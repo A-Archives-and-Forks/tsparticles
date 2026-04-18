@@ -35,14 +35,18 @@ export default class App extends Component {
     constructor() {
         super();
 
-        void initParticlesEngine(async (engine) => {
-            await loadFull(engine);
-        }).then(() => {
-            this.setState({
-                ...this.state,
-                particlesInitialized: true
+        // Initialize particles on client after mount to avoid running during
+        // SSR or module evaluation.
+        if (typeof window !== "undefined") {
+            void initParticlesEngine(async (engine) => {
+                await loadFull(engine);
+            }).then(() => {
+                this.setState({
+                    ...this.state,
+                    particlesInitialized: true
+                });
             });
-        });
+        }
     }
 
     render() {

@@ -28,6 +28,11 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
       await init(tsParticles);
     }
 
+    // Ensure engine-level initialization is run when available
+    if (typeof (tsParticles as any).init === "function") {
+      await (tsParticles as any).init();
+    }
+
     initialized = true;
   })().catch((error: unknown) => {
     initPromise = undefined;

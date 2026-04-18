@@ -5,9 +5,12 @@ import "./main.css";
 import { loadFull } from "tsparticles";
 import configs from "@tsparticles/configs";
 
-void initParticlesEngine(async engine => {
-	await loadFull(engine);
-});
+// Ensure initialization runs only on the client (not during SSR/module eval).
+if (typeof window !== "undefined") {
+  void initParticlesEngine(async engine => {
+    await loadFull(engine);
+  });
+}
 
 const container = document.getElementById("app");
 

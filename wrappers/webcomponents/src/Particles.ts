@@ -31,6 +31,11 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
       await init(globalThis.tsParticles);
     }
 
+    // Some engine builds expose an async init() to complete setup (plugins, presets)
+    if (typeof (globalThis as any).tsParticles.init === "function") {
+      await (globalThis as any).tsParticles.init();
+    }
+
     initialized = true;
   })().catch((error: unknown) => {
     initPromise = undefined;
