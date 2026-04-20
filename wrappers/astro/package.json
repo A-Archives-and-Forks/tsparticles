@@ -2,9 +2,14 @@
   "name": "@tsparticles/astro",
   "version": "4.0.0-beta.12",
   "description": "Official tsParticles Astro Component - Easily create highly customizable particle, confetti and fireworks animations and use them as animated backgrounds for your website. Ready to use components available also for Web Components, Vue.js (2.x and 3.x), Angular, Svelte, jQuery, Preact, React.js, Riot.js, Solid.js, Inferno.",
+  "type": "module",
   "scripts": {
-    "build": "echo build",
-    "build:ci": "echo build:ci",
+    "prettify:ci:src": "prettier --plugin=prettier-plugin-astro --check \"./src/**/*.{js,ts,css,astro,md}\"",
+    "prettify:ci:readme": "prettier --check ./README.md",
+    "prettify:src": "prettier --plugin=prettier-plugin-astro --write \"./src/**/*.{js,ts,css,astro,md}\"",
+    "prettify:readme": "prettier --write ./README.md",
+    "build": "pnpm run prettify:src && pnpm run prettify:readme && tsc --noEmit",
+    "build:ci": "pnpm run prettify:ci:src && pnpm run prettify:ci:readme && tsc --noEmit",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -87,9 +92,20 @@
   },
   "author": "Matteo Bruni <matteo.bruni@me.com>",
   "license": "MIT",
+  "prettier": "@tsparticles/prettier-config",
   "exports": {
-    ".": "./index.ts"
+    ".": {
+      "types": "./index.ts",
+      "node": "./index.server.js",
+      "browser": "./dist/index.client.js",
+      "import": "./dist/index.client.js",
+      "default": "./index.server.js"
+    }
   },
+
+  "main": "./index.server.js",
+  "module": "./dist/index.client.js",
+  "browser": "./dist/index.client.js",
   "peerDependencies": {
     "astro": "^6.1.6"
   },
@@ -97,6 +113,9 @@
     "@tsparticles/engine": "workspace:^"
   },
   "devDependencies": {
+    "@tsparticles/prettier-config": "^3.4.6",
+    "prettier": "^3.8.2",
+    "prettier-plugin-astro": "^0.14.1",
     "astro": "^6.1.6",
     "typescript": "^5.9.3"
   },

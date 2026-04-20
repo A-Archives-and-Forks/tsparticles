@@ -33,14 +33,29 @@ const options: ISourceOptions = {
 
 <Layout title="Welcome to Astro.">
     <main>
+        <script type="importmap">
+            {
+                "imports": {
+                    "@tsparticles/astro": "/node_modules/@tsparticles/astro/dist/index.client.js",
+                    "tsparticles": "/node_modules/tsparticles/esm/index.js"
+                }
+            }
+        </script>
         <script type="module">
             import { initParticlesEngine } from "@tsparticles/astro";
-            import { loadFull } from "tsparticles";
 
             // Initialize the particles engine on the client before the
-            // Particles element is upgraded.
+            // Particles element is upgraded. In dev we avoid loading the
+            // full tsparticles bundle (which dynamically imports workspace
+            // packages) because the dev server cannot resolve those bare
+            // workspace imports reliably. Calling initParticlesEngine()
+            // without a callback will still mark the engine as initialized
+            // so the web component can safely mount. For full plugin
+            // behavior, run the build/process that produces dist bundles.
             initParticlesEngine(async (engine) => {
-                await loadFull(engine);
+              const { loadFull } = await import("tsparticles");
+
+              await loadFull(engine);
             }).catch((e) => {
                 // Surface initialization errors to the console in dev.
                 console.error("Failed to initialize particles engine:", e);

@@ -8,8 +8,8 @@
     "test": "nyc --require esm --require jsdom-global/register --require @riotjs/register mocha src/**/*.spec.js",
     "cov": "nyc report --reporter=text-lcov",
     "cov-html": "nyc report --reporter=html",
-    "build": "echo build",
-    "build:ci": "echo build",
+    "build": "webpack --mode production",
+    "build:ci": "webpack --mode production",
     "prepublishOnly": "npm test",
     "start": "webpack serve --mode development --hot --port 3003"
   },

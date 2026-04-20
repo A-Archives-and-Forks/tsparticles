@@ -68,6 +68,41 @@ const options: ISourceOptions = {
 <Particles id="tsparticles" options={options} loaded="particlesLoaded" />
 ```
 
+## Dev notes
+
+When running the Astro demo in development, Vite/Astro may serve modules directly from the workspace and
+the browser needs a browser-ready ESM entry for the wrapper. To ensure the client runtime is initialized
+before the custom element upgrades, call initParticlesEngine on the client before the element is upgraded.
+
+Recommended minimal pattern (client-side) — place this in your page before the <Particles> element:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "@tsparticles/astro": "/node_modules/@tsparticles/astro/dist/index.client.js",
+      "tsparticles": "/node_modules/tsparticles/esm/index.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import { initParticlesEngine } from "@tsparticles/astro";
+
+  // Initialize the engine before the web component upgrades.
+  initParticlesEngine(async (engine) => {
+    const { loadFull } = await import("tsparticles");
+    await loadFull(engine);
+  }).catch(console.error);
+</script>
+```
+
+Notes:
+- The importmap above is a pragmatic development-time helper so the browser can resolve bare specifiers to
+  the local node_modules dist files. In production builds a bundler or proper package exports should make this unnecessary.
+- The important part is that initParticlesEngine is invoked (and begins initialization) before the custom element is
+  defined/upgraded in the page so the component can detect the initialization and not throw.
+
 ### Props
 
 | Prop    | Type   | Definition                                                      |

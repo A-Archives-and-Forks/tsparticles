@@ -1,8 +1,5 @@
 import type { Container, ISourceOptions, Engine } from "@tsparticles/engine";
-
-declare global {
-  var tsParticles: Engine;
-}
+import { tsParticles } from "@tsparticles/engine";
 
 export type ParticlesPluginRegistrar = (engine: Engine) => Promise<void> | void;
 
@@ -28,12 +25,12 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
   initCallback = init;
   initPromise = (async () => {
     if (init) {
-      await init(globalThis.tsParticles);
+      await init(tsParticles);
     }
 
     // Some engine builds expose an async init() to complete setup (plugins, presets)
-    if (typeof (globalThis as any).tsParticles.init === "function") {
-      await (globalThis as any).tsParticles.init();
+    if (typeof (tsParticles as any).init === "function") {
+      await (tsParticles as any).init();
     }
 
     initialized = true;
@@ -105,7 +102,7 @@ export class Particles extends HTMLElement {
 
     this.dispatchEvent(
       new CustomEvent("particlesInit", {
-        detail: globalThis.tsParticles,
+        detail: tsParticles,
       }),
     );
   }
@@ -138,13 +135,13 @@ export class Particles extends HTMLElement {
     let container: Container | undefined;
 
     if (this._url) {
-      container = await globalThis.tsParticles.load({
+      container = await tsParticles.load({
         id: this.id,
         element: this,
         url: this._url,
       });
     } else if (this._options) {
-      container = await globalThis.tsParticles.load({
+      container = await tsParticles.load({
         id: this.id,
         element: this,
         options: this._options,

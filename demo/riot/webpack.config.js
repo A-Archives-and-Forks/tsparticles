@@ -13,6 +13,11 @@ module.exports = {
         clean: true
     },
     devtool: 'source-map',
+    resolve: {
+        alias: {
+            '@tsparticles/riot': path.resolve(__dirname, '..', '..', 'wrappers', 'riot', 'src'),
+        },
+    },
     optimization: {
         runtimeChunk: {
             name: 'runtime',

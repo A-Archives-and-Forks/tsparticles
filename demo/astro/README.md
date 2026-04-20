@@ -48,3 +48,35 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Running the tsParticles demo locally
+
+The demo uses the @tsparticles/astro wrapper. In local dev the browser needs a browser-ready
+ESM entry for the wrapper. The easiest way to run the demo locally is:
+
+1. Install deps at the repo root: `pnpm install`
+2. Start the demo dev server:
+
+```bash
+cd demo/astro
+pnpm dev
+```
+
+3. Open the local URL reported by Astro.
+
+Dev note: the demo places a small importmap and a client-init script before the Particles component so that
+the browser loads the wrapper's browser entry and the core bundle in dev. The importmap looks like this:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "@tsparticles/astro": "/node_modules/@tsparticles/astro/dist/index.client.js",
+      "tsparticles": "/node_modules/tsparticles/esm/index.js"
+    }
+  }
+</script>
+```
+
+Then a small client script calls `initParticlesEngine(...)` before the component is upgraded so the wrapper
+can detect initialization and proceed without throwing.
