@@ -2,7 +2,7 @@
   "name": "@tsparticles/electron-demo",
   "version": "4.0.0-beta.12",
   "description": "",
-  "main": "app/index.js",
+  "main": "app/index.cjs",
   "private": true,
   "scripts": {
     "start": "pnpm run build:client && electron .",
