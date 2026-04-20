@@ -90,7 +90,7 @@ Recommended minimal pattern (client-side) — place this in your page before the
   import { initParticlesEngine } from "@tsparticles/astro";
 
   // Initialize the engine before the web component upgrades.
-  initParticlesEngine(async (engine) => {
+  initParticlesEngine(async engine => {
     const { loadFull } = await import("tsparticles");
     await loadFull(engine);
   }).catch(console.error);
@@ -98,6 +98,7 @@ Recommended minimal pattern (client-side) — place this in your page before the
 ```
 
 Notes:
+
 - The importmap above is a pragmatic development-time helper so the browser can resolve bare specifiers to
   the local node_modules dist files. In production builds a bundler or proper package exports should make this unnecessary.
 - The important part is that initParticlesEngine is invoked (and begins initialization) before the custom element is

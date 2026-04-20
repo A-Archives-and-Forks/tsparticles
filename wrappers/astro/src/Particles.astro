@@ -32,7 +32,8 @@ const { id, loaded, options, url } = Astro.props as IParticlesProps;
         // build step from inlining a separate copy of the helpers and
         // ensures both the page init script and this component share the
         // same module instance.
-        const { isParticlesEngineInitialized, waitForParticlesEngineInitialization } = await import("@tsparticles/astro");
+        const { isParticlesEngineInitialized, waitForParticlesEngineInitialization } =
+          await import("@tsparticles/astro");
 
         await waitForParticlesEngineInitialization();
 
