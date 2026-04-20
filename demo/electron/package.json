@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "pnpm run build:client && electron .",
-    "build:client": "webpack --mode production"
+    "build:client": "webpack --config webpack.config.cjs --mode production"
   },
   "keywords": [
     "electron"

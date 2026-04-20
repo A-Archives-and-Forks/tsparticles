@@ -18,13 +18,16 @@
             onBeforeMount() {
                 this.state.particlesInitialized = false;
 
-                initParticlesEngine(async (engine) => {
-                    await loadFull(engine);
+                // Riot can be used server-side; guard initialization to client only.
+                if (typeof window !== "undefined") {
+                    initParticlesEngine(async (engine) => {
+                        await loadFull(engine);
 
-                    console.log("particles initialized");
-                }).then(() => {
-                    this.update({ particlesInitialized: true });
-                })
+                        console.log("particles initialized");
+                    }).then(() => {
+                        this.update({ particlesInitialized: true });
+                    });
+                }
             },
         }
     </script>

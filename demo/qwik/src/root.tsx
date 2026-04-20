@@ -1,9 +1,14 @@
 import { Particles, initParticlesEngine } from "../../../wrappers/qwik/src/components/particles";
 import type { Engine } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
+import { useVisibleTask$ } from "@builder.io/qwik";
 
-void initParticlesEngine(async (engine: Engine) => {
-  await loadSlim(engine);
+// Run initialization on the client only. useVisibleTask$ ensures the
+// callback runs in the browser when the component becomes visible.
+useVisibleTask$(async () => {
+  await initParticlesEngine(async (engine: Engine) => {
+    await loadSlim(engine);
+  });
 });
 
 export default function Root() {

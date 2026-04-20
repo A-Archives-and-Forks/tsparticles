@@ -24,30 +24,59 @@ interface ILogger {
   warning(this: void, message?: unknown, ...optionalParams: unknown[]): void;
 }
 
-const _logger: ILogger = {
-  debug: console.debug,
-  error: (message, optionalParams) => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.error(`${errorPrefix} - ${message}`, optionalParams);
-  },
-  info: console.info,
-  log: console.log,
-  trace: console.trace,
-  verbose: console.log,
-  warning: console.warn,
-};
+const wrap =
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    <T extends unknown[]>(fn: (this: void, ...args: T) => void) =>
+      (...args: T): void => {
+        fn(...args);
+      },
+  _logger: ILogger = {
+    debug: wrap(console.debug),
+
+    error: (message?: unknown, ...optionalParams: unknown[]) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      console.error(`${errorPrefix} - ${message}`, ...optionalParams);
+    },
+
+    info: wrap(console.info),
+    log: wrap(console.log),
+    trace: wrap(console.trace),
+    verbose: wrap(console.log),
+    warning: wrap(console.warn),
+  };
 
 /**
  * Replaces the library log functions with a custom one.
  * @param logger - A logger object responsible for logging messages.
  */
-export function setLogger(logger: ILogger): void {
-  _logger.debug = logger.debug;
-  _logger.error = logger.error;
-  _logger.info = logger.info;
-  _logger.log = logger.log;
-  _logger.verbose = logger.verbose;
-  _logger.warning = logger.warning;
+export function setLogger(logger: Partial<ILogger>): void {
+  if (logger.debug) {
+    _logger.debug = wrap(logger.debug);
+  }
+
+  if (logger.error) {
+    _logger.error = wrap(logger.error);
+  }
+
+  if (logger.info) {
+    _logger.info = wrap(logger.info);
+  }
+
+  if (logger.log) {
+    _logger.log = wrap(logger.log);
+  }
+
+  if (logger.trace) {
+    _logger.trace = wrap(logger.trace);
+  }
+
+  if (logger.verbose) {
+    _logger.verbose = wrap(logger.verbose);
+  }
+
+  if (logger.warning) {
+    _logger.warning = wrap(logger.warning);
+  }
 }
 
 /**

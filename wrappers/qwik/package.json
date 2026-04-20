@@ -21,7 +21,12 @@
   },
   "type": "module",
   "scripts": {
-    "build": "echo build",
+    "prettify:src": "prettier --write ./src/**/*",
+    "prettify:readme": "prettier --write ./README.md",
+    "prettify:ci:src": "prettier --check ./src/**/*",
+    "prettify:ci:readme": "prettier --check ./README.md",
+    "build": "pnpm run prettify:src && pnpm run build.lib && pnpm run build.types",
+    "build:ci": "pnpm run prettify:ci:src && pnpm run build.lib && pnpm run build.types",
     "build.lib": "vite build --mode lib",
     "build.types": "tsc --emitDeclarationOnly",
     "dev": "vite --mode ssr",

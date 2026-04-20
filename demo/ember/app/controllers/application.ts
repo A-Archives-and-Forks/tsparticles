@@ -15,10 +15,15 @@ export default class ApplicationController extends Controller {
   constructor(...args: unknown[]) {
     super(...args);
 
-    void initParticlesEngine(async (engine: Engine) => {
-      await loadFull(engine);
-      await loadSnowPreset(engine);
-    });
+    // Defer particles engine initialization to client runtime. Ember apps
+    // may run in FastBoot (server) where window/document are not available.
+    // Guard and initialize only on the client.
+    if (typeof window !== "undefined") {
+      void initParticlesEngine(async (engine: Engine) => {
+        await loadFull(engine);
+        await loadSnowPreset(engine);
+      });
+    }
   }
 
   loadedCallback(container: Container) {

@@ -1,6 +1,6 @@
-import path from "node:path";
+const path = require("path");
 
-export default {
+module.exports = {
   entry: "./client/client.js",
   output: {
     path: path.resolve(__dirname, "client", "dist"),
