@@ -7,6 +7,9 @@
       "ember-demo/*": [
         "app/*"
       ],
+      "@tsparticles/ember-demo/*": [
+        "app/*"
+      ],
       "@tsparticles/ember": [
         "../../wrappers/ember/addon"
       ],

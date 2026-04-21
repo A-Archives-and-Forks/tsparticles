@@ -1,7 +1,4 @@
 export const LINK_OPTIONS = {
-  fullScreen: {
-    enable: false,
-  },
   particles: {
     color: {
       value: "#ffffff",

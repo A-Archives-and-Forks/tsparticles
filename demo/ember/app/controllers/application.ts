@@ -12,8 +12,9 @@ export default class ApplicationController extends Controller {
   options = LINK_OPTIONS;
   confetti = CONFETTI_OPTIONS;
 
-  constructor(...args: unknown[]) {
-    super(...args);
+  // Use a typed args parameter for compatibility with Ember/TS
+  constructor(...args: any[]) {
+    super(...(args as [object?]));
 
     // Defer particles engine initialization to client runtime. Ember apps
     // may run in FastBoot (server) where window/document are not available.

@@ -9,7 +9,8 @@
     {{content-for "head"}}
 
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ember-demo.css" />
+    <!-- built ember assets are namespaced under @tsparticles in the dist output -->
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/@tsparticles/ember-demo.css" />
 
     {{content-for "head-footer"}}
   </head>
@@ -17,7 +18,8 @@
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/ember-demo.js"></script>
+    <!-- built ember app bundle is namespaced under @tsparticles in the dist output -->
+    <script src="{{rootURL}}assets/@tsparticles/ember-demo.js"></script>
 
     {{content-for "body-footer"}}
   </body>
