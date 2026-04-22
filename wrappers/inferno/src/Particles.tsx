@@ -49,8 +49,6 @@ export default class Particles extends Component<IParticlesProps> {
 			const { id, url, options } = this.props;
 
 			this._container = await tsParticles.load({ id: id ?? "tsparticles", url, options });
-
-			getLogger().log(this._container);
 		} catch (e) {
 			getLogger().error("Particles: error during load", e);
 		}

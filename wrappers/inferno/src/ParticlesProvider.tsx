@@ -93,22 +93,18 @@ export class ParticlesProvider extends Component<IParticlesProviderProps, IParti
 
 	async startInit(init?: ParticlesPluginRegistrar) {
 		try {
-			getLogger().debug("ParticlesProvider: starting engine init");
-
 			await initParticlesEngine(init);
 
 			if (!this._cancelled) {
 				this.setState({ loaded: true });
 				notifyProviderLoaded(true);
 			}
-
-			// eslint-disable-next-line no-console
-			console.debug("ParticlesProvider: engine init completed");
 		} catch (e) {
-			// eslint-disable-next-line no-console
-			console.error("ParticlesProvider: engine init failed", e);
+			getLogger().error("ParticlesProvider: engine init failed", e);
+
 			if (!this._cancelled) {
 				this.setState({ loaded: false });
+
 				notifyProviderLoaded(false);
 			}
 		}

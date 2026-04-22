@@ -33,7 +33,6 @@ function App() {
 							},
 							links: {
 								enable: true,
-								opacity: 1,
 								color: "#fff",
 							},
 							move: {

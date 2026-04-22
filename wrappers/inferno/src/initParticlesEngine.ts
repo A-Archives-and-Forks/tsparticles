@@ -1,4 +1,4 @@
-import { tsParticles, getLogger, type Engine } from "@tsparticles/engine";
+import { tsParticles, type Engine } from "@tsparticles/engine";
 
 export type ParticlesPluginRegistrar = (engine: Engine) => Promise<void> | void;
 
@@ -21,13 +21,8 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
 
 	initPromise = (async () => {
 		if (init) {
-			getLogger().log("initParticlesEngine: calling init callback");
-
 			await init(tsParticles);
 		}
-
-		// Call engine init when available
-		getLogger().log("initParticlesEngine: calling tsParticles.init()");
 
 		await tsParticles.init();
 
