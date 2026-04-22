@@ -6,6 +6,7 @@ packages:
   - interactions/*
   - interactions/*/*
   - wrappers/*
+  - wrappers/inferno-hooks
   - templates/*
   - palettes/*/*
   - paths/*

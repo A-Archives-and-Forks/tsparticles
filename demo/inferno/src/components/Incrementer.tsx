@@ -1,4 +1,4 @@
-import { useState } from '@tsparticles/inferno';
+import { Component } from 'inferno';
 import { addOne } from '../utils/math';
 import { Visualizer } from './Visualizer';
 
@@ -8,18 +8,35 @@ interface Props {
   name: string;
 }
 
-export function Incrementer({ name }: Props) {
-  const [value, setValue] = useState(1);
+interface State {
+  value: number;
+}
 
-  const doMath = () => setValue((v) => addOne(v));
+export class Incrementer extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props as any);
 
-  return (
-    <div>
-      {name}
-      <button className="my-button" onClick={doMath}>
-        Increment
-      </button>
-      <Visualizer value={value + 'THIS SHOULD FAIL ( npm run check )!'} />
-    </div>
-  );
+    this.state = { value: 1 };
+
+    this.doMath = this.doMath.bind(this);
+  }
+
+  doMath() {
+    this.setState(({ value }) => ({ value: addOne(value) }));
+  }
+
+  render() {
+    const { name } = this.props;
+    const { value } = this.state;
+
+    return (
+      <div>
+        {name}
+        <button className="my-button" onClick={this.doMath}>
+          Increment
+        </button>
+        <Visualizer value={value} />
+      </div>
+    );
+  }
 }

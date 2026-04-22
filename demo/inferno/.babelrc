@@ -4,13 +4,18 @@
     [
       "@babel/preset-env",
       {
-        "loose": true,
+        // Target modern environments during local development so native
+        // classes are preserved. This prevents transpiling classes to
+        // ES5 which can cause "Cannot call a class constructor Component
+        // without |new|" when mixing transpiled subclasses with native
+        // runtime classes (Inferno). For CI or production builds you can
+        // revert to broader browser targets.
         "targets": {
-          "browsers": ["ie >= 11", "safari > 10"]
+          "esmodules": true
         }
       }
     ],
     ["@babel/typescript", {"isTSX": true, "allExtensions": true}]
   ],
-  "plugins": [["babel-plugin-inferno", { "imports": true }], ["@babel/plugin-proposal-class-properties", { "loose": true }]]
+  "plugins": [["babel-plugin-inferno", { "imports": true }], ["@babel/plugin-proposal-class-properties", { "loose": false }]]
 }

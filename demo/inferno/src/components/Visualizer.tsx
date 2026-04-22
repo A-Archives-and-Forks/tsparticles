@@ -5,10 +5,14 @@ import './Visualizer.css';
  * Functional components provide great performance but does not have state
  */
 
+import { Component } from 'inferno';
+
 interface VisualizerProps {
-	value: number;
+  value: number;
 }
 
-export function Visualizer(props: VisualizerProps) {
-	return <div className="visualizer">{props.value}</div>;
+export class Visualizer extends Component<VisualizerProps> {
+  render() {
+    return <div className="visualizer">{this.props.value}</div>;
+  }
 }
