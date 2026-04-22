@@ -1,16 +1,18 @@
+const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-	mode: "none",
-	entry: "./src/index.tsx", // Point to main file
+	module.exports = {
+		mode: "none",
+		entry: "./src/index.tsx", // Point to main file
+		resolve: {
+			extensions: ['.js', '.jsx', '.ts', '.tsx'],
+		},
 	output: {
 		path: __dirname + "/dist",
 		filename: "bundle.js"
 	},
-	resolve: {
-		extensions: ['.js', '.jsx', '.ts', '.tsx']
-	},
+		// merged with alias above
 	performance: {
 		hints: false
 	},
@@ -38,10 +40,16 @@ module.exports = {
 			}
 		]
 	},
-	devServer: {
-		static: "src/",
-		historyApiFallback: true
-	},
+    devServer: {
+        // Serve demo source and built output so dynamic chunks emitted
+        // by other packages (eg. wrappers) are reachable during dev.
+        static: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'dist'),
+            path.resolve(__dirname, '..', '..', 'wrappers', 'inferno', 'dist'),
+        ],
+        historyApiFallback: true,
+    },
 	plugins: [
 		new HtmlWebpackPlugin(
 			{

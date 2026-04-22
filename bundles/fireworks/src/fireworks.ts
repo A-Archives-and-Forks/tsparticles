@@ -22,8 +22,9 @@ import type { IFireworkOptions } from "./IFireworkOptions.js";
 
 declare const __VERSION__: string;
 
-let initialized = false,
-  initializing = false;
+let initPromise: Promise<void> | null = null;
+
+const instances = new Map<string, FireworksInstance | Promise<FireworksInstance | undefined>>();
 
 type FireworksFunc = ((
   idOrOptions: string | RecursivePartial<IFireworkOptions>,
@@ -51,28 +52,10 @@ const explodeSoundCheck = (args: CustomEventArgs): boolean => {
 
 /**
  * @param engine - the engine to use for loading all plugins
+ * @returns the promise of initialization
+ * @internal
  */
-async function initPlugins(engine: Engine): Promise<void> {
-  if (initialized) {
-    return;
-  }
-
-  if (initializing) {
-    return new Promise<void>(resolve => {
-      const timeout = 100,
-        interval = setInterval(() => {
-          if (!initialized) {
-            return;
-          }
-
-          clearInterval(interval);
-          resolve();
-        }, timeout);
-    });
-  }
-
-  initializing = true;
-
+async function doInitPlugins(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
@@ -117,9 +100,21 @@ async function initPlugins(engine: Engine): Promise<void> {
       loadPaintUpdater(e),
     ]);
   });
+}
 
-  initializing = false;
-  initialized = true;
+/**
+ * @param engine - the engine to use for loading all plugins
+ * @returns the promise of initialization
+ * @internal
+ */
+async function initPlugins(engine: Engine): Promise<void> {
+  if (initPromise) {
+    return initPromise;
+  }
+
+  initPromise = doInitPlugins(engine);
+
+  return initPromise;
 }
 
 /**
@@ -296,7 +291,6 @@ function getOptions(options: IFireworkOptions, canvas?: HTMLCanvasElement): ISou
 }
 
 /**
- *
  * @param id -
  * @param sourceOptions -
  * @param canvas -
@@ -309,20 +303,44 @@ async function getFireworksInstance(
 ): Promise<FireworksInstance | undefined> {
   await initPlugins(tsParticles);
 
-  const options = new FireworkOptions();
+  /* Check if an instance or a loading promise already exists */
+  const existing = instances.get(id);
 
-  options.load(sourceOptions);
-
-  const particlesOptions = getOptions(options, canvas),
-    container = await tsParticles.load({ id, element: canvas, options: particlesOptions });
-
-  if (!container) {
-    return;
+  if (existing instanceof Promise) {
+    return existing; // Wait for the ongoing initialization
   }
 
-  const { FireworksInstance } = await import("./FireworksInstance.js");
+  if (existing) {
+    return existing; // Return existing instance
+  }
 
-  return new FireworksInstance(container);
+  /* Create a locking promise */
+  const createPromise = (async (): Promise<FireworksInstance | undefined> => {
+    const options = new FireworkOptions();
+    options.load(sourceOptions);
+
+    const particlesOptions = getOptions(options, canvas),
+      // Load the container
+      container = await tsParticles.load({ id, element: canvas, options: particlesOptions });
+
+    if (!container) {
+      instances.delete(id); // Clean up on failure
+      return;
+    }
+
+    const { FireworksInstance } = await import("./FireworksInstance.js"),
+      instance = new FireworksInstance(container);
+
+    /* Swap the promise for the actual instance */
+    instances.set(id, instance);
+
+    return instance;
+  })();
+
+  /* Set the promise in the map immediately to block concurrent calls */
+  instances.set(id, createPromise);
+
+  return createPromise;
 }
 
 /**

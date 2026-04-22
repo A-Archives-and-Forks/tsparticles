@@ -40,10 +40,9 @@ declare global {
  */
 export type ConfettiFirstParam = string | RecursivePartial<IConfettiOptions>;
 
-let initialized = false,
-  initializing = false;
+let initPromise: Promise<void> | null = null;
 
-const ids = new Map<string, Container | undefined>(),
+const ids = new Map<string, Container | Promise<Container | undefined> | undefined>(),
   defaultGravity = 9.81,
   sizeFactor = 5,
   speedFactor = 3,
@@ -72,31 +71,11 @@ export interface ConfettiParams {
 }
 
 /**
- * This function prepares all the plugins needed by the confetti bundle
  * @param engine -
+ * @returns the init plugins promise
+ * @internal
  */
-async function initPlugins(engine: Engine): Promise<void> {
-  if (initialized) {
-    return;
-  }
-
-  if (initializing) {
-    return new Promise<void>(resolve => {
-      const timeout = 100,
-        interval = setInterval(() => {
-          if (!initialized) {
-            return;
-          }
-
-          clearInterval(interval);
-
-          resolve();
-        }, timeout);
-    });
-  }
-
-  initializing = true;
-
+async function doInitPlugins(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
@@ -157,9 +136,22 @@ async function initPlugins(engine: Engine): Promise<void> {
       loadWobbleUpdater(e),
     ]);
   });
+}
 
-  initializing = false;
-  initialized = true;
+/**
+ * This function prepares all the plugins needed by the confetti bundle
+ * @param engine -
+ * @returns the init plugins promise
+ * @internal
+ */
+async function initPlugins(engine: Engine): Promise<void> {
+  if (initPromise) {
+    return initPromise;
+  }
+
+  initPromise = doInitPlugins(engine);
+
+  return initPromise;
 }
 
 /**
@@ -171,20 +163,256 @@ async function setConfetti(params: ConfettiParams): Promise<Container | undefine
 
   actualOptions.load(params.options);
 
-  let container;
-
   const fpsLimit = 120,
     fpsLimitFactor = 3.6,
     opacitySpeed = (actualOptions.ticks * millisecondsToSeconds) / (fpsLimitFactor * millisecondsToSeconds * fpsLimit);
 
-  if (ids.has(params.id)) {
-    container = ids.get(params.id);
+  /* Check if there is already an entry for this ID */
+  let containerOrPromise = ids.get(params.id);
 
-    if (container && !container.destroyed) {
-      const alias = container as EmitterContainer;
+  /* If it's a Promise, another call is currently initializing this container. Wait for it. */
+  if (containerOrPromise instanceof Promise) {
+    await containerOrPromise;
+    containerOrPromise = ids.get(params.id);
+  }
 
-      if ("addEmitter" in alias) {
-        await alias.addEmitter?.({
+  const container = containerOrPromise as Container | undefined;
+
+  /* If the container exists and is active, we just add a new emitter (fast path) */
+  if (container && !container.destroyed) {
+    const alias = container as EmitterContainer;
+
+    if ("addEmitter" in alias) {
+      await alias.addEmitter?.({
+        startCount: actualOptions.count,
+        position: actualOptions.position,
+        size: {
+          width: 0,
+          height: 0,
+        },
+        rate: {
+          delay: 0,
+          quantity: 0,
+        },
+        life: {
+          duration: 0.1,
+          count: 1,
+        },
+        particles: {
+          fill: {
+            color: {
+              value: actualOptions.colors,
+            },
+            enable: true,
+          },
+          shape: {
+            type: actualOptions.shapes,
+            options: actualOptions.shapeOptions,
+          },
+          life: {
+            count: 1,
+          },
+          opacity: {
+            value: { min: 0, max: 1 },
+            animation: {
+              enable: true,
+              sync: true,
+              speed: opacitySpeed,
+              startValue: "max",
+              destroy: "min",
+              count: 1,
+            },
+          },
+          size: {
+            value: sizeFactor * actualOptions.scalar,
+          },
+          move: {
+            angle: {
+              value: actualOptions.spread,
+              offset: 0,
+            },
+            drift: {
+              min: -actualOptions.drift,
+              max: actualOptions.drift,
+            },
+            gravity: {
+              acceleration: actualOptions.gravity * defaultGravity,
+            },
+            speed: actualOptions.startVelocity * speedFactor,
+            decay: decayOffset - actualOptions.decay,
+            direction: -actualOptions.angle,
+          },
+          rotate: {
+            value: actualOptions.flat
+              ? disableRotate
+              : {
+                  min: 0,
+                  max: 360,
+                },
+            direction: "random",
+            animation: {
+              enable: !actualOptions.flat,
+              speed: 60,
+            },
+          },
+          tilt: {
+            direction: "random",
+            enable: !actualOptions.flat,
+            value: actualOptions.flat
+              ? disableTilt
+              : {
+                  min: 0,
+                  max: 360,
+                },
+            animation: {
+              enable: true,
+              speed: 60,
+            },
+          },
+          roll: {
+            darken: {
+              enable: true,
+              value: 25,
+            },
+            enable: !actualOptions.flat,
+            speed: {
+              min: 15,
+              max: 25,
+            },
+          },
+          wobble: {
+            distance: 30,
+            enable: !actualOptions.flat,
+            speed: {
+              min: -15,
+              max: 15,
+            },
+          },
+        },
+      });
+
+      return container;
+    }
+  }
+
+  /* If no container exists, we create a initialization promise to lock other calls */
+  const createPromise = (async (): Promise<Container | undefined> => {
+    const particlesOptions: ISourceOptions = {
+        fullScreen: {
+          enable: !params.canvas,
+          zIndex: actualOptions.zIndex,
+        },
+        fpsLimit: 120,
+        particles: {
+          number: {
+            value: 0,
+          },
+          fill: {
+            color: {
+              value: actualOptions.colors,
+            },
+            enable: true,
+          },
+          shape: {
+            type: actualOptions.shapes,
+            options: actualOptions.shapeOptions,
+          },
+          opacity: {
+            value: { min: 0, max: 1 },
+            animation: {
+              enable: true,
+              sync: true,
+              speed: opacitySpeed,
+              startValue: "max",
+              destroy: "min",
+              count: 1,
+            },
+          },
+          size: {
+            value: sizeFactor * actualOptions.scalar,
+          },
+          links: {
+            enable: false,
+          },
+          life: {
+            count: 1,
+          },
+          move: {
+            angle: {
+              value: actualOptions.spread,
+              offset: 0,
+            },
+            drift: {
+              min: -actualOptions.drift,
+              max: actualOptions.drift,
+            },
+            enable: true,
+            gravity: {
+              enable: true,
+              acceleration: actualOptions.gravity * defaultGravity,
+            },
+            speed: actualOptions.startVelocity * speedFactor,
+            decay: decayOffset - actualOptions.decay,
+            direction: -actualOptions.angle,
+            random: true,
+            straight: false,
+            outModes: {
+              default: "none",
+              bottom: "destroy",
+            },
+          },
+          rotate: {
+            value: actualOptions.flat
+              ? disableRotate
+              : {
+                  min: 0,
+                  max: 360,
+                },
+            direction: "random",
+            animation: {
+              enable: !actualOptions.flat,
+              speed: 60,
+            },
+          },
+          tilt: {
+            direction: "random",
+            enable: !actualOptions.flat,
+            value: actualOptions.flat
+              ? disableTilt
+              : {
+                  min: 0,
+                  max: 360,
+                },
+            animation: {
+              enable: true,
+              speed: 60,
+            },
+          },
+          roll: {
+            darken: {
+              enable: true,
+              value: 25,
+            },
+            enable: !actualOptions.flat,
+            speed: {
+              min: 15,
+              max: 25,
+            },
+          },
+          wobble: {
+            distance: 30,
+            enable: !actualOptions.flat,
+            speed: {
+              min: -15,
+              max: 15,
+            },
+          },
+        },
+        motion: {
+          disable: actualOptions.disableForReducedMotion,
+        },
+        emitters: {
+          name: "confetti",
           startCount: actualOptions.count,
           position: actualOptions.position,
           size: {
@@ -199,242 +427,24 @@ async function setConfetti(params: ConfettiParams): Promise<Container | undefine
             duration: 0.1,
             count: 1,
           },
-          particles: {
-            fill: {
-              color: {
-                value: actualOptions.colors,
-              },
-              enable: true,
-            },
-            shape: {
-              type: actualOptions.shapes,
-              options: actualOptions.shapeOptions,
-            },
-            life: {
-              count: 1,
-            },
-            opacity: {
-              value: { min: 0, max: 1 },
-              animation: {
-                enable: true,
-                sync: true,
-                speed: opacitySpeed,
-                startValue: "max",
-                destroy: "min",
-                count: 1,
-              },
-            },
-            size: {
-              value: sizeFactor * actualOptions.scalar,
-            },
-            move: {
-              angle: {
-                value: actualOptions.spread,
-                offset: 0,
-              },
-              drift: {
-                min: -actualOptions.drift,
-                max: actualOptions.drift,
-              },
-              gravity: {
-                acceleration: actualOptions.gravity * defaultGravity,
-              },
-              speed: actualOptions.startVelocity * speedFactor,
-              decay: decayOffset - actualOptions.decay,
-              direction: -actualOptions.angle,
-            },
-            rotate: {
-              value: actualOptions.flat
-                ? disableRotate
-                : {
-                    min: 0,
-                    max: 360,
-                  },
-              direction: "random",
-              animation: {
-                enable: !actualOptions.flat,
-                speed: 60,
-              },
-            },
-            tilt: {
-              direction: "random",
-              enable: !actualOptions.flat,
-              value: actualOptions.flat
-                ? disableTilt
-                : {
-                    min: 0,
-                    max: 360,
-                  },
-              animation: {
-                enable: true,
-                speed: 60,
-              },
-            },
-            roll: {
-              darken: {
-                enable: true,
-                value: 25,
-              },
-              enable: !actualOptions.flat,
-              speed: {
-                min: 15,
-                max: 25,
-              },
-            },
-            wobble: {
-              distance: 30,
-              enable: !actualOptions.flat,
-              speed: {
-                min: -15,
-                max: 15,
-              },
-            },
-          },
-        });
+        },
+      },
+      newContainer = await tsParticles.load({
+        id: params.id,
+        element: params.canvas,
+        options: particlesOptions,
+      });
 
-        return;
-      }
-    }
-  }
+    /* Replace the promise with the actual container in the map */
+    ids.set(params.id, newContainer);
 
-  const particlesOptions: ISourceOptions = {
-    fullScreen: {
-      enable: !params.canvas,
-      zIndex: actualOptions.zIndex,
-    },
-    fpsLimit: 120,
-    particles: {
-      number: {
-        value: 0,
-      },
-      fill: {
-        color: {
-          value: actualOptions.colors,
-        },
-        enable: true,
-      },
-      shape: {
-        type: actualOptions.shapes,
-        options: actualOptions.shapeOptions,
-      },
-      opacity: {
-        value: { min: 0, max: 1 },
-        animation: {
-          enable: true,
-          sync: true,
-          speed: opacitySpeed,
-          startValue: "max",
-          destroy: "min",
-          count: 1,
-        },
-      },
-      size: {
-        value: sizeFactor * actualOptions.scalar,
-      },
-      links: {
-        enable: false,
-      },
-      life: {
-        count: 1,
-      },
-      move: {
-        angle: {
-          value: actualOptions.spread,
-          offset: 0,
-        },
-        drift: {
-          min: -actualOptions.drift,
-          max: actualOptions.drift,
-        },
-        enable: true,
-        gravity: {
-          enable: true,
-          acceleration: actualOptions.gravity * defaultGravity,
-        },
-        speed: actualOptions.startVelocity * speedFactor,
-        decay: decayOffset - actualOptions.decay,
-        direction: -actualOptions.angle,
-        random: true,
-        straight: false,
-        outModes: {
-          default: "none",
-          bottom: "destroy",
-        },
-      },
-      rotate: {
-        value: actualOptions.flat
-          ? disableRotate
-          : {
-              min: 0,
-              max: 360,
-            },
-        direction: "random",
-        animation: {
-          enable: !actualOptions.flat,
-          speed: 60,
-        },
-      },
-      tilt: {
-        direction: "random",
-        enable: !actualOptions.flat,
-        value: actualOptions.flat
-          ? disableTilt
-          : {
-              min: 0,
-              max: 360,
-            },
-        animation: {
-          enable: true,
-          speed: 60,
-        },
-      },
-      roll: {
-        darken: {
-          enable: true,
-          value: 25,
-        },
-        enable: !actualOptions.flat,
-        speed: {
-          min: 15,
-          max: 25,
-        },
-      },
-      wobble: {
-        distance: 30,
-        enable: !actualOptions.flat,
-        speed: {
-          min: -15,
-          max: 15,
-        },
-      },
-    },
-    motion: {
-      disable: actualOptions.disableForReducedMotion,
-    },
-    emitters: {
-      name: "confetti",
-      startCount: actualOptions.count,
-      position: actualOptions.position,
-      size: {
-        width: 0,
-        height: 0,
-      },
-      rate: {
-        delay: 0,
-        quantity: 0,
-      },
-      life: {
-        duration: 0.1,
-        count: 1,
-      },
-    },
-  };
+    return newContainer;
+  })();
 
-  container = await tsParticles.load({ id: params.id, element: params.canvas, options: particlesOptions });
+  /* Set the promise in the map immediately to block concurrent calls */
+  ids.set(params.id, createPromise);
 
-  ids.set(params.id, container);
-
-  return container;
+  return createPromise;
 }
 
 /**
