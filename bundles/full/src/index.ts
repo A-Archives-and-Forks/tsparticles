@@ -15,41 +15,47 @@ export async function loadFull(engine: Engine): Promise<void> {
 
   await engine.pluginManager.register(async e => {
     const [
-      { loadSlim },
-      { loadExternalDragInteraction },
-      { loadExternalTrailInteraction },
-      { loadAbsorbersPlugin },
-      { loadEmittersPlugin },
-      { loadEmittersShapeCircle },
-      { loadEmittersShapeSquare },
-      { loadTextShape },
-      { loadDestroyUpdater },
-      { loadRollUpdater },
-      { loadTiltUpdater },
-      { loadTwinkleUpdater },
-      { loadWobbleUpdater },
-    ] = await Promise.all([
-      import("@tsparticles/slim"),
+        { loadSlim },
+        { loadExternalDragInteraction },
+        { loadExternalTrailInteraction },
+        { loadAbsorbersPlugin },
+        { loadEmittersPlugin },
+        { loadEmittersShapeCircle },
+        { loadEmittersShapeSquare },
+        { loadTextShape },
+        { loadDestroyUpdater },
+        { loadRollUpdater },
+        { loadTiltUpdater },
+        { loadTwinkleUpdater },
+        { loadWobbleUpdater },
+      ] = await Promise.all([
+        import("@tsparticles/slim"),
 
-      import("@tsparticles/interaction-external-drag"),
-      import("@tsparticles/interaction-external-trail"),
+        import("@tsparticles/interaction-external-drag"),
+        import("@tsparticles/interaction-external-trail"),
 
-      import("@tsparticles/plugin-absorbers"),
-      import("@tsparticles/plugin-emitters"),
-      import("@tsparticles/plugin-emitters-shape-circle"),
-      import("@tsparticles/plugin-emitters-shape-square"),
+        import("@tsparticles/plugin-absorbers"),
+        import("@tsparticles/plugin-emitters"),
+        import("@tsparticles/plugin-emitters-shape-circle"),
+        import("@tsparticles/plugin-emitters-shape-square"),
 
-      import("@tsparticles/shape-text"),
+        import("@tsparticles/shape-text"),
 
-      import("@tsparticles/updater-destroy"),
-      import("@tsparticles/updater-roll"),
-      import("@tsparticles/updater-tilt"),
-      import("@tsparticles/updater-twinkle"),
-      import("@tsparticles/updater-wobble"),
-    ]);
+        import("@tsparticles/updater-destroy"),
+        import("@tsparticles/updater-roll"),
+        import("@tsparticles/updater-tilt"),
+        import("@tsparticles/updater-twinkle"),
+        import("@tsparticles/updater-wobble"),
+      ]),
+      loadEmittersPluginBundle = async (e: Engine): Promise<void> => {
+        await loadEmittersPlugin(e);
 
-    await Promise.all([
-      (async (): Promise<void> => {
+        await Promise.all([
+          loadEmittersShapeCircle(e),
+          loadEmittersShapeSquare(e),
+        ]);
+      },
+      loadInteractivityForFull = async (e: Engine): Promise<void> => {
         await loadSlim(e);
 
         await Promise.all([
@@ -57,16 +63,12 @@ export async function loadFull(engine: Engine): Promise<void> {
           loadExternalTrailInteraction(e),
 
           loadAbsorbersPlugin(e),
-          (async (): Promise<void> => {
-            await loadEmittersPlugin(e);
-
-            await Promise.all([
-              loadEmittersShapeCircle(e),
-              loadEmittersShapeSquare(e),
-            ]);
-          })(),
+          loadEmittersPluginBundle(e),
         ]);
-      })(),
+      };
+
+    await Promise.all([
+      loadInteractivityForFull(e),
 
       loadDestroyUpdater(e),
       loadRollUpdater(e),
