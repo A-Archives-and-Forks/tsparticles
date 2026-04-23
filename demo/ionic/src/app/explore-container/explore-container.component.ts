@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-explore-container',
+  // explicitly mark as non-standalone to avoid runtime mismatch when declared in NgModule
+  standalone: false,
   templateUrl: './explore-container.component.html',
   styleUrls: ['./explore-container.component.scss'],
 })
