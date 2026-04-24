@@ -128,9 +128,7 @@ export class Particles extends HTMLElement {
   set url(value: string | null | undefined) {
     this._url = value;
 
-    // Debug: record when the url setter triggers a reload
-    // eslint-disable-next-line no-console
-    console.log("web-particles: url setter invoked, value=", value, "current loadId=", this.loadId);
+    // Note: setter triggers a reload when changed
 
     this.container.current?.destroy();
 
@@ -144,9 +142,7 @@ export class Particles extends HTMLElement {
   set options(value: ISourceOptions | undefined) {
     this._options = value;
 
-    // Debug: record when options setter triggers a reload
-    // eslint-disable-next-line no-console
-    console.log("web-particles: options setter invoked, hasValue=", !!value, "current loadId=", this.loadId);
+    // Note: setter triggers a reload when changed
 
     this.container.current?.destroy();
 
@@ -208,9 +204,7 @@ export class Particles extends HTMLElement {
       return;
     }
 
-    // Debug: connected - starting load
-    // eslint-disable-next-line no-console
-    console.log("web-particles: connectedCallback, starting load, current loadId=", this.loadId + 1);
+    // connected - start load when element is attached
 
     void this.loadParticles(++this.loadId);
   }
@@ -222,9 +216,7 @@ export class Particles extends HTMLElement {
   }
 
   private async loadParticles(currentLoadId: number): Promise<void> {
-    // Debug: entering loadParticles
-    // eslint-disable-next-line no-console
-    console.log("web-particles: loadParticles start - currentLoadId=", currentLoadId, "this.loadId=", this.loadId);
+    // entering loadParticles
 
     try {
       await waitForParticlesEngineInitialization();
@@ -250,47 +242,30 @@ export class Particles extends HTMLElement {
         try {
           urlParam = new URL(urlParam as string, document.baseURI).toString();
         } catch (e) {
-          // We'll let engine.load throw the original error; also mirror into
-          // wrapper logs for immediate visibility.
-          // eslint-disable-next-line no-console
-          console.error("web-particles: invalid url attribute:", this._url, e);
+          // We'll let engine.load throw the original error.
         }
 
-        // eslint-disable-next-line no-console
-        console.log("web-particles: calling engine.load with url=", urlParam);
+        // calling engine.load with the normalized url
 
-        container = await engine.load({
+        container = await engine?.load({
           id: this.id,
           element: this,
           url: urlParam,
         });
       } else if (this._options) {
-        // eslint-disable-next-line no-console
-        console.log("web-particles: calling engine.load with options=", this._options);
+        // calling engine.load with inline options
 
-        container = await engine.load({
+        container = await engine?.load({
           id: this.id,
           element: this,
           options: this._options,
         });
       }
 
-      // Debug: after engine.load returned
-      // eslint-disable-next-line no-console
-      console.log(
-        "web-particles: engine.load returned, currentLoadId=",
-        currentLoadId,
-        "this.loadId=",
-        this.loadId,
-        "containerDestroyed=",
-        !!container?.destroyed,
-      );
+      // after engine.load returned
 
       if (currentLoadId !== this.loadId) {
         // Another load superseded us; destroy the stale container.
-        // eslint-disable-next-line no-console
-        console.log("web-particles: load cancelled due to newer loadId, destroying returned container");
-
         container?.destroy();
 
         return;
