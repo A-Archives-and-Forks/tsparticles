@@ -16,7 +16,7 @@ const rollupConfig = {
     ],
     plugins: [
       typescript(),
-      resolve(),
+      resolve({ preferBuiltins: false }),
     ],
     onwarn(warning: { code: string; message: string }) {
       if (warning.code === "THIS_IS_UNDEFINED") {
@@ -28,7 +28,11 @@ const rollupConfig = {
   outputOptions: {
     sourcemap: true,
     exports: "named",
-    file: "dist/web-particles.js",
+    // When Rollup emits multiple chunks the `file` option is invalid.
+    // Use `dir` so Rollup can write chunked output into the dist folder
+    // and set `entryFileNames` to keep the main filename predictable.
+    dir: "dist",
+    entryFileNames: "web-particles.js",
     name: "web-particles",
     format: "es",
   } as OutputOptions,
