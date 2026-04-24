@@ -2088,9 +2088,9 @@ importers:
       '@tsparticles/engine':
         specifier: workspace:^
         version: link:../../engine/dist
-      '@tsparticles/slim':
+      tsparticles:
         specifier: workspace:^
-        version: link:../../bundles/slim/dist
+        version: link:../../bundles/full/dist
     devDependencies:
       '@types/node':
         specifier: ^25.6.0

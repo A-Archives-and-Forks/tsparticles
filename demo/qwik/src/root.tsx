@@ -1,21 +1,21 @@
 import { Particles, initParticlesEngine } from "../../../wrappers/qwik/src/components/particles";
 import type { Engine } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
-import { useVisibleTask$ } from "@builder.io/qwik";
+import { loadFull } from "tsparticles";
+import { component$, useVisibleTask$ } from "@builder.io/qwik";
 
 // Run initialization on the client only. useVisibleTask$ ensures the
 // callback runs in the browser when the component becomes visible.
-useVisibleTask$(async () => {
-  await initParticlesEngine(async (engine: Engine) => {
-    await loadSlim(engine);
+export default component$(() => {
+  useVisibleTask$(async () => {
+    await initParticlesEngine(async (engine: Engine) => {
+      await loadFull(engine);
+    });
   });
-});
 
-export default function Root() {
   return (
     <>
       <head>
-        <meta charSet="utf-8" />
+        <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <title>tsParticles Qwik Demo</title>
       </head>
@@ -25,10 +25,20 @@ export default function Root() {
           <Particles
             id="tsparticles"
             options={{
+              background: {
+                color: {
+                  value: "#000",
+                },
+              },
               fullScreen: {
                 zIndex: -1,
               },
               particles: {
+                paint: {
+                  fill: {
+                    enable: true,
+                  },
+                },
                 links: {
                   enable: true,
                 },
@@ -45,4 +55,4 @@ export default function Root() {
       </body>
     </>
   );
-}
+});
