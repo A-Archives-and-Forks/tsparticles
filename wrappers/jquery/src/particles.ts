@@ -1,4 +1,4 @@
-import { type Container, type ISourceOptions, getRandom, tsParticles } from "@tsparticles/engine";
+import { type Container, getRandom, type ISourceOptions, tsParticles } from "@tsparticles/engine";
 
 export type ParticlesPluginRegistrar = (engine: typeof tsParticles) => Promise<void> | void;
 
@@ -6,7 +6,7 @@ let initialized = false;
 let initPromise: Promise<void> | undefined;
 let initCallback: ParticlesPluginRegistrar | undefined;
 
-export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Promise<void> {
+async function initParticlesEngine(init?: ParticlesPluginRegistrar): Promise<void> {
   if (initialized) {
     return;
   }
@@ -27,9 +27,7 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
       await init(tsParticles);
     }
 
-    if (typeof (tsParticles as any).init === "function") {
-      await (tsParticles as any).init();
-    }
+    await tsParticles.init();
 
     initialized = true;
   })().catch((error: unknown) => {
@@ -43,11 +41,11 @@ export async function initParticlesEngine(init?: ParticlesPluginRegistrar): Prom
   await initPromise;
 }
 
-export function isParticlesEngineInitialized(): boolean {
+function isParticlesEngineInitialized(): boolean {
   return initialized;
 }
 
-export async function waitForParticlesEngineInitialization(): Promise<void> {
+async function waitForParticlesEngineInitialization(): Promise<void> {
   await (initPromise ?? Promise.resolve());
 }
 
@@ -55,13 +53,24 @@ export async function waitForParticlesEngineInitialization(): Promise<void> {
  * Extend the jQuery result declaration with the example plugin.
  */
 type ParticlesResult = {
-  init: (options: ISourceOptions, callback: (container: Container | undefined) => Promise<void>) => void;
-  ajax: (jsonUrl: string, callback: (container: Container | undefined) => Promise<void>) => void;
+  load: (options: ISourceOptions) => Promise<Container | undefined>;
+  ajax: (jsonUrl: string) => Promise<Container | undefined>;
+};
+
+type StaticParticlesResult = {
+  init: (init?: ParticlesPluginRegistrar) => Promise<void>;
 };
 
 export type IParticlesProps = ISourceOptions;
 
 declare global {
+  interface JQueryStatic {
+    /**
+     * Extension of the example plugin.
+     */
+    particles: () => StaticParticlesResult;
+  }
+
   interface JQuery {
     /**
      * Extension of the example plugin.
@@ -73,45 +82,71 @@ declare global {
 $.fn.particles = function (): ParticlesResult {
   const baseId = "tsparticles";
 
-  const init = (options: IParticlesProps, callback: (container: Container | undefined) => Promise<void>): void => {
+  const load = (options: IParticlesProps): Promise<Container | undefined> => {
+    const promises: Promise<Container | undefined>[] = [];
+
     this.each((index, element) => {
       if (element.id === undefined) {
         element.id = baseId + Math.floor(getRandom() * 1000);
       }
 
-      void (async () => {
+      const p = (async () => {
+        // If the wrapper hasn't been initialized yet, attempt a safe
+        // default initialization (no registrar). This avoids throwing
+        // when consumers forget to call $.particles.init(...) while
+        // preserving the ability for apps to call init explicitly.
+        if (!initPromise) {
+          // start initialization (will set initPromise)
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          initParticlesEngine();
+        }
+
         await waitForParticlesEngineInitialization();
 
         if (!isParticlesEngineInitialized()) {
-          throw new Error("initParticlesEngine(...) must be called once before rendering jQuery particles.");
+          throw new Error("$.particles.init(...) must be called once before rendering jQuery particles.");
         }
 
-        const container = await tsParticles.load({ id: element.id, options });
-
-        await callback(container);
+        return await tsParticles.load({ id: element.id, options });
       })();
+
+      promises.push(p);
     });
+
+    return Promise.all(promises).then(list => (list.length > 0 ? list[0] : undefined));
   };
 
-  const ajax = (jsonUrl: string, callback: (container: Container | undefined) => Promise<void>): void => {
+  const ajax = (jsonUrl: string): Promise<Container | undefined> => {
+    const promises: Promise<Container | undefined>[] = [];
+
     this.each((index, element) => {
       if (element.id === undefined) {
         element.id = baseId + Math.floor(getRandom() * 1000);
       }
 
-      void (async () => {
+      const p = (async () => {
         await waitForParticlesEngineInitialization();
 
         if (!isParticlesEngineInitialized()) {
-          throw new Error("initParticlesEngine(...) must be called once before rendering jQuery particles.");
+          throw new Error("$.particles.init(...) must be called once before rendering jQuery particles.");
         }
 
-        const container = await tsParticles.load({ id: element.id, url: jsonUrl });
-
-        await callback(container);
+        return await tsParticles.load({ id: element.id, url: jsonUrl });
       })();
+
+      promises.push(p);
     });
+
+    return Promise.all(promises).then(list => (list.length > 0 ? list[0] : undefined));
   };
 
-  return { init, ajax };
+  return { load, ajax };
+};
+
+$.particles = function (): StaticParticlesResult {
+  // $.particles().init(callback?) initializes the engine; callback is the
+  // plugin registrar that receives the engine object and can register plugins.
+  const init = (init?: ParticlesPluginRegistrar) => initParticlesEngine(init);
+
+  return { init };
 };

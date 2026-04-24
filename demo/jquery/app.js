@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const stylus = require('stylus');
 const rateLimit = require("express-rate-limit");
 
+const path = require('path');
 const app = express();
 
 const limiter = rateLimit({
@@ -24,7 +25,14 @@ app.use("/fontawesome", express.static("./node_modules/@fortawesome/fontawesome-
 app.use("/jsoneditor", express.static("./node_modules/jsoneditor/dist"));
 app.use("/tsparticles", express.static("./node_modules/tsparticles"));
 app.use("/demo-configs", express.static("./node_modules/@tsparticles/configs"));
-app.use("/jquery-particles", express.static("./node_modules/@tsparticles/jquery/dist"));
+// Serve the local wrapper build so the demo uses the current jQuery wrapper
+// implementation in this repo (wrappers/jquery/dist). Use an absolute
+// resolved path so the mapping works regardless of the cwd used to start
+// the demo server.
+app.use(
+    "/jquery-particles",
+    express.static(path.resolve(__dirname, '..', '..', 'wrappers', 'jquery', 'dist'))
+);
 app.use("/preset-links", express.static("./node_modules/@tsparticles/preset-links"));
 app.use("/stats.ts", express.static("./node_modules/stats.ts/"));
 app.use("/jquery", express.static("./node_modules/jquery/dist/"));
