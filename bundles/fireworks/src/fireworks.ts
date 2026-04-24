@@ -291,17 +291,19 @@ function getOptions(options: IFireworkOptions, canvas?: HTMLCanvasElement): ISou
 }
 
 /**
+ * @param engine -
  * @param id -
  * @param sourceOptions -
  * @param canvas -
  * @returns the loaded instance
  */
 async function getFireworksInstance(
+  engine: Engine,
   id: string,
   sourceOptions: RecursivePartial<IFireworkOptions>,
   canvas?: HTMLCanvasElement,
 ): Promise<FireworksInstance | undefined> {
-  await initPlugins(tsParticles);
+  await initPlugins(engine);
 
   /* Check if an instance or a loading promise already exists */
   const existing = instances.get(id);
@@ -315,27 +317,28 @@ async function getFireworksInstance(
   }
 
   /* Create a locking promise */
-  const createPromise = (async (): Promise<FireworksInstance | undefined> => {
-    const options = new FireworkOptions();
-    options.load(sourceOptions);
+  const create = async (): Promise<FireworksInstance | undefined> => {
+      const options = new FireworkOptions();
+      options.load(sourceOptions);
 
-    const particlesOptions = getOptions(options, canvas),
-      // Load the container
-      container = await tsParticles.load({ id, element: canvas, options: particlesOptions });
+      const particlesOptions = getOptions(options, canvas),
+        // Load the container
+        container = await engine.load({ id, element: canvas, options: particlesOptions });
 
-    if (!container) {
-      instances.delete(id); // Clean up on failure
-      return;
-    }
+      if (!container) {
+        instances.delete(id); // Clean up on failure
+        return;
+      }
 
-    const { FireworksInstance } = await import("./FireworksInstance.js"),
-      instance = new FireworksInstance(container);
+      const { FireworksInstance } = await import("./FireworksInstance.js"),
+        instance = new FireworksInstance(container);
 
-    /* Swap the promise for the actual instance */
-    instances.set(id, instance);
+      /* Swap the promise for the actual instance */
+      instances.set(id, instance);
 
-    return instance;
-  })();
+      return instance;
+    },
+    createPromise = create();
 
   /* Set the promise in the map immediately to block concurrent calls */
   instances.set(id, createPromise);
@@ -362,7 +365,7 @@ export async function fireworks(
     options = idOrOptions ?? {};
   }
 
-  return getFireworksInstance(id, options);
+  return getFireworksInstance(tsParticles, id, options);
 }
 
 fireworks.create = async (
@@ -371,7 +374,7 @@ fireworks.create = async (
 ): Promise<FireworksInstance | undefined> => {
   const id = canvas.id || "fireworks";
 
-  return getFireworksInstance(id, options ?? {}, canvas);
+  return getFireworksInstance(tsParticles, id, options ?? {}, canvas);
 };
 
 fireworks.init = async (): Promise<void> => {
