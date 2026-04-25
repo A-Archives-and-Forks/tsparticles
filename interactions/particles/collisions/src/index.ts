@@ -1,5 +1,7 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
+import { Collider } from "./Collider.js";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { OverlapPlugin } from "./OverlapPlugin.js";
 
 declare const __VERSION__: string;
 
@@ -9,23 +11,13 @@ declare const __VERSION__: string;
 export async function loadParticlesCollisionsInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const [
-      { ensureInteractivityPluginLoaded },
-      { OverlapPlugin },
-    ] = await Promise.all([
-      import("@tsparticles/plugin-interactivity"),
-      import("./OverlapPlugin.js"),
-    ]);
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
     e.pluginManager.addPlugin(new OverlapPlugin());
 
-    e.pluginManager.addInteractor?.("particlesCollisions", async container => {
-      const { Collider } = await import("./Collider.js");
-
-      return new Collider(container);
+    e.pluginManager.addInteractor?.("particlesCollisions", container => {
+      return Promise.resolve(new Collider(container));
     });
   });
 }

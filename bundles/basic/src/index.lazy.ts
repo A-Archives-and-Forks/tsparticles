@@ -30,7 +30,7 @@ export async function loadBasic(engine: Engine): Promise<void> {
       import("@tsparticles/plugin-hex-color"),
       import("@tsparticles/plugin-hsl-color"),
       import("@tsparticles/plugin-rgb-color"),
-      import("@tsparticles/plugin-move"),
+      import("@tsparticles/plugin-move/lazy"),
 
       import("@tsparticles/shape-circle"),
 

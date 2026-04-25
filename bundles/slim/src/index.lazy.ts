@@ -50,7 +50,7 @@ export async function loadSlim(engine: Engine): Promise<void> {
         import("@tsparticles/basic/lazy"),
 
         import("@tsparticles/interaction-external-parallax"),
-        import("@tsparticles/interaction-external-attract"),
+        import("@tsparticles/interaction-external-attract/lazy"),
         import("@tsparticles/interaction-external-bounce"),
         import("@tsparticles/interaction-external-bubble"),
         import("@tsparticles/interaction-external-connect"),
@@ -62,11 +62,11 @@ export async function loadSlim(engine: Engine): Promise<void> {
         import("@tsparticles/interaction-external-repulse"),
         import("@tsparticles/interaction-external-slow"),
         import("@tsparticles/interaction-particles-attract"),
-        import("@tsparticles/interaction-particles-collisions"),
+        import("@tsparticles/interaction-particles-collisions/lazy"),
         import("@tsparticles/interaction-particles-links"),
 
         import("@tsparticles/plugin-easing-quad"),
-        import("@tsparticles/plugin-interactivity"),
+        import("@tsparticles/plugin-interactivity/lazy"),
 
         import("@tsparticles/shape-emoji"),
         import("@tsparticles/shape-image"),

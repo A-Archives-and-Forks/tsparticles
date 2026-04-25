@@ -50,7 +50,7 @@ export class TextDrawer implements IShapeDrawer<TextParticle> {
       return;
     }
 
-    const character = particle.shapeData as ITextShape | undefined;
+    const character = particle.shapeData;
 
     if (character === undefined) {
       return;

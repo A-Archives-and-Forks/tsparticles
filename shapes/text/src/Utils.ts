@@ -19,7 +19,7 @@ const firstIndex = 0,
  */
 export function drawText(data: IShapeDrawData<TextParticle>): void {
   const { context, particle, fill, stroke, radius, opacity } = data,
-    character = particle.shapeData as ITextShape | undefined;
+    character = particle.shapeData;
 
   if (!character) {
     return;

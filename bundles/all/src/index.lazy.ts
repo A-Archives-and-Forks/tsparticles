@@ -148,7 +148,7 @@ export async function loadAll(engine: Engine): Promise<void> {
         import("@tsparticles/interaction-external-cannon"),
         import("@tsparticles/interaction-external-particle"),
         import("@tsparticles/interaction-external-pop"),
-        import("@tsparticles/interaction-light"),
+        import("@tsparticles/interaction-light/lazy"),
         import("@tsparticles/interaction-particles-repulse"),
 
         import("@tsparticles/updater-gradient"),

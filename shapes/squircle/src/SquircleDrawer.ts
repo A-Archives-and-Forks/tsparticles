@@ -9,7 +9,7 @@ export class SquircleDrawer implements IShapeDrawer<SquircleParticle> {
   }
 
   particleInit(_container: Container, particle: SquircleParticle): void {
-    const shapeData = particle.shapeData as ISquircleData | undefined;
+    const shapeData = particle.shapeData;
 
     particle.squircleExponent = getRangeValue(shapeData?.exponent ?? defaultExponent);
     particle.squircleSteps = getRangeValue(shapeData?.steps ?? defaultSteps);

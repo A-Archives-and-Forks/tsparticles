@@ -1,4 +1,15 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadConfettiPalette } from "@tsparticles/palette-confetti";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { loadLifeUpdater } from "@tsparticles/updater-life";
+import { loadMotionPlugin } from "@tsparticles/plugin-motion";
+import { loadRollUpdater } from "@tsparticles/updater-roll";
+import { loadRotateUpdater } from "@tsparticles/updater-rotate";
+import { loadSquareShape } from "@tsparticles/shape-square";
+import { loadTiltUpdater } from "@tsparticles/updater-tilt";
+import { loadWobbleUpdater } from "@tsparticles/updater-wobble";
+import { options } from "./options.js";
 
 const presetName = "confetti";
 
@@ -7,32 +18,6 @@ const presetName = "confetti";
  */
 export async function loadConfettiPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadBasic },
-      { loadEmittersPluginSimple },
-      { loadMotionPlugin },
-      { loadRotateUpdater },
-      { loadSquareShape },
-      { loadTiltUpdater },
-      { loadWobbleUpdater },
-      { loadLifeUpdater },
-      { loadRollUpdater },
-      { loadConfettiPalette },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("@tsparticles/plugin-motion"),
-      import("@tsparticles/updater-rotate"),
-      import("@tsparticles/shape-square"),
-      import("@tsparticles/updater-tilt"),
-      import("@tsparticles/updater-wobble"),
-      import("@tsparticles/updater-life"),
-      import("@tsparticles/updater-roll"),
-      import("@tsparticles/palette-confetti"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadBasic(e),
       loadConfettiPalette(e),

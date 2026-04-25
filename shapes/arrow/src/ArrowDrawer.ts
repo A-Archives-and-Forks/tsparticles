@@ -13,7 +13,7 @@ export class ArrowDrawer implements IShapeDrawer<ArrowParticle> {
   }
 
   particleInit(_container: Container, particle: ArrowParticle): void {
-    const shapeData = particle.shapeData as IArrowData | undefined;
+    const shapeData = particle.shapeData;
 
     particle.heightFactor = getRangeValue(shapeData?.heightFactor ?? defaultHeightFactor);
     particle.headWidthFactor = getRangeValue(shapeData?.headWidthFactor ?? defaultHeadWidthFactor);

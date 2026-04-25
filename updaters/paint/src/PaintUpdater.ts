@@ -32,7 +32,7 @@ export class PaintUpdater implements IParticleUpdater {
       options = particle.options,
       paint = itemFromSingleOrMultiple(options.paint, particle.id, options.reduceDuplicates),
       color = (paint as { color?: unknown } | undefined)?.color,
-      paintColor = (color ?? undefined) as SingleOrMultiple<string> | RecursivePartial<IAnimatableColor> | undefined,
+      paintColor = color ?? undefined,
       fill = paint?.fill,
       stroke = paint?.stroke;
 

@@ -256,7 +256,7 @@ function getState(particle: Particle, minInterval: number, maxInterval: number):
  */
 export function drawMatrix(data: IShapeDrawData): void {
   const { context, radius, particle, delta, fill, stroke } = data,
-    shapeData = particle.shapeData as IMatrixOptions | undefined,
+    shapeData = particle.shapeData,
     minInterval = getRangeMin(shapeData?.interval ?? defaultMinInterval),
     maxInterval = getRangeMax(shapeData?.interval ?? defaultMaxInterval),
     state = getState(particle, minInterval, maxInterval);
