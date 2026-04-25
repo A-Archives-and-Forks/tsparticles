@@ -141,9 +141,9 @@ export async function loadAll(engine: Engine): Promise<void> {
         import("@tsparticles/plugin-trail"),
         import("@tsparticles/plugin-zoom"),
 
-        import("@tsparticles/plugin-export-image"),
-        import("@tsparticles/plugin-export-json"),
-        import("@tsparticles/plugin-export-video"),
+        import("@tsparticles/plugin-export-image/lazy"),
+        import("@tsparticles/plugin-export-json/lazy"),
+        import("@tsparticles/plugin-export-video/lazy"),
 
         import("@tsparticles/interaction-external-cannon"),
         import("@tsparticles/interaction-external-particle"),
