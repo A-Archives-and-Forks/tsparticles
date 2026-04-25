@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { HslColorManager } from "./HslColorManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,9 +10,7 @@ declare const __VERSION__: string;
 export async function loadHslColorPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { HslColorManager } = await import("./HslColorManager.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addColorManager("hsl", new HslColorManager());
   });
 }

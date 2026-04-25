@@ -1,5 +1,6 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { Popper } from "./Popper.js";
 
 declare const __VERSION__: string;
 
@@ -9,15 +10,11 @@ declare const __VERSION__: string;
 export async function loadExternalPopInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
-    e.pluginManager.addInteractor?.("externalPop", async container => {
-      const { Popper } = await import("./Popper.js");
-
-      return new Popper(container);
+    e.pluginManager.addInteractor?.("externalPop", container => {
+      return Promise.resolve(new Popper(container));
     });
   });
 }

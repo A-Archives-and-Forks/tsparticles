@@ -5,21 +5,26 @@
   "defaultBase": "main",
   "release": {
     "projectsRelationship": "fixed",
+    "projects": ["*"],
     "version": {
       "conventionalCommits": true,
-      "generatorOptions": {
-        "fallbackCurrentVersionResolver": "disk"
+      "updateDependents": "always",
+      "git": {
+        "commit": true,
+        "commitMessage": "chore(release): published new version",
+        "push": true,
+        "tag": true,
+        "stageChanges": true
       }
     },
     "changelog": {
       "workspaceChangelog": true,
-      "projectChangelogs": false
-    },
-    "git": {
-      "commit": true,
-      "commitMessage": "chore(release): published new version",
-      "tag": true,
-      "stageChanges": true
+      "projectChangelogs": false,
+      "git": {
+        "commit": true,
+        "push": true,
+        "stageChanges": true
+      }
     }
   },
   "targetDefaults": {

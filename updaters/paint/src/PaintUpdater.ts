@@ -1,13 +1,10 @@
 import {
   AnimatableColor,
   type Container,
-  type IAnimatableColor,
   type IDelta,
   type IParticleUpdater,
   type Particle,
   type PluginManager,
-  type RecursivePartial,
-  type SingleOrMultiple,
   getHslAnimationFromHsl,
   getRangeValue,
   itemFromSingleOrMultiple,

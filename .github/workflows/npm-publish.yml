@@ -94,6 +94,7 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NX_CLOUD_DISTRIBUTED_EXECUTION: false
 
       # 🧠 Create release (raw GitHub notes)
       - name: Create Release (raw)

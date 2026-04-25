@@ -1,5 +1,6 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { Slower } from "./Slower.js";
 
 declare const __VERSION__: string;
 
@@ -9,15 +10,11 @@ declare const __VERSION__: string;
 export async function loadExternalSlowInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
-    e.pluginManager.addInteractor?.("externalSlow", async container => {
-      const { Slower } = await import("./Slower.js");
-
-      return new Slower(container);
+    e.pluginManager.addInteractor?.("externalSlow", container => {
+      return Promise.resolve(new Slower(container));
     });
   });
 }

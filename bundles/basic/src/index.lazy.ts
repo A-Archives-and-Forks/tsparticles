@@ -22,22 +22,22 @@ export async function loadBasic(engine: Engine): Promise<void> {
 
       { loadCircleShape },
 
-      { loadPaintUpdater },
       { loadOpacityUpdater },
       { loadOutModesUpdater },
+      { loadPaintUpdater },
       { loadSizeUpdater },
     ] = await Promise.all([
-      import("@tsparticles/plugin-hex-color"),
-      import("@tsparticles/plugin-hsl-color"),
-      import("@tsparticles/plugin-rgb-color"),
+      import("@tsparticles/plugin-hex-color/lazy"),
+      import("@tsparticles/plugin-hsl-color/lazy"),
+      import("@tsparticles/plugin-rgb-color/lazy"),
       import("@tsparticles/plugin-move/lazy"),
 
-      import("@tsparticles/shape-circle"),
+      import("@tsparticles/shape-circle/lazy"),
 
-      import("@tsparticles/updater-paint"),
-      import("@tsparticles/updater-opacity"),
-      import("@tsparticles/updater-out-modes"),
-      import("@tsparticles/updater-size"),
+      import("@tsparticles/updater-opacity/lazy"),
+      import("@tsparticles/updater-out-modes/lazy"),
+      import("@tsparticles/updater-paint/lazy"),
+      import("@tsparticles/updater-size/lazy"),
     ]);
 
     await Promise.all([
