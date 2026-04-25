@@ -65,7 +65,7 @@ export async function loadSlim(engine: Engine): Promise<void> {
         import("@tsparticles/interaction-particles-collisions/lazy"),
         import("@tsparticles/interaction-particles-links/lazy"),
 
-        import("@tsparticles/plugin-easing-quad"),
+        import("@tsparticles/plugin-easing-quad/lazy"),
         import("@tsparticles/plugin-interactivity/lazy"),
 
         import("@tsparticles/shape-emoji"),

@@ -1,5 +1,4 @@
-import { type Engine } from "@tsparticles/engine";
-import { easingsFunctions } from "./easingsFunctions.js";
+import { type Engine } from "@tsparticles/engine/lazy";
 
 declare const __VERSION__: string;
 
@@ -9,7 +8,9 @@ declare const __VERSION__: string;
 export async function loadEasingQuadPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(e => {
+  await engine.pluginManager.register(async e => {
+    const { easingsFunctions } = await import("./easingsFunctions.js");
+
     for (const [easing, easingFn] of easingsFunctions) {
       e.pluginManager.addEasing(easing, easingFn);
     }
