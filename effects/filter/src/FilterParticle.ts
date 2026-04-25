@@ -1,6 +1,8 @@
+import type { IFilterData } from "./IFilterData.js";
 import type { Particle } from "@tsparticles/engine";
 
 export type FilterParticle = Particle & {
+  effectData?: IFilterData;
   filterBlur?: number | string;
   filterBrightness?: number;
   filterContrast?: number;

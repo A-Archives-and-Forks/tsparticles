@@ -1,14 +1,15 @@
-import type { ConfettiOptions } from "./ConfettiOptions.js";
+import { type Container, type Engine, type ISourceOptions, millisecondsToSeconds } from "@tsparticles/engine";
+import { ConfettiOptions } from "./ConfettiOptions.js";
 import type { ConfettiParams } from "./ConfettiParams.js";
 import type { EmitterContainer } from "@tsparticles/plugin-emitters";
-import type { ISourceOptions } from "@tsparticles/engine";
 
 const defaultGravity = 9.81,
   sizeFactor = 5,
   speedFactor = 3,
   decayOffset = 1,
   disableRotate = 0,
-  disableTilt = 0;
+  disableTilt = 0,
+  ids = new Map<string, Container | Promise<Container | undefined> | undefined>();
 
 /**
  * @param container -
@@ -272,4 +273,62 @@ export function convertOptions(
       },
     },
   };
+}
+
+/**
+ * @param engine - the engine object
+ * @param params - the parameters object used for the confetti animation
+ * @returns the tsParticles Container for more customizations
+ */
+export async function setConfetti(engine: Engine, params: ConfettiParams): Promise<Container | undefined> {
+  const actualOptions = new ConfettiOptions();
+
+  actualOptions.load(params.options);
+
+  const fpsLimit = 120,
+    fpsLimitFactor = 3.6,
+    opacitySpeed = (actualOptions.ticks * millisecondsToSeconds) / (fpsLimitFactor * millisecondsToSeconds * fpsLimit);
+
+  /* Check if there is already an entry for this ID */
+  let containerOrPromise = ids.get(params.id);
+
+  /* If it's a Promise, another call is currently initializing this container. Wait for it. */
+  if (containerOrPromise instanceof Promise) {
+    await containerOrPromise;
+    containerOrPromise = ids.get(params.id);
+  }
+
+  const container = containerOrPromise as Container | undefined;
+
+  /* If the container exists and is active, we just add a new emitter (fast path) */
+  if (container && !container.destroyed) {
+    const alias = container as EmitterContainer;
+
+    if ("addEmitter" in alias) {
+      await addEmitter(alias, actualOptions, opacitySpeed);
+
+      return container;
+    }
+  }
+
+  /* If no container exists, we create a initialization promise to lock other calls */
+  const create = async (): Promise<Container | undefined> => {
+      const particlesOptions = convertOptions(actualOptions, params, opacitySpeed),
+        newContainer = await engine.load({
+          id: params.id,
+          element: params.canvas,
+          options: particlesOptions,
+        });
+
+      /* Replace the promise with the actual container in the map */
+      ids.set(params.id, newContainer);
+
+      return newContainer;
+    },
+    createPromise = create();
+
+  /* Set the promise in the map immediately to block concurrent calls */
+  ids.set(params.id, createPromise);
+
+  return createPromise;
 }

@@ -5,6 +5,8 @@ import { type Container, type Engine } from "@tsparticles/engine";
 import type { IParticlesJS } from "./VincentGarreau/IParticlesJS.js";
 import { MBParticles } from "./marcbruederlin/Particles.js";
 import { initParticlesJS } from "./VincentGarreau/particles.js";
+import { loadFull } from "tsparticles";
+import { loadResponsivePlugin } from "@tsparticles/plugin-responsive";
 
 declare const __VERSION__: string;
 
@@ -35,17 +37,7 @@ const initPjs = async (engine: Engine): Promise<void> => {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
-    const [
-      { loadFull },
-      { loadResponsivePlugin },
-    ] = await Promise.all([
-      import("tsparticles"),
-      import("@tsparticles/plugin-responsive"),
-    ]);
-
-    await loadFull(e);
-
-    await loadResponsivePlugin(e);
+    await Promise.all([loadFull(e), loadResponsivePlugin(e)]);
   });
 
   // eslint-disable-next-line @typescript-eslint/no-deprecated

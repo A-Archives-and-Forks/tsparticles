@@ -33,7 +33,16 @@ interface TrailStep {
   };
 }
 
+interface ITrailData extends IShapeValues {
+  fade?: boolean;
+  length?: RangeValue;
+  maxWidth?: RangeValue;
+  minWidth?: RangeValue;
+  transform?: boolean;
+}
+
 type TrailParticle = Particle & {
+  effectData?: ITrailData;
   trail?: TrailStep[];
   trailFade?: boolean;
   trailLength?: number;
@@ -41,14 +50,6 @@ type TrailParticle = Particle & {
   trailMinWidth?: number;
   trailTransform?: boolean;
 };
-
-interface ITrailData extends IShapeValues {
-  fade: boolean;
-  length: RangeValue;
-  maxWidth: RangeValue;
-  minWidth: RangeValue;
-  transform: boolean;
-}
 
 const defaultTransform = {
   a: 1,
@@ -173,7 +174,7 @@ export class TrailDrawer implements IEffectDrawer<TrailParticle> {
   particleInit(container: Container, particle: TrailParticle): void {
     particle.trail = [];
 
-    const effectData = particle.effectData as ITrailData | undefined;
+    const effectData = particle.effectData;
 
     particle.trailFade = effectData?.fade ?? true;
     particle.trailLength = getRangeValue(effectData?.length ?? defaultLength) * container.retina.pixelRatio;

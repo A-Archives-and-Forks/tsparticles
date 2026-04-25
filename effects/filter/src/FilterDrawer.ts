@@ -1,6 +1,5 @@
 import { type Container, type IEffectDrawer, type IShapeDrawData, isNull } from "@tsparticles/engine";
 import type { FilterParticle } from "./FilterParticle.js";
-import type { IFilterData } from "./IFilterData.js";
 
 export class FilterDrawer implements IEffectDrawer<FilterParticle> {
   drawAfter(data: IShapeDrawData<FilterParticle>): void {
@@ -43,7 +42,7 @@ export class FilterDrawer implements IEffectDrawer<FilterParticle> {
   }
 
   particleInit(_container: Container, particle: FilterParticle): void {
-    const effectData = particle.effectData as IFilterData | undefined;
+    const effectData = particle.effectData;
 
     if (!effectData) {
       return;

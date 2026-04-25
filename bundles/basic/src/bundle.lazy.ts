@@ -1,2 +1,2 @@
-export * from "@tsparticles/engine";
+export * from "@tsparticles/engine/lazy";
 export { loadBasic } from "./index.lazy.js";

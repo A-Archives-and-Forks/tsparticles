@@ -1,4 +1,17 @@
 import { type Engine } from "@tsparticles/engine";
+import { loadAbsorbersPlugin } from "@tsparticles/plugin-absorbers";
+import { loadDestroyUpdater } from "@tsparticles/updater-destroy";
+import { loadEmittersPlugin } from "@tsparticles/plugin-emitters";
+import { loadEmittersShapeCircle } from "@tsparticles/plugin-emitters-shape-circle";
+import { loadEmittersShapeSquare } from "@tsparticles/plugin-emitters-shape-square";
+import { loadExternalDragInteraction } from "@tsparticles/interaction-external-drag";
+import { loadExternalTrailInteraction } from "@tsparticles/interaction-external-trail";
+import { loadRollUpdater } from "@tsparticles/updater-roll";
+import { loadSlim } from "@tsparticles/slim";
+import { loadTextShape } from "@tsparticles/shape-text";
+import { loadTiltUpdater } from "@tsparticles/updater-tilt";
+import { loadTwinkleUpdater } from "@tsparticles/updater-twinkle";
+import { loadWobbleUpdater } from "@tsparticles/updater-wobble";
 
 declare const __VERSION__: string;
 
@@ -14,40 +27,7 @@ export async function loadFull(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
-    const [
-        { loadSlim },
-        { loadExternalDragInteraction },
-        { loadExternalTrailInteraction },
-        { loadAbsorbersPlugin },
-        { loadEmittersPlugin },
-        { loadEmittersShapeCircle },
-        { loadEmittersShapeSquare },
-        { loadTextShape },
-        { loadDestroyUpdater },
-        { loadRollUpdater },
-        { loadTiltUpdater },
-        { loadTwinkleUpdater },
-        { loadWobbleUpdater },
-      ] = await Promise.all([
-        import("@tsparticles/slim"),
-
-        import("@tsparticles/interaction-external-drag"),
-        import("@tsparticles/interaction-external-trail"),
-
-        import("@tsparticles/plugin-absorbers"),
-        import("@tsparticles/plugin-emitters"),
-        import("@tsparticles/plugin-emitters-shape-circle"),
-        import("@tsparticles/plugin-emitters-shape-square"),
-
-        import("@tsparticles/shape-text"),
-
-        import("@tsparticles/updater-destroy"),
-        import("@tsparticles/updater-roll"),
-        import("@tsparticles/updater-tilt"),
-        import("@tsparticles/updater-twinkle"),
-        import("@tsparticles/updater-wobble"),
-      ]),
-      loadEmittersPluginBundle = async (e: Engine): Promise<void> => {
+    const loadEmittersPluginBundle = async (e: Engine): Promise<void> => {
         await loadEmittersPlugin(e);
 
         await Promise.all([

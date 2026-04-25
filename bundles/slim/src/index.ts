@@ -1,4 +1,31 @@
 import { type Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadEasingQuadPlugin } from "@tsparticles/plugin-easing-quad";
+import { loadEmojiShape } from "@tsparticles/shape-emoji";
+import { loadExternalAttractInteraction } from "@tsparticles/interaction-external-attract";
+import { loadExternalBounceInteraction } from "@tsparticles/interaction-external-bounce";
+import { loadExternalBubbleInteraction } from "@tsparticles/interaction-external-bubble";
+import { loadExternalConnectInteraction } from "@tsparticles/interaction-external-connect";
+import { loadExternalDestroyInteraction } from "@tsparticles/interaction-external-destroy";
+import { loadExternalGrabInteraction } from "@tsparticles/interaction-external-grab";
+import { loadExternalParallaxInteraction } from "@tsparticles/interaction-external-parallax";
+import { loadExternalPauseInteraction } from "@tsparticles/interaction-external-pause";
+import { loadExternalPushInteraction } from "@tsparticles/interaction-external-push";
+import { loadExternalRemoveInteraction } from "@tsparticles/interaction-external-remove";
+import { loadExternalRepulseInteraction } from "@tsparticles/interaction-external-repulse";
+import { loadExternalSlowInteraction } from "@tsparticles/interaction-external-slow";
+import { loadImageShape } from "@tsparticles/shape-image";
+import { loadInteractivityPlugin } from "@tsparticles/plugin-interactivity";
+import { loadLifeUpdater } from "@tsparticles/updater-life";
+import { loadLineShape } from "@tsparticles/shape-line";
+import { loadPaintUpdater } from "@tsparticles/updater-paint";
+import { loadParticlesAttractInteraction } from "@tsparticles/interaction-particles-attract";
+import { loadParticlesCollisionsInteraction } from "@tsparticles/interaction-particles-collisions";
+import { loadParticlesLinksInteraction } from "@tsparticles/interaction-particles-links";
+import { loadPolygonShape } from "@tsparticles/shape-polygon";
+import { loadRotateUpdater } from "@tsparticles/updater-rotate";
+import { loadSquareShape } from "@tsparticles/shape-square";
+import { loadStarShape } from "@tsparticles/shape-star";
 
 declare const __VERSION__: string;
 
@@ -14,93 +41,28 @@ export async function loadSlim(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
-    const [
-        { loadBasic },
+    const loadInteractivityForSlim = async (e: Engine): Promise<void> => {
+      await loadInteractivityPlugin(e);
 
-        { loadExternalParallaxInteraction },
-        { loadExternalAttractInteraction },
-        { loadExternalBounceInteraction },
-        { loadExternalBubbleInteraction },
-        { loadExternalConnectInteraction },
-        { loadExternalDestroyInteraction },
-        { loadExternalGrabInteraction },
-        { loadExternalPauseInteraction },
-        { loadExternalPushInteraction },
-        { loadExternalRemoveInteraction },
-        { loadExternalRepulseInteraction },
-        { loadExternalSlowInteraction },
-        { loadParticlesAttractInteraction },
-        { loadParticlesCollisionsInteraction },
-        { loadParticlesLinksInteraction },
+      await Promise.all([
+        loadExternalParallaxInteraction(e),
+        loadExternalAttractInteraction(e),
+        loadExternalBounceInteraction(e),
+        loadExternalBubbleInteraction(e),
+        loadExternalConnectInteraction(e),
+        loadExternalDestroyInteraction(e),
+        loadExternalGrabInteraction(e),
+        loadExternalPauseInteraction(e),
+        loadExternalPushInteraction(e),
+        loadExternalRemoveInteraction(e),
+        loadExternalRepulseInteraction(e),
+        loadExternalSlowInteraction(e),
 
-        { loadEasingQuadPlugin },
-        { loadInteractivityPlugin },
-
-        { loadEmojiShape },
-        { loadImageShape },
-        { loadLineShape },
-        { loadPolygonShape },
-        { loadSquareShape },
-        { loadStarShape },
-
-        { loadLifeUpdater },
-        { loadPaintUpdater },
-        { loadRotateUpdater },
-      ] = await Promise.all([
-        import("@tsparticles/basic"),
-
-        import("@tsparticles/interaction-external-parallax"),
-        import("@tsparticles/interaction-external-attract"),
-        import("@tsparticles/interaction-external-bounce"),
-        import("@tsparticles/interaction-external-bubble"),
-        import("@tsparticles/interaction-external-connect"),
-        import("@tsparticles/interaction-external-destroy"),
-        import("@tsparticles/interaction-external-grab"),
-        import("@tsparticles/interaction-external-pause"),
-        import("@tsparticles/interaction-external-push"),
-        import("@tsparticles/interaction-external-remove"),
-        import("@tsparticles/interaction-external-repulse"),
-        import("@tsparticles/interaction-external-slow"),
-        import("@tsparticles/interaction-particles-attract"),
-        import("@tsparticles/interaction-particles-collisions"),
-        import("@tsparticles/interaction-particles-links"),
-
-        import("@tsparticles/plugin-easing-quad"),
-        import("@tsparticles/plugin-interactivity"),
-
-        import("@tsparticles/shape-emoji"),
-        import("@tsparticles/shape-image"),
-        import("@tsparticles/shape-line"),
-        import("@tsparticles/shape-polygon"),
-        import("@tsparticles/shape-square"),
-        import("@tsparticles/shape-star"),
-
-        import("@tsparticles/updater-life"),
-        import("@tsparticles/updater-paint"),
-        import("@tsparticles/updater-rotate"),
-      ]),
-      loadInteractivityForSlim = async (e: Engine): Promise<void> => {
-        await loadInteractivityPlugin(e);
-
-        await Promise.all([
-          loadExternalParallaxInteraction(e),
-          loadExternalAttractInteraction(e),
-          loadExternalBounceInteraction(e),
-          loadExternalBubbleInteraction(e),
-          loadExternalConnectInteraction(e),
-          loadExternalDestroyInteraction(e),
-          loadExternalGrabInteraction(e),
-          loadExternalPauseInteraction(e),
-          loadExternalPushInteraction(e),
-          loadExternalRemoveInteraction(e),
-          loadExternalRepulseInteraction(e),
-          loadExternalSlowInteraction(e),
-
-          loadParticlesAttractInteraction(e),
-          loadParticlesCollisionsInteraction(e),
-          loadParticlesLinksInteraction(e),
-        ]);
-      };
+        loadParticlesAttractInteraction(e),
+        loadParticlesCollisionsInteraction(e),
+        loadParticlesLinksInteraction(e),
+      ]);
+    };
 
     await Promise.all([
       loadBasic(e),
