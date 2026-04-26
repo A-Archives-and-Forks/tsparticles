@@ -1,4 +1,8 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadInteractivityPlugin } from "@tsparticles/plugin-interactivity";
+import { loadParticlesLinksInteraction } from "@tsparticles/interaction-particles-links";
+import { options } from "./options.js";
 
 const presetName = "links";
 
@@ -7,14 +11,6 @@ const presetName = "links";
  */
 export async function loadLinksPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [{ loadBasic }, { loadParticlesLinksInteraction }, { loadInteractivityPlugin }, { options }] =
-      await Promise.all([
-        import("@tsparticles/basic"),
-        import("@tsparticles/interaction-particles-links"),
-        import("@tsparticles/plugin-interactivity"),
-        import("./options.js"),
-      ]);
-
     await Promise.all([
       loadBasic(e),
       (async (): Promise<void> => {

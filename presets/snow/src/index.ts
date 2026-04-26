@@ -1,4 +1,8 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadSnowfallPalette } from "@tsparticles/palette-snowfall";
+import { loadWobbleUpdater } from "@tsparticles/updater-wobble";
+import { options } from "./options.js";
 
 const presetName = "snow";
 
@@ -7,13 +11,6 @@ const presetName = "snow";
  */
 export async function loadSnowPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [{ loadBasic }, { loadWobbleUpdater }, { loadSnowfallPalette }, { options }] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/updater-wobble"),
-      import("@tsparticles/palette-snowfall"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([loadBasic(e), loadWobbleUpdater(e), loadSnowfallPalette(e)]);
 
     e.pluginManager.addPreset(presetName, options);

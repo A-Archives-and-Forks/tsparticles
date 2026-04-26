@@ -1,4 +1,6 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { options } from "./options.js";
 
 const presetName = "stars";
 
@@ -7,8 +9,6 @@ const presetName = "stars";
  */
 export async function loadStarsPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [{ loadBasic }, { options }] = await Promise.all([import("@tsparticles/basic"), import("./options.js")]);
-
     await loadBasic(e);
 
     e.pluginManager.addPreset(presetName, options);

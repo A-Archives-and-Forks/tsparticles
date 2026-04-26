@@ -78,6 +78,8 @@ export class OutOutMode implements IOutModeManager {
         particle.direction = Math.atan2(-newDy, -newDx);
         particle.velocity.angle = particle.direction;
 
+        particle.justWarped = true;
+
         break;
       }
       default: {
@@ -110,6 +112,8 @@ export class OutOutMode implements IOutModeManager {
               particle.velocity.angle = particle.direction;
             }
 
+            particle.justWarped = true;
+
             break;
           }
 
@@ -133,6 +137,8 @@ export class OutOutMode implements IOutModeManager {
                 particle.position.y = getRandom() * canvasSize.height;
                 particle.initialPosition.y = particle.position.y;
               }
+
+              particle.justWarped = true;
             } else if (direction === OutModeDirection.left && nextBounds.right < -particle.offset.x) {
               particle.position.x = newPos.right;
               particle.initialPosition.x = particle.position.x;
@@ -141,6 +147,8 @@ export class OutOutMode implements IOutModeManager {
                 particle.position.y = getRandom() * canvasSize.height;
                 particle.initialPosition.y = particle.position.y;
               }
+
+              particle.justWarped = true;
             }
 
             if (direction === OutModeDirection.bottom && nextBounds.top > canvasSize.height + particle.offset.y) {
@@ -151,6 +159,8 @@ export class OutOutMode implements IOutModeManager {
 
               particle.position.y = newPos.top;
               particle.initialPosition.y = particle.position.y;
+
+              particle.justWarped = true;
             } else if (direction === OutModeDirection.top && nextBounds.bottom < -particle.offset.y) {
               if (!warp) {
                 particle.position.x = getRandom() * canvasSize.width;
@@ -159,6 +169,8 @@ export class OutOutMode implements IOutModeManager {
 
               particle.position.y = newPos.bottom;
               particle.initialPosition.y = particle.position.y;
+
+              particle.justWarped = true;
             }
 
             break;

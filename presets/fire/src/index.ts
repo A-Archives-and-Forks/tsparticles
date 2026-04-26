@@ -1,4 +1,8 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadExternalPushInteraction } from "@tsparticles/interaction-external-push";
+import { loadInteractivityPlugin } from "@tsparticles/plugin-interactivity";
+import { options } from "./options.js";
 
 const presetName = "fire";
 
@@ -7,14 +11,6 @@ const presetName = "fire";
  */
 export async function loadFirePreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [{ loadBasic }, { loadInteractivityPlugin }, { loadExternalPushInteraction }, { options }] =
-      await Promise.all([
-        import("@tsparticles/basic"),
-        import("@tsparticles/plugin-interactivity"),
-        import("@tsparticles/interaction-external-push"),
-        import("./options.js"),
-      ]);
-
     await Promise.all([
       loadBasic(e),
       (async (): Promise<void> => {

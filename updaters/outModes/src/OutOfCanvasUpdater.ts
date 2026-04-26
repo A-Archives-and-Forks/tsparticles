@@ -47,6 +47,8 @@ export class OutOfCanvasUpdater implements IParticleUpdater {
   update(particle: Particle, delta: IDelta): void {
     const outModes = particle.options.move.outModes;
 
+    particle.justWarped = false;
+
     this._updateOutMode(particle, delta, outModes.bottom ?? outModes.default, OutModeDirection.bottom);
     this._updateOutMode(particle, delta, outModes.left ?? outModes.default, OutModeDirection.left);
     this._updateOutMode(particle, delta, outModes.right ?? outModes.default, OutModeDirection.right);

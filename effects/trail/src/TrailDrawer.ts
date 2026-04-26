@@ -8,7 +8,6 @@ import {
   type RangeValue,
   defaultAlpha,
   double,
-  getDistances,
   getRangeValue,
   half,
   originPoint,
@@ -23,6 +22,7 @@ const minTrailLength = 3,
   loopTrailLengthMinIndex = 0;
 
 interface TrailStep {
+  break: boolean;
   color: string | CanvasGradient | CanvasPattern;
   position: ICoordinates;
   transformData?: {
@@ -80,6 +80,7 @@ export class TrailDrawer implements IEffectDrawer<TrailParticle> {
       pathLength = particle.trailLength * drawScale + drawRadius;
 
     trail.push({
+      break: particle.justWarped,
       color: context.fillStyle || context.strokeStyle,
       position: {
         x: currentPos.x,
@@ -98,11 +99,7 @@ export class TrailDrawer implements IEffectDrawer<TrailParticle> {
       trail.splice(firstIndex, trail.length - pathLengthFloor);
     }
 
-    const trailLength = Math.min(trail.length, pathLength),
-      canvasSize = {
-        width: container.canvas.size.width * drawScale + diameter,
-        height: container.canvas.size.height * drawScale + diameter,
-      };
+    const trailLength = Math.min(trail.length, pathLength);
 
     context.save();
 
@@ -121,20 +118,9 @@ export class TrailDrawer implements IEffectDrawer<TrailParticle> {
       const previousPosition = previousStep.position,
         position = step.position,
         nextPosition = nextStep.position,
-        stepTransformData = particle.trailTransform ? (step.transformData ?? defaultTransform) : defaultTransform,
-        { distance: previousDistance } = getDistances(previousPosition, position),
-        { distance: nextDistance } = getDistances(position, nextPosition);
+        stepTransformData = particle.trailTransform ? (step.transformData ?? defaultTransform) : defaultTransform;
 
-      if (previousDistance > pathLength * double || nextDistance > pathLength * double) {
-        continue;
-      }
-
-      if (
-        Math.abs(previousPosition.x - position.x) > canvasSize.width * half ||
-        Math.abs(previousPosition.y - position.y) > canvasSize.height * half ||
-        Math.abs(position.x - nextPosition.x) > canvasSize.width * half ||
-        Math.abs(position.y - nextPosition.y) > canvasSize.height * half
-      ) {
+      if (step.break || previousStep.break || nextStep.break) {
         continue;
       }
 
