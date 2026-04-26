@@ -46,10 +46,10 @@ async function doInitPlugins(engine: Engine): Promise<void> {
         import("@tsparticles/plugin-emitters/plugin"),
         import("@tsparticles/plugin-emitters-shape-square"),
         import("@tsparticles/plugin-sounds"),
-        import("@tsparticles/updater-rotate"),
-        import("@tsparticles/updater-destroy"),
-        import("@tsparticles/updater-life"),
-        import("@tsparticles/updater-paint"),
+        import("@tsparticles/updater-rotate/lazy"),
+        import("@tsparticles/updater-destroy/lazy"),
+        import("@tsparticles/updater-life/lazy"),
+        import("@tsparticles/updater-paint/lazy"),
       ]),
       loadEmittersForFireworks = async (e: Engine): Promise<void> => {
         await loadEmittersPluginSimple(e);

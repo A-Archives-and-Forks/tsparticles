@@ -1,4 +1,7 @@
 import type { EmittersEngine } from "./EmittersEngine.js";
+import { EmittersPlugin } from "./EmittersPlugin.js";
+import { addEmittersShapesManager } from "./addEmittersShapesManager.js";
+import { getEmittersInstancesManager } from "./getEmittersInstancesManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,16 +12,7 @@ export async function loadEmittersPluginSimple(engine: EmittersEngine): Promise<
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async (e: EmittersEngine) => {
-    const [
-        { addEmittersShapesManager },
-        { getEmittersInstancesManager },
-        { EmittersPlugin },
-      ] = await Promise.all([
-        import("./addEmittersShapesManager.js"),
-        import("./getEmittersInstancesManager.js"),
-        import("./EmittersPlugin.js"),
-      ]),
-      instancesManager = await getEmittersInstancesManager(e);
+    const instancesManager = await getEmittersInstancesManager(e);
 
     await addEmittersShapesManager(e);
 

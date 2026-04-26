@@ -1,0 +1,16 @@
+import { type Engine } from "@tsparticles/engine/lazy";
+
+declare const __VERSION__: string;
+
+/**
+ * @param engine -
+ */
+export async function loadInfinityShape(engine: Engine): Promise<void> {
+  engine.checkVersion(__VERSION__);
+
+  await engine.pluginManager.register(async e => {
+    const { InfinityDrawer } = await import("./InfinityDrawer.js");
+
+    e.pluginManager.addShape(["infinity"], () => Promise.resolve(new InfinityDrawer()));
+  });
+}

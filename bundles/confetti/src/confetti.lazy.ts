@@ -44,12 +44,12 @@ async function doInitPlugins(engine: Engine): Promise<void> {
       { loadMotionPlugin },
 
       { loadCardSuitsShape },
+      { loadEmojiShape },
       { loadHeartShape },
       { loadImageShape },
       { loadPolygonShape },
       { loadSquareShape },
       { loadStarShape },
-      { loadEmojiShape },
 
       { loadRotateUpdater },
       { loadLifeUpdater },
@@ -58,28 +58,30 @@ async function doInitPlugins(engine: Engine): Promise<void> {
       { loadWobbleUpdater },
     ] = await Promise.all([
       import("@tsparticles/basic/lazy"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("@tsparticles/plugin-motion"),
+      import("@tsparticles/plugin-emitters/plugin/lazy"),
+      import("@tsparticles/plugin-motion/lazy"),
 
-      import("@tsparticles/shape-cards/suits"),
-      import("@tsparticles/shape-heart"),
-      import("@tsparticles/shape-image"),
-      import("@tsparticles/shape-polygon"),
-      import("@tsparticles/shape-square"),
-      import("@tsparticles/shape-star"),
-      import("@tsparticles/shape-emoji"),
+      import("@tsparticles/shape-cards/suits/lazy"),
+      import("@tsparticles/shape-emoji/lazy"),
+      import("@tsparticles/shape-heart/lazy"),
+      import("@tsparticles/shape-image/lazy"),
+      import("@tsparticles/shape-polygon/lazy"),
+      import("@tsparticles/shape-square/lazy"),
+      import("@tsparticles/shape-star/lazy"),
 
-      import("@tsparticles/updater-rotate"),
-      import("@tsparticles/updater-life"),
-      import("@tsparticles/updater-roll"),
-      import("@tsparticles/updater-tilt"),
-      import("@tsparticles/updater-wobble"),
+      import("@tsparticles/updater-rotate/lazy"),
+      import("@tsparticles/updater-life/lazy"),
+      import("@tsparticles/updater-roll/lazy"),
+      import("@tsparticles/updater-tilt/lazy"),
+      import("@tsparticles/updater-wobble/lazy"),
     ]);
 
     await Promise.all([
       loadBasic(e),
+
       loadMotionPlugin(e),
       loadEmittersPluginSimple(e),
+
       loadCardSuitsShape(e),
       loadHeartShape(e),
       loadImageShape(e),

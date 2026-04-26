@@ -1,3 +1,4 @@
+import { BlendPlugin } from "./BlendPlugin.js";
 import { type Engine } from "@tsparticles/engine";
 
 declare const __VERSION__: string;
@@ -8,9 +9,7 @@ declare const __VERSION__: string;
 export async function loadBlendPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { BlendPlugin } = await import("./BlendPlugin.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addPlugin(new BlendPlugin());
   });
 }

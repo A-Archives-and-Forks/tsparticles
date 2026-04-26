@@ -2,8 +2,6 @@ import type { EmittersEngine } from "./EmittersEngine.js";
 import { loadEmittersInteraction } from "./interaction.js";
 import { loadEmittersPluginSimple } from "./plugin.js";
 
-declare const __VERSION__: string;
-
 /**
  * @param engine - The [[EmittersEngine]] instance to load the plugin into
  */

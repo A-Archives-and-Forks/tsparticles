@@ -5,7 +5,6 @@ import {
   half,
   itemFromSingleOrMultiple,
 } from "@tsparticles/engine";
-import type { ITextShape } from "./ITextShape.js";
 import type { TextParticle } from "./TextParticle.js";
 
 export const validTypes = ["text", "character", "char", "multiline-text"];

@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { ResponsivePlugin } from "./ResponsivePlugin.js";
 
 declare const __VERSION__: string;
 
@@ -8,9 +9,7 @@ declare const __VERSION__: string;
 export async function loadResponsivePlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { ResponsivePlugin } = await import("./ResponsivePlugin.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addPlugin(new ResponsivePlugin());
   });
 }

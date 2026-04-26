@@ -1,4 +1,6 @@
+import { AbsorbersPlugin } from "./AbsorbersPlugin.js";
 import { type Engine } from "@tsparticles/engine";
+import { getAbsorbersInstancesManager } from "./getAbsorbersInstancesManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,14 +11,7 @@ export async function loadAbsorbersPluginSimple(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async (e: Engine) => {
-    const [
-        { getAbsorbersInstancesManager },
-        { AbsorbersPlugin },
-      ] = await Promise.all([
-        import("./getAbsorbersInstancesManager.js"),
-        import("./AbsorbersPlugin.js"),
-      ]),
-      pluginManager = e.pluginManager,
+    const pluginManager = e.pluginManager,
       instancesManager = await getAbsorbersInstancesManager(e);
 
     pluginManager.addPlugin(new AbsorbersPlugin(instancesManager));

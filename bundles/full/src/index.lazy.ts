@@ -31,21 +31,21 @@ export async function loadFull(engine: Engine): Promise<void> {
       ] = await Promise.all([
         import("@tsparticles/slim/lazy"),
 
-        import("@tsparticles/interaction-external-drag"),
-        import("@tsparticles/interaction-external-trail"),
+        import("@tsparticles/interaction-external-drag/lazy"),
+        import("@tsparticles/interaction-external-trail/lazy"),
 
-        import("@tsparticles/plugin-absorbers"),
-        import("@tsparticles/plugin-emitters"),
-        import("@tsparticles/plugin-emitters-shape-circle"),
-        import("@tsparticles/plugin-emitters-shape-square"),
+        import("@tsparticles/plugin-absorbers/lazy"),
+        import("@tsparticles/plugin-emitters/lazy"),
+        import("@tsparticles/plugin-emitters-shape-circle/lazy"),
+        import("@tsparticles/plugin-emitters-shape-square/lazy"),
 
-        import("@tsparticles/shape-text"),
+        import("@tsparticles/shape-text/lazy"),
 
-        import("@tsparticles/updater-destroy"),
-        import("@tsparticles/updater-roll"),
-        import("@tsparticles/updater-tilt"),
-        import("@tsparticles/updater-twinkle"),
-        import("@tsparticles/updater-wobble"),
+        import("@tsparticles/updater-destroy/lazy"),
+        import("@tsparticles/updater-roll/lazy"),
+        import("@tsparticles/updater-tilt/lazy"),
+        import("@tsparticles/updater-twinkle/lazy"),
+        import("@tsparticles/updater-wobble/lazy"),
       ]),
       loadEmittersPluginBundle = async (e: Engine): Promise<void> => {
         await loadEmittersPlugin(e);

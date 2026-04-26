@@ -1,5 +1,6 @@
+import { type MoveEngine, ensureBaseMoverLoaded } from "@tsparticles/plugin-move";
 import type { Engine } from "@tsparticles/engine";
-import type { MoveEngine } from "@tsparticles/plugin-move";
+import { LevyPathGenerator } from "./LevyPathGenerator.js";
 
 declare const __VERSION__: string;
 
@@ -11,15 +12,11 @@ export const levyPathName = "levyPathGenerator";
 export async function loadLevyPath(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: MoveEngine) => {
-    const { ensureBaseMoverLoaded } = await import("@tsparticles/plugin-move");
-
+  await engine.pluginManager.register((e: MoveEngine) => {
     ensureBaseMoverLoaded(e);
 
-    e.pluginManager.addPathGenerator?.(levyPathName, async container => {
-      const { LevyPathGenerator } = await import("./LevyPathGenerator.js");
-
-      return new LevyPathGenerator(container);
+    e.pluginManager.addPathGenerator?.(levyPathName, container => {
+      return Promise.resolve(new LevyPathGenerator(container));
     });
   });
 }

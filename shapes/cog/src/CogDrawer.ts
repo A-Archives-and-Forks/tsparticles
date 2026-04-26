@@ -1,7 +1,6 @@
 import { type Container, type IShapeDrawData, type IShapeDrawer, getRangeValue } from "@tsparticles/engine";
 import { drawCog, drawCogHole } from "./Utils.js";
 import type { CogParticle } from "./CogParticle.js";
-import type { ICogData } from "./ICogData.js";
 
 const defaultHoleRadius = 44,
   defaultInnerRadius = 72,

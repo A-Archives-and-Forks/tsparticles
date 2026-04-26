@@ -1,4 +1,4 @@
-import type { EmitterModeOptions, IEmitterDataModeOptions, IEmitterModeOptions } from "./types.js";
+import type { EmitterModeOptions, IEmitterModeOptions } from "./types.js";
 import {
   ExternalInteractorBase,
   type IInteractivityData,

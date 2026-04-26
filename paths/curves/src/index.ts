@@ -1,5 +1,6 @@
+import { type MoveEngine, ensureBaseMoverLoaded } from "@tsparticles/plugin-move";
+import { CurvesPathGenerator } from "./CurvesPathGenerator.js";
 import { type Engine } from "@tsparticles/engine";
-import { type MoveEngine } from "@tsparticles/plugin-move";
 
 declare const __VERSION__: string;
 
@@ -11,15 +12,11 @@ export const curvesPathName = "curvesPathGenerator";
 export async function loadCurvesPath(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: MoveEngine) => {
-    const { ensureBaseMoverLoaded } = await import("@tsparticles/plugin-move");
-
+  await engine.pluginManager.register((e: MoveEngine) => {
     ensureBaseMoverLoaded(e);
 
-    e.pluginManager.addPathGenerator?.(curvesPathName, async container => {
-      const { CurvesPathGenerator } = await import("./CurvesPathGenerator.js");
-
-      return new CurvesPathGenerator(container);
+    e.pluginManager.addPathGenerator?.(curvesPathName, container => {
+      return Promise.resolve(new CurvesPathGenerator(container));
     });
   });
 }

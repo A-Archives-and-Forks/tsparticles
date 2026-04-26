@@ -82,6 +82,13 @@
       "require": "./cjs/index.js",
       "default": "./esm/index.js"
     },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
+    },
     "./interaction": {
       "types": "./types/interaction.d.ts",
       "browser": "./browser/interaction.js",
@@ -89,12 +96,26 @@
       "require": "./cjs/interaction.js",
       "default": "./esm/interaction.js"
     },
+    "./interaction/lazy": {
+      "types": "./types/interaction.lazy.d.ts",
+      "browser": "./browser/interaction.lazy.js",
+      "import": "./esm/interaction.lazy.js",
+      "require": "./cjs/interaction.lazy.js",
+      "default": "./esm/interaction.lazy.js"
+    },
     "./plugin": {
       "types": "./types/plugin.d.ts",
       "browser": "./browser/plugin.js",
       "import": "./esm/plugin.js",
       "require": "./cjs/plugin.js",
       "default": "./esm/plugin.js"
+    },
+    "./plugin/lazy": {
+      "types": "./types/plugin.lazy.d.ts",
+      "browser": "./browser/plugin.lazy.js",
+      "import": "./esm/plugin.lazy.js",
+      "require": "./cjs/plugin.lazy.js",
+      "default": "./esm/plugin.lazy.js"
     },
     "./package.json": "./package.json"
   },

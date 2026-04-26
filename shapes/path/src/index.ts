@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { PathDrawer } from "./PathDrawer.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,6 @@ export async function loadPathShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["path"], async () => {
-      const { PathDrawer } = await import("./PathDrawer.js");
-
-      return new PathDrawer();
-    });
+    e.pluginManager.addShape(["path"], () => Promise.resolve(new PathDrawer()));
   });
 }

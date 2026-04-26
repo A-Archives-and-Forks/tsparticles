@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { OklabColorManager } from "./OklabColorManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,9 +10,7 @@ declare const __VERSION__: string;
 export async function loadOklabColorPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { OklabColorManager } = await import("./OklabColorManager.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addColorManager("oklab", new OklabColorManager());
   });
 }

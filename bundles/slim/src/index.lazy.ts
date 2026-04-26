@@ -14,6 +14,9 @@ export async function loadSlim(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
+    // Promise.all on dynamic imports returns a tuple of module namespaces.
+    // Provide an explicit tuple type to avoid unsafe `any` warnings from ESLint
+    // when destructuring the result.
     const [
         { loadBasic },
 
@@ -68,16 +71,16 @@ export async function loadSlim(engine: Engine): Promise<void> {
         import("@tsparticles/plugin-easing-quad/lazy"),
         import("@tsparticles/plugin-interactivity/lazy"),
 
-        import("@tsparticles/shape-emoji"),
-        import("@tsparticles/shape-image"),
-        import("@tsparticles/shape-line"),
-        import("@tsparticles/shape-polygon"),
-        import("@tsparticles/shape-square"),
-        import("@tsparticles/shape-star"),
+        import("@tsparticles/shape-emoji/lazy"),
+        import("@tsparticles/shape-image/lazy"),
+        import("@tsparticles/shape-line/lazy"),
+        import("@tsparticles/shape-polygon/lazy"),
+        import("@tsparticles/shape-square/lazy"),
+        import("@tsparticles/shape-star/lazy"),
 
-        import("@tsparticles/updater-life"),
-        import("@tsparticles/updater-paint"),
-        import("@tsparticles/updater-rotate"),
+        import("@tsparticles/updater-life/lazy"),
+        import("@tsparticles/updater-paint/lazy"),
+        import("@tsparticles/updater-rotate/lazy"),
       ]),
       loadInteractivityForSlim = async (e: Engine): Promise<void> => {
         await loadInteractivityPlugin(e);

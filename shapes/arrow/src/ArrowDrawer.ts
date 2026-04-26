@@ -1,6 +1,5 @@
 import { type Container, type IShapeDrawData, type IShapeDrawer, getRangeValue } from "@tsparticles/engine";
 import type { ArrowParticle } from "./ArrowParticle.js";
-import type { IArrowData } from "./IArrowData.js";
 import { drawArrow } from "./Utils.js";
 
 const defaultHeightFactor = 0.5,

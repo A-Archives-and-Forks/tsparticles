@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { StarDrawer } from "./StarDrawer.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,6 @@ export async function loadStarShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["star"], async () => {
-      const { StarDrawer } = await import("./StarDrawer.js");
-
-      return new StarDrawer();
-    });
+    e.pluginManager.addShape(["star"], () => Promise.resolve(new StarDrawer()));
   });
 }

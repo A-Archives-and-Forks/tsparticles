@@ -1,5 +1,9 @@
 import type { EmitterContainer } from "./EmitterContainer.js";
 import type { EmittersEngine } from "./EmittersEngine.js";
+import { EmittersInteractor } from "./EmittersInteractor.js";
+import { addEmittersShapesManager } from "./addEmittersShapesManager.js";
+import { ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
+import { getEmittersInstancesManager } from "./getEmittersInstancesManager.js";
 
 declare const __VERSION__: string;
 
@@ -10,25 +14,14 @@ export async function loadEmittersInteraction(engine: EmittersEngine): Promise<v
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async (e: EmittersEngine) => {
-    const [
-        { ensureInteractivityPluginLoaded },
-        { addEmittersShapesManager },
-        { getEmittersInstancesManager },
-      ] = await Promise.all([
-        import("@tsparticles/plugin-interactivity"),
-        import("./addEmittersShapesManager.js"),
-        import("./getEmittersInstancesManager.js"),
-      ]),
-      instancesManager = await getEmittersInstancesManager(e);
+    const instancesManager = await getEmittersInstancesManager(e);
 
     ensureInteractivityPluginLoaded(e);
 
     await addEmittersShapesManager(e);
 
-    e.pluginManager.addInteractor?.("externalEmitters", async container => {
-      const { EmittersInteractor } = await import("./EmittersInteractor.js");
-
-      return new EmittersInteractor(instancesManager, container as EmitterContainer);
+    e.pluginManager.addInteractor?.("externalEmitters", container => {
+      return Promise.resolve(new EmittersInteractor(instancesManager, container as EmitterContainer));
     });
   });
 }

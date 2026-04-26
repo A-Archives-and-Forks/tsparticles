@@ -7,7 +7,7 @@ import {
   getRangeMin,
   originPoint,
 } from "@tsparticles/engine";
-import type { IMatrixOptions } from "./IMatrixOptions.js";
+import type { MatrixParticle } from "./MatrixParticle.js";
 
 /**
  * Pool of Matrix-style characters: katakana, digits, Latin letters
@@ -254,7 +254,7 @@ function getState(particle: Particle, minInterval: number, maxInterval: number):
  * Each particle changes its character at its own random speed.
  * @param data - shape draw data provided by tsparticles engine
  */
-export function drawMatrix(data: IShapeDrawData): void {
+export function drawMatrix(data: IShapeDrawData<MatrixParticle>): void {
   const { context, radius, particle, delta, fill, stroke } = data,
     shapeData = particle.shapeData,
     minInterval = getRangeMin(shapeData?.interval ?? defaultMinInterval),

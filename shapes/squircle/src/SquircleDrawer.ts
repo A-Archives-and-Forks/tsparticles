@@ -1,6 +1,5 @@
 import { type Container, type IShapeDrawData, type IShapeDrawer, getRangeValue } from "@tsparticles/engine";
 import { defaultExponent, defaultSteps, drawSquircle } from "./Utils.js";
-import type { ISquircleData } from "./ISquircleData.js";
 import type { SquircleParticle } from "./SquircleParticle.js";
 
 export class SquircleDrawer implements IShapeDrawer<SquircleParticle> {

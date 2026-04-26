@@ -1,4 +1,6 @@
 import { type Engine } from "@tsparticles/engine";
+import { loadCardSuitsShape } from "./suits.js";
+import { loadFullCardsShape } from "./cards/index.js";
 
 declare const __VERSION__: string;
 
@@ -8,18 +10,8 @@ declare const __VERSION__: string;
 export async function loadCardsShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const [{ loadFullCardsShape }, { loadCardSuitsShape }] = await Promise.all([
-      import("./cards/index.js"),
-      import("./suits.js"),
-    ]);
-
-    await Promise.all([
-      loadFullCardsShape(e),
-      loadCardSuitsShape(e),
-    ]);
-  });
+  await Promise.all([
+    loadFullCardsShape(engine),
+    loadCardSuitsShape(engine),
+  ]);
 }
-
-export * from "./cards/index.js";
-export * from "./suits.js";

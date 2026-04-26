@@ -1,3 +1,4 @@
+import { CogDrawer } from "./CogDrawer.js";
 import { type Engine } from "@tsparticles/engine";
 
 declare const __VERSION__: string;
@@ -9,10 +10,6 @@ export async function loadCogShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["cog"], async () => {
-      const { CogDrawer } = await import("./CogDrawer.js");
-
-      return new CogDrawer();
-    });
+    e.pluginManager.addShape(["cog"], () => Promise.resolve(new CogDrawer()));
   });
 }
