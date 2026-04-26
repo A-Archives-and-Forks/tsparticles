@@ -4,8 +4,10 @@ import { curvesPathName } from "@tsparticles/path-curves";
 export const options: ISourceOptions = {
   fpsLimit: 120,
   particles: {
-    color: {
-      value: "#FF0000",
+    paint: {
+      color: {
+        value: "#FF0000",
+      },
     },
     move: {
       direction: "none",

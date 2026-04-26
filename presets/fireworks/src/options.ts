@@ -192,7 +192,7 @@ export function initOptions(): ISourceOptions {
               acceleration: 5,
             },
             speed: { min: 5, max: 15 },
-            direction: none,
+            direction: MoveDirection.none,
             outModes: OutMode.destroy,
           },
         };
