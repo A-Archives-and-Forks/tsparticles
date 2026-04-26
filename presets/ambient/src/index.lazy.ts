@@ -12,9 +12,7 @@ export async function loadAmbientPreset(engine: Engine): Promise<void> {
       import("./options.js"),
     ]);
 
-    await Promise.all([
-      loadBasic(e),
-    ]);
+    await loadBasic(e);
 
     e.pluginManager.addPreset(presetName, options);
   });
