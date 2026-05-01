@@ -2109,16 +2109,16 @@ importers:
         specifier: workspace:^
         version: link:../../bundles/full/dist
       vue:
-        specifier: ^2.7.16
+        specifier: 2.7.16
         version: 2.7.16
       vue-router:
-        specifier: ^3.6.5
+        specifier: 3.6.5
         version: 3.6.5(vue@2.7.16)
       vue-server-renderer:
-        specifier: ^2.7.16
+        specifier: 2.7.16
         version: 2.7.16
       vue-template-compiler:
-        specifier: ^2.7.16
+        specifier: 2.7.16
         version: 2.7.16
     devDependencies:
       '@babel/core':
@@ -2150,7 +2150,7 @@ importers:
         version: 12.1.0(eslint@8.57.1)(typescript@6.0.3)
       '@nuxtjs/eslint-module':
         specifier: ^4.1.0
-        version: 4.1.0(eslint@8.57.1)(magicast@0.5.2)(vite@8.0.8(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(stylus@0.64.0)(terser@5.46.1)(yaml@2.8.3))(webpack@4.47.0(webpack-cli@7.0.2(webpack-bundle-analyzer@5.3.0)(webpack-dev-server@5.2.3)(webpack@5.106.2)))
+        version: 4.1.0(eslint@8.57.1)(vite@8.0.8(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(stylus@0.64.0)(terser@5.46.1)(yaml@2.8.3))(webpack@4.47.0(webpack-cli@7.0.2(webpack-bundle-analyzer@5.3.0)(webpack-dev-server@5.2.3)(webpack@5.106.2)))
       '@types/node':
         specifier: ^20.11.25
         version: 20.19.39
@@ -3697,6 +3697,15 @@ importers:
         specifier: workspace:*
         version: link:../../plugins/interactivity/dist
     publishDirectory: dist
+
+  interactions/light/dist:
+    dependencies:
+      '@tsparticles/engine':
+        specifier: 4.0.0-beta.12
+        version: link:../../../engine/dist
+      '@tsparticles/plugin-interactivity':
+        specifier: 4.0.0-beta.12
+        version: link:../../../plugins/interactivity/dist
 
   interactions/particles/attract:
     devDependencies:
@@ -7306,8 +7315,8 @@ importers:
   wrappers/nuxt3:
     dependencies:
       '@nuxt/kit':
-        specifier: ^4.4.2
-        version: 4.4.2(magicast@0.5.2)
+        specifier: ^3.21.2
+        version: 3.21.2(magicast@0.5.2)
       '@tsparticles/engine':
         specifier: workspace:^
         version: link:../../engine/dist
@@ -7322,8 +7331,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.2.0(jiti@2.6.1))
       '@nuxt/schema':
-        specifier: ^4.4.2
-        version: 4.4.2
+        specifier: ^3.21.2
+        version: 3.21.2
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.58.2
         version: 8.58.2(@typescript-eslint/parser@8.58.2(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2)
@@ -42222,7 +42231,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@nuxtjs/eslint-module@4.1.0(eslint@8.57.1)(magicast@0.5.2)(vite@8.0.8(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(stylus@0.64.0)(terser@5.46.1)(yaml@2.8.3))(webpack@4.47.0(webpack-cli@7.0.2(webpack-bundle-analyzer@5.3.0)(webpack-dev-server@5.2.3)(webpack@5.106.2)))':
+  '@nuxtjs/eslint-module@4.1.0(eslint@8.57.1)(vite@8.0.8(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(stylus@0.64.0)(terser@5.46.1)(yaml@2.8.3))(webpack@4.47.0(webpack-cli@7.0.2(webpack-bundle-analyzer@5.3.0)(webpack-dev-server@5.2.3)(webpack@5.106.2)))':
     dependencies:
       '@nuxt/kit': 3.21.2(magicast@0.5.2)
       chokidar: 3.5.3
@@ -71947,7 +71956,7 @@ snapshots:
       he: 1.2.0
       lodash.template: 4.18.1
       lodash.uniq: 4.5.0
-      resolve: 1.22.11
+      resolve: 1.22.12
       serialize-javascript: 6.0.2
       source-map: 0.5.6
 
