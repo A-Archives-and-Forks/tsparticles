@@ -1,0 +1,45 @@
+{
+  "name": "@tsparticles/palette-pineapple",
+  "version": "4.0.0-beta.12",
+  "description": "tsParticles pineapple palette",
+  "homepage": "https://particles.js.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "palettes/food/pineapple"
+  },
+  "author": "Matteo Bruni <matteo.bruni@me.com>",
+  "license": "MIT",
+  "jsdelivr": "tsparticles.palette.pineapple.min.js",
+  "unpkg": "tsparticles.palette.pineapple.min.js",
+  "browser": "browser/index.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "browser": "./browser/index.js",
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "umd": "./umd/index.js",
+      "default": "./cjs/index.js"
+    },
+    "./package.json": "./package.json",
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "umd": "./umd/index.lazy.js",
+      "default": "./cjs/index.lazy.js"
+    }
+  },
+  "dependencies": {
+    "@tsparticles/engine": "4.0.0-beta.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module"
+}
