@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url),
 
 export default loadParticlesPalette({
   dir: __dirname,
-  moduleName: "palette-confetti-monochrome-purple",
-  paletteName: "Confetti Monochrome Purple Palette",
-  version,
+  moduleName: "palette-monochromePurple",
+  paletteName: "MonochromePurple Palette",
+  "4.0.0-beta.12",
 });

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Volcanic Ash Palette
+# tsParticles VolcanicAsh Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-volcanicAsh/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-volcanicAsh) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-volcanicAsh.svg)](https://www.npmjs.com/package/@tsparticles/palette-volcanicAsh) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-volcanicAsh) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-volcanic-ash/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-volcanic-ash) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-volcanic-ash.svg)](https://www.npmjs.com/package/@tsparticles/palette-volcanic-ash) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-volcanic-ash)](https://www.npmjs.com/package/@tsparticles/palette-volcanic-ash) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for volcanic ash atmosphere.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/atmosphere/volcanicAsh/images/sample.png)](https://particles.js.org/samples/palettes/volcanic-ash)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmosphere/volcanicAsh/images/sample.png)](https://particles.js.org/samples/palettes/volcanicAsh)
 
 ## Colors
 
@@ -83,7 +82,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-volcanic-ash@4/tsparticles.palette-volcanic-ash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-volcanicAsh@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -105,7 +104,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "volcanic-ash",
+    palette: "volcanicAsh",
   };
 
   await engine.load({

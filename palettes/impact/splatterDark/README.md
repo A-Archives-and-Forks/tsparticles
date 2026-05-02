@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Dark Splatter Palette
+# tsParticles SplatterDark Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-splatterDark/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-splatterDark) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-splatterDark.svg)](https://www.npmjs.com/package/@tsparticles/palette-splatterDark) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-splatterDark) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-splatter-dark/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-splatter-dark) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-splatter-dark.svg)](https://www.npmjs.com/package/@tsparticles/palette-splatter-dark) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-splatter-dark)](https://www.npmjs.com/package/@tsparticles/palette-splatter-dark) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for dark splatter impact.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/impact/splatterDark/images/sample.png)](https://particles.js.org/samples/palettes/splatter-dark)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/impact/splatterDark/images/sample.png)](https://particles.js.org/samples/palettes/splatterDark)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-splatter-dark@4/tsparticles.palette-splatter-dark.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-splatterDark@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "splatter-dark",
+    palette: "splatterDark",
   };
 
   await engine.load({

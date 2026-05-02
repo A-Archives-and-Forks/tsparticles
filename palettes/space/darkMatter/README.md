@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Dark Matter Palette
+# tsParticles DarkMatter Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-darkMatter/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-darkMatter) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-darkMatter.svg)](https://www.npmjs.com/package/@tsparticles/palette-darkMatter) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-darkMatter) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-dark-matter/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-dark-matter) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-dark-matter.svg)](https://www.npmjs.com/package/@tsparticles/palette-dark-matter) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-dark-matter)](https://www.npmjs.com/package/@tsparticles/palette-dark-matter) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for dark matter.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/darkMatter/images/samples.png)](https://particles.js.org/samples/palettes/dark-matter)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/space/darkMatter/images/sample.png)](https://particles.js.org/samples/palettes/darkMatter)
 
 ## Colors
 
@@ -69,7 +68,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-dark-matter@4/tsparticles.palette.dark-matter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-darkMatter@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -91,7 +90,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "dark-matter",
+    palette: "darkMatter",
   };
 
   await engine.load({
@@ -106,47 +105,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "dark-matter",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadDarkMatterPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadDarkMatterPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadDarkMatterPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-padarkMatter[Dark Matter]
-end
-
-e[tsParticles Engine] --> padarkMatter
-```

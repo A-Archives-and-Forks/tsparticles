@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Fireworks Silver Palette
+# tsParticles Silver Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-silver/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-silver) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-silver.svg)](https://www.npmjs.com/package/@tsparticles/palette-silver) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-silver) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-fireworks-silver/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-fireworks-silver) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-fireworks-silver.svg)](https://www.npmjs.com/package/@tsparticles/palette-fireworks-silver) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-fireworks-silver)](https://www.npmjs.com/package/@tsparticles/palette-fireworks-silver) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for fireworks silver.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/fireworks/fireworksSilver/images/sample.png)](https://particles.js.org/samples/palettes/fireworks-silver)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/fireworks/silver/images/sample.png)](https://particles.js.org/samples/palettes/silver)
 
 ## Colors
 
@@ -68,7 +67,7 @@
 ## Quick checklist
 
 1. Install `@tsparticles/engine` (or use the CDN bundle below)
-2. Load a base package (for example `@tsparticles/basic`) and call `loadFireworksSilverPalette` before `tsParticles.load(...)`
+2. Load a base package (for example `@tsparticles/basic`) and call `loadSilverPalette` before `tsParticles.load(...)`
 3. Apply the palette plus a minimal particles configuration in your options
 
 A palette defines colors, not complete behavior, so pair it with a runtime package and particle options.
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-fireworks-silver@4/tsparticles.palette-fireworks-silver.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-silver@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -89,7 +88,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 ```javascript
 (async engine => {
   await loadBasic(engine);
-  await loadFireworksSilverPalette(engine);
+  await loadSilverPalette(engine);
 
   const options = {
     particles: {
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "fireworks-silver",
+    palette: "silver",
   };
 
   await engine.load({
@@ -118,7 +117,7 @@ You can override all the options defining the properties like in any standard `t
 
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadFireworksSilverPalette` function.
+Checkout the documentation in the component library repository and call the `loadSilverPalette` function.
 
 ## Related docs
 

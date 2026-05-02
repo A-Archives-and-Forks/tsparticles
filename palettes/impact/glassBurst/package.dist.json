@@ -109,8 +109,8 @@
     "@tsparticles/engine": "4.0.0-beta.12"
   },
   "type": "module",
-  "jsdelivr": "tsparticles.palette-glass-burst.min.js",
-  "unpkg": "tsparticles.palette-glass-burst.min.js",
+  "jsdelivr": "tsparticles.palette-colored-smoke-amber.min.js",
+  "unpkg": "tsparticles.palette-colored-smoke-amber.min.js",
   "publishConfig": {
     "access": "public"
   }

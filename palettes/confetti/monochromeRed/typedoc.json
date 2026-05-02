@@ -4,7 +4,7 @@
     "./src/"
   ],
   "entryPointStrategy": "expand",
-  "name": "tsParticles Confetti Monochrome Red Palette",
+  "name": "tsParticles MonochromeRed Palette",
   "includeVersion": true,
   "hideGenerator": true,
   "out": "./docs",

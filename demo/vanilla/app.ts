@@ -3,13 +3,12 @@ import cluster from "node:cluster";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 //import helmet from "helmet";
 import connectLiveReload from "connect-livereload";
-import { dirname } from "path";
+import path, { dirname } from "node:path";
 import dotenv from "dotenv";
 import express from "express";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import livereload from "livereload";
-import path from "node:path";
-import os from "os";
+import os from "node:os";
 //import rateLimit from "express-rate-limit";
 import stylus from "stylus";
 import winston from "winston";
@@ -57,6 +56,19 @@ const workspaceRootGuess = path.resolve(dirName, "..", "..", ".."),
     : path.resolve(dirName, "..", ".."),
   presetsRoot = path.join(workspaceRoot, "presets"),
   palettesRoot = path.join(workspaceRoot, "palettes");
+
+// Read demo package.json to get declared dependencies (we will only discover palettes/presets
+// that are declared as dependencies of this demo). This avoids scanning the whole repo.
+let demoPackageDeps: string[] = [];
+try {
+  const demoPkgPath = path.join(dirName, "package.json");
+  if (existsSync(demoPkgPath)) {
+    const demoPkg = JSON.parse(readFileSync(demoPkgPath, "utf8")) as { dependencies?: Record<string, string> };
+    demoPackageDeps = Object.keys(demoPkg.dependencies ?? {});
+  }
+} catch {
+  demoPackageDeps = [];
+}
 
 type CatalogMode = "preset" | "palette";
 
@@ -180,15 +192,12 @@ const findGeneratedScript = (distPath: string, fallback: string, matcher: RegExp
 };
 
 const loadPresetsCatalog = (): CatalogItem[] => {
-  if (!existsSync(presetsRoot)) {
-    return [];
-  }
+  // Use demo package dependencies to discover presets
+  const presetDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/preset-"));
 
-  return readdirSync(presetsRoot, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .map(entry => entry.name)
-    .sort((a, b) => a.localeCompare(b))
-    .map(folder => {
+  return presetDeps
+    .map((dep) => dep.replace("@tsparticles/preset-", ""))
+    .map((folder) => {
       const slug = camelToKebab(folder),
         packageName = `@tsparticles/preset-${slug}`,
         title = toTitleCase(slug.replace(/-/g, " ")),
@@ -214,35 +223,51 @@ const loadPresetsCatalog = (): CatalogItem[] => {
         description: `${title} preset demo`,
         staticPath: path.join(packageRoot, "dist"),
       };
-    });
+    })
+    .filter(item => existsSync(item.staticPath));
 };
 
 const hasPaletteOptions = (palettePath: string): boolean => existsSync(path.join(palettePath, "src", "options.ts"));
 
 const discoverPaletteDirs = (): Array<{ category: string; folder: string; fullPath: string }> => {
-  if (!existsSync(palettesRoot)) {
-    return [];
+  // Discover palettes only among demo's declared dependencies
+  const paletteDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/palette-"));
+
+  const results: Array<{ category: string; folder: string; fullPath: string }> = [];
+
+  for (const dep of paletteDeps) {
+    const slug = dep.replace("@tsparticles/palette-", "");
+
+    // Try direct folder under palettesRoot (category "other")
+    const directPath = path.join(palettesRoot, slug);
+    if (existsSync(directPath) && hasPaletteOptions(directPath)) {
+      results.push({ category: "other", folder: slug, fullPath: directPath });
+      continue;
+    }
+
+    // Otherwise search categories for matching folder name
+    if (!existsSync(palettesRoot)) {
+      continue;
+    }
+
+    const categories = readdirSync(palettesRoot, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name);
+    let found = false;
+    for (const cat of categories) {
+      const candidate = path.join(palettesRoot, cat, slug);
+      if (existsSync(candidate) && hasPaletteOptions(candidate)) {
+        results.push({ category: cat, folder: slug, fullPath: candidate });
+        found = true;
+        break;
+      }
+    }
+
+    // If not found, still add a fallback pointing to where it would be (so show missing dist)
+    if (!found) {
+      results.push({ category: "other", folder: slug, fullPath: directPath });
+    }
   }
 
-  return readdirSync(palettesRoot, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .flatMap(entry => {
-      const categoryPath = path.join(palettesRoot, entry.name);
-
-      if (hasPaletteOptions(categoryPath)) {
-        return [{ category: "other", folder: entry.name, fullPath: categoryPath }];
-      }
-
-      return readdirSync(categoryPath, { withFileTypes: true })
-        .filter(nested => nested.isDirectory())
-        .map(nested => ({
-          category: entry.name,
-          folder: nested.name,
-          fullPath: path.join(categoryPath, nested.name),
-        }))
-        .filter(item => hasPaletteOptions(item.fullPath));
-    })
-    .sort((a, b) => a.folder.localeCompare(b.folder));
+  return results.sort((a, b) => a.folder.localeCompare(b.folder));
 };
 
 const loadPalettesCatalog = (): CatalogItem[] => {

@@ -106,7 +106,6 @@
       "umd": "./dist/umd/index.js",
       "default": "./dist/cjs/index.js"
     },
-    "./package.json": "./dist/package.json",
     "./lazy": {
       "types": "./dist/types/index.lazy.d.ts",
       "browser": "./dist/browser/index.lazy.js",
@@ -114,7 +113,8 @@
       "require": "./dist/cjs/index.lazy.js",
       "umd": "./dist/umd/index.lazy.js",
       "default": "./dist/cjs/index.lazy.js"
-    }
+    },
+    "./package.json": "./dist/package.json"
   },
   "prettier": "@tsparticles/prettier-config",
   "dependencies": {

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Thermal Map Cold to Hot Palette
+# tsParticles ThermalMap Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-thermalMap/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-thermalMap) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-thermalMap.svg)](https://www.npmjs.com/package/@tsparticles/palette-thermalMap) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-thermalMap) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-thermal-map/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-thermal-map) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-thermal-map.svg)](https://www.npmjs.com/package/@tsparticles/palette-thermal-map) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-thermal-map)](https://www.npmjs.com/package/@tsparticles/palette-thermal-map) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for thermal map - cold to hot.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/thermalMap/images/sample.png)](https://particles.js.org/samples/palettes/thermal-map)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/thermalMap/images/sample.png)](https://particles.js.org/samples/palettes/thermalMap)
 
 ## Colors
 
@@ -241,7 +240,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-thermal-map@4/tsparticles.palette.thermal-map.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-thermalMap@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -263,7 +262,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "thermal-map",
+    palette: "thermalMap",
   };
 
   await engine.load({
@@ -278,47 +277,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "thermal-map",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadThermalMapPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadThermalMapPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadThermalMapPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pathermalMap[Thermal Map Cold to Hot]
-end
-
-e[tsParticles Engine] --> pathermalMap
-```

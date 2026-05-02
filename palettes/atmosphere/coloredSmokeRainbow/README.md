@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Colored Smoke Rainbow Palette
+# tsParticles ColoredSmokeRainbow Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-coloredSmokeRainbow/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-coloredSmokeRainbow) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-coloredSmokeRainbow.svg)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeRainbow) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeRainbow) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-colored-smoke-rainbow/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-colored-smoke-rainbow) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-colored-smoke-rainbow.svg)](https://www.npmjs.com/package/@tsparticles/palette-colored-smoke-rainbow) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-colored-smoke-rainbow)](https://www.npmjs.com/package/@tsparticles/palette-colored-smoke-rainbow) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke rainbow.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/atmosphere/coloredSmokeRainbow/images/sample.png)](https://particles.js.org/samples/palettes/colored-smoke-rainbow)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmosphere/coloredSmokeRainbow/images/sample.png)](https://particles.js.org/samples/palettes/coloredSmokeRainbow)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-colored-smoke-rainbow@4/tsparticles.palette-colored-smoke-rainbow.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-coloredSmokeRainbow@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "colored-smoke-rainbow",
+    palette: "coloredSmokeRainbow",
   };
 
   await engine.load({

@@ -4,7 +4,7 @@
     "./src/"
   ],
   "entryPointStrategy": "expand",
-  "name": "tsParticles Fireworks Rainbow Palette",
+  "name": "tsParticles Rainbow Palette",
   "includeVersion": true,
   "hideGenerator": true,
   "out": "./docs",

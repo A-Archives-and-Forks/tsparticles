@@ -4,7 +4,7 @@
     "./src/"
   ],
   "entryPointStrategy": "expand",
-  "name": "tsParticles Colored Smoke Red Palette",
+  "name": "tsParticles ColoredSmokeRed Palette",
   "includeVersion": true,
   "hideGenerator": true,
   "out": "./docs",

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Meteor Impact Palette
+# tsParticles MeteorImpact Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-meteorImpact/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-meteorImpact) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-meteorImpact.svg)](https://www.npmjs.com/package/@tsparticles/palette-meteorImpact) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-meteorImpact) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-meteor-impact/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-meteor-impact) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-meteor-impact.svg)](https://www.npmjs.com/package/@tsparticles/palette-meteor-impact) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-meteor-impact)](https://www.npmjs.com/package/@tsparticles/palette-meteor-impact) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for meteor impact.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/impact/meteorImpact/images/sample.png)](https://particles.js.org/samples/palettes/meteor-impact)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/impact/meteorImpact/images/sample.png)](https://particles.js.org/samples/palettes/meteorImpact)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-meteor-impact@4/tsparticles.palette-meteor-impact.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-meteorImpact@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "meteor-impact",
+    palette: "meteorImpact",
   };
 
   await engine.load({

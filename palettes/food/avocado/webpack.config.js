@@ -13,5 +13,5 @@ export default loadParticlesPalette({
   dir: __dirname,
   moduleName: "palette-avocado",
   paletteName: "Avocado Palette",
-  version,
+  "4.0.0-beta.12",
 });

@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url),
 
 export default loadParticlesPalette({
   dir: __dirname,
-  moduleName: "palette-monochrome-silver",
-  paletteName: "Monochrome Silver Palette",
-  version,
+  moduleName: "palette-silver",
+  paletteName: "Silver Palette",
+  "4.0.0-beta.12",
 });

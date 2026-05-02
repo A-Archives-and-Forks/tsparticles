@@ -4,7 +4,7 @@
     "./src/"
   ],
   "entryPointStrategy": "expand",
-  "name": "tsParticles Monochrome Silver Palette",
+  "name": "tsParticles Silver Palette",
   "includeVersion": true,
   "hideGenerator": true,
   "out": "./docs",

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Smoke Warm Palette
+# tsParticles SmokeWarm Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-smokeWarm/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-smokeWarm) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-smokeWarm.svg)](https://www.npmjs.com/package/@tsparticles/palette-smokeWarm) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-smokeWarm) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-smoke-warm/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-smoke-warm) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-smoke-warm.svg)](https://www.npmjs.com/package/@tsparticles/palette-smoke-warm) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-smoke-warm)](https://www.npmjs.com/package/@tsparticles/palette-smoke-warm) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for smoke - warm.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/smokeWarm/images/sample.png)](https://particles.js.org/samples/palettes/smoke-warm)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/smokeWarm/images/sample.png)](https://particles.js.org/samples/palettes/smokeWarm)
 
 ## Colors
 
@@ -69,7 +68,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-smoke-warm@4/tsparticles.palette.smoke-warm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-smokeWarm@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -91,7 +90,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "smoke-warm",
+    palette: "smokeWarm",
   };
 
   await engine.load({
@@ -106,47 +105,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "smoke-warm",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadSmokeWarmPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadSmokeWarmPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadSmokeWarmPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pasmokeWarm[Smoke Warm]
-end
-
-e[tsParticles Engine] --> pasmokeWarm
-```

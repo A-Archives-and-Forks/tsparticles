@@ -4,7 +4,7 @@
     "./src/"
   ],
   "entryPointStrategy": "expand",
-  "name": "tsParticles Colored Smoke Amber Palette",
+  "name": "tsParticles ColoredSmokeAmber Palette",
   "includeVersion": true,
   "hideGenerator": true,
   "out": "./docs",

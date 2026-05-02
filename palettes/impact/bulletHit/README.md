@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Bullet Hit Palette
+# tsParticles BulletHit Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bulletHit/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bulletHit) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bulletHit.svg)](https://www.npmjs.com/package/@tsparticles/palette-bulletHit) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-bulletHit) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bullet-hit/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bullet-hit) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bullet-hit.svg)](https://www.npmjs.com/package/@tsparticles/palette-bullet-hit) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-bullet-hit)](https://www.npmjs.com/package/@tsparticles/palette-bullet-hit) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for bullet hit impact.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/impact/bulletHit/images/sample.png)](https://particles.js.org/samples/palettes/bullet-hit)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/impact/bulletHit/images/sample.png)](https://particles.js.org/samples/palettes/bulletHit)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-bullet-hit@4/tsparticles.palette-bullet-hit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-bulletHit@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "bullet-hit",
+    palette: "bulletHit",
   };
 
   await engine.load({

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Matrix Rain Palette
+# tsParticles MatrixRain Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-matrixRain/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-matrixRain) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-matrixRain.svg)](https://www.npmjs.com/package/@tsparticles/palette-matrixRain) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-matrixRain) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-matrix-rain/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-matrix-rain) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-matrix-rain.svg)](https://www.npmjs.com/package/@tsparticles/palette-matrix-rain) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-matrix-rain)](https://www.npmjs.com/package/@tsparticles/palette-matrix-rain) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for matrix rain.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/matrixRain/images/sample.png)](https://particles.js.org/samples/palettes/matrix-rain)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/tech/matrixRain/images/sample.png)](https://particles.js.org/samples/palettes/matrixRain)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-matrix-rain@4/tsparticles.palette.matrix-rain.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-matrixRain@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +100,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "matrix-rain",
+    palette: "matrixRain",
   };
 
   await engine.load({
@@ -116,47 +115,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "matrix-rain",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadMatrixRainPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadMatrixRainPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadMatrixRainPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pamatrixRain[Matrix Rain]
-end
-
-e[tsParticles Engine] --> pamatrixRain
-```

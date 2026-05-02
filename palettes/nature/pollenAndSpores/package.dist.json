@@ -81,8 +81,7 @@
       "url": "https://www.buymeacoffee.com/matteobruni"
     }
   ],
-  "jsdelivr": "tsparticles.palette.pollen-and-spores.min.js",
-  "unpkg": "tsparticles.palette.pollen-and-spores.min.js",
+  "sideEffects": false,
   "browser": "browser/index.js",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -109,8 +108,10 @@
   "dependencies": {
     "@tsparticles/engine": "4.0.0-beta.12"
   },
+  "type": "module",
+  "jsdelivr": "tsparticles.palette-colored-smoke-amber.min.js",
+  "unpkg": "tsparticles.palette-colored-smoke-amber.min.js",
   "publishConfig": {
     "access": "public"
-  },
-  "type": "module"
+  }
 }

@@ -1,16 +1,15 @@
 {
-    "includes": "./markdown",
-    "entryPoints": [
-        "./src/"
-    ],
-    "entryPointStrategy": "expand",
-    "name": "tsParticles Vibrant Electric Palette",
-    "includeVersion": true,
-    "hideGenerator": true,
-    "out": "./docs",
-    "validation": {
-        "invalidLink": true,
-        "notDocumented": true
-    }
+  "includes": "./markdown",
+  "entryPoints": [
+    "./src/"
+  ],
+  "entryPointStrategy": "expand",
+  "name": "tsParticles Electric Palette",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "out": "./docs",
+  "validation": {
+    "invalidLink": true,
+    "notDocumented": true
+  }
 }
-

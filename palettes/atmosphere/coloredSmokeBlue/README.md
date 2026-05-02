@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Colored Smoke Blue Palette
+# tsParticles ColoredSmokeBlue Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-coloredSmokeBlue/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-coloredSmokeBlue) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-coloredSmokeBlue.svg)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeBlue) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeBlue) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-colored-smoke-blue/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-colored-smoke-blue) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-colored-smoke-blue.svg)](https://www.npmjs.com/package/@tsparticles/palette-colored-smoke-blue) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-colored-smoke-blue)](https://www.npmjs.com/package/@tsparticles/palette-colored-smoke-blue) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke blue.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/atmosphere/coloredSmokeBlue/images/sample.png)](https://particles.js.org/samples/palettes/colored-smoke-blue)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmosphere/coloredSmokeBlue/images/sample.png)](https://particles.js.org/samples/palettes/coloredSmokeBlue)
 
 ## Colors
 
@@ -75,7 +74,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-colored-smoke-blue@4/tsparticles.palette-colored-smoke-blue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-coloredSmokeBlue@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -97,7 +96,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "colored-smoke-blue",
+    palette: "coloredSmokeBlue",
   };
 
   await engine.load({

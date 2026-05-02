@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url),
 
 export default loadParticlesPalette({
   dir: __dirname,
-  moduleName: "palette-colored-smoke-red",
-  paletteName: "Colored Smoke Red Palette",
-  version,
+  moduleName: "palette-coloredSmokeRed",
+  paletteName: "ColoredSmokeRed Palette",
+  "4.0.0-beta.12",
 });

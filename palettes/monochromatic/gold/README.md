@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Monochrome Gold Palette
+# tsParticles Gold Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-gold/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-gold) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-gold.svg)](https://www.npmjs.com/package/@tsparticles/palette-gold) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-gold) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-monochrome-gold/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-monochrome-gold) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-monochrome-gold.svg)](https://www.npmjs.com/package/@tsparticles/palette-monochrome-gold) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-monochrome-gold)](https://www.npmjs.com/package/@tsparticles/palette-monochrome-gold) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for monochrome gold.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/monochromatic/monochromeGold/images/sample.png)](https://particles.js.org/samples/palettes/monochrome-gold)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/monochromatic/gold/images/sample.png)](https://particles.js.org/samples/palettes/gold)
 
 ## Colors
 
@@ -64,7 +63,7 @@
 ## Quick checklist
 
 1. Install `@tsparticles/engine` (or use the CDN bundle below)
-2. Load a base package (for example `@tsparticles/basic`) and call `loadMonochromeGoldPalette` before `tsParticles.load(...)`
+2. Load a base package (for example `@tsparticles/basic`) and call `loadGoldPalette` before `tsParticles.load(...)`
 3. Apply the palette plus a minimal particles configuration in your options
 
 A palette defines colors, not complete behavior, so pair it with a runtime package and particle options.
@@ -75,7 +74,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-monochrome-gold@4/tsparticles.palette-monochrome-gold.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-gold@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -85,7 +84,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 ```javascript
 (async engine => {
   await loadBasic(engine);
-  await loadMonochromeGoldPalette(engine);
+  await loadGoldPalette(engine);
 
   const options = {
     particles: {
@@ -97,7 +96,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "monochrome-gold",
+    palette: "gold",
   };
 
   await engine.load({
@@ -114,7 +113,7 @@ You can override all the options defining the properties like in any standard `t
 
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadMonochromeGoldPalette` function.
+Checkout the documentation in the component library repository and call the `loadGoldPalette` function.
 
 ## Related docs
 

@@ -1,15 +1,15 @@
 {
-    "includes": "./markdown",
-    "entryPoints": [
-        "./src/"
-    ],
-    "entryPointStrategy": "expand",
-    "name": "tsParticles Galaxy Dust Palette",
-    "includeVersion": true,
-    "hideGenerator": true,
-    "out": "./docs",
-    "validation": {
-        "invalidLink": true,
-        "notDocumented": true
-    }
+  "includes": "./markdown",
+  "entryPoints": [
+    "./src/"
+  ],
+  "entryPointStrategy": "expand",
+  "name": "tsParticles GalaxyDust Palette",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "out": "./docs",
+  "validation": {
+    "invalidLink": true,
+    "notDocumented": true
+  }
 }

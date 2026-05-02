@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Heat Haze Palette
+# tsParticles HeatHaze Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-heatHaze/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-heatHaze) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-heatHaze.svg)](https://www.npmjs.com/package/@tsparticles/palette-heatHaze) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-heatHaze) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-heat-haze/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-heat-haze) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-heat-haze.svg)](https://www.npmjs.com/package/@tsparticles/palette-heat-haze) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-heat-haze)](https://www.npmjs.com/package/@tsparticles/palette-heat-haze) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for heat haze.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/heatHaze/images/sample.png)](https://particles.js.org/samples/palettes/heat-haze)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/heatHaze/images/sample.png)](https://particles.js.org/samples/palettes/heatHaze)
 
 ## Colors
 
@@ -69,7 +68,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-heat-haze@4/tsparticles.palette.heat-haze.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-heatHaze@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -91,7 +90,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "heat-haze",
+    palette: "heatHaze",
   };
 
   await engine.load({
@@ -106,47 +105,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "heat-haze",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadHeatHazePalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadHeatHazePalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadHeatHazePalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-paheatHaze[Heat Haze]
-end
-
-e[tsParticles Engine] --> paheatHaze
-```

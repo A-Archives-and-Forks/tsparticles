@@ -1,15 +1,15 @@
 {
-    "includes": "./markdown",
-    "entryPoints": [
-        "./src/"
-    ],
-    "entryPointStrategy": "expand",
-    "name": "tsParticles Holy Light Palette",
-    "includeVersion": true,
-    "hideGenerator": true,
-    "out": "./docs",
-    "validation": {
-        "invalidLink": true,
-        "notDocumented": true
-    }
+  "includes": "./markdown",
+  "entryPoints": [
+    "./src/"
+  ],
+  "entryPointStrategy": "expand",
+  "name": "tsParticles HolyLight Palette",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "out": "./docs",
+  "validation": {
+    "invalidLink": true,
+    "notDocumented": true
+  }
 }

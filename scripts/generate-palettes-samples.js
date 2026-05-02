@@ -16,7 +16,7 @@ const workspaceRoot = resolve(__dirname, "..");
 const catalogRoot = resolve(workspaceRoot, "palettes");
 const demoRoot = resolve(workspaceRoot, "demo", "vanilla");
 const demoPort = 3416;
-const liveReloadPort = 3716;
+const liveReloadPort = 0;
 const pnpmCommand = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 
 const toKebabCase = value =>
@@ -79,21 +79,27 @@ const discoverPalettes = async root => {
   return items.sort((first, second) => first.slug.localeCompare(second.slug));
 };
 
-const isReachable = async baseUrl => {
+const isReachable = async (baseUrl, healthPath) => {
   try {
-    const response = await fetch(baseUrl, { method: "GET" });
+    const response = await fetch(`${baseUrl}${healthPath}`, { method: "GET" });
 
-    return response.ok;
+    if (!response.ok) {
+      return false;
+    }
+
+    const body = await response.text();
+
+    return body.includes("tsParticles");
   } catch {
     return false;
   }
 };
 
-const waitForServer = async (baseUrl, timeout, child, output) => {
+const waitForServer = async (baseUrl, healthPath, timeout, child, output) => {
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeout) {
-    if (await isReachable(baseUrl)) {
+    if (await isReachable(baseUrl, healthPath)) {
       return;
     }
 
@@ -104,7 +110,7 @@ const waitForServer = async (baseUrl, timeout, child, output) => {
     await delay(250);
   }
 
-  throw new Error(`Timed out waiting for ${baseUrl}.\n${output.join("")}`.trim());
+  throw new Error(`Timed out waiting for ${baseUrl}${healthPath}.\n${output.join("")}`.trim());
 };
 
 const stopServer = async child => {
@@ -125,14 +131,14 @@ const stopServer = async child => {
   child.kill("SIGKILL");
 };
 
-const startDemoServer = async ({ baseUrl, port, timeout, verbose }) => {
+const startDemoServer = async ({ baseUrl, healthPath, liveReload, port, timeout, verbose }) => {
   const output = [];
   const child = spawn(pnpmCommand, ["start"], {
     cwd: demoRoot,
     env: {
       ...process.env,
       FORCE_COLOR: "0",
-      LIVE_RELOAD_PORT: String(liveReloadPort),
+      LIVE_RELOAD_PORT: String(liveReload),
       PORT: String(port),
     },
     stdio: ["ignore", "pipe", "pipe"],
@@ -154,7 +160,7 @@ const startDemoServer = async ({ baseUrl, port, timeout, verbose }) => {
   child.stdout.on("data", appendOutput);
   child.stderr.on("data", appendOutput);
 
-  await waitForServer(baseUrl, timeout, child, output);
+  await waitForServer(baseUrl, healthPath, timeout, child, output);
 
   console.log(`[samples] Demo server started on ${baseUrl}`);
 
@@ -316,6 +322,11 @@ const argv = await yargs(cliArgs)
     describe: "List the discovered palettes and exit.",
     type: "boolean",
   })
+  .option("live-reload-port", {
+    default: liveReloadPort,
+    describe: "Port used by the demo live reload server when launching demo/vanilla.",
+    type: "number",
+  })
   .option("port", {
     default: demoPort,
     describe: "Port used for the temporary demo server started by the script.",
@@ -375,11 +386,14 @@ if (items.length === 0) {
 }
 
 const baseUrl = argv["base-url"] ?? `http://127.0.0.1:${argv.port}`;
+const healthPath = "/palettes";
 const executablePath = resolveExecutablePath(argv["executable-path"]);
 const server = argv["base-url"]
   ? { stop: async () => undefined }
   : await startDemoServer({
       baseUrl,
+      healthPath,
+      liveReload: argv["live-reload-port"],
       port: argv.port,
       timeout: argv.timeout,
       verbose: argv.verbose,

@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles Thunderstorm Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-thunderstorm/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-thunderstorm) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-thunderstorm.svg)](https://www.npmjs.com/package/@tsparticles/palette-thunderstorm) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-thunderstorm) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-thunderstorm/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-thunderstorm) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-thunderstorm.svg)](https://www.npmjs.com/package/@tsparticles/palette-thunderstorm) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-thunderstorm)](https://www.npmjs.com/package/@tsparticles/palette-thunderstorm) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for thunderstorm.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/thunderstorm/images/sample.png)](https://particles.js.org/samples/palettes/thunderstorm)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/thunderstorm/images/sample.png)](https://particles.js.org/samples/palettes/thunderstorm)
 
 ## Colors
 
@@ -79,7 +78,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-thunderstorm@4/tsparticles.palette.thunderstorm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-thunderstorm@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -116,47 +115,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "thunderstorm",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadThunderstormPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadThunderstormPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadThunderstormPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pathunderstorm[Thunderstorm]
-end
-
-e[tsParticles Engine] --> pathunderstorm
-```

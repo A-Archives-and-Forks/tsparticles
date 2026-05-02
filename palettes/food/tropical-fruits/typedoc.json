@@ -1,5 +1,15 @@
 {
-  "out": "docs",
-  "entryPoints": ["src/index.ts"],
-  "exclude": ["**/__tests__/**"]
+  "includes": "./markdown",
+  "entryPoints": [
+    "./src/"
+  ],
+  "entryPointStrategy": "expand",
+  "name": "tsParticles Tropical Fruits Palette",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "out": "./docs",
+  "validation": {
+    "invalidLink": true,
+    "notDocumented": true
+  }
 }

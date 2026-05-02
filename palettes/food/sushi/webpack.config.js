@@ -13,5 +13,5 @@ export default loadParticlesPalette({
   dir: __dirname,
   moduleName: "palette-sushi",
   paletteName: "Sushi Palette",
-  version,
+  "4.0.0-beta.12",
 });

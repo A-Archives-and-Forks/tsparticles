@@ -1,15 +1,15 @@
 {
-    "includes": "./markdown",
-    "entryPoints": [
-        "./src/"
-    ],
-    "entryPointStrategy": "expand",
-    "name": "tsParticles Holographic Shimmer Palette",
-    "includeVersion": true,
-    "hideGenerator": true,
-    "out": "./docs",
-    "validation": {
-        "invalidLink": true,
-        "notDocumented": true
-    }
+  "includes": "./markdown",
+  "entryPoints": [
+    "./src/"
+  ],
+  "entryPointStrategy": "expand",
+  "name": "tsParticles HolographicShimmer Palette",
+  "includeVersion": true,
+  "hideGenerator": true,
+  "out": "./docs",
+  "validation": {
+    "invalidLink": true,
+    "notDocumented": true
+  }
 }

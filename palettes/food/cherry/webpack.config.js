@@ -13,5 +13,5 @@ export default loadParticlesPalette({
   dir: __dirname,
   moduleName: "palette-cherry",
   paletteName: "Cherry Palette",
-  version,
+  "4.0.0-beta.12",
 });

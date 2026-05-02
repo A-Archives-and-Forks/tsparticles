@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Sunset Binary Palette
+# tsParticles SunsetBinary Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-sunsetBinary/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-sunsetBinary) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-sunsetBinary.svg)](https://www.npmjs.com/package/@tsparticles/palette-sunsetBinary) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-sunsetBinary) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-sunset-binary/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-sunset-binary) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-sunset-binary.svg)](https://www.npmjs.com/package/@tsparticles/palette-sunset-binary) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-sunset-binary)](https://www.npmjs.com/package/@tsparticles/palette-sunset-binary) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for sunset binary.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/sunsetBinary/images/sample.png)](https://particles.js.org/samples/palettes/sunset-binary)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/sunsetBinary/images/sample.png)](https://particles.js.org/samples/palettes/sunsetBinary)
 
 ## Colors
 
@@ -57,7 +56,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-sunset-binary@4/tsparticles.palette.sunset-binary.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-sunsetBinary@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -79,7 +78,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "sunset-binary",
+    palette: "sunsetBinary",
   };
 
   await engine.load({
@@ -94,47 +93,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "sunset-binary",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadSunsetBinaryPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadSunsetBinaryPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadSunsetBinaryPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pasunsetBinary[Sunset Binary]
-end
-
-e[tsParticles Engine] --> pasunsetBinary
-```

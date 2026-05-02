@@ -1,10 +1,9 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Sunrise Gold Palette
+# tsParticles SunriseGold Palette
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-sunriseGold/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-sunriseGold) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-sunriseGold.svg)](https://www.npmjs.com/package/@tsparticles/palette-sunriseGold) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-sunriseGold) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-sunrise-gold/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-sunrise-gold) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-sunrise-gold.svg)](https://www.npmjs.com/package/@tsparticles/palette-sunrise-gold) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-sunrise-gold)](https://www.npmjs.com/package/@tsparticles/palette-sunrise-gold) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
-
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for sunrise gold.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +11,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/sunriseGold/images/sample.png)](https://particles.js.org/samples/palettes/sunrise-gold)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmospheric/sunriseGold/images/sample.png)](https://particles.js.org/samples/palettes/sunriseGold)
 
 ## Colors
 
@@ -75,7 +74,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-sunrise-gold@4/tsparticles.palette.sunrise-gold.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-sunriseGold@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -97,7 +96,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "sunrise-gold",
+    palette: "sunriseGold",
   };
 
   await engine.load({
@@ -112,47 +111,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "sunrise-gold",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadSunriseGoldPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadSunriseGoldPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadSunriseGoldPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pasunriseGold[Sunrise Gold]
-end
-
-e[tsParticles Engine] --> pasunriseGold
-```

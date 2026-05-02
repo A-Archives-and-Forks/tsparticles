@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url),
 
 export default loadParticlesPalette({
   dir: __dirname,
-  moduleName: "palette-fireworks-rainbow",
-  paletteName: "Fireworks Rainbow Palette",
-  version,
+  moduleName: "palette-rainbow",
+  paletteName: "Rainbow Palette",
+  "4.0.0-beta.12",
 });
