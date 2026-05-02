@@ -3,17 +3,17 @@ import { type IPalette } from "@tsparticles/engine";
 export const options: IPalette = {
   name: "Citrus Twist",
   background: "#07110a",
-  blendMode: "source-over",
+  blendMode: "screen",
   colors: {
     fill: {
       enable: true,
       value: [
-        "#FFF9C4", // lemon light
         "#FFF176",
         "#FFEE58",
-        "#FFB74D", // orange
+        "#FFCA28",
         "#FFA726",
         "#FF7043",
+        "#66BB6A", // lime accent
       ],
     },
   },

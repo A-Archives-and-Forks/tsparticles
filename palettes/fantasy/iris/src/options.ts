@@ -1,19 +1,21 @@
 import { type IPalette } from "@tsparticles/engine";
 
-// Iris — metallic/galvanized shifting tones (inspired by TWSBI Diamond Iris finish)
+// Iris — accurate anodized rainbow
 export const options: IPalette = {
   name: "Iris",
-  background: "#0b0b0b",
+  background: "#0a0a0a",
   blendMode: "screen",
   colors: {
     fill: {
       enable: true,
       value: [
-        "#9EA8D3",
-        "#8C7DA1",
-        "#6E7C8C",
-        "#7FB3D5",
-        "#C1A4E6",
+        "#F5F7FA", // metallic highlight
+        "#90CAF9", // blue
+        "#5C6BC0", // indigo
+        "#7E57C2", // violet
+        "#EC407A", // magenta/pink
+        "#FFCA28", // gold/yellow
+        "#26C6DA", // teal
       ],
     },
   },

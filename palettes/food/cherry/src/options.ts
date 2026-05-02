@@ -3,16 +3,16 @@ import { type IPalette } from "@tsparticles/engine";
 export const options: IPalette = {
   name: "Cherry",
   background: "#0b0710",
-  blendMode: "source-over",
+  blendMode: "multiply",
   colors: {
     fill: {
       enable: true,
       value: [
-        "#FFF8FB",
-        "#FFCDD2",
-        "#E57373",
-        "#C62828",
+        "#FDE0DC",
+        "#EF5350",
+        "#D32F2F",
         "#B71C1C",
+        "#880E4F",
       ],
     },
   },

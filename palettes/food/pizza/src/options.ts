@@ -3,19 +3,19 @@ import { type IPalette } from "@tsparticles/engine";
 export const options: IPalette = {
   name: "Pizza",
   background: "#1b1207",
-  blendMode: "source-over",
+  blendMode: "multiply",
   colors: {
     fill: {
       enable: true,
       value: [
-        "#F4D6A0", // crust light
-        "#E0B06F", // crust golden
-        "#C6863D", // crust brown
-        "#D84315", // tomato sauce
+        "#F4D6A0",
+        "#E0B06F",
+        "#C6863D",
+        "#D84315",
         "#B71C1C",
-        "#FFD54F", // cheese
-        "#2E2E2E", // olives
-        "#2E7D32", // basil
+        "#FFD54F",
+        "#3A3A3A",
+        "#2E7D32",
       ],
     },
   },

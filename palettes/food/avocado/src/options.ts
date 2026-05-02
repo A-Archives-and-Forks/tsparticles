@@ -3,17 +3,17 @@ import { type IPalette } from "@tsparticles/engine";
 export const options: IPalette = {
   name: "Avocado",
   background: "#081009",
-  blendMode: "source-over",
+  blendMode: "multiply",
   colors: {
     fill: {
       enable: true,
       value: [
-        "#8BC34A", // flesh
+        "#C5E1A5", // light flesh
+        "#9CCC65",
         "#7CB342",
         "#558B2F",
+        "#1B5E20", // peel
         "#3E2723", // pit
-        "#2E7D32",
-        "#C8E6C9", // lighter flesh edge
       ],
     },
   },
