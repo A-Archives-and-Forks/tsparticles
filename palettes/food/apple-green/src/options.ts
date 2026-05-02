@@ -23,4 +23,3 @@ export const options: IPalette = {
 };
 
 export default options;
-

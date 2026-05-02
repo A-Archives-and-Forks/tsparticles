@@ -13,5 +13,5 @@ export default loadParticlesPalette({
   dir: __dirname,
   moduleName: "palette-multicolorStroke",
   paletteName: "MulticolorStroke Palette",
-  "4.0.0-beta.12",
+  version,
 });

@@ -1,6 +1,7 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles Berries Palette
+
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-berries/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-berries) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-berries.svg)](https://www.npmjs.com/package/@tsparticles/palette-berries) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-berries) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
 [tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.

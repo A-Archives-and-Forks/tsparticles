@@ -5,11 +5,10 @@ const paletteName = "apple-green";
 
 /**
  * Register the apple-green palette
+ * @param engine
  */
 export async function loadAppleGreenPalette(engine: Engine): Promise<void> {
   await engine.pluginManager.register(e => {
     e.pluginManager.addPalette(paletteName, options);
   });
 }
-
-

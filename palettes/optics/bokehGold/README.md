@@ -1,6 +1,7 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles BokehGold Palette
+
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bokehGold/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bokehGold) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bokehGold.svg)](https://www.npmjs.com/package/@tsparticles/palette-bokehGold) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-bokehGold) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
 [tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.

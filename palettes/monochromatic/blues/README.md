@@ -1,6 +1,7 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles Blues Palette
+
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-blues/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-blues) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-blues.svg)](https://www.npmjs.com/package/@tsparticles/palette-blues) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-blues) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
 [tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.

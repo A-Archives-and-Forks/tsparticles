@@ -12,4 +12,3 @@ export async function loadAppleRedPalette(engine: Engine): Promise<void> {
     e.pluginManager.addPalette(paletteName, options);
   });
 }
-

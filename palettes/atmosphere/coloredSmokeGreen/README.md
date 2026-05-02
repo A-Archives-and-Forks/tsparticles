@@ -1,6 +1,7 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles ColoredSmokeGreen Palette
+
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-coloredSmokeGreen/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-coloredSmokeGreen) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-coloredSmokeGreen.svg)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeGreen) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-coloredSmokeGreen) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
 [tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.

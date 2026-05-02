@@ -1,6 +1,7 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
 # tsParticles Glitch Palette
+
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-glitch/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-glitch) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-glitch.svg)](https://www.npmjs.com/package/@tsparticles/palette-glitch) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-glitch) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
 [tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
