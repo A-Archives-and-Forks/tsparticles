@@ -1,5 +1,4 @@
-import { type Engine } from "@tsparticles/engine";
-import { options } from "./options.js";
+import { type Engine } from "@tsparticles/engine/lazy";
 
 const paletteName = "iris";
 
@@ -8,7 +7,9 @@ const paletteName = "iris";
  * @param engine
  */
 export async function loadIrisPalette(engine: Engine): Promise<void> {
-  await engine.pluginManager.register(e => {
+  await engine.pluginManager.register(async e => {
+    const { options } = await import("./options.js");
+
     e.pluginManager.addPalette(paletteName, options);
   });
 }
