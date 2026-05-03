@@ -13,7 +13,7 @@ beautiful fireworks effects with ease.
 - [@tsparticles/engine](https://github.com/tsparticles/tsparticles/tree/main/engine)
 - [@tsparticles/plugin-blend](https://github.com/tsparticles/tsparticles/tree/main/plugins/blend)
 - [@tsparticles/plugin-emitters](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters)
-- [@tsparticles/plugin-emitters-shape-square](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/square)
+- [@tsparticles/plugin-emitters-shape-square](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/square)
 - [@tsparticles/plugin-sounds](https://github.com/tsparticles/tsparticles/tree/main/plugins/sounds)
 - [@tsparticles/updater-destroy](https://github.com/tsparticles/tsparticles/tree/main/updaters/destroy)
 - [@tsparticles/updater-life](https://github.com/tsparticles/tsparticles/tree/main/updaters/life)

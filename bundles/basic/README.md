@@ -9,10 +9,10 @@
 **Included Packages**
 
 - [@tsparticles/engine](https://github.com/tsparticles/tsparticles/tree/main/engine)
-- [@tsparticles/plugin-move](https://github.com/tsparticles/tsparticles/tree/main/plugin/move)
-- [@tsparticles/plugin-hex-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hexColor)
-- [@tsparticles/plugin-hsl-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hslColor)
-- [@tsparticles/plugin-rgb-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/rgbColor)
+- [@tsparticles/plugin-move](https://github.com/tsparticles/tsparticles/tree/main/plugins/move)
+- [@tsparticles/plugin-hex-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hex)
+- [@tsparticles/plugin-hsl-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hsl)
+- [@tsparticles/plugin-rgb-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/rgb)
 - [@tsparticles/shape-circle](https://github.com/tsparticles/tsparticles/tree/main/shapes/circle)
 - [@tsparticles/updater-paint](https://github.com/tsparticles/tsparticles/tree/main/updaters/paint)
 - [@tsparticles/updater-opacity](https://github.com/tsparticles/tsparticles/tree/main/updaters/opacity)
