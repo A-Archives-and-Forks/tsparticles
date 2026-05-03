@@ -1,0 +1,225 @@
+import type { DemoPreset } from "./playgroundTypes";
+
+export const presetDemos: DemoPreset[] = [
+  {
+    key: "ambient",
+    title: "Ambient Preset",
+    description: "Official ambient preset with a soft, steady background.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/ambient",
+    options: {
+      preset: "ambient",
+    },
+  },
+  {
+    key: "big-circles",
+    title: "Big Circles Preset",
+    description: "Official big-circles preset for minimal backgrounds.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "big-circles",
+    },
+  },
+  {
+    key: "bubbles",
+    title: "Bubbles Preset",
+    description: "Official bubbles preset for interactive bubble effects.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/recipes/bubbles",
+    options: {
+      preset: "bubbles",
+    },
+  },
+  {
+    key: "confetti",
+    title: "Confetti Preset",
+    description: "Official confetti preset for events and celebrations.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "confetti",
+    },
+  },
+  {
+    key: "confetti-cannon",
+    title: "Confetti Cannon Preset",
+    description: "Confetti cannon with an immediate burst effect.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "confetti-cannon",
+    },
+  },
+  {
+    key: "confetti-explosions",
+    title: "Confetti Explosions Preset",
+    description: "Explosive variation of the confetti preset.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "confetti-explosions",
+    },
+  },
+  {
+    key: "confetti-falling",
+    title: "Confetti Falling Preset",
+    description: "Continuous confetti rain for promotional overlays.",
+    category: "seasonal",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "confetti-falling",
+    },
+  },
+  {
+    key: "confetti-parade",
+    title: "Confetti Parade Preset",
+    description: "Confetti preset with more cinematic dynamics.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "confetti-parade",
+    },
+  },
+  {
+    key: "fire",
+    title: "Fire Preset",
+    description: "Official fire preset with flame and heat effects.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "fire",
+    },
+  },
+  {
+    key: "firefly",
+    title: "Firefly Preset",
+    description: "Official firefly preset for elegant hero sections.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/firefly",
+    options: {
+      preset: "firefly",
+    },
+  },
+  {
+    key: "fireworks",
+    title: "Fireworks Preset",
+    description: "Official fireworks preset for celebration scenes.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/recipes/fireworks",
+    options: {
+      preset: "fireworks",
+    },
+  },
+  {
+    key: "fountain",
+    title: "Fountain Preset",
+    description: "Fountain preset for vertical particle streams.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "fountain",
+    },
+  },
+  {
+    key: "hyperspace",
+    title: "Hyperspace Preset",
+    description: "Official hyperspace preset with tunnel-like movement.",
+    category: "interactive",
+    kind: "preset",
+    recipePath: "/demos/recipes/hyperspace",
+    options: {
+      preset: "hyperspace",
+    },
+  },
+  {
+    key: "links",
+    title: "Links Preset",
+    description: "Official links preset for network-like backgrounds.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/links",
+    options: {
+      preset: "links",
+    },
+  },
+  {
+    key: "matrix",
+    title: "Matrix Preset",
+    description: "Official matrix preset for matrix-like backgrounds.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/matrix",
+    options: {
+      preset: "matrix",
+    },
+  },
+  {
+    key: "sea-anemone",
+    title: "Sea Anemone Preset",
+    description: "Official sea-anemone preset for organic flowing effects.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "sea-anemone",
+    },
+  },
+  {
+    key: "snow",
+    title: "Snow Preset",
+    description: "Official snow preset for winter overlays.",
+    category: "seasonal",
+    kind: "preset",
+    recipePath: "/demos/recipes/snow",
+    options: {
+      preset: "snow",
+    },
+  },
+  {
+    key: "squares",
+    title: "Squares Preset",
+    description: "Squares preset for a pixel/geometric style.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/presets",
+    options: {
+      preset: "squares",
+    },
+  },
+  {
+    key: "stars",
+    title: "Stars Preset",
+    description: "Official stars preset for hero backgrounds.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/stars",
+    options: {
+      preset: "stars",
+    },
+  },
+  {
+    key: "triangles",
+    title: "Triangles Preset",
+    description: "Official triangles preset with geometric particles.",
+    category: "background",
+    kind: "preset",
+    recipePath: "/demos/recipes/triangles",
+    options: {
+      preset: "triangles",
+    },
+  },
+];
+

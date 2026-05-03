@@ -1,0 +1,74 @@
+:root {
+  --vp-c-brand-1: #5d8dff;
+  --vp-c-brand-2: #7aa0ff;
+  --vp-c-brand-3: #9cb7ff;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #7aa0ff 10%, #8fe3ff 45%, #9effb5 90%);
+  --vp-home-hero-image-background-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(122, 160, 255, 0.35),
+    rgba(124, 234, 255, 0.15)
+  );
+  --vp-home-hero-image-filter: blur(68px);
+}
+
+.dark {
+  --vp-c-bg: #090d1c;
+  --vp-c-bg-soft: #0d1328;
+  --vp-c-bg-mute: #111831;
+}
+
+.VPHome {
+  background: radial-gradient(1000px 500px at 50% -20%, rgba(109, 146, 255, 0.25), transparent 60%);
+}
+
+.VPFeature {
+  border: 1px solid rgba(122, 160, 255, 0.18);
+}
+
+.vp-doc h2,
+.vp-doc h3 {
+  letter-spacing: 0.01em;
+}
+
+.cookie-banner {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 100;
+  display: grid;
+  gap: 0.75rem;
+  width: min(460px, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0.75rem;
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cookie-banner__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.cookie-banner__button {
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 999px;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+}
+
+.cookie-banner__button--secondary {
+  border-color: var(--vp-c-divider);
+  background: transparent;
+  color: var(--vp-c-text-1);
+}
