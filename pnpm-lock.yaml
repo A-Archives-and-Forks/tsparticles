@@ -7749,6 +7749,9 @@ importers:
       '@tsparticles/slim':
         specifier: workspace:*
         version: link:../../bundles/slim/dist
+      tsparticles:
+        specifier: workspace:*
+        version: link:../../bundles/full/dist
     devDependencies:
       prettier:
         specifier: ^3.8.1
