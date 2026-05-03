@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vue-server-renderer@2.7.16: 7374e4bf5b7956d7097feec494aaea43bf8f6a02e2b64e8a3cc57e19c2f65132
+
 importers:
 
   .:
@@ -2116,7 +2119,7 @@ importers:
         version: 3.6.5(vue@2.7.16)
       vue-server-renderer:
         specifier: 2.7.16
-        version: 2.7.16
+        version: 2.7.16(patch_hash=7374e4bf5b7956d7097feec494aaea43bf8f6a02e2b64e8a3cc57e19c2f65132)
       vue-template-compiler:
         specifier: 2.7.16
         version: 2.7.16
@@ -43579,7 +43582,7 @@ snapshots:
       ufo: 1.6.3
       vue: 2.7.16
       vue-meta: 2.4.0
-      vue-server-renderer: 2.7.16
+      vue-server-renderer: 2.7.16(patch_hash=7374e4bf5b7956d7097feec494aaea43bf8f6a02e2b64e8a3cc57e19c2f65132)
 
   '@nuxt/webpack@2.18.1(@vue/compiler-sfc@3.5.32)(ejs@3.1.10)(hamljs@0.6.2)(handlebars@4.7.9)(nunjucks@3.2.4(chokidar@3.6.0))(prettier@3.8.2)(pug@3.0.4)(tslib@2.8.1)(typescript@6.0.3)(underscore@1.13.8)(vue@2.7.16)(webpack-cli@7.0.2(webpack-bundle-analyzer@5.3.0)(webpack-dev-server@5.2.3)(webpack@5.106.2))':
     dependencies:
@@ -73809,7 +73812,7 @@ snapshots:
 
   vue-runtime-helpers@1.1.2: {}
 
-  vue-server-renderer@2.7.16:
+  vue-server-renderer@2.7.16(patch_hash=7374e4bf5b7956d7097feec494aaea43bf8f6a02e2b64e8a3cc57e19c2f65132):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0

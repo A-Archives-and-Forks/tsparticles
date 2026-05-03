@@ -56,3 +56,5 @@ onlyBuiltDependencies:
   - nx
   - sharp
   - unrs-resolver
+patchedDependencies:
+  vue-server-renderer@2.7.16: patches/vue-server-renderer@2.7.16.patch

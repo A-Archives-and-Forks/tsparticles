@@ -95,6 +95,9 @@
       "vue-server-renderer@2.7.16>vue": "2.7.16",
       "vue-template-compiler@2.7.16>vue": "2.7.16"
     },
+    "patchedDependencies": {
+      "vue-server-renderer@2.7.16": "patches/vue-server-renderer@2.7.16.patch"
+    },
     "packageExtensions": {
       "vue-server-renderer@*": {
         "dependencies": {
