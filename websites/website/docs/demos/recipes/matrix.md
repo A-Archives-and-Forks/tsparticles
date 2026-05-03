@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for tech/hacker aesthetic designs and digital themes.
-

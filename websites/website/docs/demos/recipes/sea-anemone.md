@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for organic, flowing underwater-inspired animations.
-

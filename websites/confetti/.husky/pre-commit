@@ -1,5 +1,0 @@
-#!/bin/sh
-# Run formatting then attempt to auto-fix lint issues; fail commit if lint still reports errors
-pnpm run format
-pnpm run lint:fix
-pnpm run lint

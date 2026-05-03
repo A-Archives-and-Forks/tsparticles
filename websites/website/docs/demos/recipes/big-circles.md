@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for minimal, modern designs with large animated circles.
-

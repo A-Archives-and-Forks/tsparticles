@@ -36,4 +36,4 @@ pnpm run docs:preview
 
 ## Deploy to GitHub Pages
 
-Deployment is automatic on push to `main` via `website/.github/workflows/deploy.yml`, which builds and publishes `docs/.vitepress/dist` with GitHub Pages Actions.
+Deployment is now managed from the main `tsparticles` monorepo CI/CD setup.

@@ -95,4 +95,3 @@ declare module "@tsparticles/palette-unicorn" {
 declare module "@tsparticles/palette-watermelon" {
   export function loadWatermelonPalette(engine: Engine): Promise<void>;
 }
-

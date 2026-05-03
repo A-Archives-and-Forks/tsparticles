@@ -108,15 +108,7 @@ export const paletteGroupDefinitions: readonly PaletteGroupDefinition[] = [
   },
   {
     title: "Fire",
-    slugs: [
-      "candlelight",
-      "fire",
-      "fire-seed",
-      "full-fire-gradient",
-      "lava-lamp",
-      "metal-sparks",
-      "molten-metal",
-    ],
+    slugs: ["candlelight", "fire", "fire-seed", "full-fire-gradient", "lava-lamp", "metal-sparks", "molten-metal"],
   },
   {
     title: "Fireworks",

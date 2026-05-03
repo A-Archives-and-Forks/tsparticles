@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for dramatic, high-energy designs and effect demonstrations.
-

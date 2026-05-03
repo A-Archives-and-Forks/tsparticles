@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for elegant, flowing particle animations and water-themed effects.
-

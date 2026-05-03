@@ -19,6 +19,7 @@ packages:
   - shapes/*
   - updaters/*
   - utils/*
+  - websites/*
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true

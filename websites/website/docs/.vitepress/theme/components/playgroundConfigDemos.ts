@@ -47,4 +47,3 @@ export const configDemoPresets: DemoPreset[] = configEntries.map(([key, options]
   recipePath: "/demos/configs",
   options,
 }));
-

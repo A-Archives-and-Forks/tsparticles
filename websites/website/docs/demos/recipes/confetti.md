@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for celebrations, announcements, and festive designs. Combine with different color palettes for variety.
-

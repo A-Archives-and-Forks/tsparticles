@@ -21,11 +21,7 @@ function getPaletteSlugFromPreset(preset: DemoPreset): string | undefined {
   return typeof preset.options.palette === "string" ? preset.options.palette : undefined;
 }
 
-export function usePlaygroundPanelState({
-  mode,
-  demoPresets,
-  paletteGroupDefinitions,
-}: UsePlaygroundPanelStateParams) {
+export function usePlaygroundPanelState({ mode, demoPresets, paletteGroupDefinitions }: UsePlaygroundPanelStateParams) {
   const selectedKey = ref(demoPresets[0].key);
   const editorText = ref(JSON.stringify(demoPresets[0].options, null, 2));
   const isRunning = ref(false);
@@ -38,7 +34,11 @@ export function usePlaygroundPanelState({
 
   let particlesInstance:
     | {
-        load: (params: { id: string; element?: HTMLElement; options: ISourceOptions }) => Promise<Container | undefined>;
+        load: (params: {
+          id: string;
+          element?: HTMLElement;
+          options: ISourceOptions;
+        }) => Promise<Container | undefined>;
       }
     | undefined;
   let demoContainer: Container | undefined;
@@ -101,7 +101,9 @@ export function usePlaygroundPanelState({
       .filter((group) => group.presets.length > 0);
 
     const groupedPresetKeys = new Set(groups.flatMap((group) => group.presets.map((preset: DemoPreset) => preset.key)));
-    const uncategorizedPresets = visiblePresets.value.filter((preset: DemoPreset) => !groupedPresetKeys.has(preset.key));
+    const uncategorizedPresets = visiblePresets.value.filter(
+      (preset: DemoPreset) => !groupedPresetKeys.has(preset.key),
+    );
 
     if (uncategorizedPresets.length > 0) {
       groups.push({
@@ -140,7 +142,6 @@ export function usePlaygroundPanelState({
     if (particlesInstance) {
       return;
     }
-
 
     particlesInstance = tsParticles;
   }
@@ -350,6 +351,3 @@ export function usePlaygroundPanelState({
     visiblePresets,
   };
 }
-
-
-

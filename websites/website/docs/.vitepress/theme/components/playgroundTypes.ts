@@ -18,4 +18,3 @@ export type PaletteGroupDefinition = {
   title: string;
   slugs: readonly string[];
 };
-

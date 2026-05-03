@@ -5,7 +5,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
   {
-    ignores: ['node_modules/**', '.git/**', '.planning/**', 'public/js/confetti-modes.js'],
+    ignores: ['node_modules/**', '.git/**', 'public/js/confetti-modes.js'],
   },
   js.configs.recommended,
   {

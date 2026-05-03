@@ -40,4 +40,3 @@ export function resume(): void {
 ```
 
 Perfect for geometric, structured designs and modern layouts.
-
