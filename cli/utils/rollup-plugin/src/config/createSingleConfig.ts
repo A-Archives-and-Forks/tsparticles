@@ -12,20 +12,8 @@ const toJsBanner = (text: string): string => {
   return `/* ${text} */`;
 };
 
-export const createSingleConfig = (
-  params: ConfigParams,
-  min: boolean,
-  lazy: boolean
-): RollupOptions => {
-  const {
-      additionalExternals,
-      banner,
-      bundle,
-      dir,
-      entry,
-      minBanner,
-      version,
-    } = params,
+export const createSingleConfig = (params: ConfigParams, min: boolean, lazy: boolean): RollupOptions => {
+  const { additionalExternals, banner, bundle, dir, entry, minBanner, version } = params,
     { name, input } = getEntry({ ...entry, min, lazy });
 
   return {
@@ -40,9 +28,9 @@ export const createSingleConfig = (
         __VERSION__: JSON.stringify(version),
       }),
       !min &&
-      visualizer({
-        filename: path.resolve(dir, "dist/report.html"),
-      }),
+        visualizer({
+          filename: path.resolve(dir, "dist/report.html"),
+        }),
       min && terser(),
     ].filter(Boolean),
     output: {

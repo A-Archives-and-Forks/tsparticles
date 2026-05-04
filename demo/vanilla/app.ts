@@ -504,16 +504,34 @@ app.get("/", function (req, res) {
   res.render("index");
 });
 
+app.get("/lazy", function (req, res) {
+  logger.info("lazy requested");
+
+  res.render("lazy");
+});
+
 app.get("/basic", function (req, res) {
   logger.info("basic requested");
 
   res.render("basic");
 });
 
+app.get("/basic-lazy", function (req, res) {
+  logger.info("basic lazy requested");
+
+  res.render("basic-lazy");
+});
+
 app.get("/bundle", function (req, res) {
   logger.info("bundle requested");
 
   res.render("bundle");
+});
+
+app.get("/bundle-lazy", function (req, res) {
+  logger.info("bundle lazy requested");
+
+  res.render("bundle-lazy");
 });
 
 app.get("/playground", function (req, res) {
