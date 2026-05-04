@@ -100,13 +100,21 @@ export class ParticlesOptions implements IParticlesOptions, IOptionLoader<IParti
     const paintToLoad = data.paint;
 
     if (paintToLoad) {
-      this.paint = executeOnSingleOrMultiple(paintToLoad, t => {
-        const tmp = new Paint();
+      if (isArray(paintToLoad)) {
+        this.paint = executeOnSingleOrMultiple(paintToLoad, t => {
+          const tmp = new Paint();
 
-        tmp.load(t);
+          tmp.load(t);
 
-        return tmp;
-      });
+          return tmp;
+        });
+      } else if (isArray(this.paint)) {
+        this.paint = new Paint();
+
+        this.paint.load(paintToLoad);
+      } else {
+        this.paint.load(paintToLoad);
+      }
     }
 
     this.shape.load(data.shape);
