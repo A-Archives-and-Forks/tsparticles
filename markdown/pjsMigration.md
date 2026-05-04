@@ -59,7 +59,7 @@ particlesJS.load("particles-js", "assets/particles.json", () => {
 After:
 
 ```js
-tsParticles.loadJSON("tsparticles", "assets/particles.json").then(container => {
+tsParticles.loadJSON("tsparticles", "assets/particles.json").then((container) => {
   console.log("callback - tsParticles config loaded", container);
 });
 ```

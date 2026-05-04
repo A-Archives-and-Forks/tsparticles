@@ -4,8 +4,8 @@
   "description": "tsParticles path utils path",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "version": "tsparticles-cli build -d && git add package.dist.json && tsparticles-cli build -p -l && git add .",
+    "build": "tsparticles-build",
+    "version": "tsparticles-build -d && git add package.dist.json && tsparticles-build -p -l && git add .",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -116,7 +116,9 @@
     "@tsparticles/engine": "workspace:*"
   },
   "devDependencies": {
-    "@tsparticles/engine": "workspace:*"
+    "@tsparticles/engine": "workspace:*",
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

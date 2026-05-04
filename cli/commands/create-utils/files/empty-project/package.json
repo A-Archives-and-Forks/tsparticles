@@ -6,9 +6,9 @@
   "description": "tsParticles empty template",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "build:ci": "tsparticles-cli build --ci",
-    "version": "tsparticles-cli build -d && git add package.dist.json",
+    "build": "tsparticles-build",
+    "build:ci": "tsparticles-build --ci",
+    "version": "tsparticles-build -d && git add package.dist.json",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -84,7 +84,7 @@
   "prettier": "@tsparticles/prettier-config",
   "devDependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli": "latest",
+    "@tsparticles/cli-build": "latest",
     "@tsparticles/browserslist-config": "^3.4.14",
     "@tsparticles/depcruise-config": "^3.4.14",
     "@tsparticles/engine": "^3.9.1",

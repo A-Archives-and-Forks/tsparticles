@@ -1,18 +1,21 @@
 /* eslint-disable sort-imports */
 import { Command } from "commander";
-import { bundleWebpackCommand } from "@tsparticles/cli-command-build-bundle-webpack";
-import { bundleRollupCommand } from "@tsparticles/cli-command-build-bundle-rollup";
-import { circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
-import { clearCommand } from "@tsparticles/cli-command-build-clear";
-import { distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
+import { bundleWebpack, bundleWebpackCommand } from "@tsparticles/cli-command-build-bundle-webpack";
+import { bundleRollup, bundleRollupCommand } from "@tsparticles/cli-command-build-bundle-rollup";
+import { circularDeps as checkCircularDeps, circularDepsCommand } from "@tsparticles/cli-command-build-circular-deps";
+import { clearCommand, clearDist } from "@tsparticles/cli-command-build-clear";
+import { buildDistFiles, distFilesCommand } from "@tsparticles/cli-command-build-distfiles";
 import { getDistStats, type IDistStats } from "@tsparticles/cli-command-build-diststats";
-import { esLintCommand } from "@tsparticles/cli-command-build-eslint";
-import { prettierCommand } from "@tsparticles/cli-command-build-prettier";
-import { tscCommand } from "@tsparticles/cli-command-build-tsc";
-
-import type { BuildExecutionOptions } from "./build-options.js";
-import { runLegacyBuild } from "./legacy-runner.js";
-import { tryRunNxBuild } from "./nx-runner.js";
+import { esLintCommand, lint } from "@tsparticles/cli-command-build-eslint";
+import {
+  prettierCommand,
+  prettifyPackageDistJson,
+  prettifyPackageJson,
+  prettifyReadme,
+  prettifySrc,
+} from "@tsparticles/cli-command-build-prettier";
+import { buildTS, tscCommand } from "@tsparticles/cli-command-build-tsc";
+import path from "node:path";
 
 const minSize = 0;
 
@@ -80,7 +83,6 @@ buildCommand.option(
   false,
 );
 buildCommand.option("-t, --tsc", "Build the library using TypeScript", false);
-buildCommand.option("--nx", "Prefer running Nx targets when available", false);
 
 buildCommand.argument("[path]", `Path to the project root folder, default is "src"`, "src");
 
@@ -97,11 +99,10 @@ buildCommand.action(async (argPath: string) => {
         !opts["prettify"] &&
         !opts["tsc"]),
     silentOpt = opts["silent"] as string | boolean,
-    commandOptions: BuildExecutionOptions = {
-      all,
-      argPath,
-      basePath: process.cwd(),
-      ci: !!opts["ci"],
+    ci = !!opts["ci"],
+    basePath = process.cwd(),
+    sourcePath = path.join(basePath, argPath),
+    options = {
       circularDeps: all || !!opts["circularDeps"],
       clean: all || !!opts["clean"],
       distfiles: all || !!opts["dist"],
@@ -109,24 +110,54 @@ buildCommand.action(async (argPath: string) => {
       doBundleWebpack: all || !!opts["bundleWebpack"],
       doLint: all || !!opts["lint"],
       prettier: all || !!opts["prettify"],
-      silent: silentOpt === "false" ? false : !!silentOpt || !!opts["ci"],
+      silent: silentOpt === "false" ? false : !!silentOpt || ci,
       tsc: all || !!opts["tsc"],
-      useNx: !!opts["nx"],
     },
-    oldStats = await getDistStats(commandOptions.basePath);
+    oldStats = await getDistStats(basePath);
 
-  if (tryRunNxBuild(commandOptions)) {
-    if (!commandOptions.silent) {
-      printDistStatsDiff(oldStats, await getDistStats(commandOptions.basePath));
-    }
-
-    return;
+  if (options.clean && !(await clearDist(basePath, options.silent))) {
+    throw new Error("Dist clear failed");
   }
 
-  runLegacyBuild(commandOptions);
+  if (options.prettier && !(await prettifySrc(basePath, sourcePath, ci, options.silent))) {
+    throw new Error("Source prettify failed");
+  }
 
-  if (!commandOptions.silent) {
-    printDistStatsDiff(oldStats, await getDistStats(commandOptions.basePath));
+  if (options.doLint && !(await lint(ci, options.silent))) {
+    throw new Error("Lint failed");
+  }
+
+  if (options.tsc && !(await buildTS(basePath, options.silent))) {
+    throw new Error("TypeScript build failed");
+  }
+
+  if (options.circularDeps && !(await checkCircularDeps(basePath, options.silent))) {
+    throw new Error("Circular dependencies check failed");
+  }
+
+  if (options.doBundleWebpack && !(await bundleWebpack(basePath, options.silent))) {
+    throw new Error("Webpack bundling failed");
+  }
+
+  if (options.doBundleRollup && !(await bundleRollup(basePath, options.silent))) {
+    throw new Error("Rollup bundling failed");
+  }
+
+  if (
+    options.prettier &&
+    (!(await prettifyReadme(basePath, ci, options.silent)) ||
+      !(await prettifyPackageJson(basePath, ci, options.silent)) ||
+      !(await prettifyPackageDistJson(basePath, ci, options.silent)))
+  ) {
+    throw new Error("Project prettify failed");
+  }
+
+  if (options.distfiles && !(await buildDistFiles(basePath, options.silent))) {
+    throw new Error("Dist files build failed");
+  }
+
+  if (!options.silent) {
+    printDistStatsDiff(oldStats, await getDistStats(basePath));
   }
 });
 

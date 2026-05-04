@@ -5,6 +5,13 @@
   "type": "module",
   "main": "dist/eslint.config.js",
   "types": "dist/eslint.config.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/eslint.config.d.ts",
+      "import": "./dist/eslint.config.js",
+      "default": "./dist/eslint.config.js"
+    }
+  },
   "license": "MIT",
   "files": [
     "dist/eslint.config.js",
@@ -12,8 +19,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "utils/eslint-config"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/utils/eslint-config"
   },
   "publishConfig": {
     "access": "public"

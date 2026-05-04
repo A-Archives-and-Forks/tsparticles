@@ -45,8 +45,27 @@
           "args": ["--ci"]
         }
       }
+    },
+    "build:ci": {
+      "dependsOn": [
+        "^build:ci"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "cache": true
     }
   },
+  "plugins": [
+    {
+      "plugin": "nx/plugins/package-json",
+      "include": [
+        "cli/packages/*/package.json",
+        "cli/commands/build/package.json"
+      ]
+    },
+    "@tsparticles/cli-nx-plugin"
+  ],
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": false

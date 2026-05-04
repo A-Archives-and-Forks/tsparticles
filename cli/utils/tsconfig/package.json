@@ -5,8 +5,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "utils/tsconfig"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/utils/tsconfig"
   },
   "publishConfig": {
     "access": "public"

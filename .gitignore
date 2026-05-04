@@ -193,6 +193,7 @@ PublishScripts/
 **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
 !**/[Pp]ackages/build/
+!cli/packages/**
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
@@ -356,6 +357,10 @@ MigrationBackup/
 dist/
 tmp/
 build/
+!cli/commands/build/
+!cli/commands/build/**
+!cli/commands/build/package.json
+!cli/commands/build/project.json
 docs/
 demo/vanilla/report.html
 demo/vanilla/report.htm

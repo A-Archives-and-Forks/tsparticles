@@ -4,11 +4,18 @@
   "type": "module",
   "main": "dist/webpack-tsparticles.js",
   "types": "dist/webpack-tsparticles.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/webpack-tsparticles.d.ts",
+      "import": "./dist/webpack-tsparticles.js",
+      "default": "./dist/webpack-tsparticles.js"
+    }
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "utils/webpack-config"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/utils/webpack-config"
   },
   "publishConfig": {
     "access": "public"

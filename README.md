@@ -311,10 +311,10 @@ tsParticles
     id: "tsparticles",
     url: "presets/default.json",
   })
-  .then(container => {
+  .then((container) => {
     console.log("callback - tsparticles config loaded");
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
   });
 

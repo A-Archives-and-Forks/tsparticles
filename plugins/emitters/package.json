@@ -4,8 +4,8 @@
   "description": "tsParticles emitters plugin",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "version": "tsparticles-cli build -d && git add package.dist.json && tsparticles-cli build -p -l && git add .",
+    "build": "tsparticles-build",
+    "version": "tsparticles-build -d && git add package.dist.json && tsparticles-build -p -l && git add .",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -132,7 +132,9 @@
   },
   "devDependencies": {
     "@tsparticles/engine": "workspace:*",
-    "@tsparticles/plugin-interactivity": "workspace:*"
+    "@tsparticles/plugin-interactivity": "workspace:*",
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^"
   },
   "peerDependenciesMeta": {
     "@tsparticles/plugin-interactivity": {

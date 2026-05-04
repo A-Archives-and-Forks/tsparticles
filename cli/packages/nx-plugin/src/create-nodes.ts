@@ -3,10 +3,47 @@ import { createCanonicalAliasTargets, isTsParticlesWorkspacePackage } from "./ca
 import { dirname, join } from "node:path";
 
 interface TsParticlesPackageJson {
+  name?: string;
   scripts?: Record<string, string>;
 }
 
 const emptyCount = 0;
+
+/**
+ * @param scriptName -
+ * @returns -
+ */
+function createScriptTarget(scriptName: string): Record<string, unknown> {
+  return {
+    executor: "nx:run-script",
+    options: {
+      script: scriptName,
+    },
+    parallelism: true,
+  };
+}
+
+/**
+ * @param scripts -
+ * @returns -
+ */
+function createFallbackScriptTargets(scripts?: Record<string, string>): Record<string, unknown> {
+  const targets: Record<string, unknown> = {};
+
+  if (!scripts) {
+    return targets;
+  }
+
+  if (scripts["build"]) {
+    targets["build"] = createScriptTarget("build");
+  }
+
+  if (scripts["build:ci"]) {
+    targets["build:ci"] = createScriptTarget("build:ci");
+  }
+
+  return targets;
+}
 
 /**
  * @param packageJsonPath -
@@ -20,9 +57,16 @@ function createProjectAugmentation(packageJsonPath: string, workspaceRoot: strin
 
   const packageJson = readJsonFile<TsParticlesPackageJson>(join(workspaceRoot, packageJsonPath)),
     aliasTargets = createCanonicalAliasTargets(packageJson.scripts),
-    targetNames = Object.keys(aliasTargets);
+    fallbackTargets = createFallbackScriptTargets(packageJson.scripts),
+    aliasTargetNames = Object.keys(aliasTargets),
+    fallbackTargetNames = Object.keys(fallbackTargets),
+    projectTargets = {
+      ...fallbackTargets,
+      ...aliasTargets,
+    },
+    targetNames = Object.keys(projectTargets);
 
-  if (targetNames.length === emptyCount) {
+  if (!packageJson.name || targetNames.length === emptyCount) {
     return {};
   }
 
@@ -31,11 +75,13 @@ function createProjectAugmentation(packageJsonPath: string, workspaceRoot: strin
   return {
     projects: {
       [projectRoot]: {
+        name: packageJson.name,
         root: projectRoot,
-        targets: aliasTargets,
+        targets: projectTargets,
         metadata: {
           targetGroups: {
-            "tsParticles Nx aliases": targetNames,
+            ...(fallbackTargetNames.length > emptyCount ? { "tsParticles Nx fallback": fallbackTargetNames } : {}),
+            ...(aliasTargetNames.length > emptyCount ? { "tsParticles Nx aliases": aliasTargetNames } : {}),
           },
         },
       },

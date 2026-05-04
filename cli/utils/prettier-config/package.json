@@ -2,15 +2,19 @@
   "name": "@tsparticles/prettier-config",
   "version": "3.4.14",
   "description": "tsParticles default Prettier Configuration",
-  "main": "dist/prettier-config.json",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": "./dist/index.cjs"
+  },
   "license": "MIT",
   "files": [
+    "dist/index.cjs",
     "dist/prettier-config.json"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "utils/prettier-config"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/utils/prettier-config"
   },
   "publishConfig": {
     "access": "public"

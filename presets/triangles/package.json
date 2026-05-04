@@ -4,9 +4,9 @@
   "description": "tsParticles triangles preset",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "build:ci": "tsparticles-cli build --ci",
-    "version": "tsparticles-cli build -d && git add package.dist.json",
+    "build": "tsparticles-build",
+    "build:ci": "tsparticles-build --ci",
+    "version": "tsparticles-build -d && git add package.dist.json",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -122,5 +122,9 @@
     "@tsparticles/interaction-particles-links": "workspace:*",
     "@tsparticles/plugin-interactivity": "workspace:*"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^"
+  }
 }

@@ -16,10 +16,7 @@ pnpm add -D @tsparticles/depcruise-config dependency-cruiser
 ## Usage
 
 ```ts
-import {
-  defaultConfig,
-  loadDependencyCruiserConfig,
-} from "@tsparticles/depcruise-config";
+import { defaultConfig, loadDependencyCruiserConfig } from "@tsparticles/depcruise-config";
 
 const config = await loadDependencyCruiserConfig();
 // fallback behavior:

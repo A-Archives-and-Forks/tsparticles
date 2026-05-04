@@ -9,7 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/commands/create-utils"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {
@@ -57,7 +58,6 @@
     "webpack": "^5.106.2"
   },
   "devDependencies": {
-    "@tsparticles/engine": "^3.9.1",
     "@types/estree": "^1.0.8",
     "@types/klaw": "^3.0.7",
     "@types/node": "^25.6.0",

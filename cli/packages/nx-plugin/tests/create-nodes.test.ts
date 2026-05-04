@@ -39,10 +39,11 @@ describe("createCanonicalAliasTargets", () => {
 });
 
 describe("isTsParticlesWorkspacePackage", () => {
-  it("matches workspace package roots used by the CLI monorepo", () => {
+  it("matches workspace package roots used by the merged CLI monorepo", () => {
+    expect(isTsParticlesWorkspacePackage("cli/commands/build/package.json")).toBe(true);
+    expect(isTsParticlesWorkspacePackage("cli/packages/nx-plugin/package.json")).toBe(true);
+    expect(isTsParticlesWorkspacePackage("cli/commands/create-utils/files/empty-project/package.json")).toBe(false);
     expect(isTsParticlesWorkspacePackage("commands/build/package.json")).toBe(true);
-    expect(isTsParticlesWorkspacePackage("packages/nx-plugin/package.json")).toBe(true);
-    expect(isTsParticlesWorkspacePackage("commands/create-utils/files/empty-project/package.json")).toBe(false);
     expect(isTsParticlesWorkspacePackage("package.json")).toBe(false);
   });
 });

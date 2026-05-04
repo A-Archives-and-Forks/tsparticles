@@ -1,5 +1,8 @@
 packages:
   - bundles/*
+  - cli/commands/*
+  - cli/packages/*
+  - cli/utils/*
   - demo/*
   - effects/*
   - engine
@@ -57,4 +60,5 @@ onlyBuiltDependencies:
   - sharp
   - unrs-resolver
 patchedDependencies:
+  tsup@8.5.1: cli/utils/patches/tsup@8.5.1.patch
   vue-server-renderer@2.7.16: patches/vue-server-renderer@2.7.16.patch

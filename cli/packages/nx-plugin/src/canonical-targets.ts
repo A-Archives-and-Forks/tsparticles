@@ -7,7 +7,8 @@ interface TsParticlesAliasDefinition {
   description: string;
 }
 
-const pnpmRunPrefix = "pnpm run";
+const pnpmRunPrefix = "pnpm run",
+  cliPrefixLength = 4;
 
 export const tsParticlesAliasDefinitions: readonly TsParticlesAliasDefinition[] = [
   {
@@ -99,15 +100,16 @@ export function createCanonicalAliasTargets(
 }
 
 export function isTsParticlesWorkspacePackage(packageJsonPath: string): boolean {
-  const normalizedPath = packageJsonPath.replaceAll("\\", "/");
+  const normalizedPath = packageJsonPath.replaceAll("\\", "/"),
+    pathFromWorkspaceRoot = normalizedPath.startsWith("cli/") ? normalizedPath.slice(cliPrefixLength) : normalizedPath;
 
   if (normalizedPath.includes("/files/")) {
     return false;
   }
 
   return (
-    normalizedPath.startsWith("commands/") ||
-    normalizedPath.startsWith("packages/") ||
-    normalizedPath.startsWith("utils/")
+    pathFromWorkspaceRoot.startsWith("commands/") ||
+    pathFromWorkspaceRoot.startsWith("packages/") ||
+    pathFromWorkspaceRoot.startsWith("utils/")
   );
 }

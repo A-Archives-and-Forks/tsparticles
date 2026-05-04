@@ -12,16 +12,10 @@ import tseslint from "typescript-eslint";
 
 const consumerDir = process.cwd(),
   consumerTsconfig = path.resolve(consumerDir, "tsconfig.json"),
-  parserProject = fs.existsSync(consumerTsconfig) ? consumerTsconfig : undefined;
-
-export default defineConfig([
-  globalIgnores(["dist", "node_modules"]),
-  js.configs.recommended,
-  stylistic.configs.recommended,
-  jsdoc.configs["flat/recommended-typescript"],
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
-  {
+  parserProject = fs.existsSync(consumerTsconfig) ? consumerTsconfig : undefined,
+  strictTypeCheckedConfigs = tseslint.configs.strictTypeChecked as unknown[],
+  stylisticTypeCheckedConfigs = tseslint.configs.stylisticTypeChecked as unknown[],
+  tsParticlesConfig = {
     plugins: {
       "@stylistic": stylistic,
       "@typescript-eslint": tseslint.plugin,
@@ -147,7 +141,7 @@ export default defineConfig([
       "@typescript-eslint/no-misused-promises": "error",
       "@typescript-eslint/no-restricted-types": "warn",
       "@typescript-eslint/no-unnecessary-condition": "error",
-      "@typescript-eslint/no-unnecessary-type-arguments": "off", // bug #12158 on typescript-eslint
+      "@typescript-eslint/no-unnecessary-type-arguments": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "error",
       "@typescript-eslint/no-unused-expressions": "error",
       "@typescript-eslint/no-unused-vars": [
@@ -240,7 +234,16 @@ export default defineConfig([
       "no-unused-expressions": "off",
       "no-useless-constructor": "off",
     },
-  },
+  } as unknown;
+
+export default defineConfig([
+  globalIgnores(["dist", "node_modules"]),
+  js.configs.recommended,
+  stylistic.configs.recommended,
+  jsdoc.configs["flat/recommended-typescript"],
+  ...strictTypeCheckedConfigs,
+  ...stylisticTypeCheckedConfigs,
+  tsParticlesConfig,
   prettierConfig,
   prettierRecommended,
-]);
+] as never);

@@ -7,19 +7,19 @@
 ### NPM
 
 ```bash
-npm install -g @particlesjs/cli
+npm install -g @tsparticles/cli-build
 ```
 
 ### Yarn
 
 ```bash
-yarn global add @particlesjs/cli
+yarn global add @tsparticles/cli-build
 ```
 
 ### PNPM
 
 ```bash
-pnpm global add @particlesjs/cli
+pnpm global add @tsparticles/cli-build
 ```
 
 ## Usage
@@ -27,37 +27,23 @@ pnpm global add @particlesjs/cli
 ### Help
 
 ```bash
-npx @particlesjs/cli --help
+npx @tsparticles/cli-build --help
 ```
 
 or
 
 ```bash
-tsparticles-cli --help
+tsparticles-build --help
 ```
 
 ### Build
 
 ```bash
-npx @particlesjs/cli build
+npx @tsparticles/cli-build
 ```
 
 or
 
 ```bash
-tsparticles-cli build
-```
-
-### Create
-
-#### Preset
-
-```bash
-npx @particlesjs/cli create preset <folder>
-```
-
-or
-
-```bash
-tsparticles-cli create preset <folder>
+tsparticles-build
 ```

@@ -9,8 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsparticles/cli.git",
-    "directory": "commands/build"
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/commands/build"
   },
   "prettier": "@tsparticles/prettier-config",
   "scripts": {

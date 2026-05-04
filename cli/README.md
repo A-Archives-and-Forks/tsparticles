@@ -7,19 +7,19 @@
 ### NPM
 
 ```bash
-npm install -g @particlesjs/cli
+npm install -g @tsparticles/cli-build
 ```
 
 ### Yarn
 
 ```bash
-yarn global add @particlesjs/cli
+yarn global add @tsparticles/cli-build
 ```
 
 ### PNPM
 
 ```bash
-pnpm global add @particlesjs/cli
+pnpm global add @tsparticles/cli-build
 ```
 
 ## Usage
@@ -27,43 +27,37 @@ pnpm global add @particlesjs/cli
 ### Help
 
 ```bash
-npx @particlesjs/cli --help
+npx @tsparticles/cli-build --help
 ```
 
 or
 
 ```bash
-tsparticles-cli --help
+tsparticles-build --help
 ```
 
 ### Build
 
 ```bash
-npx @particlesjs/cli build
+npx @tsparticles/cli-build
 ```
 
 or
 
 ```bash
-tsparticles-cli build
+tsparticles-build
 ```
 
-### Build in an Nx workspace
-
-The `build` command can delegate to Nx targets when it detects an Nx workspace.
+### Build options
 
 ```bash
-tsparticles-cli build --nx
-tsparticles-cli build --nx --clean --lint --tsc
-tsparticles-cli build --legacy
-pnpm nx run @tsparticles/cli-command-build:tsc
+tsparticles-build
+tsparticles-build --clean --lint --tsc
+tsparticles-build --bundle-webpack
+tsparticles-build --bundle-rollup
 ```
 
-- `--nx`: forces Nx-target execution when required targets exist
-- `--legacy`: disables Nx-aware mode and runs the original in-process pipeline
-- default behavior in this workspace: with no granular flags, `build`/`build:ci` Nx aggregate targets are preferred when available
-
-Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package projects under `commands/*`, `packages/*`, and `utils/*` with canonical aliases like `clean`, `prettify`, `prettify:ci`, `tsc`, `bundle`, and `distfiles`.
+Inside this repository, the local plugin `@tsparticles/cli-nx-plugin` augments package projects under `cli/commands/*`, `cli/packages/*`, and `cli/utils/*` with canonical aliases like `clean`, `prettify`, `prettify:ci`, `tsc`, `bundle`, and `distfiles`.
 
 ## Workspace commands (development)
 
@@ -93,11 +87,11 @@ pnpm nx run @tsparticles/cli-nx-plugin:build
 #### Preset
 
 ```bash
-npx @particlesjs/cli create preset <folder>
+npx @tsparticles/cli-create preset <folder>
 ```
 
 or
 
 ```bash
-tsparticles-cli create preset <folder>
+tsparticles-create preset <folder>
 ```
