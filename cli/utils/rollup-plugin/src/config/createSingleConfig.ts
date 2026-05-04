@@ -1,4 +1,5 @@
 import path from "node:path";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -6,6 +7,10 @@ import { getEntry } from "./entry";
 import { getExternal, getGlobals } from "./externals";
 import type { ConfigParams } from "../types";
 import type { RollupOptions } from "rollup";
+
+const toJsBanner = (text: string): string => {
+  return `/* ${text} */`;
+};
 
 export const createSingleConfig = (
   params: ConfigParams,
@@ -27,6 +32,9 @@ export const createSingleConfig = (
     input,
     external: getExternal({ bundle, additionalExternals }),
     plugins: [
+      nodeResolve({
+        browser: true,
+      }),
       replace({
         preventAssignment: true,
         __VERSION__: JSON.stringify(version),
@@ -40,9 +48,10 @@ export const createSingleConfig = (
     output: {
       file: path.resolve(dir, "dist", `${name}.js`),
       format: "umd",
-      name: "tsParticles",
+      name: "window",
+      extend: true,
       globals: getGlobals(additionalExternals, bundle),
-      banner: min ? minBanner : banner,
+      banner: toJsBanner(min ? minBanner : banner),
       inlineDynamicImports: true,
     },
   };

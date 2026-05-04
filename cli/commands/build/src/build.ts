@@ -62,7 +62,7 @@ buildCommand.addCommand(tscCommand);
 
 buildCommand.option(
   "-a, --all",
-  "Do all build steps (default if no flags are specified) (same as -b -c -d -l -p -t)",
+  "Do all build steps (default if no flags are specified) (same as --bundle-rollup -c -d -l -p -t)",
   false,
 );
 buildCommand.option("-b, --bundle-webpack", "Bundle the library using Webpack", false);
@@ -106,8 +106,8 @@ buildCommand.action(async (argPath: string) => {
       circularDeps: all || !!opts["circularDeps"],
       clean: all || !!opts["clean"],
       distfiles: all || !!opts["dist"],
-      doBundleRollup: !!opts["bundleRollup"],
-      doBundleWebpack: all || !!opts["bundleWebpack"],
+      doBundleRollup: all || !!opts["bundleRollup"],
+      doBundleWebpack: !!opts["bundleWebpack"],
       doLint: all || !!opts["lint"],
       prettier: all || !!opts["prettify"],
       silent: silentOpt === "false" ? false : !!silentOpt || ci,

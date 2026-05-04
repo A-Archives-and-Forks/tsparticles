@@ -48,6 +48,9 @@ importers:
       '@tsparticles/prettier-config':
         specifier: workspace:^
         version: link:cli/utils/prettier-config
+      '@tsparticles/rollup-plugin':
+        specifier: workspace:^
+        version: link:cli/utils/rollup-plugin
       '@tsparticles/tsconfig':
         specifier: workspace:^
         version: link:cli/utils/tsconfig
@@ -2165,6 +2168,9 @@ importers:
 
   cli/utils/rollup-plugin:
     dependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: ^16.0.3
+        version: 16.0.3(rollup@4.60.1)
       '@rollup/plugin-replace':
         specifier: ^6.0.3
         version: 6.0.3(rollup@4.60.1)

@@ -7,6 +7,7 @@ export default {
     ...builtinModules,
     "rollup",
     "node:path",
+    "@rollup/plugin-node-resolve",
     "@rollup/plugin-replace",
     "@rollup/plugin-terser",
     "rollup-plugin-visualizer"

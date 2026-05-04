@@ -5,9 +5,21 @@ interface Params {
   bundle?: boolean;
 }
 
+const defaultGlobal = "window";
+
+const getRootGlobal = (external: ExternalData): string => {
+  const root = external.data?.root;
+
+  if (Array.isArray(root)) {
+    return root.filter((t): t is string => typeof t === "string").join(".") || defaultGlobal;
+  }
+
+  return typeof root === "string" ? root : defaultGlobal;
+};
+
 export const getExternal = ({ bundle, additionalExternals = [] }: Params) => {
   if (bundle) {
-    return [];
+    return additionalExternals.filter(e => !e.bundle).map(e => e.name);
   }
 
   return [
@@ -22,11 +34,18 @@ export const getGlobals = (
   additionalExternals: ExternalData[] = [],
   bundle?: boolean
 ) => {
-  if (bundle) {
-    return {};
-  }
+  const globalsAdditional = bundle ? additionalExternals.filter(e => !e.bundle) : additionalExternals;
+  const additionalMap = new Map(globalsAdditional.map(e => [e.name, getRootGlobal(e)]));
 
-  return Object.fromEntries(
-    additionalExternals.map(e => [e.name, "window"])
-  );
+  return (id: string) => {
+    if (additionalMap.has(id)) {
+      return additionalMap.get(id) ?? defaultGlobal;
+    }
+
+    if (id === "tsparticles" || id.startsWith("tsparticles-") || id.startsWith("@tsparticles/")) {
+      return defaultGlobal;
+    }
+
+    return defaultGlobal;
+  };
 };
