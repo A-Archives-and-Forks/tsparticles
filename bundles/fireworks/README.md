@@ -4,8 +4,7 @@
 
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/fireworks/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/fireworks) [![npmjs](https://badge.fury.io/js/@tsparticles/fireworks.svg)](https://www.npmjs.com/package/@tsparticles/fireworks) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/fireworks)](https://www.npmjs.com/package/@tsparticles/fireworks) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) fireworks bundle loads all the features necessary to create
-beautiful fireworks effects with ease.
+[tsParticles](https://github.com/tsparticles/tsparticles) fireworks bundle to create fireworks effects with a focused API.
 
 **Included Packages**
 
@@ -17,6 +16,7 @@ beautiful fireworks effects with ease.
 - [@tsparticles/plugin-sounds](https://github.com/tsparticles/tsparticles/tree/main/plugins/sounds)
 - [@tsparticles/updater-destroy](https://github.com/tsparticles/tsparticles/tree/main/updaters/destroy)
 - [@tsparticles/updater-life](https://github.com/tsparticles/tsparticles/tree/main/updaters/life)
+- [@tsparticles/updater-paint](https://github.com/tsparticles/tsparticles/tree/main/updaters/paint)
 - [@tsparticles/updater-rotate](https://github.com/tsparticles/tsparticles/tree/main/updaters/rotate)
 
 ## Dependency Graph
@@ -43,40 +43,93 @@ end
 subgraph u [Updaters]
   ud[tsparticles/updater-destroy]
   ul[tsparticles/updater-life]
+  up[tsparticles/updater-paint]
   ur[tsparticles/updater-rotate]
 end
 
 bf --> bb
 bf --> ce
-bf --> e
 bf --> p
 bf --> u
 ```
 
-## Quick checklist
+## Exposed API
 
-1. Install `@tsparticles/engine` (or use the CDN bundle below)
-2. Call the package loader function(s) before `tsParticles.load(...)`
-3. Apply the package options in your `tsParticles.load(...)` config
+The package API is centered on `fireworks`.
+
+```ts
+import { fireworks } from "@tsparticles/fireworks";
+
+// Main API
+const instance = await fireworks();
+const byId = await fireworks("canvas-id", options);
+const byOptions = await fireworks(options);
+
+// Extra helpers
+await fireworks.init();
+const custom = await fireworks.create(canvas, options);
+
+console.log(fireworks.version);
+```
+
+`@tsparticles/fireworks` does not expose `tsParticles` from its main entrypoint.
+If you need direct engine APIs, import them from `@tsparticles/engine`.
+
+## Installation
+
+```bash
+pnpm add @tsparticles/fireworks
+```
 
 ## How to use it
 
+### ESM / TypeScript
+
+```ts
+import { fireworks } from "@tsparticles/fireworks";
+
+const instance = await fireworks({
+  colors: ["#ffffff", "#ff0000"],
+  sounds: false,
+});
+
+instance?.pause();
+instance?.play();
+instance?.stop();
+```
+
+With explicit canvas id:
+
+```ts
+import { fireworks } from "@tsparticles/fireworks";
+
+await fireworks("tsparticles", {
+  rate: 3,
+  speed: { min: 10, max: 25 },
+});
+```
+
+### Custom canvas via `fireworks.create`
+
+```ts
+import { fireworks } from "@tsparticles/fireworks";
+
+const canvas = document.getElementById("my-canvas") as HTMLCanvasElement;
+await fireworks.create(canvas, { sounds: true });
+```
+
 ### CDN / Vanilla JS / jQuery
 
-The CDN/Vanilla version JS has two different files:
+The CDN/Vanilla JS version has two files:
 
 - One is a bundle file with all the scripts included in a single file
-- One is a file including just the `fireworks` function to load the tsParticles fireworks bunddle, all dependencies must
-  be
-  included manually
+- One includes only the `fireworks` API, where dependencies must be loaded manually
+
+After loading the bundle, `fireworks` is available on `globalThis`.
 
 #### Bundle
 
-Including the `tsparticles.fireworks.bundle.min.js` file will out of the box.
-
-This is the easiest usage, since it's a single file with all the features loaded.
-
-You can still add additional packages, loading them like all the other packages.
+Use the bundle when you want a single script with all required dependencies.
 
 #### Not Bundle
 
@@ -85,47 +138,33 @@ specified in the **Included Packages** section.
 
 ### Usage
 
-Once the scripts are loaded you can set up `tsParticles` like the following examples:
-
-** Easiest Way **
-
 ```javascript
 fireworks();
 ```
 
-** Async Way, best practice **
-
 ```javascript
 (async () => {
-  await fireworks();
+  const instance = await fireworks();
+
+  instance?.pause();
+  instance?.play();
+  instance?.stop();
 })();
 ```
-
-** Custom Canvas **
 
 ```javascript
 fireworks.create(document.getElementById("custom-id"));
 ```
 
-** Fireworks Options **
-
-```javascript
-fireworks({
-  colors: ["#ffffff", "#ff0000"],
-});
-```
-
-** Custom Canvas with Options **
-
-```javascript
-fireworks.create(document.getElementById("custom-id"), {
-  colors: ["#ffffff", "#ff0000"],
-});
-```
-
 #### Options
 
-The `fireworks` has only a single `options` object parameter, with the following properties:
+`fireworks` supports these call signatures:
+
+- `fireworks()`
+- `fireworks(options)`
+- `fireworks(id, options)`
+
+Main options:
 
 - `background` String: The background color of the canvas, it can be any valid CSS color, can be transparent as well.
 - `brightness` Number or { min: number; max: number; }: The brightness offset applied to the particles color, from -100
@@ -141,11 +180,19 @@ The `fireworks` has only a single `options` object parameter, with the following
 - `speed` Number or { min: number; max: number; }: The speed of the fireworks particles.
 - `splitCount` Number or { min: number; max: number; }: The number of particles to split the emitter in.
 
+### Returned instance methods
+
+The resolved `FireworksInstance` exposes:
+
+- `pause()`
+- `play()`
+- `stop()`
+
 ## Common pitfalls
 
-- Calling `tsParticles.load(...)` before `package loader(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+- Calling `fireworks` before scripts are loaded in CDN usage
+- Assuming `tsParticles` is exported by `@tsparticles/fireworks` main entrypoint
+- Reusing the same `id` unintentionally (the package caches instances by id)
 
 ## Related docs
 
