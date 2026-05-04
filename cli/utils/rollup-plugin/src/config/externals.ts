@@ -1,4 +1,5 @@
 import type { ExternalData } from "../types";
+import type { ExternalOption } from "rollup";
 
 interface Params {
   additionalExternals?: ExternalData[];
@@ -17,10 +18,11 @@ const getRootGlobal = (external: ExternalData): string => {
   return typeof root === "string" ? root : defaultGlobal;
 };
 
-export const getExternal = ({ bundle, additionalExternals = [] }: Params) => {
+export const getExternal = ({ bundle, additionalExternals = [] }: Params): ExternalOption => {
   if (bundle) {
     return additionalExternals.filter(e => !e.bundle).map(e => e.name);
   }
+
 
   return [
     ...additionalExternals.map(e => e.name),

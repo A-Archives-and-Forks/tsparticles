@@ -30,6 +30,7 @@ export const createParticlesBuild = (
       minBanner,
       dir,
       bundle: false,
+      includeLazy: false,
       additionalExternals,
     });
 
@@ -49,6 +50,7 @@ export const createParticlesBuild = (
         minBanner,
         dir,
         bundle: true,
+        includeLazy: true,
         additionalExternals,
       }),
     ];

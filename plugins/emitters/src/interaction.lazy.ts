@@ -15,7 +15,7 @@ export async function loadEmittersInteraction(engine: EmittersEngine): Promise<v
         { addEmittersShapesManager },
         { getEmittersInstancesManager },
       ] = await Promise.all([
-        import("@tsparticles/plugin-interactivity"),
+        import("@tsparticles/plugin-interactivity/lazy"),
         import("./addEmittersShapesManager.js"),
         import("./getEmittersInstancesManager.js"),
       ]),

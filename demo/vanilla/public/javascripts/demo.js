@@ -53,7 +53,11 @@
         poolCount = document.getElementById("pool-count");
 
     setInterval(() => {
-        const container = tsParticles.item(0);
+        if (!window.tsParticles) {
+            return;
+        }
+
+        const container = window.tsParticles.item(0);
 
         if (container) {
             particlesCount.innerText = `${container.particles.count}`;

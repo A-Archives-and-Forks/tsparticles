@@ -15,7 +15,7 @@ export async function loadInfectionPlugin(engine: Engine): Promise<void> {
       { ensureInteractivityPluginLoaded },
       { InfectionPlugin },
     ] = await Promise.all([
-      import("@tsparticles/plugin-interactivity"),
+      import("@tsparticles/plugin-interactivity/lazy"),
       import("./InfectionPlugin.js"),
     ]);
 

@@ -9,6 +9,7 @@ export interface ConfigParams {
   banner: string;
   bundle?: boolean;
   dir: string;
+  includeLazy?: boolean;
   entry: {
     bundle: boolean;
     format: string;

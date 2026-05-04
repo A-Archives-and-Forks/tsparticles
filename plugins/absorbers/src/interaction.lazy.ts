@@ -1,6 +1,6 @@
 import type { AbsorberContainer } from "./AbsorberContainer.js";
 import { type Engine } from "@tsparticles/engine/lazy";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import type { InteractivityEngine } from "@tsparticles/plugin-interactivity/lazy";
 
 declare const __VERSION__: string;
 
@@ -15,7 +15,7 @@ export async function loadAbsorbersInteraction(engine: Engine): Promise<void> {
         { ensureInteractivityPluginLoaded },
         { getAbsorbersInstancesManager },
       ] = await Promise.all([
-        import("@tsparticles/plugin-interactivity"),
+        import("@tsparticles/plugin-interactivity/lazy"),
         import("./getAbsorbersInstancesManager.js"),
       ]),
       pluginManager = e.pluginManager,
