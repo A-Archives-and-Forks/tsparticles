@@ -14,7 +14,8 @@ export type ParticlesBuildType =
   | "preset"
   | "shape"
   | "template"
-  | "updater";
+  | "updater"
+  | "util";
 
 import type { ParticlesBuildParams } from "./types";
 
@@ -110,5 +111,11 @@ export const buildMap: Record<ParticlesBuildType, BuildDefinition> = {
     format: "updater",
     banner: ({ version }) => `Updater v${version}`,
     minBanner: ({ version }) => `Updater v${version}`,
+  },
+  util: {
+    format: "",
+    hasBundle: false,
+    banner: ({ version }) => `Utility v${version}`,
+    minBanner: ({ version, bundleName }) => `tsParticles ${bundleName ?? "Utility"} v${version}`,
   },
 };

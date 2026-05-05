@@ -49,5 +49,8 @@ export const loadParticlesTemplate = (p: ParticlesBuildParams) =>
 export const loadParticlesUpdater = (p: ParticlesBuildParams) =>
   createParticlesBuild("updater", p);
 
+export const loadParticlesUtil = (p: ParticlesBuildParams) =>
+  createParticlesBuild("util", p);
+
 export { createParticlesBuild } from "./createParticlesBuild";
 export type { ParticlesBuildType } from "./buildMap";

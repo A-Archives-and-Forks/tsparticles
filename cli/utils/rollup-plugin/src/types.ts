@@ -4,6 +4,13 @@ export interface ExternalData {
   name: string;
 }
 
+export type UmdBuildKind = "bundle" | "confetti" | "engine" | "fireworks" | "package" | "pjs";
+
+export interface UmdPolicyData {
+  kind: UmdBuildKind;
+  scope: string;
+}
+
 export interface ConfigParams {
   additionalExternals?: ExternalData[];
   banner: string;
@@ -16,6 +23,7 @@ export interface ConfigParams {
     name?: string;
   };
   minBanner: string;
+  umdPolicy: UmdPolicyData;
   version: string;
 }
 

@@ -1,5 +1,9 @@
+import fs from "node:fs";
+import path from "node:path";
+
 export interface EntryParams {
   bundle: boolean;
+  dir: string;
   format: string;
   lazy: boolean;
   min: boolean;
@@ -7,9 +11,13 @@ export interface EntryParams {
 }
 
 export const getEntry = (data: EntryParams) => {
-  const { bundle, format, lazy, min, name } = data,
+  const { bundle, dir, format, lazy, min, name } = data,
     fileName = bundle ? "bundle" : "index",
+    browserFileName = "browser",
     completeFileName = lazy ? `${fileName}.lazy` : fileName,
+    completeBrowserFileName = lazy ? `${browserFileName}.lazy` : browserFileName,
+    browserCandidate = path.resolve(dir, "dist/browser", `${completeBrowserFileName}.js`),
+    inputFileName = !bundle && fs.existsSync(browserCandidate) ? completeBrowserFileName : completeFileName,
     fixFormat = format ? `.${format}` : "",
     fixName = name ? `.${name}` : "",
     fixMin = min ? ".min" : "",
@@ -17,6 +25,6 @@ export const getEntry = (data: EntryParams) => {
 
   return {
     name: `tsparticles${fixFormat}${fixName}${fixLazy}${fixMin}`,
-    input: `./dist/browser/${completeFileName}.js`,
+    input: `./dist/browser/${inputFileName}.js`,
   };
 };

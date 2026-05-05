@@ -31,16 +31,6 @@ async function updateBundleFile(destPath: string, name: string): Promise<void> {
       },
     ],
   });
-
-  await replaceTokensInFile({
-    path: path.join(destPath, "src", "bundle.lazy.ts"),
-    tokens: [
-      {
-        from: /loadTemplatePreset/g,
-        to: `load${capitalizedName}Preset`,
-      },
-    ],
-  });
 }
 
 /**

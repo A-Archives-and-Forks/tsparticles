@@ -1,5 +1,6 @@
 import { buildMap, type ParticlesBuildType } from "./buildMap";
 import { createConfig } from "./config/createConfig";
+import { getUmdPolicyData } from "./config/umdPolicy";
 import type { ParticlesBuildParams } from "./types";
 
 export const createParticlesBuild = (
@@ -17,6 +18,7 @@ export const createParticlesBuild = (
     additionalExternals = params.additionalExternals,
     moduleName = params.moduleName,
     bundle = params.bundle,
+    umdPolicy = getUmdPolicyData(type, moduleName),
     banner = def.banner(params),
     minBanner = def.minBanner(params),
     base = createConfig({
@@ -31,6 +33,7 @@ export const createParticlesBuild = (
       dir,
       bundle: false,
       includeLazy: false,
+      umdPolicy,
       additionalExternals,
     });
 
@@ -50,7 +53,8 @@ export const createParticlesBuild = (
         minBanner,
         dir,
         bundle: true,
-        includeLazy: true,
+        includeLazy: false,
+        umdPolicy,
         additionalExternals,
       }),
     ];

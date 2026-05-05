@@ -517,11 +517,6 @@ app.get("/bundle", function (req, res) {
   res.render("bundle");
 });
 
-app.get("/bundle-lazy", function (req, res) {
-  logger.info("bundle lazy requested");
-
-  res.render("bundle-lazy");
-});
 
 app.get("/playground", function (req, res) {
   logger.info("playground requested");

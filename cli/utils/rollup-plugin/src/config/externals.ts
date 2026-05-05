@@ -1,5 +1,6 @@
 import type { ExternalData } from "../types";
 import type { ExternalOption } from "rollup";
+import { getUmdGlobalForExternal } from "./umdPolicy";
 
 interface Params {
   additionalExternals?: ExternalData[];
@@ -44,8 +45,10 @@ export const getGlobals = (
       return additionalMap.get(id) ?? defaultGlobal;
     }
 
-    if (id === "tsparticles" || id.startsWith("tsparticles-") || id.startsWith("@tsparticles/")) {
-      return defaultGlobal;
+    const tsparticlesGlobal = getUmdGlobalForExternal(id);
+
+    if (tsparticlesGlobal) {
+      return tsparticlesGlobal;
     }
 
     return defaultGlobal;

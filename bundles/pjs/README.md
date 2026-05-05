@@ -137,11 +137,11 @@ Using `Particles` compatibility:
 
 ## Compatibility globals (after `initPjs`)
 
-| Global | Description | Modern equivalent |
-| --- | --- | --- |
-| `particlesJS` | particles.js-compatible loader function (plus `.load` and `.setOnClickHandler`) | `tsParticles.load`, `tsParticles.loadJSON`, `tsParticles.setOnClickHandler` |
-| `pJSDom` | array of loaded containers | `tsParticles.dom` |
-| `Particles` | `marcbruederlin/particles.js` style wrapper (`init`, `pauseAnimation`, `resumeAnimation`, `destroy`) | direct `tsParticles.load` + container methods |
+| Global        | Description                                                                                          | Modern equivalent                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `particlesJS` | particles.js-compatible loader function (plus `.load` and `.setOnClickHandler`)                      | `tsParticles.load`, `tsParticles.loadJSON`, `tsParticles.setOnClickHandler` |
+| `pJSDom`      | array of loaded containers                                                                           | `tsParticles.dom`                                                           |
+| `Particles`   | `marcbruederlin/particles.js` style wrapper (`init`, `pauseAnimation`, `resumeAnimation`, `destroy`) | direct `tsParticles.load` + container methods                               |
 
 If you need explicit references in TS/JS code:
 

@@ -1,4 +1,4 @@
-import { loadParticlesBundle } from "@tsparticles/rollup-plugin";
+import { loadParticlesUtil } from "@tsparticles/rollup-plugin";
 import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 import path from "node:path";
@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url),
   pkg = await fs.readJson(rootPkgPath),
   version = pkg.version;
 
-export default loadParticlesBundle({
+export default loadParticlesUtil({
   moduleName: "perlin.noise",
   bundle: false,
   bundleName: "Perlin Noise",
