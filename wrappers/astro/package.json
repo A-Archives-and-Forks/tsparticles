@@ -112,10 +112,10 @@
     "@tsparticles/engine": "workspace:^"
   },
   "devDependencies": {
-    "@tsparticles/prettier-config": "^3.4.6",
-    "prettier": "^3.8.2",
+    "@tsparticles/prettier-config": "workspace:^",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "astro": "^6.1.6",
+    "astro": "^6.2.2",
     "typescript": "^5.9.3"
   },
   "publishConfig": {

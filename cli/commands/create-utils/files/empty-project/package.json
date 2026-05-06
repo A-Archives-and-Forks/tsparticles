@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/empty-template",
-  "version": "1.0.0",
+  "version": "4.0.0-beta.12",
   "private": true,
   "type": "module",
   "description": "tsParticles empty template",
@@ -84,14 +84,14 @@
   "prettier": "@tsparticles/prettier-config",
   "devDependencies": {
     "@swc/core": "^1.15.32",
-    "@tsparticles/cli-build": "latest",
-    "@tsparticles/browserslist-config": "^3.4.14",
-    "@tsparticles/depcruise-config": "^3.4.14",
-    "@tsparticles/engine": "^3.9.1",
-    "@tsparticles/eslint-config": "^3.4.14",
-    "@tsparticles/prettier-config": "^3.4.14",
-    "@tsparticles/tsconfig": "^3.4.14",
-    "@tsparticles/webpack-plugin": "^3.4.14",
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/browserslist-config": "workspace:^",
+    "@tsparticles/depcruise-config": "workspace:^",
+    "@tsparticles/engine": "workspace:^",
+    "@tsparticles/eslint-config": "workspace:^",
+    "@tsparticles/prettier-config": "workspace:^",
+    "@tsparticles/tsconfig": "workspace:^",
+    "@tsparticles/webpack-plugin": "workspace:^",
     "@types/webpack-env": "^1.18.8",
     "browserslist": "^4.28.2",
     "copyfiles": "^2.4.1",
@@ -108,6 +108,6 @@
     "webpack-cli": "^7.0.2"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "^3.9.1"
+    "@tsparticles/engine": "workspace:^"
   }
 }

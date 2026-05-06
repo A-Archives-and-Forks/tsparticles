@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli-workspace",
-  "version": "0.0.0",
+  "version": "4.0.0-beta.12",
   "private": true,
   "scripts": {
     "build": "pnpm nx run-many -t build",
