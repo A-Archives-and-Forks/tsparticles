@@ -1,7 +1,6 @@
 {
   "name": "@tsparticles/cli-nx-plugin",
   "version": "4.0.0-beta.12",
-  "private": true,
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -10,6 +9,10 @@
     "directory": "cli/packages/nx-plugin"
   },
   "prettier": "@tsparticles/prettier-config",
+  "publishConfig": {
+    "access": "public",
+    "tagVersionPrefix": "v"
+  },
   "scripts": {
     "prettify:ci:src": "prettier --check ./src/*",
     "prettify:ci:readme": "prettier --check ./README.md",
