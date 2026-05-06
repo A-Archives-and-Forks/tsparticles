@@ -97,7 +97,6 @@ $.fn.particles = function (): ParticlesResult {
         // preserving the ability for apps to call init explicitly.
         if (!initPromise) {
           // start initialization (will set initPromise)
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           initParticlesEngine();
         }
 
