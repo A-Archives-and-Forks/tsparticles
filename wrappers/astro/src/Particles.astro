@@ -38,6 +38,13 @@ const { id, loaded, options, url } = Astro.props as IParticlesProps;
         await waitForParticlesEngineInitialization();
 
         if (!isParticlesEngineInitialized()) {
+          for (let i = 0; i < 20 && !isParticlesEngineInitialized(); i++) {
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            await waitForParticlesEngineInitialization();
+          }
+        }
+
+        if (!isParticlesEngineInitialized()) {
           throw new Error("initParticlesEngine(...) must be called once before rendering <Particles /> components.");
         }
 

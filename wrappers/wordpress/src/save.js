@@ -4,13 +4,8 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
-import { tsParticles } from '@tsparticles/engine';
-import { getAllPlugins, loadWordpressParticles } from './load';
-
-document.addEventListener('DOMContentLoaded', async () => {
-	await loadWordpressParticles(tsParticles, getAllPlugins());
-});
+import { useBlockProps } from "@wordpress/block-editor";
+import { getAllPlugins } from "./load";
 
 /**
  * The save function defines the way in which the different attributes should
@@ -24,23 +19,16 @@ document.addEventListener('DOMContentLoaded', async () => {
  * @return {WPElement} Element to render.
  */
 export default function save({ attributes }) {
-	setTimeout(async () => {
-		await tsParticles.load({
-			id: attributes.id,
-			options: JSON.parse(attributes.options)
-		});
-	});
-
-	const width = attributes.width ? attributes.width : '100%',
-		height = attributes.height ? attributes.height : '500px',
-		plugins = getAllPlugins(attributes).map((t) => t.name);
+	const width = attributes.width ? attributes.width : "100%",
+		height = attributes.height ? attributes.height : "500px",
+		plugins = getAllPlugins(attributes).map(t => t.name);
 
 	return (
 		<div
 			id={attributes.id}
 			style={{ width, height }}
 			data-options={attributes.options}
-			data-plugins={plugins.join(',')}
+			data-plugins={plugins.join(",")}
 			{...useBlockProps.save()}
 		></div>
 	);

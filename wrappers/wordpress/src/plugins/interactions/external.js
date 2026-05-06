@@ -1,147 +1,153 @@
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 export function getExternalInteractions(group, localizeFn) {
 	return [
 		{
-			name: 'interaction-external-attract',
-			description: localizeFn(__('Attract')),
+			name: "interaction-external-attract",
+			description: localizeFn(__("Attract")),
 			group,
-			load: async (engine) => {
-				const { loadExternalAttractInteraction } = await import(
-					'@tsparticles/interaction-external-attract'
-				);
+			load: async engine => {
+				const { loadExternalAttractInteraction } = await import("@tsparticles/interaction-external-attract");
 
 				await loadExternalAttractInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-bounce',
-			description: localizeFn(__('Bounce')),
+			name: "interaction-external-bounce",
+			description: localizeFn(__("Bounce")),
 			group,
-			load: async (engine) => {
-				const { loadExternalBounceInteraction } = await import(
-					'@tsparticles/interaction-external-bounce'
-				);
+			load: async engine => {
+				const { loadExternalBounceInteraction } = await import("@tsparticles/interaction-external-bounce");
 
 				await loadExternalBounceInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-bubble',
-			description: localizeFn(__('Bubble')),
+			name: "interaction-external-bubble",
+			description: localizeFn(__("Bubble")),
 			group,
-			load: async (engine) => {
-				const { loadExternalBubbleInteraction } = await import(
-					'@tsparticles/interaction-external-bubble'
-				);
+			load: async engine => {
+				const { loadExternalBubbleInteraction } = await import("@tsparticles/interaction-external-bubble");
 
 				await loadExternalBubbleInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-connect',
-			description: localizeFn(__('Connect')),
+			name: "interaction-external-cannon",
+			description: localizeFn(__("Cannon")),
 			group,
-			load: async (engine) => {
-				const { loadExternalConnectInteraction } = await import(
-					'@tsparticles/interaction-external-connect'
-				);
+			load: async engine => {
+				const { loadExternalCannonInteraction } = await import("@tsparticles/interaction-external-cannon");
+
+				await loadExternalCannonInteraction(engine);
+			},
+		},
+		{
+			name: "interaction-external-connect",
+			description: localizeFn(__("Connect")),
+			group,
+			load: async engine => {
+				const { loadExternalConnectInteraction } = await import("@tsparticles/interaction-external-connect");
 
 				await loadExternalConnectInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-grab',
-			description: localizeFn(__('Grab')),
+			name: "interaction-external-grab",
+			description: localizeFn(__("Grab")),
 			group,
-			load: async (engine) => {
-				const { loadExternalGrabInteraction } = await import(
-					'@tsparticles/interaction-external-grab'
-				);
+			load: async engine => {
+				const { loadExternalGrabInteraction } = await import("@tsparticles/interaction-external-grab");
 
 				await loadExternalGrabInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-pause',
-			description: localizeFn(__('Pause')),
+			name: "interaction-external-pause",
+			description: localizeFn(__("Pause")),
 			group,
-			load: async (engine) => {
-				const { loadExternalPauseInteraction } = await import(
-					'@tsparticles/interaction-external-pause'
-				);
+			load: async engine => {
+				const { loadExternalPauseInteraction } = await import("@tsparticles/interaction-external-pause");
 
 				await loadExternalPauseInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-pop',
-			description: localizeFn(__('Pop')),
+			name: "interaction-external-parallax",
+			description: localizeFn(__("Parallax")),
 			group,
-			load: async (engine) => {
-				const { loadExternalPopInteraction } = await import(
-					'@tsparticles/interaction-external-pop'
-					);
+			load: async engine => {
+				const { loadExternalParallaxInteraction } = await import("@tsparticles/interaction-external-parallax");
+
+				await loadExternalParallaxInteraction(engine);
+			},
+		},
+		{
+			name: "interaction-external-particle",
+			description: localizeFn(__("Particle")),
+			group,
+			load: async engine => {
+				const { loadExternalParticleInteraction } = await import("@tsparticles/interaction-external-particle");
+
+				await loadExternalParticleInteraction(engine);
+			},
+		},
+		{
+			name: "interaction-external-pop",
+			description: localizeFn(__("Pop")),
+			group,
+			load: async engine => {
+				const { loadExternalPopInteraction } = await import("@tsparticles/interaction-external-pop");
 
 				await loadExternalPopInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-push',
-			description: localizeFn(__('Push')),
+			name: "interaction-external-push",
+			description: localizeFn(__("Push")),
 			group,
-			load: async (engine) => {
-				const { loadExternalPushInteraction } = await import(
-					'@tsparticles/interaction-external-push'
-				);
+			load: async engine => {
+				const { loadExternalPushInteraction } = await import("@tsparticles/interaction-external-push");
 
 				await loadExternalPushInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-remove',
-			description: localizeFn(__('Remove')),
+			name: "interaction-external-remove",
+			description: localizeFn(__("Remove")),
 			group,
-			load: async (engine) => {
-				const { loadExternalRemoveInteraction } = await import(
-					'@tsparticles/interaction-external-remove'
-				);
+			load: async engine => {
+				const { loadExternalRemoveInteraction } = await import("@tsparticles/interaction-external-remove");
 
 				await loadExternalRemoveInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-repulse',
-			description: localizeFn(__('Repulse')),
+			name: "interaction-external-repulse",
+			description: localizeFn(__("Repulse")),
 			group,
-			load: async (engine) => {
-				const { loadExternalRepulseInteraction } = await import(
-					'@tsparticles/interaction-external-repulse'
-				);
+			load: async engine => {
+				const { loadExternalRepulseInteraction } = await import("@tsparticles/interaction-external-repulse");
 
 				await loadExternalRepulseInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-slow',
-			description: localizeFn(__('Slow')),
+			name: "interaction-external-slow",
+			description: localizeFn(__("Slow")),
 			group,
-			load: async (engine) => {
-				const { loadExternalSlowInteraction } = await import(
-					'@tsparticles/interaction-external-slow'
-				);
+			load: async engine => {
+				const { loadExternalSlowInteraction } = await import("@tsparticles/interaction-external-slow");
 
 				await loadExternalSlowInteraction(engine);
 			},
 		},
 		{
-			name: 'interaction-external-trail',
-			description: localizeFn(__('Trail')),
+			name: "interaction-external-trail",
+			description: localizeFn(__("Trail")),
 			group,
-			load: async (engine) => {
-				const { loadExternalTrailInteraction } = await import(
-					'@tsparticles/interaction-external-trail'
-				);
+			load: async engine => {
+				const { loadExternalTrailInteraction } = await import("@tsparticles/interaction-external-trail");
 
 				await loadExternalTrailInteraction(engine);
 			},
