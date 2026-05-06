@@ -85,8 +85,8 @@
     "@angular/common": ">=2.0.0",
     "@angular/core": ">=2.0.0",
     "rxjs": ">=7.0.0",
-    "@tsparticles/confetti": "^",
-    "@tsparticles/engine": "workspace:^"
+    "@tsparticles/confetti": "^4.0.0-beta.12",
+    "@tsparticles/engine": "^4.0.0-beta.12"
   },
   "dependencies": {
     "tslib": "^2.8.1"
