@@ -15,8 +15,8 @@ If you are migrating from `particles.js`, use this order:
 
 If you need a bridge layer while migrating legacy configs:
 
-- npm: <https://www.npmjs.com/package/@tsparticles/particles.js>
-- jsDelivr: <https://www.jsdelivr.com/package/npm/@tsparticles/particles.js>
+- npm: <https://www.npmjs.com/package/@tsparticles/pjs>
+- jsDelivr: <https://www.jsdelivr.com/package/npm/@tsparticles/pjs>
 
 Further reading:
 

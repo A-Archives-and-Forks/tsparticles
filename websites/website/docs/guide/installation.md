@@ -8,6 +8,7 @@ Source of truth: <https://github.com/tsparticles/tsparticles/blob/main/README.md
 
 - **Fast default**: `@tsparticles/engine` + `@tsparticles/slim`
 - **Smaller custom runtime**: `@tsparticles/engine` + only required plugins
+- **Focused APIs**: `@tsparticles/particles`, `@tsparticles/confetti`, or `@tsparticles/fireworks`
 - **All features included**: `@tsparticles/all`
 
 ## Hosting / CDN
@@ -17,6 +18,7 @@ Use one of these providers (or self-host your built files).
 ### jsDelivr
 
 - <https://www.jsdelivr.com/package/npm/@tsparticles/confetti>
+- <https://www.jsdelivr.com/package/npm/@tsparticles/particles>
 - <https://www.jsdelivr.com/package/npm/@tsparticles/engine>
 - <https://www.jsdelivr.com/package/npm/@tsparticles/fireworks>
 - <https://www.jsdelivr.com/package/npm/@tsparticles/basic>
@@ -31,6 +33,7 @@ Use one of these providers (or self-host your built files).
 ### unpkg
 
 - <https://unpkg.com/@tsparticles/confetti/>
+- <https://unpkg.com/@tsparticles/particles/>
 - <https://unpkg.com/@tsparticles/engine/>
 - <https://unpkg.com/@tsparticles/fireworks/>
 - <https://unpkg.com/@tsparticles/basic/>
@@ -97,3 +100,10 @@ await tsParticles.load({
 - [`/guide/wrappers`](/guide/wrappers)
 - [`/demos/presets`](/demos/presets)
 - [`/migration/`](/migration/)
+
+## Legacy compatibility
+
+If you are migrating legacy particles.js integrations, use the compatibility package:
+
+- npm: <https://www.npmjs.com/package/@tsparticles/pjs>
+- jsDelivr: <https://www.jsdelivr.com/package/npm/@tsparticles/pjs>

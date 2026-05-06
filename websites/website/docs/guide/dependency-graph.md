@@ -11,6 +11,7 @@ For the full, exhaustive graph, see:
 ```mermaid
 flowchart TD
   engine[tsParticles Engine] --> basic[tsParticles Basic]
+  basic --> particles[tsParticles Particles]
   basic --> confetti[tsParticles Confetti]
   basic --> slim[tsParticles Slim]
   basic --> fireworks[tsParticles Fireworks]
@@ -23,7 +24,7 @@ flowchart TD
 - Start from `engine` + `slim` for most production apps.
 - Move to `tsparticles` if you need extra built-in interactions/plugins.
 - Move to `all` only when you need the complete feature set.
-- Use dedicated bundles (`confetti`, `fireworks`) for focused effects.
+- Use dedicated bundles (`particles`, `confetti`, `fireworks`) for focused effects.
 
 ## Related pages
 

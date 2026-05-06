@@ -5,6 +5,7 @@ Split by use case:
 - [`Configs Playground`](/playground/configs): richer demos with full editable options.
 - [`Presets Playground`](/playground/presets): official preset-name demos (`{ preset: "..." }`).
 - [`Palettes Playground`](/playground/palettes): palette-focused demos from the presets project.
+- [`Bundles Playground`](/playground/bundles): dedicated playgrounds for `@tsparticles/confetti`, `@tsparticles/fireworks`, and `@tsparticles/particles`.
 
 Execution is always **user-triggered only** (no autoplay).
 

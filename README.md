@@ -208,6 +208,7 @@ Useful docs for the next step:
 #### jsDelivr
 
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/confetti/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/confetti)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/particles/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/particles)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/engine/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/engine)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/fireworks/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/fireworks)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/basic/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/basic)
@@ -221,7 +222,7 @@ Useful docs for the next step:
 
 #### unpkg
 
-<https://unpkg.com/@tsparticles/confetti/> <https://unpkg.com/@tsparticles/engine/> <https://unpkg.com/@tsparticles/fireworks/> <https://unpkg.com/@tsparticles/basic/> <https://unpkg.com/@tsparticles/slim/> <https://unpkg.com/tsparticles/> <https://unpkg.com/@tsparticles/all/>
+<https://unpkg.com/@tsparticles/confetti/> <https://unpkg.com/@tsparticles/particles/> <https://unpkg.com/@tsparticles/engine/> <https://unpkg.com/@tsparticles/fireworks/> <https://unpkg.com/@tsparticles/basic/> <https://unpkg.com/@tsparticles/slim/> <https://unpkg.com/tsparticles/> <https://unpkg.com/@tsparticles/all/>
 
 ---
 
@@ -230,6 +231,10 @@ Useful docs for the next step:
 _tsParticles Confetti_
 
 [![npm](https://img.shields.io/npm/v/@tsparticles/confetti?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/confetti) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/confetti?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/confetti)
+
+_tsParticles Particles_
+
+[![npm](https://img.shields.io/npm/v/@tsparticles/particles?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/particles) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/particles?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/particles)
 
 _tsParticles Engine_
 
@@ -841,7 +846,7 @@ _If you are brave enough_ you can switch to the `dev` branch for trying the feat
 
 **tsParticles** has a package that makes this library 100% compatible with the _particles.js_ configuration.
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/particles.js/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@tsparticles/particles.js) [![npmjs](https://badge.fury.io/js/@tsparticles/particles.js.svg)](https://www.npmjs.com/package/@tsparticles/particles.js) [![npm](https://img.shields.io/npm/dm/@tsparticles/particles.js)](https://www.npmjs.com/package/@tsparticles/particles.js)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/pjs/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@tsparticles/pjs) [![npmjs](https://badge.fury.io/js/@tsparticles/pjs.svg)](https://www.npmjs.com/package/@tsparticles/pjs) [![npm](https://img.shields.io/npm/dm/@tsparticles/pjs)](https://www.npmjs.com/package/@tsparticles/pjs)
 
 Seriously, you just need to change the script from particles.js to the bundled compatibility package, et-voilà, **you're
 ready** 🧙!

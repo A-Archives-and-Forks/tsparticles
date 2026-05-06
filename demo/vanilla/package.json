@@ -291,6 +291,7 @@
     "@tsparticles/path-utils": "workspace:*",
     "@tsparticles/path-zig-zag": "workspace:*",
     "@tsparticles/perlin-noise": "workspace:*",
+    "@tsparticles/particles": "workspace:*",
     "@tsparticles/pjs": "workspace:*",
     "@tsparticles/plugin-absorbers": "workspace:*",
     "@tsparticles/plugin-background-mask": "workspace:*",

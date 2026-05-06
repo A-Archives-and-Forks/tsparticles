@@ -29,6 +29,8 @@ features:
     details: React, Vue, Angular, Svelte, Solid, Web Components, and vanilla JavaScript.
   - title: Production focused
     details: Control bundle size with @tsparticles/slim, @tsparticles/basic, or @tsparticles/all.
+  - title: Focused APIs
+    details: Use @tsparticles/particles, @tsparticles/confetti, and @tsparticles/fireworks for one-call setups.
 ---
 
 ## Why this docs experience

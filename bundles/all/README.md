@@ -11,10 +11,12 @@
 - [tsparticles (and all its dependencies)](https://github.com/tsparticles/tsparticles/tree/main/bundles/full)
 - [@tsparticles/engine](https://github.com/tsparticles/tsparticles/tree/main/engine)
 - [@tsparticles/effect-bubble](https://github.com/tsparticles/tsparticles/tree/main/effects/bubble)
+- [@tsparticles/effect-filter](https://github.com/tsparticles/tsparticles/tree/main/effects/filter)
 - [@tsparticles/effect-particles](https://github.com/tsparticles/tsparticles/tree/main/effects/particles)
 - [@tsparticles/effect-shadow](https://github.com/tsparticles/tsparticles/tree/main/effects/shadow)
 - [@tsparticles/effect-trail](https://github.com/tsparticles/tsparticles/tree/main/effects/trail)
 - [@tsparticles/interaction-external-particle](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/particle)
+- [@tsparticles/interaction-external-cannon](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/cannon)
 - [@tsparticles/interaction-external-pop](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/pop)
 - [@tsparticles/interaction-light](https://github.com/tsparticles/tsparticles/tree/main/interactions/light)
 - [@tsparticles/interaction-particles-repulse](https://github.com/tsparticles/tsparticles/tree/main/interactions/particles/repulse)
@@ -101,12 +103,14 @@ end
 
 subgraph e [Effects]
   eb[tsparticles/effect-bubble]
+  ef[tsparticles/effect-filter]
   ep[tsparticles/effect-particles]
   es[tsparticles/effect-shadow]
   et[tsparticles/effect-trail]
 end
 
 subgraph i [Interactions]
+  iec[tsparticles/interaction-external-cannon]
   iep[tsparticles/interaction-external-particle]
   iepo[tsparticles/interaction-external-pop]
   il[tsparticles/interaction-light]

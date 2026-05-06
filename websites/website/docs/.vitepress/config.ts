@@ -56,6 +56,7 @@ export default defineConfig({
           text: "Playground",
           items: [
             { text: "Overview", link: "/playground/" },
+            { text: "Bundles", link: "/playground/bundles" },
             { text: "Configs", link: "/playground/configs" },
             { text: "Palettes", link: "/playground/palettes" },
             { text: "Presets", link: "/playground/presets" },

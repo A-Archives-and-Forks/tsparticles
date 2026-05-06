@@ -362,6 +362,8 @@ build/
 !cli/commands/build/package.json
 !cli/commands/build/project.json
 docs/
+!websites/website/docs/
+!websites/website/docs/**
 demo/vanilla/report.html
 demo/vanilla/report.htm
 demo/vanilla/report.*.html

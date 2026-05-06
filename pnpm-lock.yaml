@@ -611,6 +611,32 @@ importers:
         version: link:../../cli/commands/build
     publishDirectory: dist
 
+  bundles/particles:
+    dependencies:
+      '@tsparticles/basic':
+        specifier: workspace:*
+        version: link:../basic/dist
+      '@tsparticles/engine':
+        specifier: workspace:*
+        version: link:../../engine/dist
+      '@tsparticles/interaction-particles-collisions':
+        specifier: workspace:*
+        version: link:../../interactions/particles/collisions/dist
+      '@tsparticles/interaction-particles-links':
+        specifier: workspace:*
+        version: link:../../interactions/particles/links/dist
+      '@tsparticles/plugin-interactivity':
+        specifier: workspace:*
+        version: link:../../plugins/interactivity/dist
+    devDependencies:
+      '@tsparticles/cli-build':
+        specifier: workspace:^
+        version: link:../../cli/packages/cli-build
+      '@tsparticles/cli-command-build':
+        specifier: workspace:^
+        version: link:../../cli/commands/build
+    publishDirectory: dist
+
   bundles/pjs:
     dependencies:
       '@tsparticles/engine':
@@ -4974,6 +5000,9 @@ importers:
       '@tsparticles/palette-watermelon':
         specifier: workspace:*
         version: link:../../palettes/food/watermelon/dist
+      '@tsparticles/particles':
+        specifier: workspace:*
+        version: link:../../bundles/particles/dist
       '@tsparticles/path-branches':
         specifier: workspace:*
         version: link:../../paths/branches/dist
@@ -10983,12 +11012,18 @@ importers:
       '@tsparticles/all':
         specifier: workspace:*
         version: link:../../bundles/all/dist
+      '@tsparticles/confetti':
+        specifier: workspace:*
+        version: link:../../bundles/confetti/dist
       '@tsparticles/configs':
         specifier: workspace:*
         version: link:../../utils/configs/dist
       '@tsparticles/engine':
         specifier: workspace:*
         version: link:../../engine/dist
+      '@tsparticles/fireworks':
+        specifier: workspace:*
+        version: link:../../bundles/fireworks/dist
       '@tsparticles/palette-acid-pair':
         specifier: workspace:*
         version: link:../../palettes/spectrum/acidPair/dist
@@ -11556,6 +11591,9 @@ importers:
       '@tsparticles/palette-watermelon':
         specifier: workspace:*
         version: link:../../palettes/food/watermelon/dist
+      '@tsparticles/particles':
+        specifier: workspace:*
+        version: link:../../bundles/particles/dist
       '@tsparticles/preset-ambient':
         specifier: workspace:*
         version: link:../../presets/ambient/dist

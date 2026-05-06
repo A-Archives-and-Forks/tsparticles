@@ -30,7 +30,9 @@
     "dependencies": {
         "@tsparticles/all": "workspace:*",
         "@tsparticles/configs": "workspace:*",
+        "@tsparticles/confetti": "workspace:*",
         "@tsparticles/engine": "workspace:*",
+        "@tsparticles/fireworks": "workspace:*",
         "@tsparticles/palette-acid-pair": "workspace:*",
         "@tsparticles/palette-apple": "workspace:*",
         "@tsparticles/palette-apple-green": "workspace:*",
@@ -221,6 +223,7 @@
         "@tsparticles/palette-water-splash": "workspace:*",
         "@tsparticles/palette-watermelon": "workspace:*",
         "@tsparticles/preset-ambient": "workspace:*",
+        "@tsparticles/particles": "workspace:*",
         "@tsparticles/preset-big-circles": "workspace:*",
         "@tsparticles/preset-bubbles": "workspace:*",
         "@tsparticles/preset-confetti": "workspace:*",

@@ -5,7 +5,7 @@ This path is the quickest reliable setup for `tsParticles` in 2026.
 ## Quick checklist
 
 1. Install `@tsparticles/engine`.
-2. Pick one runtime path (`@tsparticles/slim`, `@tsparticles/all`, or custom packages only).
+2. Pick one runtime path (`@tsparticles/slim`, `@tsparticles/all`, focused APIs like `@tsparticles/particles`, or custom packages only).
 3. Load your bundle once.
 4. Start with manual options, a config object, or a preset.
 
@@ -68,6 +68,12 @@ const options = {
 - `@tsparticles/slim`: most apps should start here.
 - `@tsparticles/basic`: smaller feature set for very light setups.
 - `@tsparticles/all`: everything included, easiest for fast prototyping.
+
+If you need a focused API instead of direct `tsParticles` setup:
+
+- `@tsparticles/particles`: simplified particles background API
+- `@tsparticles/confetti`: one-call confetti API
+- `@tsparticles/fireworks`: one-call fireworks API
 
 ## 5) Use presets/configs when you need speed
 

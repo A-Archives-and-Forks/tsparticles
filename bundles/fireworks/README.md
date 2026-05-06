@@ -14,6 +14,7 @@
 - [@tsparticles/plugin-emitters](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters)
 - [@tsparticles/plugin-emitters-shape-square](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/square)
 - [@tsparticles/plugin-sounds](https://github.com/tsparticles/tsparticles/tree/main/plugins/sounds)
+- [@tsparticles/shape-line](https://github.com/tsparticles/tsparticles/tree/main/shapes/line)
 - [@tsparticles/updater-destroy](https://github.com/tsparticles/tsparticles/tree/main/updaters/destroy)
 - [@tsparticles/updater-life](https://github.com/tsparticles/tsparticles/tree/main/updaters/life)
 - [@tsparticles/updater-paint](https://github.com/tsparticles/tsparticles/tree/main/updaters/paint)
@@ -47,9 +48,14 @@ subgraph u [Updaters]
   ur[tsparticles/updater-rotate]
 end
 
+subgraph s [Shapes]
+  sl[tsparticles/shape-line]
+end
+
 bf --> bb
 bf --> ce
 bf --> p
+bf --> s
 bf --> u
 ```
 
