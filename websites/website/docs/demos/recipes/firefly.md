@@ -2,6 +2,8 @@
 
 Official preset from the `presets/presets/firefly` workspace.
 
+Move the mouse inside the canvas to activate the interactive firefly behavior.
+
 ## Install
 
 ```bash

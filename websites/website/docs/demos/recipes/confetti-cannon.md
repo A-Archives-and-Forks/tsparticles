@@ -2,6 +2,8 @@
 
 Official preset from the `presets/presets/confettiCannon` workspace.
 
+To trigger confetti in this preset, drag the mouse over the canvas area.
+
 ## Install
 
 ```bash

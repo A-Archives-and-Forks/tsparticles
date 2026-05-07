@@ -25,7 +25,7 @@ export async function start(): Promise<void> {
   container = await tsParticles.load({
     id: "tsparticles",
     options: {
-      preset: "sea-anemone",
+      preset: "seaAnemone",
     },
   });
 }

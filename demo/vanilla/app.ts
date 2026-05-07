@@ -50,10 +50,15 @@ const logger = winston.createLogger({
   ],
 });
 
-const workspaceRootGuess = path.resolve(dirName, "..", "..", ".."),
-  workspaceRoot = existsSync(path.join(workspaceRootGuess, "package.json"))
-    ? workspaceRootGuess
-    : path.resolve(dirName, "..", ".."),
+const workspaceRootCandidates = [
+    path.resolve(dirName, "..", "..", ".."),
+    path.resolve(dirName, "..", "..", "..", ".."),
+    path.resolve(dirName, "..", ".."),
+  ],
+  workspaceRoot =
+    workspaceRootCandidates.find(
+      candidate => existsSync(path.join(candidate, "presets")) && existsSync(path.join(candidate, "palettes")),
+    ) ?? path.resolve(dirName, "..", ".."),
   presetsRoot = path.join(workspaceRoot, "presets"),
   palettesRoot = path.join(workspaceRoot, "palettes");
 
@@ -61,8 +66,8 @@ const workspaceRootGuess = path.resolve(dirName, "..", "..", ".."),
 // that are declared as dependencies of this demo). This avoids scanning the whole repo.
 let demoPackageDeps: string[] = [];
 try {
-  const demoPkgPath = path.join(dirName, "package.json");
-  if (existsSync(demoPkgPath)) {
+  const demoPkgPath = [path.join(dirName, "package.json"), path.join(dirName, "..", "package.json")].find(existsSync);
+  if (demoPkgPath) {
     const demoPkg = JSON.parse(readFileSync(demoPkgPath, "utf8")) as { dependencies?: Record<string, string> };
     demoPackageDeps = Object.keys(demoPkg.dependencies ?? {});
   }
@@ -131,6 +136,74 @@ interface PalettePackageMetadata {
   slug: string;
 }
 
+interface PresetSourceMetadata {
+  loader: string;
+  optionValue: string;
+}
+
+interface PresetPackageMetadata {
+  packageName: string;
+  slug: string;
+}
+
+const readPresetPackageMetadata = (fullPath: string, folder: string): PresetPackageMetadata => {
+  const fallbackSlug = camelToKebab(folder),
+    packageJsonPath = path.join(fullPath, "package.json");
+
+  if (!existsSync(packageJsonPath)) {
+    return {
+      packageName: `@tsparticles/preset-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(readFileSync(packageJsonPath, "utf8")) as { name?: string },
+      packageName = parsed.name?.startsWith("@tsparticles/preset-")
+        ? parsed.name
+        : `@tsparticles/preset-${fallbackSlug}`,
+      slug = packageName.replace("@tsparticles/preset-", "");
+
+    return {
+      packageName,
+      slug,
+    };
+  } catch {
+    return {
+      packageName: `@tsparticles/preset-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+};
+
+const readPresetSourceMetadata = (fullPath: string, folder: string, slug: string): PresetSourceMetadata => {
+  const indexPath = path.join(fullPath, "src", "index.ts");
+
+  if (!existsSync(indexPath)) {
+    return {
+      loader: `load${toPascal(folder)}Preset`,
+      optionValue: slug,
+    };
+  }
+
+  const indexContent = readFileSync(indexPath, "utf8"),
+    loaderMatch = indexContent.match(/export\s+async\s+function\s+(load\w+Preset)\s*\(/u),
+    presetNamesMatch = indexContent.match(/const\s+presetNames\s*=\s*\[([^\]]+)\]\s*;/u),
+    presetNameMatch = indexContent.match(/const\s+presetName\s*=\s*"([^"]+)"\s*;/u),
+    presetNames = [...(presetNamesMatch?.[1].matchAll(/"([^"]+)"/gu) ?? [])].map(match => match[1]),
+    optionValue =
+      presetNameMatch?.[1] ??
+      presetNames.find(name => name === slug) ??
+      presetNames.find(name => !name.includes("-")) ??
+      presetNames[0] ??
+      slug;
+
+  return {
+    loader: loaderMatch?.[1] ?? `load${toPascal(folder)}Preset`,
+    optionValue,
+  };
+};
+
 const readPalettePackageMetadata = (fullPath: string, folder: string): PalettePackageMetadata => {
   const fallbackSlug = camelToKebab(folder),
     packageJsonPath = path.join(fullPath, "package.json");
@@ -191,20 +264,45 @@ const findGeneratedScript = (distPath: string, fallback: string, matcher: RegExp
   return generatedScript ?? fallback;
 };
 
-const loadPresetsCatalog = (): CatalogItem[] => {
-  // Use demo package dependencies to discover presets
+const discoverPresetDirs = (): Array<{ folder: string; fullPath: string }> => {
   const presetDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/preset-"));
 
+  if (!existsSync(presetsRoot)) {
+    return [];
+  }
+
+  const presetFolders = readdirSync(presetsRoot, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name),
+    bySlug = new Map<string, string>();
+
+  for (const folder of presetFolders) {
+    const fullPath = path.join(presetsRoot, folder),
+      packageMetadata = readPresetPackageMetadata(fullPath, folder);
+
+    bySlug.set(packageMetadata.slug, folder);
+  }
+
   return presetDeps
-    .map((dep) => dep.replace("@tsparticles/preset-", ""))
-    .map((folder) => {
-      const slug = camelToKebab(folder),
-        packageName = `@tsparticles/preset-${slug}`,
+    .map(dep => dep.replace("@tsparticles/preset-", ""))
+    .map(slug => {
+      const folder = bySlug.get(slug) ?? slug;
+
+      return {
+        folder,
+        fullPath: path.join(presetsRoot, folder),
+      };
+    })
+    .sort((a, b) => a.folder.localeCompare(b.folder));
+};
+
+const loadPresetsCatalog = (): CatalogItem[] => {
+  return discoverPresetDirs()
+    .map(({ folder, fullPath }) => {
+      const packageMetadata = readPresetPackageMetadata(fullPath, folder),
+        sourceMetadata = readPresetSourceMetadata(fullPath, folder, packageMetadata.slug),
+        slug = packageMetadata.slug,
         title = toTitleCase(slug.replace(/-/g, " ")),
-        loader = `load${toPascal(folder)}Preset`,
-        packageRoot = path.join(presetsRoot, folder),
         scriptFile = findGeneratedScript(
-          path.join(packageRoot, "dist"),
+          path.join(fullPath, "dist"),
           `tsparticles.preset.${slug}.bundle.min.js`,
           /^tsparticles\.preset\..+\.bundle\.min\.js$/u,
         );
@@ -213,15 +311,15 @@ const loadPresetsCatalog = (): CatalogItem[] => {
         id: folder,
         slug,
         title,
-        packageName,
+        packageName: packageMetadata.packageName,
         mountPath: `/preset-${slug}`,
         route: `/presets/${folder}`,
         image: `/images/presets/${folder}.png`,
         scriptFile,
-        loader,
-        optionValue: slug,
+        loader: sourceMetadata.loader,
+        optionValue: sourceMetadata.optionValue,
         description: `${title} preset demo`,
-        staticPath: path.join(packageRoot, "dist"),
+        staticPath: path.join(fullPath, "dist"),
       };
     })
     .filter(item => existsSync(item.staticPath));

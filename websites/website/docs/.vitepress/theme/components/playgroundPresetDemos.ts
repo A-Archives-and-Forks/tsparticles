@@ -48,7 +48,7 @@ export const presetDemos: DemoPreset[] = [
   {
     key: "confetti-cannon",
     title: "Confetti Cannon Preset",
-    description: "Confetti cannon with an immediate burst effect.",
+    description: "Confetti cannon effect. Drag the mouse over the canvas to launch confetti.",
     category: "interactive",
     kind: "preset",
     recipePath: "/demos/presets",
@@ -103,7 +103,7 @@ export const presetDemos: DemoPreset[] = [
   {
     key: "firefly",
     title: "Firefly Preset",
-    description: "Official firefly preset for elegant hero sections.",
+    description: "Official firefly preset. Move the mouse over the canvas to trigger the interaction.",
     category: "background",
     kind: "preset",
     recipePath: "/demos/recipes/firefly",
@@ -174,7 +174,7 @@ export const presetDemos: DemoPreset[] = [
     kind: "preset",
     recipePath: "/demos/presets",
     options: {
-      preset: "sea-anemone",
+      preset: "seaAnemone",
     },
   },
   {
