@@ -525,6 +525,12 @@ app.get("/playground", function (req, res) {
   res.render("playground");
 });
 
+app.get("/canvas", function (req, res) {
+  logger.info("canvas requested");
+
+  res.render("canvas");
+});
+
 app.get("/confetti", function (req, res) {
   logger.info("confetti requested");
 

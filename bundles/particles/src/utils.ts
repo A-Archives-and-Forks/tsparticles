@@ -12,10 +12,14 @@ const instances = new Map<string, ParticlesInstance | Promise<ParticlesInstance 
 /**
  * Creates engine source options from high-level particles options.
  * @param options - Public particles options used to build engine options.
+ * @param canvas - The custom canvas element to use, if present. If set, fullScreen will be disabled.
  * @returns The normalized source options for engine.load.
  */
-function getDefaultOptions(options: RecursivePartial<IParticlesOptions>): ISourceOptions {
+function getDefaultOptions(options: RecursivePartial<IParticlesOptions>, canvas?: HTMLCanvasElement): ISourceOptions {
   return {
+    fullScreen: {
+      enable: !canvas,
+    },
     particles: {
       number: {
         value: options.count ?? defaultCount,
@@ -63,6 +67,7 @@ export async function getParticlesInstance(
   canvas?: HTMLCanvasElement,
 ): Promise<ParticlesInstance | undefined> {
   const existing = instances.get(id);
+
   if (existing instanceof Promise) {
     return existing;
   }
@@ -72,11 +77,12 @@ export async function getParticlesInstance(
   }
 
   const create = async (): Promise<ParticlesInstance | undefined> => {
-      const particlesOptions = getDefaultOptions(sourceOptions),
+      const particlesOptions = getDefaultOptions(sourceOptions, canvas),
         container = await engine.load({ id, element: canvas, options: particlesOptions });
 
       if (!container) {
         instances.delete(id);
+
         return;
       }
 

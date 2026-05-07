@@ -226,6 +226,7 @@ export async function getFireworksInstance(
   /* Create a locking promise */
   const create = async (): Promise<FireworksInstance | undefined> => {
       const options = new FireworkOptions();
+
       options.load(sourceOptions);
 
       const particlesOptions = getOptions(options, canvas),
