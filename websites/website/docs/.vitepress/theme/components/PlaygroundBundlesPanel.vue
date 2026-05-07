@@ -41,11 +41,11 @@ const defaultOptions: Record<BundleKey, unknown> = {
     },
   },
   particles: {
-    count: 100,
+    count: 30,
     color: "#72ddf7",
     links: true,
     linksColor: "#72ddf7",
-    linksLength: 140,
+    linksLength: 100,
     collisions: true,
     radius: {
       min: 1,
