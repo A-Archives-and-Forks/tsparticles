@@ -2,7 +2,7 @@
 
 These are the official presets listed in the main `tsParticles` README and available in the presets workspace.
 
-Source repository: <https://github.com/tsparticles/presets/tree/main/presets>
+Source folder: <https://github.com/tsparticles/tsparticles/tree/main/presets>
 
 ## Presets
 
@@ -27,9 +27,9 @@ Source repository: <https://github.com/tsparticles/presets/tree/main/presets>
 - `stars` - <https://www.npmjs.com/package/@tsparticles/preset-stars> - <https://particles.js.org/samples/presets/stars>
 - `triangles` - <https://www.npmjs.com/package/@tsparticles/preset-triangles> - <https://particles.js.org/samples/presets/triangles>
 
-Each preset folder also contains docs in the presets repository, for example:
+Each preset folder also contains docs in the monorepo, for example:
 
-- <https://github.com/tsparticles/presets/tree/main/presets/confetti#readme>
+- <https://github.com/tsparticles/tsparticles/tree/main/presets/confetti#readme>
 
 ## Quick usage
 

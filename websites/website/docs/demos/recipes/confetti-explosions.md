@@ -41,4 +41,4 @@ export function resume(): void {
 
 Demo: <https://particles.js.org/samples/presets/confettiExplosions>
 
-Source docs: <https://github.com/tsparticles/presets/tree/main/presets/confettiExplosions#readme>
+Source docs: <https://github.com/tsparticles/tsparticles/tree/main/presets/confettiExplosions#readme>

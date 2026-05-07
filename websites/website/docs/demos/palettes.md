@@ -7,7 +7,7 @@ Ordering follows the source structure:
 - first level: category order (based on palettes source folders)
 - second level: palette slug order inside each category (alphabetical)
 
-Source repository: <https://github.com/tsparticles/palettes/tree/main/palettes>
+Source folder: <https://github.com/tsparticles/tsparticles/tree/main/palettes>
 
 ## Available palette groups
 

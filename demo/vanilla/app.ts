@@ -328,44 +328,50 @@ const loadPresetsCatalog = (): CatalogItem[] => {
 const hasPaletteOptions = (palettePath: string): boolean => existsSync(path.join(palettePath, "src", "options.ts"));
 
 const discoverPaletteDirs = (): Array<{ category: string; folder: string; fullPath: string }> => {
-  // Discover palettes only among demo's declared dependencies
-  const paletteDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/palette-"));
+  const paletteDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/palette-")),
+    allPaletteDirs: Array<{ category: string; folder: string; fullPath: string }> = [];
 
-  const results: Array<{ category: string; folder: string; fullPath: string }> = [];
+  if (!existsSync(palettesRoot)) {
+    return [];
+  }
 
-  for (const dep of paletteDeps) {
-    const slug = dep.replace("@tsparticles/palette-", "");
+  const rootEntries = readdirSync(palettesRoot, { withFileTypes: true }).filter(e => e.isDirectory());
 
-    // Try direct folder under palettesRoot (category "other")
-    const directPath = path.join(palettesRoot, slug);
-    if (existsSync(directPath) && hasPaletteOptions(directPath)) {
-      results.push({ category: "other", folder: slug, fullPath: directPath });
+  for (const entry of rootEntries) {
+    const category = entry.name,
+      categoryPath = path.join(palettesRoot, category);
+
+    if (hasPaletteOptions(categoryPath)) {
+      allPaletteDirs.push({ category: "other", folder: category, fullPath: categoryPath });
       continue;
     }
 
-    // Otherwise search categories for matching folder name
-    if (!existsSync(palettesRoot)) {
-      continue;
-    }
+    const palettesInCategory = readdirSync(categoryPath, { withFileTypes: true }).filter(e => e.isDirectory());
 
-    const categories = readdirSync(palettesRoot, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name);
-    let found = false;
-    for (const cat of categories) {
-      const candidate = path.join(palettesRoot, cat, slug);
-      if (existsSync(candidate) && hasPaletteOptions(candidate)) {
-        results.push({ category: cat, folder: slug, fullPath: candidate });
-        found = true;
-        break;
+    for (const paletteEntry of palettesInCategory) {
+      const fullPath = path.join(categoryPath, paletteEntry.name);
+
+      if (!hasPaletteOptions(fullPath)) {
+        continue;
       }
-    }
 
-    // If not found, still add a fallback pointing to where it would be (so show missing dist)
-    if (!found) {
-      results.push({ category: "other", folder: slug, fullPath: directPath });
+      allPaletteDirs.push({ category, folder: paletteEntry.name, fullPath });
     }
   }
 
-  return results.sort((a, b) => a.folder.localeCompare(b.folder));
+  const bySlug = new Map<string, { category: string; folder: string; fullPath: string }>();
+
+  for (const item of allPaletteDirs) {
+    const { slug } = readPalettePackageMetadata(item.fullPath, item.folder);
+
+    bySlug.set(slug, item);
+  }
+
+  return paletteDeps
+    .map(dep => dep.replace("@tsparticles/palette-", ""))
+    .map(slug => bySlug.get(slug))
+    .filter((item): item is { category: string; folder: string; fullPath: string } => Boolean(item))
+    .sort((a, b) => a.folder.localeCompare(b.folder));
 };
 
 const loadPalettesCatalog = (): CatalogItem[] => {

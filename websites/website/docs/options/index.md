@@ -147,7 +147,7 @@ export const particlesOptions: ISourceOptions = {
 ## Related references
 
 - Config package docs: <https://github.com/tsparticles/tsparticles/blob/main/utils/configs/README.md>
-- Presets repository: <https://github.com/tsparticles/presets>
-- Palettes repository: <https://github.com/tsparticles/palettes>
+- Presets folder: <https://github.com/tsparticles/tsparticles/tree/main/presets>
+- Palettes folder: <https://github.com/tsparticles/tsparticles/tree/main/palettes>
 
 For full details on every sub-option, also use the source pages in `tsparticles/markdown/Options` linked above.
