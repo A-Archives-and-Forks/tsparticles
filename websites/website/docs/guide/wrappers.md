@@ -116,7 +116,7 @@ Use this quick matrix to jump from a wrapper package to a runnable monorepo demo
 Ordering rule for this table:
 
 - alphabetical by wrapper package name
-- explicit exceptions for wrappers without a dedicated demo (`no dedicated demo yet`) and wrappers that are not demo-applicable (`@tsparticles/wordpress`)
+- explicit exception for wrappers that are not demo-applicable (`@tsparticles/wordpress`)
 
 Source demos folder: <https://github.com/tsparticles/tsparticles/tree/main/demo>
 
@@ -124,7 +124,7 @@ Source demos folder: <https://github.com/tsparticles/tsparticles/tree/main/demo>
 | ---------------------------- | ----------------------------------------------------- |
 | `@tsparticles/angular`       | `demo/angular`                                        |
 | `@tsparticles/astro`         | `demo/astro`                                          |
-| `@tsparticles/ember`         | no dedicated demo yet                                 |
+| `@tsparticles/ember`         | `demo/ember`                                          |
 | `@tsparticles/inferno`       | `demo/inferno`                                        |
 | `@tsparticles/jquery`        | `demo/jquery`                                         |
 | `@tsparticles/lit`           | `demo/lit`                                            |
@@ -133,7 +133,7 @@ Source demos folder: <https://github.com/tsparticles/tsparticles/tree/main/demo>
 | `@tsparticles/nuxt3`         | `demo/nuxt3`                                          |
 | `@tsparticles/nuxt4`         | `demo/nuxt4`                                          |
 | `@tsparticles/preact`        | `demo/preact`                                         |
-| `@tsparticles/qwik`          | no dedicated demo yet                                 |
+| `@tsparticles/qwik`          | `demo/qwik`                                           |
 | `@tsparticles/react`         | `demo/react`                                          |
 | `@tsparticles/riot`          | `demo/riot`                                           |
 | `@tsparticles/solid`         | `demo/solid`                                          |

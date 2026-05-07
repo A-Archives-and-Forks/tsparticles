@@ -66,3 +66,8 @@ The website has been redesigned around the most common question: **"How do I use
 - Palettes workspace folders: [`tsparticles/palettes`](https://github.com/tsparticles/tsparticles/tree/main/palettes)
 - Root options source: [`tsparticles/markdown/Options.md`](https://github.com/tsparticles/tsparticles/blob/main/markdown/Options.md)
 - Migration source: [`tsparticles/markdown/pjsMigration.md`](https://github.com/tsparticles/tsparticles/blob/main/markdown/pjsMigration.md)
+
+## Support the project
+
+- Sponsor Matteo Bruni: <https://github.com/matteobruni>
+- Sponsor tsParticles org: <https://github.com/tsparticles>

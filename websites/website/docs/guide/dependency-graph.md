@@ -8,15 +8,15 @@ For the full, exhaustive graph, see:
 
 ## High-level package flow
 
-```mermaid
-flowchart TD
-  engine[tsParticles Engine] --> basic[tsParticles Basic]
-  basic --> particles[tsParticles Particles]
-  basic --> confetti[tsParticles Confetti]
-  basic --> slim[tsParticles Slim]
-  basic --> fireworks[tsParticles Fireworks]
-  slim --> full[tsParticles]
-  full --> all[tsParticles All]
+```text
+tsParticles Engine
+`- tsParticles Basic
+   |- tsParticles Particles
+   |- tsParticles Confetti
+   |- tsParticles Fireworks
+   `- tsParticles Slim
+      `- tsparticles
+         `- tsParticles All
 ```
 
 ## How to use this map

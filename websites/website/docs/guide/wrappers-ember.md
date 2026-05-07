@@ -17,6 +17,7 @@ pnpm add @tsparticles/ember @tsparticles/engine @tsparticles/slim
 ## Monorepo references
 
 - Package folder: <https://github.com/tsparticles/tsparticles/tree/main/wrappers/ember>
+- Demo app: <https://github.com/tsparticles/tsparticles/tree/main/demo/ember>
 
 ## Readme
 

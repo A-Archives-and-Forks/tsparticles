@@ -10,6 +10,78 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   base,
+  locales: {
+    root: {
+      label: "English",
+      lang: "en-US",
+      link: "/",
+      title: "tsParticles",
+      description: "Modern particle animations for the web",
+    },
+    it: {
+      label: "Italiano",
+      lang: "it-IT",
+      link: "/it/",
+      title: "tsParticles",
+      description: "Animazioni particellari moderne per il web",
+    },
+    fr: {
+      label: "Français",
+      lang: "fr-FR",
+      link: "/fr/",
+      title: "tsParticles",
+      description: "Animations de particules modernes pour le web",
+    },
+    es: {
+      label: "Español",
+      lang: "es-ES",
+      link: "/es/",
+      title: "tsParticles",
+      description: "Animaciones de partículas modernas para la web",
+    },
+    de: {
+      label: "Deutsch",
+      lang: "de-DE",
+      link: "/de/",
+      title: "tsParticles",
+      description: "Moderne Partikelanimationen für das Web",
+    },
+    pt: {
+      label: "Português",
+      lang: "pt-PT",
+      link: "/pt/",
+      title: "tsParticles",
+      description: "Animacoes modernas de particulas para a web",
+    },
+    ru: {
+      label: "Русский",
+      lang: "ru-RU",
+      link: "/ru/",
+      title: "tsParticles",
+      description: "Современные анимации частиц для веба",
+    },
+    zh: {
+      label: "中文",
+      lang: "zh-CN",
+      link: "/zh/",
+      title: "tsParticles",
+      description: "适用于 Web 的现代粒子动画",
+    },
+    ja: {
+      label: "日本語",
+      lang: "ja-JP",
+      link: "/ja/",
+      title: "tsParticles",
+      description: "Web 向けのモダンなパーティクルアニメーション",
+    },
+    hi: {
+      label: "हिन्दी",
+      lang: "hi-IN",
+      link: "/hi/",
+      title: "tsParticles",
+      description: "वेब के लिए आधुनिक पार्टिकल एनिमेशन",
+    },
+  },
   vite: {
     envDir: "..",
   },
@@ -31,6 +103,13 @@ export default defineConfig({
       { text: "Demos", link: "/demos/" },
       { text: "Wrappers", link: "/guide/wrappers" },
       { text: "Options", link: "/options/" },
+      {
+        text: "Sponsor",
+        items: [
+          { text: "@matteobruni", link: "https://github.com/matteobruni" },
+          { text: "@tsparticles", link: "https://github.com/tsparticles" },
+        ],
+      },
       { text: "Releases", link: "/releases/" },
     ],
     sidebar: {
@@ -243,7 +322,7 @@ export default defineConfig({
     },
     footer: {
       message:
-        'Released under MIT License. <a href="/cookie-policy">Cookie Policy</a> · <a href="/privacy-policy">Privacy Policy</a>',
+        'Released under MIT License. <a href="/cookie-policy">Cookie Policy</a> · <a href="/privacy-policy">Privacy Policy</a> · Support: <a href="https://github.com/matteobruni">@matteobruni</a> / <a href="https://github.com/tsparticles">@tsparticles</a>',
       copyright: "Copyright © 2026 Matteo Bruni",
     },
   },

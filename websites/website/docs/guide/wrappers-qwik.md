@@ -17,6 +17,7 @@ pnpm add @tsparticles/qwik @tsparticles/engine @tsparticles/slim
 ## Monorepo references
 
 - Package folder: <https://github.com/tsparticles/tsparticles/tree/main/wrappers/qwik>
+- Demo app: <https://github.com/tsparticles/tsparticles/tree/main/demo/qwik>
 
 ## Readme
 
