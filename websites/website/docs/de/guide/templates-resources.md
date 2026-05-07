@@ -11,7 +11,7 @@ Vorlagen werden im Hauptmonorepo im Ordner `templates` verwaltet.
 
 - Sie möchten eine fertige Basislinie mit bereits verdrahteter Projektstruktur.
   - Sie benötigen Framework-spezifische Beispiele, bevor Sie benutzerdefinierte Wrapper schreiben.
-- Sie möchten die Bundle-Auswahl (`basic`, `slim`, `all`) schnell vergleichen.
+- Sie möchten die Bundle-Auswahl (`basic`, `slim`, `full`, `all`) schnell vergleichen.
 
 ## Beitragsfluss
 

@@ -11,7 +11,7 @@ Las plantillas se mantienen en el monorepo principal en la carpeta `templates`.
 
 - Quiere una línea base lista con la estructura del proyecto ya cableada.
 - Necesita ejemplos específicos del framework antes de crear wrappers personalizados.
-- Quiere comparar opciones de paquetes (`basic`, `slim`, `all`) rápidamente.
+- Quiere comparar opciones de paquetes (`basic`, `slim`, `full`, `all`) rápidamente.
 
 ## Flujo de contribución
 

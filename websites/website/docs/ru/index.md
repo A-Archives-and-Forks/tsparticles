@@ -28,7 +28,7 @@ features:
   - title: Готово для framework
     details: React, Vue, Angular, Svelte, Solid, Web Components и Vanilla JavaScript.
   - title: Фокус на продакшен
-    details: Контролируйте размер bundle с @tsparticles/slim, @tsparticles/basic или @tsparticles/all.
+    details: Контролируйте размер bundle с @tsparticles/basic, @tsparticles/slim, tsparticles или @tsparticles/all.
   - title: Фокусные API
     details: Используйте @tsparticles/particles, @tsparticles/confetti и @tsparticles/fireworks для setup в один вызов.
 ---

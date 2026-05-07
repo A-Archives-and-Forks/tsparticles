@@ -24,7 +24,7 @@ tsParticles Engine
 - ほとんどの実稼働アプリでは、`engine` + `slim` から開始します。
 - 追加の組み込みインタラクション/プラグインが必要な場合は、`tsparticles` に移動してください。
 - 完全な機能セットが必要な場合にのみ、`all` に移動してください。
-- 焦点を絞ったエフェクトには専用のバンドル (`particles`、`confetti`、`fireworks`) を使用します。
+- 焦点を絞ったエフェクトには専用のバンドル (`confetti`、`fireworks`、`particles`) を使用します。
 
 ## 関連ページ
 

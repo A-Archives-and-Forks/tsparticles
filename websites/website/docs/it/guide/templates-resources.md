@@ -11,7 +11,7 @@ I modelli vengono gestiti nel monorepo principale nella cartella `templates`.
 
 - Desideri una linea di base pronta con la struttura del progetto già cablata.
 - Sono necessari esempi specifici del framework prima di scrivere wrapper personalizzati.
-- Desideri confrontare rapidamente le scelte dei pacchetti (`basic`, `slim`, `all`).
+- Desideri confrontare rapidamente le scelte dei pacchetti (`basic`, `slim`, `full`, `all`).
 
 ## Flusso contributivo
 

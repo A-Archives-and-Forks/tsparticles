@@ -25,7 +25,7 @@ tsParticles Engine
 
 - Wechseln Sie zu `tsparticles`, wenn Sie zusätzliche integrierte Interaktionen/Plugins benötigen.
 - Wechseln Sie nur dann zu `all`, wenn Sie den vollständigen Funktionsumfang benötigen.
-- Verwenden Sie dedizierte Bundles (`particles`, `confetti`, `fireworks`) für gezielte Effekte.
+- Verwenden Sie dedizierte Bundles (`confetti`, `fireworks`, `particles`) für gezielte Effekte.
 
 ## Verwandte Seiten
 

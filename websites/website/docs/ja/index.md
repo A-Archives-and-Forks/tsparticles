@@ -28,7 +28,7 @@ features:
   - title: framework 対応
     details: React、Vue、Angular、Svelte、Solid、Web Components、Vanilla JavaScript をサポート。
   - title: 本番運用を重視
-    details: "@tsparticles/slim、@tsparticles/basic、@tsparticles/all で bundle サイズを調整できます。"
+    details: "@tsparticles/basic、@tsparticles/slim、tsparticles、@tsparticles/all で bundle サイズを調整できます。"
   - title: 用途別 API
     details: "@tsparticles/particles、@tsparticles/confetti、@tsparticles/fireworks を 1 回の呼び出しで導入できます。"
 ---

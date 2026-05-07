@@ -28,7 +28,7 @@ features:
   - title: framework-ready
     details: React, Vue, Angular, Svelte, Solid, Web Components और Vanilla JavaScript के लिए तैयार।
   - title: production-focused
-    details: "@tsparticles/slim, @tsparticles/basic या @tsparticles/all से bundle size नियंत्रित करें।"
+    details: "@tsparticles/basic, @tsparticles/slim, tsparticles या @tsparticles/all से bundle size नियंत्रित करें।"
   - title: focused APIs
     details: "@tsparticles/particles, @tsparticles/confetti और @tsparticles/fireworks के साथ एक ही call में setup करें।"
 ---

@@ -28,7 +28,7 @@ features:
   - title: Pronto per i framework
     details: React, Vue, Angular, Svelte, Solid, Web Components e JavaScript vanilla.
   - title: Ottimizzato per produzione
-    details: Controlla la dimensione del bundle con @tsparticles/slim, @tsparticles/basic o @tsparticles/all.
+    details: Controlla la dimensione del bundle con @tsparticles/basic, @tsparticles/slim, tsparticles o @tsparticles/all.
   - title: API focalizzate
     details: Usa @tsparticles/particles, @tsparticles/confetti e @tsparticles/fireworks per setup in una sola chiamata.
 ---

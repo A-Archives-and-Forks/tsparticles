@@ -28,7 +28,7 @@ features:
   - title: Pret pour les frameworks
     details: React, Vue, Angular, Svelte, Solid, Web Components et JavaScript vanilla.
   - title: Oriente production
-    details: Maitrisez la taille du bundle avec @tsparticles/slim, @tsparticles/basic ou @tsparticles/all.
+    details: Maitrisez la taille du bundle avec @tsparticles/basic, @tsparticles/slim, tsparticles ou @tsparticles/all.
   - title: APIs ciblees
     details: Utilisez @tsparticles/particles, @tsparticles/confetti et @tsparticles/fireworks pour une integration en un seul appel.
 ---

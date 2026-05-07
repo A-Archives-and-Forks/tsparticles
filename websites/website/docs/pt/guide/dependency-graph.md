@@ -24,7 +24,7 @@ tsParticles Engine
 - Comece com `engine` + `slim` para a maioria dos aplicativos de produção.
 - Mude para `tsparticles` se precisar de interações/plug-ins extras integrados.
 - Mude para `all` somente quando precisar do conjunto completo de recursos.
-- Use pacotes dedicados (`particles`, `confetti`, `fireworks`) para efeitos focados.
+- Use pacotes dedicados (`confetti`, `fireworks`, `particles`) para efeitos focados.
 
 ## Páginas relacionadas
 

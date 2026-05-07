@@ -24,7 +24,7 @@ tsParticles Engine
 - Start from `engine` + `slim` for most production apps.
 - Move to `tsparticles` if you need extra built-in interactions/plugins.
 - Move to `all` only when you need the complete feature set.
-- Use dedicated bundles (`particles`, `confetti`, `fireworks`) for focused effects.
+- Use dedicated bundles (`confetti`, `fireworks`, `particles`) for focused effects.
 
 ## Related pages
 

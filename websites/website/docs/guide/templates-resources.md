@@ -11,7 +11,7 @@ Templates are maintained in the main monorepo under the `templates` folder.
 
 - You want a ready baseline with project structure already wired.
 - You need framework-specific examples before writing custom wrappers.
-- You want to compare bundle choices (`basic`, `slim`, `all`) quickly.
+- You want to compare bundle choices (`basic`, `slim`, `full`, `all`) quickly.
 
 ## Contribution flow
 

@@ -11,7 +11,7 @@ Les modèles sont conservés dans le monorepo principal sous le dossier `templat
 
 - Vous voulez une base de référence prête à l'emploi avec une structure de projet déjà câblée.
 - Vous avez besoin d'exemples spécifiques au framework avant d'écrire des wrappers personnalisés.
-- Vous souhaitez comparer rapidement les choix de bundles (`basic`, `slim`, `all`).
+- Vous souhaitez comparer rapidement les choix de bundles (`basic`, `slim`, `full`, `all`).
 
 ## Flux de contribution
 

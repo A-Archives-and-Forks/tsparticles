@@ -11,7 +11,7 @@ Os modelos são mantidos no monorepo principal na pasta `templates`.
 
 - Você deseja uma linha de base pronta com a estrutura do projeto já instalada.
 - Você precisa de exemplos específicos da estrutura antes de escrever wrappers personalizados.
-- Você deseja comparar opções de pacotes (`basic`, `slim`, `all`) rapidamente.
+- Você deseja comparar opções de pacotes (`basic`, `slim`, `full`, `all`) rapidamente.
 
 ## Fluxo de contribuição
 

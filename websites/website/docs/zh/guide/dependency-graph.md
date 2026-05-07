@@ -24,7 +24,7 @@ tsParticles Engine
 - 对于大多数生产应用程序，从 `engine` + `slim` 开始。
 - 如果您需要额外的内置交互/插件，请移至 `tsparticles`。
 - 仅当您需要完整的功能集时才移至 `all`。
-- 使用专用捆绑包（`particles`、`confetti`、`fireworks`）来获得集中效果。
+- 使用专用捆绑包（`confetti`、`fireworks`、`particles`）来获得集中效果。
 
 ## 相关页面
 
