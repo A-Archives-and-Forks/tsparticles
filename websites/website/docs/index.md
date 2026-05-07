@@ -40,7 +40,7 @@ The website has been redesigned around the most common question: **"How do I use
 - Start from a working snippet in under 5 minutes.
 - Choose the right package without digging through many repos.
 - Find options, configs, presets, and palettes quickly.
-- Run heavy effects only when you decide with explicit Start/Stop controls.
+- Run heavy effects only when you decide with explicit Start/Pause controls.
 
 ## What to read first
 
@@ -56,12 +56,13 @@ The website has been redesigned around the most common question: **"How do I use
 10. [`/guide/video-tutorials`](/guide/video-tutorials): official video demos and references.
 11. [`/guide/dependency-graph`](/guide/dependency-graph): package-level map for engine and bundles.
 
-## Core repositories and sources
+## Core source and folders
 
 - Main monorepo: [github.com/tsparticles/tsparticles](https://github.com/tsparticles/tsparticles)
 - Main README (quick start, wrappers, presets): [README.md](https://github.com/tsparticles/tsparticles/blob/main/README.md)
-- Presets: [github.com/tsparticles/presets](https://github.com/tsparticles/presets)
-- Palettes: [github.com/tsparticles/palettes](https://github.com/tsparticles/palettes)
-- Templates: [github.com/tsparticles/templates](https://github.com/tsparticles/templates)
+- Wrappers folder: [`tsparticles/wrappers`](https://github.com/tsparticles/tsparticles/tree/main/wrappers)
+- Demo apps folder: [`tsparticles/demo`](https://github.com/tsparticles/tsparticles/tree/main/demo)
+- Presets workspace folders: [`tsparticles/presets`](https://github.com/tsparticles/tsparticles/tree/main/presets)
+- Palettes workspace folders: [`tsparticles/palettes`](https://github.com/tsparticles/tsparticles/tree/main/palettes)
 - Root options source: [`tsparticles/markdown/Options.md`](https://github.com/tsparticles/tsparticles/blob/main/markdown/Options.md)
 - Migration source: [`tsparticles/markdown/pjsMigration.md`](https://github.com/tsparticles/tsparticles/blob/main/markdown/pjsMigration.md)

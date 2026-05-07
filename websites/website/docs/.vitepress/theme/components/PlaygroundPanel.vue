@@ -43,6 +43,8 @@ const {
 
 <template>
   <div class="playground-panel">
+    <div :id="containerId" ref="playgroundTarget" class="playground-canvas" />
+
     <div class="playground-controls">
       <div class="toolbar-row">
         <label for="demoPreset">Ready demo</label>
@@ -74,7 +76,7 @@ const {
         <button type="button" :disabled="isBusy" @click="copyJson">Copy JSON</button>
         <button type="button" :disabled="isBusy" @click="copyShareLink">Copy Share Link</button>
         <button type="button" :disabled="isBusy" @click="startDemo">Start</button>
-        <button type="button" :disabled="isBusy || !isRunning" @click="stopDemo">Stop</button>
+        <button type="button" :disabled="isBusy || !isRunning" @click="stopDemo">Pause</button>
         <button type="button" :disabled="isBusy || isRunning" @click="resumeDemo">Resume</button>
         <button type="button" :disabled="isBusy" @click="destroyDemo">Destroy</button>
       </div>
@@ -85,8 +87,6 @@ const {
     </div>
 
     <textarea v-model="editorText" class="options-editor" spellcheck="false" aria-label="tsParticles options editor" />
-
-    <div :id="containerId" ref="playgroundTarget" class="playground-canvas" />
   </div>
 </template>
 

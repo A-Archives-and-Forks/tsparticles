@@ -6,6 +6,8 @@ Use this page to test the focused APIs from these packages:
 - `@tsparticles/fireworks`
 - `@tsparticles/particles`
 
-Each section has its own JSON editor and controls.
+Each section has its own canvas, JSON editor, and controls.
+
+The demos are scoped to their local canvas element (`*.create(...)`) so they do not take over the full page.
 
 <PlaygroundBundlesPanel></PlaygroundBundlesPanel>

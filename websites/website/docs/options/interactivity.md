@@ -58,7 +58,7 @@ interactivity: {
 
 - Avoid enabling too many modes at once on low-end devices.
 - Keep `distance` moderate to avoid performance spikes.
-- If the effect is heavy, use manual start with `Start/Stop`.
+- If the effect is heavy, use manual control with `Start/Pause`.
 
 ## Detailed references
 

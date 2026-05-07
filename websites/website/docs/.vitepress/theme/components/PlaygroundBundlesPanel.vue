@@ -3,7 +3,7 @@ import { confetti, type ConfettiOptions } from "@tsparticles/confetti";
 import { tsParticles, type Container } from "@tsparticles/engine";
 import { fireworks, type FireworkOptions } from "@tsparticles/fireworks";
 import { particles, type ParticlesOptions } from "@tsparticles/particles";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 type BundleKey = "confetti" | "fireworks" | "particles";
 
@@ -59,33 +59,38 @@ const defaultOptions: Record<BundleKey, unknown> = {
   },
 };
 
-const editors = {
-  confetti: ref(JSON.stringify(defaultOptions.confetti, null, 2)),
-  fireworks: ref(JSON.stringify(defaultOptions.fireworks, null, 2)),
-  particles: ref(JSON.stringify(defaultOptions.particles, null, 2)),
-};
+const editors = reactive<Record<BundleKey, string>>({
+  confetti: JSON.stringify(defaultOptions.confetti, null, 2),
+  fireworks: JSON.stringify(defaultOptions.fireworks, null, 2),
+  particles: JSON.stringify(defaultOptions.particles, null, 2),
+});
 
-const statuses = {
-  confetti: ref("Ready. Press Start."),
-  fireworks: ref("Ready. Press Start."),
-  particles: ref("Ready. Press Start."),
-};
+const statuses = reactive<Record<BundleKey, string>>({
+  confetti: "Ready. Press Start.",
+  fireworks: "Ready. Press Start.",
+  particles: "Ready. Press Start.",
+});
 
-const parseErrors = {
-  confetti: ref(""),
-  fireworks: ref(""),
-  particles: ref(""),
-};
+const parseErrors = reactive<Record<BundleKey, string>>({
+  confetti: "",
+  fireworks: "",
+  particles: "",
+});
 
-const busy = {
-  confetti: ref(false),
-  fireworks: ref(false),
-  particles: ref(false),
-};
+const busy = reactive<Record<BundleKey, boolean>>({
+  confetti: false,
+  fireworks: false,
+  particles: false,
+});
 
 const confettiContainer = ref<Container | undefined>();
+const confettiCanvas = ref<HTMLCanvasElement | null>(null);
 const confettiRunning = ref(false);
+const fireworksCanvas = ref<HTMLCanvasElement | null>(null);
+const fireworksInstance = ref<{ pause: () => void; play: () => void; stop: () => void } | undefined>();
 const fireworksRunning = ref(false);
+const particlesCanvas = ref<HTMLCanvasElement | null>(null);
+const particlesInstance = ref<{ pause: () => void; play: () => void; stop: () => void } | undefined>();
 const particlesRunning = ref(false);
 
 function getContainerById(id: string): Container | undefined {
@@ -99,86 +104,93 @@ function destroyById(id: string): void {
 }
 
 function parseOptions<T>(bundle: BundleKey): T | undefined {
-  parseErrors[bundle].value = "";
+  parseErrors[bundle] = "";
 
   try {
-    return JSON.parse(editors[bundle].value) as T;
+    return JSON.parse(editors[bundle]) as T;
   } catch {
-    parseErrors[bundle].value = "Invalid JSON. Check commas, quotes, and braces.";
-    statuses[bundle].value = "JSON parsing error.";
+    parseErrors[bundle] = "Invalid JSON. Check commas, quotes, and braces.";
+    statuses[bundle] = "JSON parsing error.";
 
     return;
   }
 }
 
 function resetOptions(bundle: BundleKey): void {
-  editors[bundle].value = JSON.stringify(defaultOptions[bundle], null, 2);
-  parseErrors[bundle].value = "";
-  statuses[bundle].value = "Reset to default options.";
+  editors[bundle] = JSON.stringify(defaultOptions[bundle], null, 2);
+  parseErrors[bundle] = "";
+  statuses[bundle] = "Reset to default options.";
 }
 
 async function startConfetti(): Promise<void> {
-  if (busy.confetti.value) {
+  if (busy.confetti) {
     return;
   }
 
   const options = parseOptions<ConfettiOptions>("confetti");
+  const canvas = confettiCanvas.value;
 
-  if (!options) {
+  if (!options || !canvas) {
+    if (!canvas) {
+      statuses.confetti = "Canvas not ready yet. Retry in a second.";
+    }
+
     return;
   }
 
-  busy.confetti.value = true;
+  busy.confetti = true;
 
   try {
     destroyById(bundleIds.confetti);
-    confettiContainer.value = await confetti(bundleIds.confetti, options);
+    const fireOnCanvas = await confetti.create(canvas, options);
+
+    confettiContainer.value = await fireOnCanvas(options);
 
     if (!confettiContainer.value) {
       confettiRunning.value = false;
-      statuses.confetti.value = "No confetti container created.";
+      statuses.confetti = "No confetti container created.";
 
       return;
     }
 
     confettiRunning.value = true;
-    statuses.confetti.value = "Confetti running.";
+    statuses.confetti = "Confetti running.";
   } catch (error) {
     const reason = error instanceof Error ? error.message : "Unknown error";
 
-    statuses.confetti.value = `Start failed: ${reason}`;
+    statuses.confetti = `Start failed: ${reason}`;
   } finally {
-    busy.confetti.value = false;
+    busy.confetti = false;
   }
 }
 
 function stopConfetti(): void {
   if (!confettiContainer.value) {
-    statuses.confetti.value = "No active confetti demo.";
+    statuses.confetti = "No active confetti demo.";
 
     return;
   }
 
   confettiContainer.value.pause();
   confettiRunning.value = false;
-  statuses.confetti.value = "Confetti paused.";
+  statuses.confetti = "Confetti paused.";
 }
 
 function resumeConfetti(): void {
   if (!confettiContainer.value) {
-    statuses.confetti.value = "No active confetti demo.";
+    statuses.confetti = "No active confetti demo.";
 
     return;
   }
 
   confettiContainer.value.play();
   confettiRunning.value = true;
-  statuses.confetti.value = "Confetti resumed.";
+  statuses.confetti = "Confetti resumed.";
 }
 
 function destroyConfetti(): void {
   if (!confettiContainer.value) {
-    statuses.confetti.value = "No confetti demo to destroy.";
+    statuses.confetti = "No confetti demo to destroy.";
 
     return;
   }
@@ -186,161 +198,167 @@ function destroyConfetti(): void {
   confettiContainer.value.destroy();
   confettiContainer.value = undefined;
   confettiRunning.value = false;
-  statuses.confetti.value = "Confetti destroyed.";
+  statuses.confetti = "Confetti destroyed.";
 }
 
 async function startFireworks(): Promise<void> {
-  if (busy.fireworks.value) {
+  if (busy.fireworks) {
     return;
   }
 
   const options = parseOptions<FireworkOptions>("fireworks");
+  const canvas = fireworksCanvas.value;
 
-  if (!options) {
+  if (!options || !canvas) {
+    if (!canvas) {
+      statuses.fireworks = "Canvas not ready yet. Retry in a second.";
+    }
+
     return;
   }
 
-  busy.fireworks.value = true;
+  busy.fireworks = true;
 
   try {
     destroyById(bundleIds.fireworks);
-    const instance = await fireworks(bundleIds.fireworks, options);
+    fireworksInstance.value = undefined;
+    const instance = await fireworks.create(canvas, options);
 
     if (!instance) {
       fireworksRunning.value = false;
-      statuses.fireworks.value = "No fireworks instance created.";
+      statuses.fireworks = "No fireworks instance created.";
 
       return;
     }
 
+    fireworksInstance.value = instance;
     fireworksRunning.value = true;
-    statuses.fireworks.value = "Fireworks running.";
+    statuses.fireworks = "Fireworks running.";
   } catch (error) {
     const reason = error instanceof Error ? error.message : "Unknown error";
 
-    statuses.fireworks.value = `Start failed: ${reason}`;
+    statuses.fireworks = `Start failed: ${reason}`;
   } finally {
-    busy.fireworks.value = false;
+    busy.fireworks = false;
   }
 }
 
 function stopFireworks(): void {
-  const container = getContainerById(bundleIds.fireworks);
-
-  if (!container) {
-    statuses.fireworks.value = "No active fireworks demo.";
+  if (!fireworksInstance.value) {
+    statuses.fireworks = "No active fireworks demo.";
 
     return;
   }
 
-  container.pause();
+  fireworksInstance.value.pause();
   fireworksRunning.value = false;
-  statuses.fireworks.value = "Fireworks paused.";
+  statuses.fireworks = "Fireworks paused.";
 }
 
 function resumeFireworks(): void {
-  const container = getContainerById(bundleIds.fireworks);
-
-  if (!container) {
-    statuses.fireworks.value = "No active fireworks demo.";
+  if (!fireworksInstance.value) {
+    statuses.fireworks = "No active fireworks demo.";
 
     return;
   }
 
-  container.play();
+  fireworksInstance.value.play();
   fireworksRunning.value = true;
-  statuses.fireworks.value = "Fireworks resumed.";
+  statuses.fireworks = "Fireworks resumed.";
 }
 
 function destroyFireworks(): void {
-  const container = getContainerById(bundleIds.fireworks);
-
-  if (!container) {
-    statuses.fireworks.value = "No fireworks demo to destroy.";
+  if (!fireworksInstance.value) {
+    statuses.fireworks = "No fireworks demo to destroy.";
 
     return;
   }
 
-  container.destroy();
+  fireworksInstance.value.stop();
+  fireworksInstance.value = undefined;
+  destroyById(bundleIds.fireworks);
   fireworksRunning.value = false;
-  statuses.fireworks.value = "Fireworks destroyed.";
+  statuses.fireworks = "Fireworks destroyed.";
 }
 
 async function startParticles(): Promise<void> {
-  if (busy.particles.value) {
+  if (busy.particles) {
     return;
   }
 
   const options = parseOptions<ParticlesOptions>("particles");
+  const canvas = particlesCanvas.value;
 
-  if (!options) {
+  if (!options || !canvas) {
+    if (!canvas) {
+      statuses.particles = "Canvas not ready yet. Retry in a second.";
+    }
+
     return;
   }
 
-  busy.particles.value = true;
+  busy.particles = true;
 
   try {
     destroyById(bundleIds.particles);
-    const instance = await particles(bundleIds.particles, options);
+    particlesInstance.value = undefined;
+    const instance = await particles.create(canvas, options);
 
     if (!instance) {
       particlesRunning.value = false;
-      statuses.particles.value = "No particles instance created.";
+      statuses.particles = "No particles instance created.";
 
       return;
     }
 
+    particlesInstance.value = instance;
     particlesRunning.value = true;
-    statuses.particles.value = "Particles running.";
+    statuses.particles = "Particles running.";
   } catch (error) {
     const reason = error instanceof Error ? error.message : "Unknown error";
 
-    statuses.particles.value = `Start failed: ${reason}`;
+    statuses.particles = `Start failed: ${reason}`;
   } finally {
-    busy.particles.value = false;
+    busy.particles = false;
   }
 }
 
 function stopParticles(): void {
-  const container = getContainerById(bundleIds.particles);
-
-  if (!container) {
-    statuses.particles.value = "No active particles demo.";
+  if (!particlesInstance.value) {
+    statuses.particles = "No active particles demo.";
 
     return;
   }
 
-  container.pause();
+  particlesInstance.value.pause();
   particlesRunning.value = false;
-  statuses.particles.value = "Particles paused.";
+  statuses.particles = "Particles paused.";
 }
 
 function resumeParticles(): void {
-  const container = getContainerById(bundleIds.particles);
-
-  if (!container) {
-    statuses.particles.value = "No active particles demo.";
+  if (!particlesInstance.value) {
+    statuses.particles = "No active particles demo.";
 
     return;
   }
 
-  container.play();
+  particlesInstance.value.play();
   particlesRunning.value = true;
-  statuses.particles.value = "Particles resumed.";
+  statuses.particles = "Particles resumed.";
 }
 
 function destroyParticles(): void {
-  const container = getContainerById(bundleIds.particles);
-
-  if (!container) {
-    statuses.particles.value = "No particles demo to destroy.";
+  if (!particlesInstance.value) {
+    statuses.particles = "No particles demo to destroy.";
 
     return;
   }
 
-  container.destroy();
+  particlesInstance.value.stop();
+  particlesInstance.value = undefined;
+  destroyById(bundleIds.particles);
   particlesRunning.value = false;
-  statuses.particles.value = "Particles destroyed.";
+  statuses.particles = "Particles destroyed.";
 }
 </script>
 
@@ -349,10 +367,11 @@ function destroyParticles(): void {
     <section class="bundle-card">
       <h2>@tsparticles/confetti</h2>
       <p class="bundle-description">One-call confetti API for celebratory bursts and overlays.</p>
+      <canvas :id="bundleIds.confetti" ref="confettiCanvas" class="playground-canvas" />
       <div class="button-row">
         <button type="button" :disabled="busy.confetti" @click="resetOptions('confetti')">Reset JSON</button>
         <button type="button" :disabled="busy.confetti" @click="startConfetti">Start</button>
-        <button type="button" :disabled="busy.confetti || !confettiRunning" @click="stopConfetti">Stop</button>
+        <button type="button" :disabled="busy.confetti || !confettiRunning" @click="stopConfetti">Pause</button>
         <button type="button" :disabled="busy.confetti || confettiRunning" @click="resumeConfetti">Resume</button>
         <button type="button" :disabled="busy.confetti" @click="destroyConfetti">Destroy</button>
       </div>
@@ -364,16 +383,16 @@ function destroyParticles(): void {
         spellcheck="false"
         aria-label="Confetti options editor"
       />
-      <div :id="bundleIds.confetti" class="playground-canvas" />
     </section>
 
     <section class="bundle-card">
       <h2>@tsparticles/fireworks</h2>
       <p class="bundle-description">Focused fireworks API with quick setup for launch/explosion scenes.</p>
+      <canvas :id="bundleIds.fireworks" ref="fireworksCanvas" class="playground-canvas" />
       <div class="button-row">
         <button type="button" :disabled="busy.fireworks" @click="resetOptions('fireworks')">Reset JSON</button>
         <button type="button" :disabled="busy.fireworks" @click="startFireworks">Start</button>
-        <button type="button" :disabled="busy.fireworks || !fireworksRunning" @click="stopFireworks">Stop</button>
+        <button type="button" :disabled="busy.fireworks || !fireworksRunning" @click="stopFireworks">Pause</button>
         <button type="button" :disabled="busy.fireworks || fireworksRunning" @click="resumeFireworks">Resume</button>
         <button type="button" :disabled="busy.fireworks" @click="destroyFireworks">Destroy</button>
       </div>
@@ -385,16 +404,16 @@ function destroyParticles(): void {
         spellcheck="false"
         aria-label="Fireworks options editor"
       />
-      <div :id="bundleIds.fireworks" class="playground-canvas" />
     </section>
 
     <section class="bundle-card">
       <h2>@tsparticles/particles</h2>
       <p class="bundle-description">Simplified particles background API for network and geometric effects.</p>
+      <canvas :id="bundleIds.particles" ref="particlesCanvas" class="playground-canvas" />
       <div class="button-row">
         <button type="button" :disabled="busy.particles" @click="resetOptions('particles')">Reset JSON</button>
         <button type="button" :disabled="busy.particles" @click="startParticles">Start</button>
-        <button type="button" :disabled="busy.particles || !particlesRunning" @click="stopParticles">Stop</button>
+        <button type="button" :disabled="busy.particles || !particlesRunning" @click="stopParticles">Pause</button>
         <button type="button" :disabled="busy.particles || particlesRunning" @click="resumeParticles">Resume</button>
         <button type="button" :disabled="busy.particles" @click="destroyParticles">Destroy</button>
       </div>
@@ -406,7 +425,6 @@ function destroyParticles(): void {
         spellcheck="false"
         aria-label="Particles options editor"
       />
-      <div :id="bundleIds.particles" class="playground-canvas" />
     </section>
   </div>
 </template>

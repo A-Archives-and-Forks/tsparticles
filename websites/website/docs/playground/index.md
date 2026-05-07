@@ -11,11 +11,17 @@ Execution is always **user-triggered only** (no autoplay).
 
 ## Shared flow
 
-1. Pick a demo from the menu.
-2. Press `Start` to run it (no autoplay).
-3. Edit the JSON in the editor.
-4. Press `Start` again to reload with your new options.
-5. Use `Stop`/`Resume` to control performance and CPU usage.
+The layout is consistent across playgrounds:
+
+1. Canvas preview first.
+2. Controls for Start/Pause/Resume/Destroy.
+3. JSON editor for options.
+
+4. Pick a demo from the menu.
+5. Press `Start` to run it (no autoplay).
+6. Edit the JSON in the editor.
+7. Press `Start` again to reload with your new options.
+8. Use `Pause`/`Resume` to control performance and CPU usage.
 
 > Note: `Destroy` fully releases the container instance.
 

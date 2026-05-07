@@ -248,4 +248,4 @@ await tsParticles.load({
 
 You can combine the same `palette` with different presets to get visual variants without rewriting the rest of the options.
 
-Use [`/playground/palettes`](/playground/palettes) to test them with explicit Start/Stop controls.
+Use [`/playground/palettes`](/playground/palettes) to test them with explicit Start/Pause controls.

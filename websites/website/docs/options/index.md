@@ -82,6 +82,41 @@
 - `interactivity`: hover/click modes and external effects.
 - `detectRetina`: quality/perf tradeoff on high-DPI screens.
 
+## Particles map (nested view)
+
+Use this quick tree as a navigation aid before opening single pages:
+
+```text
+particles
+|- number
+|- color
+|- shape
+|- size
+|- opacity
+|- move
+|- links
+|- collisions
+|- life
+|- destroy
+|- group
+|- orbit
+|- repulse
+|- roll
+|- rotate
+|- shadow
+|- stroke
+|- tilt
+|- twinkle
+|- wobble
+|- zIndex
+`- palette
+```
+
+Open root docs first, then deep-dive sections:
+
+- Root: [`Particles`](/options/particles)
+- Deep dives: [`Particles Number`](/options/particles-number), [`Particles Move`](/options/particles-move), [`Particles Links`](/options/particles-links)
+
 ## Safe options workflow
 
 1. Start with a working config from demos or presets.

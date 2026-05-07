@@ -5,11 +5,13 @@ const googleAdSenseClientId = (
   ""
 ).trim();
 const cookiePolicyPath = (import.meta.env.VITE_COOKIE_POLICY_PATH ?? "/cookie-policy").trim();
+const privacyPolicyPath = (import.meta.env.VITE_PRIVACY_POLICY_PATH ?? "/privacy-policy").trim();
 
 export const trackingConfig = {
   gaMeasurementId,
   googleAdSenseClientId,
   cookiePolicyPath: cookiePolicyPath.length > 0 ? cookiePolicyPath : "/cookie-policy",
+  privacyPolicyPath: privacyPolicyPath.length > 0 ? privacyPolicyPath : "/privacy-policy",
   isAnalyticsEnabled: gaMeasurementId.length > 0,
   isAdSenseEnabled: googleAdSenseClientId.length > 0,
 };

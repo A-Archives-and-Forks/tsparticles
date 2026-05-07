@@ -24,7 +24,9 @@ onMounted(() => {
     <p class="cookie-banner__text">
       We use analytics and advertising cookies (Google Analytics and Google AdSense) to improve documentation and
       measure campaign performance.
-      <a :href="trackingConfig.cookiePolicyPath">Read the cookie policy</a>.
+      <a :href="trackingConfig.cookiePolicyPath">Cookie Policy</a>
+      and
+      <a :href="trackingConfig.privacyPolicyPath">Privacy Policy</a>.
     </p>
     <div class="cookie-banner__actions">
       <button type="button" class="cookie-banner__button cookie-banner__button--secondary" @click="updateConsent('rejected')">
@@ -34,4 +36,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-

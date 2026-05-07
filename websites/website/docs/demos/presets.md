@@ -47,4 +47,4 @@ await tsParticles.load({
 
 For production setups, use manual start/stop/resume/destroy as shown in the recipes under [`/demos/`](/demos/).
 
-Use [`/playground/presets`](/playground/presets) to test each preset with explicit Start/Stop controls.
+Use [`/playground/presets`](/playground/presets) to test each preset with explicit Start/Pause controls.

@@ -8,6 +8,11 @@ This website uses a small set of cookies and third-party technologies to keep th
 - **Analytics cookies** (Google Analytics): used to understand traffic and documentation usage patterns.
 - **Advertising cookies** (Google AdSense): used to measure ad campaign performance and show ads.
 
+Environment variables currently configured in this project:
+
+- `VITE_GA_MEASUREMENT_ID`
+- `VITE_GOOGLE_ADSENSE_CLIENT_ID`
+
 ## How consent works
 
 - Tracking cookies are disabled until you explicitly click **Accept** in the cookie banner.
@@ -17,6 +22,10 @@ This website uses a small set of cookies and third-party technologies to keep th
 ## How to change your choice
 
 If you want to change your consent after choosing, clear this site's local storage/cookies in your browser settings and reload the page.
+
+## Related policy
+
+- [`/privacy-policy`](/privacy-policy)
 
 ## Data controllers and processors
 

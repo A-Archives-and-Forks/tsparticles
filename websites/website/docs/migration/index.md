@@ -1,4 +1,4 @@
-# Migration from particles.js
+# Migration and compatibility
 
 If you are migrating from `particles.js`, use this order:
 
@@ -35,3 +35,47 @@ Further reading:
 - Verify CPU/GPU impact on low-end devices.
 - Verify no option keys are ignored silently.
 - Pin exact package versions before release week.
+
+## Migration from canvas-confetti to `@tsparticles/confetti`
+
+If you are migrating from `canvas-confetti`, the easiest switch is replacing imperative calls with `@tsparticles/confetti` API calls.
+
+### Typical mapping
+
+- `confetti({...})` -> `await confetti({...})`
+- custom canvas -> `const local = await confetti.create(canvas, defaults)` then `await local({...})`
+- repeated shots -> keep your existing timers/loops, call `await confetti(...)` in those callbacks
+
+### Example conversion
+
+Before (`canvas-confetti` style):
+
+```ts
+import confetti from "canvas-confetti";
+
+confetti({
+  particleCount: 90,
+  spread: 70,
+  origin: { x: 0.5, y: 0.6 },
+});
+```
+
+After (`@tsparticles/confetti`):
+
+```ts
+import { confetti } from "@tsparticles/confetti";
+
+await confetti({
+  count: 90,
+  spread: 70,
+  position: { x: 50, y: 60 },
+});
+```
+
+### Option name notes
+
+- `particleCount` -> `count`
+- `origin.x`/`origin.y` in `0..1` -> `position.x`/`position.y` in `0..100`
+- `startVelocity`, `spread`, `angle`, and `colors` keep the same semantics
+
+For complete API and helpers, see: <https://github.com/tsparticles/tsparticles/tree/main/bundles/confetti#readme>

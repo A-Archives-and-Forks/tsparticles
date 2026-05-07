@@ -33,7 +33,7 @@ interactivity: {
 
 - Enable only the modes you really use.
 - Keep distances moderate for stable performance.
-- Use Start/Stop controls for expensive mode combinations.
+- Use Start/Pause controls for expensive mode combinations.
 
 Related pages:
 
