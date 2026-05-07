@@ -16,7 +16,7 @@ declare global {
      * @param options -
      * @returns the confetti function
      */
-    create: (canvas: HTMLCanvasElement, options: RecursivePartial<IConfettiOptions>) => Promise<ConfettiFunc>;
+    create: (canvas?: HTMLCanvasElement | null, options?: RecursivePartial<IConfettiOptions>) => Promise<ConfettiFunc>;
 
     init: () => Promise<void>;
 
@@ -149,14 +149,20 @@ export async function confetti(
  * @returns the confetti function to use for the given canvas animations
  */
 confetti.create = async (
-  canvas: HTMLCanvasElement,
-  options: RecursivePartial<IConfettiOptions>,
+  canvas?: HTMLCanvasElement | null,
+  options: RecursivePartial<IConfettiOptions> = {},
 ): Promise<ConfettiFunc> => {
   await initPlugins(tsParticles);
 
-  const id = canvas.getAttribute("id") ?? "confetti";
+  const id = canvas?.getAttribute("id") ?? "confetti";
 
-  canvas.setAttribute("id", id);
+  canvas?.setAttribute("id", id);
+
+  await setConfetti(tsParticles, {
+    id,
+    canvas: canvas ?? undefined,
+    options,
+  });
 
   return async (
     idOrOptions: ConfettiFirstParam,
@@ -174,7 +180,7 @@ confetti.create = async (
 
     return setConfetti(tsParticles, {
       id: subId,
-      canvas,
+      canvas: canvas ?? undefined,
       options: subOptions,
     });
   };

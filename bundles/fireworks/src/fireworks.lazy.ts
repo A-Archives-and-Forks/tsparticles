@@ -11,8 +11,8 @@ let initPromise: Promise<void> | null = null;
 declare global {
   var fireworks: FireworksFunc & {
     create: (
-      canvas: HTMLCanvasElement,
-      options: RecursivePartial<IFireworkOptions>,
+      canvas?: HTMLCanvasElement | null,
+      options?: RecursivePartial<IFireworkOptions>,
     ) => Promise<FireworksInstance | undefined>;
     init: () => Promise<void>;
     version: string;
@@ -111,14 +111,14 @@ export async function fireworks(
 }
 
 fireworks.create = async (
-  canvas: HTMLCanvasElement,
+  canvas?: HTMLCanvasElement | null,
   options?: RecursivePartial<IFireworkOptions>,
 ): Promise<FireworksInstance | undefined> => {
   await initPlugins(tsParticles);
 
-  const id = canvas.id || "fireworks";
+  const id = canvas?.id ?? "fireworks";
 
-  return getFireworksInstance(tsParticles, id, options ?? {}, canvas);
+  return getFireworksInstance(tsParticles, id, options ?? {}, canvas ?? undefined);
 };
 
 fireworks.init = async (): Promise<void> => {

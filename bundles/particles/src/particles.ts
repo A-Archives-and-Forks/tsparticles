@@ -15,8 +15,8 @@ let initPromise: Promise<void> | null = null;
 declare global {
   var particles: ParticlesFunc & {
     create: (
-      canvas: HTMLCanvasElement,
-      options: RecursivePartial<IParticlesOptions>,
+      canvas?: HTMLCanvasElement | null,
+      options?: RecursivePartial<IParticlesOptions>,
     ) => Promise<ParticlesInstance | undefined>;
     init: () => Promise<void>;
     version: string;
@@ -86,14 +86,14 @@ export async function particles(
 }
 
 particles.create = async (
-  canvas: HTMLCanvasElement,
+  canvas?: HTMLCanvasElement | null,
   options?: RecursivePartial<IParticlesOptions>,
 ): Promise<ParticlesInstance | undefined> => {
   await initPlugins(tsParticles);
 
-  const id = canvas.id || "particles";
+  const id = canvas?.id ?? "particles";
 
-  return getParticlesInstance(tsParticles, id, options ?? {}, canvas);
+  return getParticlesInstance(tsParticles, id, options ?? {}, canvas ?? undefined);
 };
 
 particles.init = async (): Promise<void> => {
