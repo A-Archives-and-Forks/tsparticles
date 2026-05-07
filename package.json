@@ -98,7 +98,7 @@
       "vue-template-compiler@2.7.16>vue": "2.7.16"
     },
     "patchedDependencies": {
-      "tsup@8.5.1": "cli/utils/patches/tsup@8.5.1.patch",
+      "tsup@8.5.1": "patches/tsup@8.5.1.patch",
       "vue-server-renderer@2.7.16": "patches/vue-server-renderer@2.7.16.patch"
     },
     "packageExtensions": {

@@ -17,9 +17,10 @@ ghpages.publish(
     repo: ghToken
       ? `https://git:${ghToken}@github.com/tsparticles/confetti.git`
       : `https://git:github.com/tsparticles/confetti.git`,
+    branch: 'main',
     dotfiles: true,
     history: false,
-    message: 'build: gh pages updated',
+    message: 'build: website updated',
     user: gitUser,
   },
   (publishErr) => {
