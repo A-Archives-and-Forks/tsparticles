@@ -93,6 +93,7 @@ Wenn Sie Setups bevorzugen, die auf Preset-Namen basieren, verwenden Sie den off
 - Wrapper-Referenz: [`/guide/wrappers`](/de/guide/wrappers)
 - Voreinstellungskatalog: [`/demos/presets`](/de/demos/presets)
 - Palettenkatalog: [`/demos/palettes`](/de/demos/palettes)
+- Formenkatalog: [`/demos/shapes`](/de/demos/shapes)
 - Migration von particles.js: [`/migration/`](/de/migration/)
 - Farbformate: [`/guide/color-formats`](/de/guide/color-formats)
 - Container-Lebenszyklus: [`/guide/container-lifecycle`](/de/guide/container-lifecycle)

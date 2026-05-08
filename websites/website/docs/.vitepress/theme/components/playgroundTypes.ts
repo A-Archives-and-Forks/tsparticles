@@ -1,8 +1,8 @@
 import type { ISourceOptions } from "@tsparticles/engine";
 
 export type DemoCategory = "background" | "interactive" | "seasonal";
-export type DemoKind = "config" | "palette" | "preset";
-export type PlaygroundMode = "all" | "configs" | "palettes" | "presets";
+export type DemoKind = "config" | "palette" | "preset" | "shape";
+export type PlaygroundMode = "all" | "configs" | "palettes" | "presets" | "shapes";
 
 export type DemoPreset = {
   key: string;

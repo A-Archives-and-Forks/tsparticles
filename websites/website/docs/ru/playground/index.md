@@ -3,6 +3,7 @@
 Разделить по вариантам использования:
 
 - [`Configs Playground`](/ru/playground/configs): более богатые демо-версии с полными редактируемыми параметрами.
+- [`Shapes Playground`](/ru/playground/shapes): демо, сфокусированные на `shape.type`, с параметрами для конкретных форм там, где они доступны.
 - [`Presets Playground`](/ru/playground/presets): официальные демо-версии с пресетами (`{ preset: "..." }`).
 - [`Palettes Playground`](/ru/playground/palettes): демонстрационные версии с палитрой из проекта пресетов.
 - [`Bundles Playground`](/ru/playground/bundles): выделенные игровые площадки для `@tsparticles/confetti`, `@tsparticles/fireworks` и `@tsparticles/particles`.

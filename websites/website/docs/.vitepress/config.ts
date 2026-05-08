@@ -110,6 +110,7 @@ export default defineConfig({
           { text: "@tsparticles", link: "https://github.com/tsparticles" },
         ],
       },
+      { text: "Changelog", link: "/changelog" },
       { text: "Releases", link: "/releases/" },
     ],
     sidebar: {
@@ -156,6 +157,11 @@ export default defineConfig({
           items: [
             { text: "Getting Started", link: "/guide/getting-started" },
             { text: "Installation", link: "/guide/installation" },
+            { text: "Migrations", link: "/guide/migrations" },
+            { text: "Option Rename Matrix", link: "/guide/option-rename-matrix" },
+            { text: "Migrate from v3.x", link: "/guide/migrate-from-v3" },
+            { text: "Migrate from v2.x", link: "/guide/migrate-from-v2" },
+            { text: "Migrate from v1.x", link: "/guide/migrate-from-v1" },
             { text: "Bundles", link: "/guide/bundles" },
             { text: "Bundle: Basic", link: "/guide/bundles-basic" },
             { text: "Bundle: Slim", link: "/guide/bundles-slim" },
@@ -218,6 +224,7 @@ export default defineConfig({
             { text: "Overview", link: "/playground/" },
             { text: "Bundles", link: "/playground/bundles" },
             { text: "Configs", link: "/playground/configs" },
+            { text: "Shapes", link: "/playground/shapes" },
             { text: "Palettes", link: "/playground/palettes" },
             { text: "Presets", link: "/playground/presets" },
           ],
@@ -230,6 +237,7 @@ export default defineConfig({
             { text: "Ready-to-Use", link: "/demos/" },
             { text: "Presets Catalog", link: "/demos/presets" },
             { text: "Palettes Catalog", link: "/demos/palettes" },
+            { text: "Shapes Catalog", link: "/demos/shapes" },
             { text: "Ambient", link: "/demos/recipes/ambient" },
             { text: "Big Circles", link: "/demos/recipes/big-circles" },
             { text: "Bubbles", link: "/demos/recipes/bubbles" },
@@ -323,6 +331,7 @@ export default defineConfig({
         },
       ],
       "/migration/": [{ text: "Migration", items: [{ text: "Compatibility & Migrations", link: "/migration/" }] }],
+      "/changelog": [{ text: "Changelog", items: [{ text: "Latest Release", link: "/changelog" }] }],
       "/releases/": [{ text: "Releases", items: [{ text: "Versioning & Release", link: "/releases/" }] }],
     },
     search: {

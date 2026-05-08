@@ -28,6 +28,7 @@ export function resume(): void {
 
 - Presets catalog: [`/demos/presets`](/demos/presets)
 - Palettes catalog: [`/demos/palettes`](/demos/palettes)
+- Shapes catalog: [`/demos/shapes`](/demos/shapes)
 
 - [`Ambient`](/demos/recipes/ambient)
 - [`Big Circles`](/demos/recipes/big-circles)

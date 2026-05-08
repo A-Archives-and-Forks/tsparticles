@@ -3,6 +3,7 @@
 Dividido por caso de uso:
 
 - [`Configs Playground`](/pt/playground/configs): demonstrações mais ricas com opções editáveis completas.
+- [`Shapes Playground`](/pt/playground/shapes): demonstracoes focadas em `shape.type`, com opcoes especificas por forma quando disponiveis.
 - [`Presets Playground`](/pt/playground/presets): demonstrações oficiais de nomes predefinidos (`{ preset: "..." }`).
 - [`Palettes Playground`](/pt/playground/palettes): demonstrações focadas na paleta do projeto de predefinições.
 - [`Bundles Playground`](/pt/playground/bundles): playgrounds dedicados para `@tsparticles/confetti`, `@tsparticles/fireworks` e `@tsparticles/particles`.

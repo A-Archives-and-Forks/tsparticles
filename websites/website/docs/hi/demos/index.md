@@ -28,6 +28,7 @@ export function resume(): void {
 
 - प्रीसेट कैटलॉग: [`/demos/presets`](/hi/demos/presets)
 - पैलेट कैटलॉग: [`/demos/palettes`](/hi/demos/palettes)
+- शेप कैटलॉग: [`/demos/shapes`](/hi/demos/shapes)
 
 - [`Ambient`](/hi/demos/recipes/ambient)
 - [`Big Circles`](/hi/demos/recipes/big-circles)

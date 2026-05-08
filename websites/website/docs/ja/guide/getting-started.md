@@ -93,6 +93,7 @@ pnpm add @tsparticles/configs
 - ラッパーリファレンス: [`/guide/wrappers`](/ja/guide/wrappers)
 - プリセットカタログ: [`/demos/presets`](/ja/demos/presets)
 - パレット カタログ: [`/demos/palettes`](/ja/demos/palettes)
+- シェイプ カタログ: [`/demos/shapes`](/ja/demos/shapes)
 - particles.js からの移行: [`/migration/`](/ja/migration/)
 - カラー形式: [`/guide/color-formats`](/ja/guide/color-formats)
 - コンテナのライフサイクル: [`/guide/container-lifecycle`](/ja/guide/container-lifecycle)

@@ -28,6 +28,7 @@ export function resume(): void {
 
 - Catalogo preimpostazioni: [`/demos/presets`](/it/demos/presets)
 - Catalogo tavolozze: [`/demos/palettes`](/it/demos/palettes)
+- Catalogo forme: [`/demos/shapes`](/it/demos/shapes)
 
 - [`Ambient`](/it/demos/recipes/ambient)
 - [`Big Circles`](/it/demos/recipes/big-circles)

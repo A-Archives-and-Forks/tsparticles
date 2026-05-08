@@ -28,6 +28,7 @@ export function resume(): void {
 
 - Каталог пресетов: [`/demos/presets`](/ru/demos/presets)
 - Каталог палитр: [`/demos/palettes`](/ru/demos/palettes)
+- Каталог форм: [`/demos/shapes`](/ru/demos/shapes)
 
 - [`Ambient`](/ru/demos/recipes/ambient)
 - [`Big Circles`](/ru/demos/recipes/big-circles)

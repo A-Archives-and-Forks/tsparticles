@@ -93,6 +93,7 @@ pnpm add @tsparticles/configs
 - रैपर संदर्भ: [`/guide/wrappers`](/hi/guide/wrappers)
 - प्रीसेट कैटलॉग: [`/demos/presets`](/hi/demos/presets)
 - पैलेट कैटलॉग: [`/demos/palettes`](/hi/demos/palettes)
+- शेप कैटलॉग: [`/demos/shapes`](/hi/demos/shapes)
 - particles.js से माइग्रेशन: [`/migration/`](/hi/migration/)
 - रंग प्रारूप: [`/guide/color-formats`](/hi/guide/color-formats)
 - कंटेनर जीवनचक्र: [`/guide/container-lifecycle`](/hi/guide/container-lifecycle)

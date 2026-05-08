@@ -28,6 +28,7 @@ export function resume(): void {
 
 - Catálogo de presets: [`/demos/presets`](/es/demos/presets)
 - Catálogo de paletas: [`/demos/palettes`](/es/demos/palettes)
+- Catálogo de formas: [`/demos/shapes`](/es/demos/shapes)
 
 - [`Ambient`](/es/demos/recipes/ambient)
 - [`Big Circles`](/es/demos/recipes/big-circles)

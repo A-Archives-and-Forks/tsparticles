@@ -28,6 +28,7 @@ export function resume(): void {
 
 - プリセットカタログ: [`/demos/presets`](/ja/demos/presets)
 - パレット カタログ: [`/demos/palettes`](/ja/demos/palettes)
+- シェイプ カタログ: [`/demos/shapes`](/ja/demos/shapes)
 
 - [`Ambient`](/ja/demos/recipes/ambient)
 - [`Big Circles`](/ja/demos/recipes/big-circles)

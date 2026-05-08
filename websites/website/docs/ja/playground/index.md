@@ -3,6 +3,7 @@
 ユースケースごとに分割:
 
 - [`Configs Playground`](/ja/playground/configs): 完全な編集可能なオプションを備えた豊富なデモ。
+- [`Shapes Playground`](/ja/playground/shapes): `shape.type` に特化したデモ。利用可能な場合は形状固有のオプションも含みます。
 - [`Presets Playground`](/ja/playground/presets): 公式プリセット名のデモ (`{ preset: "..." }`)。
 - [`Palettes Playground`](/ja/playground/palettes): プリセット プロジェクトからのパレットに焦点を当てたデモ。
 - [`Bundles Playground`](/ja/playground/bundles): `@tsparticles/confetti`、`@tsparticles/fireworks`、および `@tsparticles/particles` の専用プレイグラウンド。

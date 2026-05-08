@@ -49,12 +49,13 @@ The website has been redesigned around the most common question: **"How do I use
 3. [`/playground/`](/playground/): launch demos only on command and edit JSON live.
 4. [`/demos/`](/demos/): copy ready-to-use recipes for production.
 5. [`/options/`](/options/): map of root options and deep links.
-6. [`/migration/`](/migration/): migrate from particles.js with compatibility notes.
-7. [`/guide/wrappers`](/guide/wrappers): official wrapper packages and framework links.
-8. [`/guide/plugins-customization`](/guide/plugins-customization): custom shapes, presets, and plugin extension.
-9. [`/guide/templates-resources`](/guide/templates-resources): starter repos and shareable resources.
-10. [`/guide/video-tutorials`](/guide/video-tutorials): official video demos and references.
-11. [`/guide/dependency-graph`](/guide/dependency-graph): package-level map for engine and bundles.
+6. [`/guide/migrations`](/guide/migrations): migrate from tsParticles v1/v2/v3 to current.
+7. [`/migration/`](/migration/): migrate from particles.js with compatibility notes.
+8. [`/guide/wrappers`](/guide/wrappers): official wrapper packages and framework links.
+9. [`/guide/plugins-customization`](/guide/plugins-customization): custom shapes, presets, and plugin extension.
+10. [`/guide/templates-resources`](/guide/templates-resources): starter repos and shareable resources.
+11. [`/guide/video-tutorials`](/guide/video-tutorials): official video demos and references.
+12. [`/guide/dependency-graph`](/guide/dependency-graph): package-level map for engine and bundles.
 
 ## Core source and folders
 

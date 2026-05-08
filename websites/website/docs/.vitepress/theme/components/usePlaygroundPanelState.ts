@@ -56,6 +56,10 @@ export function usePlaygroundPanelState({ mode, demoPresets, paletteGroupDefinit
       return demoPresets.filter((preset) => preset.kind === "preset");
     }
 
+    if (mode === "shapes") {
+      return demoPresets.filter((preset) => preset.kind === "shape");
+    }
+
     return demoPresets;
   });
 
@@ -79,6 +83,10 @@ export function usePlaygroundPanelState({ mode, demoPresets, paletteGroupDefinit
 
     if (mode === "palettes") {
       return "Showing palette demos from the presets project.";
+    }
+
+    if (mode === "shapes") {
+      return "Showing shape demos with per-shape options where available.";
     }
 
     return "Showing all demos.";

@@ -3,6 +3,7 @@
 उपयोग के मामले से विभाजित:
 
 - [`Configs Playground`](/hi/playground/configs): पूर्ण संपादन योग्य विकल्पों के साथ समृद्ध डेमो।
+- [`Shapes Playground`](/hi/playground/shapes): `shape.type` के लिए केंद्रित डेमो, जहां उपलब्ध हो वहां आकार-विशिष्ट विकल्पों के साथ।
 - [`Presets Playground`](/hi/playground/presets): आधिकारिक प्रीसेट-नाम डेमो (`{ preset: "..." }`)।
 - [`Palettes Playground`](/hi/playground/palettes): प्रीसेट प्रोजेक्ट से पैलेट-केंद्रित डेमो।
 - [`Bundles Playground`](/hi/playground/bundles): `@tsparticles/confetti`, `@tsparticles/fireworks`, और `@tsparticles/particles` के लिए समर्पित खेल के मैदान।

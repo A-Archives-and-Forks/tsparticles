@@ -3,6 +3,7 @@
 Suddiviso per caso d'uso:
 
 - [`Configs Playground`](/it/playground/configs): demo più ricche con opzioni completamente modificabili.
+- [`Shapes Playground`](/it/playground/shapes): demo focalizzate su `shape.type`, con opzioni specifiche per forma quando disponibili.
 - [`Presets Playground`](/it/playground/presets): demo ufficiali con nomi preimpostati (`{ preset: "..." }`).
 - [`Palettes Playground`](/it/playground/palettes): demo incentrate sulla tavolozza dal progetto dei preset.
 - [`Bundles Playground`](/it/playground/bundles): campi da gioco dedicati per `@tsparticles/confetti`, `@tsparticles/fireworks` e `@tsparticles/particles`.

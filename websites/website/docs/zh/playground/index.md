@@ -3,6 +3,7 @@
 按用例划分：
 
 - [`Configs Playground`](/zh/playground/configs)：更丰富的演示，具有完整的可编辑选项。
+- [`Shapes Playground`](/zh/playground/shapes)：聚焦 `shape.type` 的演示，在可用时提供形状专属选项。
 - [`Presets Playground`](/zh/playground/presets)：官方预设名称演示 (`{ preset: "..." }`)。
 - [`Palettes Playground`](/zh/playground/palettes)：来自预设项目的以调色板为中心的演示。
 - [`Bundles Playground`](/zh/playground/bundles)：`@tsparticles/confetti`、`@tsparticles/fireworks` 和 `@tsparticles/particles` 的专用游乐场。

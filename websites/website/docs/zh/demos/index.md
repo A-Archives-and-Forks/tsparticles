@@ -28,6 +28,7 @@ export function resume(): void {
 
 - 预设目录：[`/demos/presets`](/zh/demos/presets)
 - 调色板目录：[`/demos/palettes`](/zh/demos/palettes)
+- 形状目录：[`/demos/shapes`](/zh/demos/shapes)
 
 - [`Ambient`](/zh/demos/recipes/ambient)
 - [`Big Circles`](/zh/demos/recipes/big-circles)
