@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/ember-demo",
-  "version": "4.0.0-beta.13",
+  "version": "4.0.0-beta.14",
   "private": true,
   "description": "Ember demo for @tsparticles/ember",
   "engines": {

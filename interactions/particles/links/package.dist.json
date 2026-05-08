@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/interaction-particles-links",
-  "version": "4.0.0-beta.13",
+  "version": "4.0.0-beta.14",
   "description": "tsParticles links particles interaction",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -102,8 +102,8 @@
   },
   "type": "module",
   "peerDependencies": {
-    "@tsparticles/canvas-utils": "4.0.0-beta.13",
-    "@tsparticles/engine": "4.0.0-beta.13",
-    "@tsparticles/plugin-interactivity": "4.0.0-beta.13"
+    "@tsparticles/canvas-utils": "4.0.0-beta.14",
+    "@tsparticles/engine": "4.0.0-beta.14",
+    "@tsparticles/plugin-interactivity": "4.0.0-beta.14"
   }
 }

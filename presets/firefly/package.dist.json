@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/preset-firefly",
-  "version": "4.0.0-beta.13",
+  "version": "4.0.0-beta.14",
   "description": "tsParticles firefly preset",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -106,11 +106,11 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@tsparticles/basic": "4.0.0-beta.13",
-    "@tsparticles/engine": "4.0.0-beta.13",
-    "@tsparticles/interaction-external-trail": "4.0.0-beta.13",
-    "@tsparticles/plugin-interactivity": "4.0.0-beta.13",
-    "@tsparticles/updater-life": "4.0.0-beta.13"
+    "@tsparticles/basic": "4.0.0-beta.14",
+    "@tsparticles/engine": "4.0.0-beta.14",
+    "@tsparticles/interaction-external-trail": "4.0.0-beta.14",
+    "@tsparticles/plugin-interactivity": "4.0.0-beta.14",
+    "@tsparticles/updater-life": "4.0.0-beta.14"
   },
   "publishConfig": {
     "access": "public"

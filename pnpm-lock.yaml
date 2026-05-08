@@ -6871,10 +6871,10 @@ importers:
   interactions/light/dist:
     dependencies:
       '@tsparticles/engine':
-        specifier: 4.0.0-beta.13
+        specifier: 4.0.0-beta.14
         version: link:../../../engine/dist
       '@tsparticles/plugin-interactivity':
-        specifier: 4.0.0-beta.13
+        specifier: 4.0.0-beta.14
         version: link:../../../plugins/interactivity/dist
 
   interactions/particles/attract:
