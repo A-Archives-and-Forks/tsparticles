@@ -1,50 +1,52 @@
-import { cp } from "node:fs/promises";
-import { exec } from "node:child_process";
+import * as childProcess from "node:child_process";
+import * as fsPromises from "node:fs/promises";
+import { replaceTokensInFile, updateJsonFile } from "./file-utils.js";
 import { lookpath } from "lookpath";
 import path from "node:path";
-import { replaceTokensInFile } from "./file-utils.js";
+
+export interface IProjectMetadata {
+  description: string;
+  directory: string;
+  packageName: string;
+  repoUrl: string;
+  unpkgFileName: string;
+}
 
 /**
  * Updates the package.json file
  * @param destPath - The path where the package.json file is located
- * @param packageName - The name of the package
- * @param description - The description of the package
- * @param fileName - The name of the output file
- * @param repoUrl - The repository URL
+ * @param metadata - The project metadata used for updates
  */
-export async function updatePackageFile(
-  destPath: string,
-  packageName: string,
-  description: string,
-  fileName: string,
-  repoUrl: string,
-): Promise<void> {
+export async function updatePackageFile(destPath: string, metadata: IProjectMetadata): Promise<void> {
+  await updateJsonFile<Record<string, unknown>>(path.join(destPath, "package.json"), data => {
+    const publishConfig = (data["publishConfig"] ?? {}) as Record<string, unknown>;
+
+    return {
+      ...data,
+      name: metadata.packageName,
+      description: metadata.description,
+      repository: {
+        type: "git",
+        url: `git+${metadata.repoUrl}`,
+        directory: metadata.directory,
+      },
+      bugs: {
+        url: metadata.repoUrl.replace(/\.git$/, "/issues"),
+      },
+      publishConfig: {
+        ...publishConfig,
+        access: "public",
+      },
+      private: undefined,
+    };
+  });
+
   await replaceTokensInFile({
     path: path.join(destPath, "package.json"),
     tokens: [
       {
-        from: /"tsParticles empty template"/g,
-        to: `"${description}"`,
-      },
-      {
         from: /"tsparticles.empty.template.min.js"/g,
-        to: `"${fileName}"`,
-      },
-      {
-        from: /\s{4}"private": true,\r?\n?/g,
-        to: "",
-      },
-      {
-        from: /"@tsparticles\/empty-template"/g,
-        to: `"${packageName}"`,
-      },
-      {
-        from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
-        to: `"url": "git+${repoUrl}"`,
-      },
-      {
-        from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
-        to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
+        to: `"${metadata.unpkgFileName}"`,
       },
     ],
   });
@@ -53,76 +55,38 @@ export async function updatePackageFile(
 /**
  * Updates the package.dist.json file with the new project name and description
  * @param destPath - The path where the package.dist.json file is located
- * @param packageName - The name of the package
- * @param description - The description of the package
- * @param fileName - The name of the output file
- * @param repoUrl - The url of the repository
+ * @param metadata - The project metadata used for updates
  */
-export async function updatePackageDistFile(
-  destPath: string,
-  packageName: string,
-  description: string,
-  fileName: string,
-  repoUrl: string,
-): Promise<void> {
+export async function updatePackageDistFile(destPath: string, metadata: IProjectMetadata): Promise<void> {
+  await updateJsonFile<Record<string, unknown>>(path.join(destPath, "package.dist.json"), data => {
+    const publishConfig = (data["publishConfig"] ?? {}) as Record<string, unknown>;
+
+    return {
+      ...data,
+      name: metadata.packageName,
+      description: metadata.description,
+      repository: {
+        type: "git",
+        url: `git+${metadata.repoUrl}`,
+        directory: metadata.directory,
+      },
+      bugs: {
+        url: metadata.repoUrl.replace(/\.git$/, "/issues"),
+      },
+      publishConfig: {
+        ...publishConfig,
+        access: "public",
+      },
+      private: undefined,
+    };
+  });
+
   await replaceTokensInFile({
     path: path.join(destPath, "package.dist.json"),
     tokens: [
       {
-        from: /"tsParticles empty template"/g,
-        to: `"${description}"`,
-      },
-      {
         from: /"tsparticles.empty.template.min.js"/g,
-        to: `"${fileName}"`,
-      },
-      {
-        from: /\s{4}"private": true,\r?\n?/g,
-        to: "",
-      },
-      {
-        from: /"@tsparticles\/empty-template"/g,
-        to: `"${packageName}"`,
-      },
-      {
-        from: /"url": "git\+https:\/\/github\.com\/tsparticles\/empty-template\.git"/g,
-        to: `"url": "git+${repoUrl}"`,
-      },
-      {
-        from: /"url": "https:\/\/github\.com\/tsparticles\/empty-template\/issues"/g,
-        to: `"url": "${repoUrl.replace(".git", "/issues")}"`,
-      },
-    ],
-  });
-}
-
-/**
- * Updates the webpack file with the new project name and description
- * @param destPath - The path where the project will be created
- * @param name - The name of the project
- * @param description - The description of the project
- * @param fnName - The name of the function to load the template
- */
-export async function updateWebpackFile(
-  destPath: string,
-  name: string,
-  description: string,
-  fnName: string,
-): Promise<void> {
-  await replaceTokensInFile({
-    path: path.join(destPath, "webpack.config.js"),
-    tokens: [
-      {
-        from: /"Empty"/g,
-        to: `"${description}"`,
-      },
-      {
-        from: /"empty"/g,
-        to: `"${name}"`,
-      },
-      {
-        from: /loadParticlesTemplate/g,
-        to: fnName,
+        to: `"${metadata.unpkgFileName}"`,
       },
     ],
   });
@@ -133,7 +97,7 @@ export async function updateWebpackFile(
  * @param destPath - The path where the project will be created
  */
 export async function copyEmptyTemplateFiles(destPath: string): Promise<void> {
-  await cp(path.join(__dirname, "..", "files", "empty-project"), destPath, {
+  await fsPromises.cp(path.join(__dirname, "..", "files", "empty-project"), destPath, {
     recursive: true,
     force: true,
     filter: copyFilter,
@@ -159,7 +123,7 @@ export async function runInstall(destPath: string): Promise<void> {
   }
 
   return new Promise((resolve, reject) => {
-    exec(
+    childProcess.exec(
       "npm install",
       {
         cwd: destPath,
@@ -187,7 +151,7 @@ export async function runBuild(destPath: string): Promise<void> {
   }
 
   return new Promise((resolve, reject) => {
-    exec(
+    childProcess.exec(
       "npm run build",
       {
         cwd: destPath,

@@ -87,7 +87,7 @@
     "@tsparticles/cli-build": "workspace:^",
     "@tsparticles/browserslist-config": "workspace:^",
     "@tsparticles/depcruise-config": "workspace:^",
-    "@tsparticles/engine": "workspace:^",
+    "@tsparticles/engine": "^4.0.0-beta.12",
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
     "@tsparticles/tsconfig": "workspace:^",
@@ -108,6 +108,6 @@
     "webpack-cli": "^7.0.2"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "workspace:^"
+    "@tsparticles/engine": "^4.0.0-beta.12"
   }
 }

@@ -4,6 +4,8 @@ import { existsSync } from "node:fs";
 import { lookpath } from "lookpath";
 import path from "node:path";
 
+const jsonIndentation = 2;
+
 export interface ReplaceTokensOptions {
   path: string;
   tokens: ReplaceTokensData[];
@@ -13,6 +15,8 @@ export interface ReplaceTokensData {
   from: string | RegExp;
   to: string;
 }
+
+export type JsonUpdater<T> = (data: T) => T;
 
 /**
  *
@@ -40,6 +44,18 @@ export async function replaceTokensInFiles(options: ReplaceTokensOptions[]): Pro
  */
 export async function replaceTokensInFile(options: ReplaceTokensOptions): Promise<void> {
   await replaceTokensInFiles([options]);
+}
+
+/**
+ * Updates a JSON file preserving standard indentation.
+ * @param filePath - The JSON file path
+ * @param updater - The updater callback
+ */
+export async function updateJsonFile<T>(filePath: string, updater: JsonUpdater<T>): Promise<void> {
+  const data = JSON.parse(await readFile(filePath, "utf-8")) as T,
+    updatedData = updater(data);
+
+  await writeFile(filePath, `${JSON.stringify(updatedData, undefined, jsonIndentation)}\n`);
 }
 
 /**
@@ -73,15 +89,14 @@ export async function getRepositoryUrl(): Promise<string> {
     return "";
   }
 
-  return new Promise<string>((resolve, reject) => {
+  return new Promise<string>(resolve => {
     exec("git config --get remote.origin.url", (error, stdout) => {
       if (error) {
-        reject(error);
-
+        resolve("");
         return;
       }
 
-      resolve(stdout);
+      resolve(stdout.trim());
     });
   });
 }
