@@ -351,5 +351,6 @@ MigrationBackup/
 .DS_Store
 .idea
 
+public/index.html
 public/js/confetti-modes.js
 public/js/tsparticles.confetti.bundle.min.js

@@ -9,8 +9,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "handlebars confetti-modes.handlebars -f public/js/confetti-modes.js -k isCustom",
-    "build:ci": "handlebars confetti-modes.handlebars -f public/js/confetti-modes.js -k isCustom",
+    "build": "node scripts/build.mjs",
+    "build:ci": "node scripts/build.mjs",
     "deploy": "rimraf node_modules/.cache && node deploy.js",
     "lint": "eslint public/js",
     "lint:fix": "eslint public/js --fix",
