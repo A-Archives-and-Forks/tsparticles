@@ -75,7 +75,7 @@ jobs:
       - name: Publish to NPM (OIDC Auth)
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
-          BASE_CMD="pnpm exec nx release publish --skip-version"
+          BASE_CMD="pnpm -r publish --no-git-checks"
 
           echo "Publishing tag: $TAG via OIDC"
 
@@ -94,7 +94,6 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NX_CLOUD_DISTRIBUTED_EXECUTION: false
 
       # 🧠 Create release (raw GitHub notes)
       - name: Create Release (raw)
