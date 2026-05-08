@@ -433,7 +433,7 @@ export class CanvasManager {
     const pointerEvents = this._pointerEvents;
 
     element.style.pointerEvents = pointerEvents;
-    element.setAttribute("pointer-events", pointerEvents);
+    element.style.setProperty("pointer-events", pointerEvents);
 
     this._safeMutationObserver(observer => {
       if (!(element instanceof Node)) {

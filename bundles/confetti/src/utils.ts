@@ -37,11 +37,13 @@ export async function addEmitter(
       count: 1,
     },
     particles: {
-      fill: {
-        color: {
-          value: actualOptions.colors,
+      paint: {
+        fill: {
+          color: {
+            value: actualOptions.colors,
+          },
+          enable: true,
         },
-        enable: true,
       },
       shape: {
         type: actualOptions.shapes,
@@ -151,11 +153,13 @@ export function convertOptions(
       number: {
         value: 0,
       },
-      fill: {
-        color: {
-          value: actualOptions.colors,
+      paint: {
+        fill: {
+          color: {
+            value: actualOptions.colors,
+          },
+          enable: true,
         },
-        enable: true,
       },
       shape: {
         type: actualOptions.shapes,

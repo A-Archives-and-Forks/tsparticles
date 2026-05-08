@@ -5,20 +5,17 @@ import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
   {
-    ignores: ['node_modules/**', '.git/**', 'public/js/confetti-modes.js'],
+    ignores: ['node_modules/**', '.git/**', 'dist/**'],
   },
   js.configs.recommended,
   {
-    files: ['public/js/**/*.js'],
+    files: ['src/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node,
-        Handlebars: 'readonly',
         ace: 'readonly',
-        confetti: 'readonly',
         js_beautify: 'readonly',
       },
     },

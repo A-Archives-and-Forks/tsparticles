@@ -798,6 +798,7 @@ function computeFullScreenStyle(zIndex: number): CSSStyleDeclaration {
       "z-index": zIndex.toString(radix),
       top: "0",
       left: "0",
+      "pointer-events": "none",
     };
 
   for (const key in style) {

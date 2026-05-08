@@ -79,6 +79,8 @@ const getCanvasFromContainer = (domContainer: HTMLElement): HTMLCanvasElement =>
       if (canvasEl.dataset[generatedAttribute] === generatedTrue) {
         canvasEl.style.width ||= fullPercent;
         canvasEl.style.height ||= fullPercent;
+        canvasEl.style.pointerEvents = "none";
+        canvasEl.style.setProperty("pointer-events", "none");
       }
     } else {
       const existingCanvases = domContainer.getElementsByTagName(canvasTag),
@@ -101,6 +103,8 @@ const getCanvasFromContainer = (domContainer: HTMLElement): HTMLCanvasElement =>
 
       canvasEl.style.width ||= fullPercent;
       canvasEl.style.height ||= fullPercent;
+      canvasEl.style.pointerEvents = "none";
+      canvasEl.style.setProperty("pointer-events", "none");
     }
 
     return canvasEl;
