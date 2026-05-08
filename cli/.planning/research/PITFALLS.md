@@ -1,1 +1,0 @@
-PITFALLS research placeholder

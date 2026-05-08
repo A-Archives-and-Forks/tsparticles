@@ -1,147 +1,52 @@
-[![banner](https://particles.js.org/images/banner2.png)](https://particles.js.org)
+# @tsparticles/cli-create-utils
 
-# tsParticles CLI
+Shared utilities used by `@tsparticles/cli-command-create` and all modular `create-*` command packages.
+
+## What It Provides
+
+- project scaffold generation (`createProjectTemplate`)
+- interactive prompt helpers (`promptProjectData`)
+- filesystem helpers (`getDestinationDir`, `getRepositoryUrl`, token replacement)
+- template/package update helpers (`updatePackageFile`, `copyEmptyTemplateFiles`, `runInstall`, `runBuild`)
+- string naming helpers (`capitalize`, `camelize`, `dash`)
 
 ## Installation
 
-### NPM
-
 ```bash
-npm install -g @tsparticles/cli-create
+pnpm add @tsparticles/cli-create-utils
 ```
 
-### Yarn
+## Exports
 
-```bash
-yarn global add @tsparticles/cli-create
-```
+This package re-exports everything from:
 
-### PNPM
+- `src/create-project.ts`
+- `src/file-utils.ts`
+- `src/prompt-utils.ts`
+- `src/string-utils.ts`
+- `src/template-utils.ts`
 
-```bash
-pnpm global add @tsparticles/cli-create
-```
+## Typical Usage
 
-## Usage
+```ts
+import { Command } from "commander";
+import { createProjectTemplate, promptProjectData } from "@tsparticles/cli-create-utils";
 
-### Help
+const cmd = new Command("shape");
 
-```bash
-npx @tsparticles/cli-create --help
-```
+cmd.argument("<destination>");
+cmd.action(async destination => {
+  const data = await promptProjectData({
+    destination,
+    nameLabel: "shape",
+  });
 
-or
-
-```bash
-tsparticles-create --help
-```
-
-### Create
-
-#### Bundle
-
-```bash
-npx @tsparticles/cli-create bundle <folder>
-```
-
-or
-
-```bash
-tsparticles-create bundle <folder>
-```
-
-#### Effect
-
-```bash
-npx @tsparticles/cli-create effect <folder>
-```
-
-or
-
-```bash
-tsparticles-create effect <folder>
-```
-
-#### Interaction
-
-```bash
-npx @tsparticles/cli-create interaction <folder>
-```
-
-or
-
-```bash
-tsparticles-create interaction <folder>
-```
-
-#### Palette
-
-```bash
-npx @tsparticles/cli-create palette <folder>
-```
-
-or
-
-```bash
-tsparticles-create palette <folder>
-```
-
-#### Path
-
-```bash
-npx @tsparticles/cli-create path <folder>
-```
-
-or
-
-```bash
-tsparticles-create path <folder>
-```
-
-#### Plugin
-
-```bash
-npx @tsparticles/cli-create plugin <folder>
-```
-
-or
-
-```bash
-tsparticles-create plugin <folder>
-```
-
-#### Preset
-
-```bash
-npx @tsparticles/cli-create preset <folder>
-```
-
-or
-
-```bash
-tsparticles-create preset <folder>
-```
-
-#### Shape
-
-```bash
-npx @tsparticles/cli-create shape <folder>
-```
-
-or
-
-```bash
-tsparticles-create shape <folder>
-```
-
-#### Updater
-
-```bash
-npx @tsparticles/cli-create updater <folder>
-```
-
-or
-
-```bash
-tsparticles-create updater <folder>
+  await createProjectTemplate({
+    description: data.description,
+    destination: data.destinationPath,
+    kind: "shape",
+    name: data.name,
+    repositoryUrl: data.repositoryUrl,
+  });
+});
 ```

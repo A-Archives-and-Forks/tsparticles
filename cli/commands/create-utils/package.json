@@ -34,6 +34,7 @@
   "dependencies": {
     "@swc/core": "^1.15.32",
     "@tsparticles/depcruise-config": "workspace:^",
+    "@tsparticles/engine": "workspace:^",
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
     "@tsparticles/tsconfig": "workspace:^",

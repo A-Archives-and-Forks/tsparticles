@@ -18,4 +18,23 @@ yarn add -D @tsparticles/cli-create
 tsparticles-create [options]
 ```
 
-For usage details, see the command package docs under `cli/commands/create`.
+The wrapper automatically prepends `create` when omitted, so these are equivalent:
+
+```bash
+tsparticles-create plugin my-plugin
+tsparticles-create create plugin my-plugin
+```
+
+Supported subcommands:
+
+- `bundle`
+- `effect`
+- `interaction`
+- `palette`
+- `path`
+- `plugin`
+- `preset`
+- `shape`
+- `updater`
+
+For full examples, see `cli/commands/create/README.md`.

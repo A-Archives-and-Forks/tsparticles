@@ -2061,6 +2061,9 @@ importers:
       '@tsparticles/depcruise-config':
         specifier: workspace:^
         version: link:../../utils/depcruise-config
+      '@tsparticles/engine':
+        specifier: workspace:^
+        version: link:../../../engine/dist
       '@tsparticles/eslint-config':
         specifier: workspace:^
         version: link:../../utils/eslint-config
