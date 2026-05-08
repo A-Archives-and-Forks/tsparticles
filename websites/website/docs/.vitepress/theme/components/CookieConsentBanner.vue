@@ -2,37 +2,105 @@
 import { computed, onMounted, ref } from "vue";
 
 import { trackingConfig } from "../tracking/config";
-import { readCookieConsent, writeCookieConsent } from "../tracking/consent";
+import {
+  defaultCookieConsentPreferences,
+  readCookieConsent,
+  writeCookieConsent,
+  type CookieConsentPreferences,
+} from "../tracking/consent";
 
-const consentChoice = ref<string | undefined>(undefined);
+const savedConsent = ref<CookieConsentPreferences | undefined>(undefined);
+const preferences = ref<CookieConsentPreferences>({ ...defaultCookieConsentPreferences });
+const isPanelOpen = ref(false);
 
 const isTrackingConfigured = computed(() => trackingConfig.isAnalyticsEnabled || trackingConfig.isAdSenseEnabled);
-const shouldShowBanner = computed(() => isTrackingConfigured.value && !consentChoice.value);
+const shouldShowBanner = computed(() => isTrackingConfigured.value && (!savedConsent.value || isPanelOpen.value));
 
-function updateConsent(choice: "accepted" | "rejected"): void {
-  writeCookieConsent(choice);
-  consentChoice.value = choice;
+function savePreferences(next: CookieConsentPreferences): void {
+  writeCookieConsent(next);
+  savedConsent.value = next;
+  isPanelOpen.value = false;
+}
+
+function rejectAll(): void {
+  savePreferences({
+    analytics: false,
+    adsense: false,
+  });
+}
+
+function acceptAll(): void {
+  savePreferences({
+    analytics: true,
+    adsense: true,
+  });
+}
+
+function saveCurrentPreferences(): void {
+  savePreferences({
+    analytics: preferences.value.analytics,
+    adsense: preferences.value.adsense,
+  });
+}
+
+function reopenPreferences(): void {
+  preferences.value = {
+    analytics: savedConsent.value?.analytics ?? false,
+    adsense: savedConsent.value?.adsense ?? false,
+  };
+  isPanelOpen.value = true;
 }
 
 onMounted(() => {
-  consentChoice.value = readCookieConsent();
+  savedConsent.value = readCookieConsent();
+
+  if (savedConsent.value) {
+    preferences.value = {
+      analytics: savedConsent.value.analytics,
+      adsense: savedConsent.value.adsense,
+    };
+  }
 });
 </script>
 
 <template>
-  <div v-if="shouldShowBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+  <div v-if="shouldShowBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Privacy settings">
+    <p class="cookie-banner__title">Privacy settings</p>
     <p class="cookie-banner__text">
-      We use analytics and advertising cookies (Google Analytics and Google AdSense) to improve documentation and
-      measure campaign performance.
+      Choose how this site can use analytics and advertising technologies. You can continue with essential only, accept
+      all, or save custom preferences.
       <a :href="trackingConfig.cookiePolicyPath">Cookie Policy</a>
       and
       <a :href="trackingConfig.privacyPolicyPath">Privacy Policy</a>.
     </p>
+    <label class="cookie-banner__option">
+      <input v-model="preferences.analytics" type="checkbox" />
+      <span>Analytics (Google Analytics)</span>
+    </label>
+    <label class="cookie-banner__option">
+      <input v-model="preferences.adsense" type="checkbox" />
+      <span>Advertising (Google AdSense)</span>
+    </label>
     <div class="cookie-banner__actions">
-      <button type="button" class="cookie-banner__button cookie-banner__button--secondary" @click="updateConsent('rejected')">
-        Reject
+      <button type="button" class="cookie-banner__button cookie-banner__button--secondary" @click="rejectAll">
+        Reject all
       </button>
-      <button type="button" class="cookie-banner__button" @click="updateConsent('accepted')">Accept</button>
+      <button
+        type="button"
+        class="cookie-banner__button cookie-banner__button--secondary"
+        @click="saveCurrentPreferences"
+      >
+        Save choices
+      </button>
+      <button type="button" class="cookie-banner__button" @click="acceptAll">Accept all</button>
     </div>
   </div>
+  <button
+    v-else-if="isTrackingConfigured && savedConsent"
+    type="button"
+    class="cookie-banner__preferences"
+    @click="reopenPreferences"
+  >
+    Privacy settings
+  </button>
 </template>

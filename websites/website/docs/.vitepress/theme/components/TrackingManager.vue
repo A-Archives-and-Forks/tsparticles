@@ -2,27 +2,21 @@
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
 
-import { CONSENT_CHANGE_EVENT, readCookieConsent } from "../tracking/consent";
-import type { CookieConsentChoice } from "../tracking/consent";
+import { CONSENT_CHANGE_EVENT, defaultCookieConsentPreferences, readCookieConsent } from "../tracking/consent";
+import type { CookieConsentPreferences } from "../tracking/consent";
 import { trackingConfig } from "../tracking/config";
 import { applyConsent, trackPageView } from "../tracking/runtime";
 
 const route = useRoute();
-const currentConsent = ref<CookieConsentChoice | undefined>(undefined);
+const currentConsent = ref<CookieConsentPreferences>(defaultCookieConsentPreferences);
 
-function syncConsent(choice?: CookieConsentChoice): void {
-  if (!choice) {
-    currentConsent.value = undefined;
-
-    return;
-  }
-
-  currentConsent.value = choice;
-  applyConsent(choice);
+function syncConsent(preferences?: CookieConsentPreferences): void {
+  currentConsent.value = preferences ?? defaultCookieConsentPreferences;
+  applyConsent(currentConsent.value);
 }
 
 function onConsentChange(event: Event): void {
-  const customEvent = event as CustomEvent<CookieConsentChoice>;
+  const customEvent = event as CustomEvent<CookieConsentPreferences>;
 
   syncConsent(customEvent.detail);
 }
@@ -43,7 +37,7 @@ onBeforeUnmount(() => {
 watch(
   () => route.path,
   (path) => {
-    if (currentConsent.value === "accepted") {
+    if (currentConsent.value.analytics) {
       trackPageView(path);
     }
   },
@@ -54,4 +48,3 @@ watch(
 <template>
   <div aria-hidden="true" style="display: none" />
 </template>
-

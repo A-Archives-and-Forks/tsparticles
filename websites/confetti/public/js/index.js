@@ -1,5 +1,17 @@
 const editors = [];
 
+const sharePlatformTemplates = {
+  facebook: (url) => `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+  x: (url, text) => `https://x.com/intent/tweet?url=${url}&text=${text}`,
+  linkedin: (url) => `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+  reddit: (url, text) => `https://www.reddit.com/submit?url=${url}&title=${text}`,
+  telegram: (url, text) => `https://t.me/share/url?url=${url}&text=${text}`,
+  whatsapp: (url, text) => `https://wa.me/?text=${text}%20${url}`,
+  email: (url, text) => `mailto:?subject=${text}&body=${url}`,
+};
+const shareDesktopOrder = ['facebook', 'x', 'linkedin', 'reddit', 'telegram', 'whatsapp', 'email'];
+const shareMobileOrder = ['x', 'whatsapp', 'telegram', 'facebook', 'linkedin', 'reddit', 'email'];
+
 let activeTheme = 'dark';
 let currentStep = parseInt(localStorage.getItem('tsparticles-confetti/theme'), 10) || 0;
 
@@ -11,6 +23,118 @@ const themes = {
 
 const getPreferedTheme = function () {
   return prefersLightTheme ? (prefersLightTheme.matches ? 'light' : 'dark') : 'dark';
+};
+
+const updateShareLinks = function () {
+  const encodedUrl = encodeURIComponent(window.location.href);
+  const encodedText = encodeURIComponent(document.title || 'tsParticles Confetti');
+
+  Array.from(document.querySelectorAll('[data-share-link]')).forEach((link) => {
+    const platform = link.getAttribute('data-share-link');
+    const template = sharePlatformTemplates[platform];
+
+    if (!template) {
+      return;
+    }
+
+    link.setAttribute('href', template(encodedUrl, encodedText));
+  });
+};
+
+const hasAnalyticsConsent = function () {
+  const consentApi = window.tsParticlesConfettiConsent;
+
+  return !!consentApi?.get?.()?.analytics;
+};
+
+const trackShare = function (platform) {
+  if (!hasAnalyticsConsent() || !window.gtag) {
+    return;
+  }
+
+  window.gtag('event', 'share_click', {
+    method: platform,
+    page_path: window.location.pathname,
+    page_title: document.title,
+  });
+};
+
+const trackCopyLink = function () {
+  if (!hasAnalyticsConsent() || !window.gtag) {
+    return;
+  }
+
+  window.gtag('event', 'share_copy_link', {
+    method: 'copy_link',
+    page_path: window.location.pathname,
+    page_title: document.title,
+  });
+};
+
+const updateShareOrder = function () {
+  const shareContainer = document.querySelector('.social-share');
+
+  if (!shareContainer) {
+    return;
+  }
+
+  const currentOrder = window.matchMedia('(max-width: 768px)').matches
+    ? shareMobileOrder
+    : shareDesktopOrder;
+  const linksByPlatform = {};
+
+  Array.from(shareContainer.querySelectorAll('[data-share-link]')).forEach((link) => {
+    const platform = link.getAttribute('data-share-link');
+
+    if (platform) {
+      linksByPlatform[platform] = link;
+    }
+  });
+
+  currentOrder.forEach((platform) => {
+    const link = linksByPlatform[platform];
+
+    if (link) {
+      shareContainer.appendChild(link);
+    }
+  });
+
+  const copyButton = document.getElementById('shareCopyLinkButton');
+
+  if (copyButton) {
+    shareContainer.appendChild(copyButton);
+  }
+};
+
+const setupShareActions = function () {
+  Array.from(document.querySelectorAll('[data-share-link]')).forEach((link) => {
+    const platform = link.getAttribute('data-share-link') || 'unknown';
+
+    link.addEventListener('click', () => {
+      trackShare(platform);
+    });
+  });
+
+  const copyButton = document.getElementById('shareCopyLinkButton');
+
+  if (!copyButton) {
+    return;
+  }
+
+  copyButton.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      const originalLabel = copyButton.textContent;
+
+      copyButton.textContent = 'Copied';
+      trackCopyLink();
+      window.setTimeout(() => {
+        copyButton.textContent = originalLabel;
+      }, 1800);
+    } catch (err) {
+      console.error('Unable to copy share link.', err);
+    }
+  });
 };
 
 const setTheme = function (isAuto, theme) {
@@ -650,6 +774,11 @@ function getCode(name) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  updateShareLinks();
+  updateShareOrder();
+  setupShareActions();
+  window.addEventListener('resize', updateShareOrder);
+
   Array.from(document.querySelectorAll('.html-group')).forEach(function (group) {
     const codeElem = group.querySelector('.editor'),
       editor = ace.edit(codeElem);

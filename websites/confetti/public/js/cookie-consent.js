@@ -2,6 +2,7 @@
   const CONSENT_KEY = 'tsparticles-confetti/cookie-consent-v1';
   const GA_MEASUREMENT_ID = 'G-80MY3TZM79';
   const ADSENSE_CLIENT_ID = 'ca-pub-1784552607103901';
+  const ADSENSE_NON_PERSONALIZED_ON_REJECT = true;
 
   const defaultConsent = {
     analytics: false,
@@ -9,6 +10,8 @@
   };
 
   let consent = readConsent();
+  let analyticsInitialized = false;
+  let adsenseInitialized = false;
 
   function readConsent() {
     try {
@@ -19,6 +22,10 @@
       }
 
       const parsed = JSON.parse(rawConsent);
+
+      if (typeof parsed !== 'object' || !parsed) {
+        return undefined;
+      }
 
       return {
         analytics: !!parsed.analytics,
@@ -57,29 +64,79 @@
     document.head.appendChild(script);
   }
 
-  function applyConsent(activeConsent) {
-    if (activeConsent.analytics) {
-      window.dataLayer = window.dataLayer || [];
-      window.gtag =
-        window.gtag ||
-        function () {
-          window.dataLayer.push(arguments);
-        };
+  function ensureGtagStub() {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+  }
 
-      window.gtag('js', new Date());
-      window.gtag('config', GA_MEASUREMENT_ID);
-
-      loadScript('ga-script', `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`);
+  function initAnalytics() {
+    if (analyticsInitialized) {
+      return;
     }
 
-    if (activeConsent.adsense) {
-      loadScript(
-        'adsense-script',
-        `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`,
-        {
-          crossorigin: 'anonymous',
-        }
-      );
+    ensureGtagStub();
+    loadScript('ga-script', `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`);
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      send_page_view: false,
+    });
+
+    analyticsInitialized = true;
+  }
+
+  function initAdSense() {
+    if (adsenseInitialized) {
+      return;
+    }
+
+    loadScript(
+      'adsense-script',
+      `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`,
+      {
+        crossorigin: 'anonymous',
+      }
+    );
+
+    window.adsbygoogle = window.adsbygoogle || [];
+    window.adsbygoogle.push({
+      google_ad_client: ADSENSE_CLIENT_ID,
+      enable_page_level_ads: true,
+    });
+
+    adsenseInitialized = true;
+  }
+
+  function updateConsentMode(activeConsent) {
+    ensureGtagStub();
+
+    window.gtag('consent', 'update', {
+      ad_storage: activeConsent.adsense ? 'granted' : 'denied',
+      analytics_storage: activeConsent.analytics ? 'granted' : 'denied',
+      ad_user_data: activeConsent.adsense ? 'granted' : 'denied',
+      ad_personalization: activeConsent.adsense ? 'granted' : 'denied',
+    });
+  }
+
+  function updateAdSensePersonalization(activeConsent) {
+    window.adsbygoogle = window.adsbygoogle || [];
+    window.adsbygoogle.requestNonPersonalizedAds =
+      activeConsent.adsense || !ADSENSE_NON_PERSONALIZED_ON_REJECT ? 0 : 1;
+  }
+
+  function applyConsent(activeConsent) {
+    updateConsentMode(activeConsent);
+    updateAdSensePersonalization(activeConsent);
+
+    if (activeConsent.analytics) {
+      initAnalytics();
+    }
+
+    if (activeConsent.adsense || ADSENSE_NON_PERSONALIZED_ON_REJECT) {
+      initAdSense();
     }
   }
 
@@ -111,15 +168,13 @@
 
     banner.innerHTML = `
       <div class="cookie-consent-content">
-        <p class="cookie-consent-title">Cookie settings</p>
+        <p class="cookie-consent-title">Privacy settings</p>
         <p class="cookie-consent-text">
-          We use cookies for analytics and ads. You can accept all, reject all, or choose each category.
+          Choose how this site can use analytics and advertising technologies.
           Read the <a class="cookie-consent-link" href="/cookie-policy.html" target="_blank" rel="noopener noreferrer">cookie policy</a>.
         </p>
         <label class="cookie-consent-option">
-          <input id="cookieConsentAnalytics" type="checkbox" ${
-            consentState.analytics ? 'checked' : ''
-          } />
+          <input id="cookieConsentAnalytics" type="checkbox" ${consentState.analytics ? 'checked' : ''} />
           <span>Analytics</span>
         </label>
         <label class="cookie-consent-option">
@@ -128,7 +183,7 @@
         </label>
         <div class="cookie-consent-actions">
           <button id="cookieConsentReject" type="button">Reject all</button>
-          <button id="cookieConsentSave" type="button">Save preferences</button>
+          <button id="cookieConsentSave" type="button">Save choices</button>
           <button id="cookieConsentAccept" type="button" class="cookie-consent-primary">Accept all</button>
         </div>
       </div>
@@ -156,6 +211,7 @@
     if (hasUserChoice()) {
       applyConsent(consent);
     } else {
+      applyConsent(defaultConsent);
       createBanner();
     }
 
@@ -166,5 +222,11 @@
         createBanner();
       });
     }
+
+    window.tsParticlesConfettiConsent = {
+      get() {
+        return consent || defaultConsent;
+      },
+    };
   });
 })();

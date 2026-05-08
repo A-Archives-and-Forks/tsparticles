@@ -24,6 +24,27 @@ Common commands:
 
 CI is now managed by the main `tsparticles` monorepo workflows.
 
+## Privacy and consent
+
+The website uses an integrated consent manager in `public/js/cookie-consent.js`.
+
+- Visitors can reject all, accept all, or save granular choices for analytics and ads.
+- Consent is stored locally and can be changed later via the footer "Cookie preferences" button.
+- AdSense can run in non-personalized mode when ad consent is not granted.
+
+### Analytics events
+
+When analytics consent is granted, social share actions emit these events:
+
+- `share_click` for social/email share buttons
+- `share_copy_link` for the copy link button
+
+Shared parameters:
+
+- `method` (for example `x`, `linkedin`, `copy_link`)
+- `page_path`
+- `page_title`
+
 ## Contributing
 
 Quick checklist for contributors:
@@ -51,4 +72,3 @@ nvm use --lts
 ```
 
 After switching Node versions, run `pnpm install` to ensure dependencies are installed for the correct environment.
-

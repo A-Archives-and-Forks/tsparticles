@@ -273,6 +273,38 @@ footer a:hover {
   cursor: pointer;
 }
 
+.social-share {
+  margin: 0.75rem auto 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 880px;
+}
+
+.social-share-label {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  color: var(--inner-color);
+}
+
+.social-share-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--inner-color);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  color: var(--inner-color);
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.social-share-button:hover {
+  opacity: 1;
+}
+
 .cookie-policy-link {
   display: inline-block;
   margin: 0 0 1rem;

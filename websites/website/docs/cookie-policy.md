@@ -6,17 +6,19 @@ This website uses a small set of cookies and third-party technologies to keep th
 
 - **Essential cookies**: required for technical behavior and navigation.
 - **Analytics cookies** (Google Analytics): used to understand traffic and documentation usage patterns.
-- **Advertising cookies** (Google AdSense): used to measure ad campaign performance and show ads.
+- **Advertising technologies** (Google AdSense): used to deliver ads. Depending on consent, ads can run in non-personalized mode.
 
 Environment variables currently configured in this project:
 
 - `VITE_GA_MEASUREMENT_ID`
 - `VITE_GOOGLE_ADSENSE_CLIENT_ID`
+- `VITE_ADSENSE_NON_PERSONALIZED_ON_REJECT` (`true` or `false`)
 
 ## How consent works
 
-- Tracking cookies are disabled until you explicitly click **Accept** in the cookie banner.
-- If you click **Reject**, analytics/ads tracking remains disabled.
+- Tracking cookies are disabled until you explicitly provide consent in the privacy banner.
+- You can reject all, accept all, or save granular choices for analytics and advertising.
+- When you reject ads, AdSense can run as non-personalized ads if configured.
 - Your choice is saved locally in your browser.
 
 ## How to change your choice

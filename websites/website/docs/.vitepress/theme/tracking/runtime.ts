@@ -1,10 +1,10 @@
 import { trackingConfig } from "./config";
-import type { CookieConsentChoice } from "./consent";
+import type { CookieConsentPreferences } from "./consent";
 
 type TrackingWindow = Window & {
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
-  adsbygoogle?: unknown[];
+  adsbygoogle?: unknown[] & { requestNonPersonalizedAds?: 0 | 1 };
 };
 
 const GA_SCRIPT_ID = "tsparticles-ga-loader";
@@ -12,7 +12,7 @@ const ADSENSE_SCRIPT_ID = "tsparticles-adsense-loader";
 
 let gaInitialized = false;
 let adSenseInitialized = false;
-let consentApplied: CookieConsentChoice | undefined;
+let consentApplied: CookieConsentPreferences | undefined;
 
 function getTrackingWindow(): TrackingWindow | undefined {
   if (typeof globalThis.window === "undefined") {
@@ -100,8 +100,24 @@ function initGoogleAdSense(): void {
   adSenseInitialized = true;
 }
 
-function updateConsentMode(choice: CookieConsentChoice): void {
-  if (!trackingConfig.isAnalyticsEnabled) {
+function updateAdSensePersonalization(preferences: CookieConsentPreferences): void {
+  if (!trackingConfig.isAdSenseEnabled) {
+    return;
+  }
+
+  const trackingWindow = getTrackingWindow();
+
+  if (!trackingWindow) {
+    return;
+  }
+
+  trackingWindow.adsbygoogle ??= [];
+  trackingWindow.adsbygoogle.requestNonPersonalizedAds =
+    !preferences.adsense && trackingConfig.adSenseNonPersonalizedOnReject ? 1 : 0;
+}
+
+function updateConsentMode(preferences: CookieConsentPreferences): void {
+  if (!trackingConfig.isAnalyticsEnabled && !trackingConfig.isAdSenseEnabled) {
     return;
   }
 
@@ -111,32 +127,39 @@ function updateConsentMode(choice: CookieConsentChoice): void {
     return;
   }
 
-  const isAccepted = choice === "accepted";
-
   trackingWindow.gtag("consent", "update", {
-    ad_storage: isAccepted ? "granted" : "denied",
-    analytics_storage: isAccepted ? "granted" : "denied",
-    ad_user_data: isAccepted ? "granted" : "denied",
-    ad_personalization: isAccepted ? "granted" : "denied",
+    ad_storage: preferences.adsense ? "granted" : "denied",
+    analytics_storage: preferences.analytics ? "granted" : "denied",
+    ad_user_data: preferences.adsense ? "granted" : "denied",
+    ad_personalization: preferences.adsense ? "granted" : "denied",
   });
 }
 
-export function applyConsent(choice: CookieConsentChoice): void {
-  if (consentApplied === choice) {
+function sameConsent(a: CookieConsentPreferences, b: CookieConsentPreferences): boolean {
+  return a.analytics === b.analytics && a.adsense === b.adsense;
+}
+
+export function applyConsent(preferences: CookieConsentPreferences): void {
+  if (consentApplied && sameConsent(consentApplied, preferences)) {
     return;
   }
 
-  if (choice === "accepted") {
+  updateConsentMode(preferences);
+  updateAdSensePersonalization(preferences);
+
+  if (preferences.analytics) {
     initGoogleAnalytics();
+  }
+
+  if (preferences.adsense || trackingConfig.adSenseNonPersonalizedOnReject) {
     initGoogleAdSense();
   }
 
-  updateConsentMode(choice);
-  consentApplied = choice;
+  consentApplied = preferences;
 }
 
 export function trackPageView(path: string): void {
-  if (!trackingConfig.isAnalyticsEnabled || consentApplied !== "accepted") {
+  if (!trackingConfig.isAnalyticsEnabled || !consentApplied?.analytics) {
     return;
   }
 
@@ -147,4 +170,14 @@ export function trackPageView(path: string): void {
     page_path: path,
     page_title: trackingWindow.document.title,
   });
+}
+
+export function trackEvent(eventName: string, params?: Record<string, unknown>): void {
+  if (!trackingConfig.isAnalyticsEnabled || !consentApplied?.analytics) {
+    return;
+  }
+
+  const trackingWindow = getTrackingWindow();
+
+  trackingWindow?.gtag?.("event", eventName, params ?? {});
 }

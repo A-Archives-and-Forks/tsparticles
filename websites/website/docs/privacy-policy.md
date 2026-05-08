@@ -10,7 +10,7 @@ This policy covers the docs website and related pages served from `particles.js.
 
 - Technical browsing data (IP-derived metadata, user agent, referrer, page URLs).
 - Analytics events for documentation usage trends.
-- Advertising-related events required by Google AdSense when consent is granted.
+- Advertising-related events required by Google AdSense when consent is granted, or non-personalized ad delivery where legally permitted.
 
 ## Services used
 
@@ -20,7 +20,8 @@ This policy covers the docs website and related pages served from `particles.js.
 ## Legal basis and consent
 
 - Essential technical storage is used for site operation.
-- Analytics and advertising technologies are enabled only after explicit consent via the cookie banner.
+- Analytics technologies are enabled only after explicit consent.
+- Advertising can run in non-personalized mode when consent for personalized ads is not granted, where legally permitted and configured.
 - You can reject consent and continue using the docs.
 
 ## Consent storage
