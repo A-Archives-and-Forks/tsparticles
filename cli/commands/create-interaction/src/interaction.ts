@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import { createProjectTemplate, promptProjectData } from "@tsparticles/cli-create-utils";
+import { Command } from "commander";
 
 const interactionCreateCommand = new Command("interaction");
 

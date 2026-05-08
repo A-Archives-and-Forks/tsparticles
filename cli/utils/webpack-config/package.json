@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@swc/core": "^1.15.32",
+    "@swc/core": "^1.15.33",
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
     "browserslist": "^4.28.2",
@@ -51,16 +51,16 @@
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-tsdoc": "^0.5.2",
     "prettier": "^3.8.3",
-    "prettier-plugin-multiline-arrays": "^4.1.7",
+    "prettier-plugin-multiline-arrays": "^4.1.8",
     "swc-loader": "^0.2.7",
     "terser-webpack-plugin": "^5.5.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.1",
+    "typescript-eslint": "^8.59.2",
     "webpack-bundle-analyzer": "^5.3.0",
     "webpack-cli": "^7.0.2"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@types/webpack-bundle-analyzer": "^4.7.0",
     "@types/webpack-env": "^1.18.8",
     "rimraf": "^6.1.3",

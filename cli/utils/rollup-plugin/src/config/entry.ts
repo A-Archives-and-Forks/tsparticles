@@ -10,7 +10,7 @@ export interface EntryParams {
   name?: string;
 }
 
-export const getEntry = (data: EntryParams) => {
+export const getEntry = (data: EntryParams): { input: string; name: string } => {
   const { bundle, dir, format, lazy, min, name } = data,
     fileName = bundle ? "bundle" : "index",
     browserFileName = "browser",
@@ -24,7 +24,7 @@ export const getEntry = (data: EntryParams) => {
     fixLazy = lazy ? ".lazy" : "";
 
   return {
-    name: `tsparticles${fixFormat}${fixName}${fixLazy}${fixMin}`,
     input: `./dist/browser/${inputFileName}.js`,
+    name: `tsparticles${fixFormat}${fixName}${fixLazy}${fixMin}`,
   };
 };

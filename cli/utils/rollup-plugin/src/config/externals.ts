@@ -7,23 +7,21 @@ interface Params {
   bundle?: boolean;
 }
 
-const defaultGlobal = "window";
+const defaultGlobal = "window",
+  getRootGlobal = (external: ExternalData): string => {
+    const root = external.data.root;
 
-const getRootGlobal = (external: ExternalData): string => {
-  const root = external.data?.root;
+    if (Array.isArray(root)) {
+      return root.filter((t): t is string => typeof t === "string").join(".") || defaultGlobal;
+    }
 
-  if (Array.isArray(root)) {
-    return root.filter((t): t is string => typeof t === "string").join(".") || defaultGlobal;
-  }
-
-  return typeof root === "string" ? root : defaultGlobal;
-};
+    return typeof root === "string" ? root : defaultGlobal;
+  };
 
 export const getExternal = ({ bundle, additionalExternals = [] }: Params): ExternalOption => {
   if (bundle) {
     return additionalExternals.filter(e => !e.bundle).map(e => e.name);
   }
-
 
   return [
     ...additionalExternals.map(e => e.name),
@@ -33,12 +31,9 @@ export const getExternal = ({ bundle, additionalExternals = [] }: Params): Exter
   ];
 };
 
-export const getGlobals = (
-  additionalExternals: ExternalData[] = [],
-  bundle?: boolean
-) => {
-  const globalsAdditional = bundle ? additionalExternals.filter(e => !e.bundle) : additionalExternals;
-  const additionalMap = new Map(globalsAdditional.map(e => [e.name, getRootGlobal(e)]));
+export const getGlobals = (additionalExternals: ExternalData[] = [], bundle?: boolean): ((id: string) => string) => {
+  const globalsAdditional = bundle ? additionalExternals.filter(e => !e.bundle) : additionalExternals,
+    additionalMap = new Map(globalsAdditional.map(e => [e.name, getRootGlobal(e)]));
 
   return (id: string) => {
     if (additionalMap.has(id)) {

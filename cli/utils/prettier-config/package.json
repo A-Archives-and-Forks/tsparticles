@@ -27,7 +27,7 @@
     "prettier": "^3"
   },
   "dependencies": {
-    "prettier-plugin-multiline-arrays": "^4.1.7"
+    "prettier-plugin-multiline-arrays": "^4.1.8"
   },
   "devDependencies": {
     "cpx2": "^8.0.2",

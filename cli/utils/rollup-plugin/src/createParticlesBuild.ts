@@ -1,19 +1,12 @@
-import { buildMap, type ParticlesBuildType } from "./buildMap";
+import { type ParticlesBuildType, buildMap } from "./buildMap";
+import type { ParticlesBuildParams } from "./types";
+import type { RollupOptions } from "rollup";
 import { createConfig } from "./config/createConfig";
 import { getUmdPolicyData } from "./config/umdPolicy";
-import type { ParticlesBuildParams } from "./types";
 
-export const createParticlesBuild = (
-  type: ParticlesBuildType,
-  params: ParticlesBuildParams
-) => {
-  const def = buildMap[type];
-
-  if (!def) {
-    throw new Error(`Unknown build type: ${type}`);
-  }
-
-  const dir = params.dir,
+export const createParticlesBuild = (type: ParticlesBuildType, params: ParticlesBuildParams): RollupOptions[] => {
+  const def = buildMap[type],
+    dir = params.dir,
     version = params.version,
     additionalExternals = params.additionalExternals,
     moduleName = params.moduleName,
@@ -43,9 +36,7 @@ export const createParticlesBuild = (
       ...createConfig({
         entry: {
           format: def.format,
-          name: moduleName
-            ? `${moduleName}.bundle`
-            : "bundle",
+          name: moduleName ? `${moduleName}.bundle` : "bundle",
           bundle: true,
         },
         version,

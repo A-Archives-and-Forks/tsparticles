@@ -1,82 +1,78 @@
-import type { ParticlesBuildType } from "../buildMap";
 import type { UmdBuildKind, UmdPolicyData } from "../types";
+import type { ParticlesBuildType } from "../buildMap";
 
-const internalRoot = "__tsParticlesInternals";
+const FIRST_INDEX = 0,
+  INDEX_AFTER_FIRST = 1,
+  internalRoot = "__tsParticlesInternals",
+  toScopeSegment = (value: string): string => {
+    const normalized = value
+      .replaceAll(/([a-z\d])([A-Z])/g, "$1-$2")
+      .replaceAll(/[._\s]+/g, "-")
+      .toLowerCase();
 
-const toScopeSegment = (value: string): string => {
-  const normalized = value
-    .replaceAll(/([a-z\d])([A-Z])/g, "$1-$2")
-    .replaceAll(/[._\s]+/g, "-")
-    .toLowerCase();
+    return normalized
+      .split("-")
+      .filter(Boolean)
+      .map((segment, index) =>
+        index === FIRST_INDEX ? segment : `${segment[FIRST_INDEX].toUpperCase()}${segment.slice(INDEX_AFTER_FIRST)}`,
+      )
+      .join("");
+  },
+  resolveBundleScope = (moduleName?: string): string => {
+    if (!moduleName) {
+      return "full";
+    }
 
-  return normalized
-    .split("-")
-    .filter(Boolean)
-    .map((segment, index) =>
-      index === 0 ? segment : `${segment[0]?.toUpperCase() ?? ""}${segment.slice(1)}`
-    )
-    .join("");
-};
+    return toScopeSegment(moduleName);
+  },
+  resolveKind = (scope: string): UmdBuildKind => {
+    if (scope === "pjs") {
+      return "pjs";
+    }
 
-const resolveBundleScope = (moduleName?: string): string => {
-  if (!moduleName) {
-    return "full";
-  }
+    if (scope === "confetti") {
+      return "confetti";
+    }
 
-  return toScopeSegment(moduleName);
-};
+    if (scope === "fireworks") {
+      return "fireworks";
+    }
 
-const resolveKind = (scope: string): UmdBuildKind => {
-  if (scope === "pjs") {
-    return "pjs";
-  }
+    return "bundle";
+  },
+  buildTypePrefix: Record<Exclude<ParticlesBuildType, "bundle" | "engine" | "util">, string> = {
+    effect: "effects",
+    interaction: "interactions",
+    interactionExternal: "interactions",
+    interactionParticles: "interactions",
+    palette: "palettes",
+    path: "paths",
+    plugin: "plugins",
+    pluginEasing: "plugins",
+    pluginEmittersShape: "plugins.emittersShapes",
+    pluginExport: "plugins",
+    preset: "presets",
+    shape: "shapes",
+    template: "utils",
+    updater: "updaters",
+  },
+  /**
+   * Qualifies a raw module-name leaf with a type-specific prefix so that
+   * `getUmdPolicyData` produces the same namespace as `getUmdGlobalForExternal`.
+   * Without this, `interactionExternal "parallax"` would land on
+   * `interactions.parallax` while the non-bundled consumer expects
+   * `interactions.externalParallax`, causing a UMD global mismatch.
+   */
+  leafPrefixes: Partial<Record<ParticlesBuildType, string>> = {
+    interactionExternal: "external-",
+    interactionParticles: "particles-",
+    pluginEasing: "easing-",
+  },
+  qualifyLeaf = (type: ParticlesBuildType, rawLeaf: string): string => {
+    const prefix = leafPrefixes[type];
 
-  if (scope === "confetti") {
-    return "confetti";
-  }
-
-  if (scope === "fireworks") {
-    return "fireworks";
-  }
-
-  return "bundle";
-};
-
-const buildTypePrefix: Record<Exclude<ParticlesBuildType, "bundle" | "engine" | "util">, string> = {
-  effect: "effects",
-  interaction: "interactions",
-  interactionExternal: "interactions",
-  interactionParticles: "interactions",
-  palette: "palettes",
-  path: "paths",
-  plugin: "plugins",
-  pluginEasing: "plugins",
-  pluginEmittersShape: "plugins.emittersShapes",
-  pluginExport: "plugins",
-  preset: "presets",
-  shape: "shapes",
-  template: "utils",
-  updater: "updaters",
-};
-
-/**
- * Qualifies a raw module-name leaf with a type-specific prefix so that
- * `getUmdPolicyData` produces the same namespace as `getUmdGlobalForExternal`.
- * Without this, `interactionExternal "parallax"` would land on
- * `interactions.parallax` while the non-bundled consumer expects
- * `interactions.externalParallax`, causing a UMD global mismatch.
- */
-const leafPrefixes: Partial<Record<ParticlesBuildType, string>> = {
-  interactionExternal: "external-",
-  interactionParticles: "particles-",
-  pluginEasing: "easing-",
-};
-
-const qualifyLeaf = (type: ParticlesBuildType, rawLeaf: string): string => {
-  const prefix = leafPrefixes[type];
-
-  return prefix ? `${prefix}${rawLeaf}` : rawLeaf;
-};
+    return prefix ? `${prefix}${rawLeaf}` : rawLeaf;
+  };
 
 export const getUmdPolicyData = (type: ParticlesBuildType, moduleName?: string): UmdPolicyData => {
   if (type === "engine") {
@@ -115,113 +111,109 @@ export const getUmdPolicyData = (type: ParticlesBuildType, moduleName?: string):
 };
 
 const buildScopedPath = (prefix: string, rawLeaf: string): string => {
-  const leaf = toScopeSegment(rawLeaf);
+    const leaf = toScopeSegment(rawLeaf);
 
-  return `${internalRoot}.${prefix}.${leaf}`;
-};
+    return `${internalRoot}.${prefix}.${leaf}`;
+  },
+  bundleLeafGlobals = new Map(
+    ["all", "basic", "confetti", "fireworks", "pjs", "slim"].map(leaf => [leaf, `${internalRoot}.bundles.${leaf}`]),
+  ),
+  scopedPrefixRules: {
+    prefix: string;
+    scope: string;
+    transform?: (segment: string) => string;
+  }[] = [
+    {
+      // @tsparticles/plugin-export-image -> __tsParticlesInternals.plugins.image
+      prefix: "plugin-export-",
+      scope: "plugins",
+    },
+    {
+      prefix: "plugin-emitters-shape-",
+      scope: "plugins.emittersShapes",
+    },
+    {
+      prefix: "plugin-",
+      scope: "plugins",
+    },
+    {
+      prefix: "interaction-external-",
+      scope: "interactions",
+      transform: segment => `external-${segment}`,
+    },
+    {
+      prefix: "interaction-particles-",
+      scope: "interactions",
+      transform: segment => `particles-${segment}`,
+    },
+    {
+      prefix: "interaction-",
+      scope: "interactions",
+    },
+    {
+      prefix: "effect-",
+      scope: "effects",
+    },
+    {
+      prefix: "path-",
+      scope: "paths",
+    },
+    {
+      prefix: "shape-",
+      scope: "shapes",
+    },
+    {
+      prefix: "updater-",
+      scope: "updaters",
+    },
+    {
+      prefix: "palette-",
+      scope: "palettes",
+    },
+    {
+      prefix: "preset-",
+      scope: "presets",
+    },
+  ],
+  getScopedGlobalFromPrefix = (leaf: string): string | undefined => {
+    for (const rule of scopedPrefixRules) {
+      if (!leaf.startsWith(rule.prefix)) {
+        continue;
+      }
 
-const bundleLeafGlobals = new Map(
-  ["all", "basic", "confetti", "fireworks", "pjs", "slim"].map(leaf => [leaf, `${internalRoot}.bundles.${leaf}`])
-);
+      const segment = leaf.slice(rule.prefix.length);
 
-const scopedPrefixRules: Array<{
-  prefix: string;
-  scope: string;
-  transform?: (segment: string) => string;
-}> = [
-  {
-    // @tsparticles/plugin-export-image -> __tsParticlesInternals.plugins.image
-    prefix: "plugin-export-",
-    scope: "plugins",
-  },
-  {
-    prefix: "plugin-emitters-shape-",
-    scope: "plugins.emittersShapes",
-  },
-  {
-    prefix: "plugin-",
-    scope: "plugins",
-  },
-  {
-    prefix: "interaction-external-",
-    scope: "interactions",
-    transform: segment => `external-${segment}`,
-  },
-  {
-    prefix: "interaction-particles-",
-    scope: "interactions",
-    transform: segment => `particles-${segment}`,
-  },
-  {
-    prefix: "interaction-",
-    scope: "interactions",
-  },
-  {
-    prefix: "effect-",
-    scope: "effects",
-  },
-  {
-    prefix: "path-",
-    scope: "paths",
-  },
-  {
-    prefix: "shape-",
-    scope: "shapes",
-  },
-  {
-    prefix: "updater-",
-    scope: "updaters",
-  },
-  {
-    prefix: "palette-",
-    scope: "palettes",
-  },
-  {
-    prefix: "preset-",
-    scope: "presets",
-  },
-];
-
-const getScopedGlobalFromPrefix = (leaf: string): string | undefined => {
-  for (const rule of scopedPrefixRules) {
-    if (!leaf.startsWith(rule.prefix)) {
-      continue;
+      return buildScopedPath(rule.scope, rule.transform ? rule.transform(segment) : segment);
     }
 
-    const segment = leaf.slice(rule.prefix.length);
+    return undefined;
+  },
+  getScopedGlobalForLeaf = (leaf: string): string => {
+    const directLeafMap = new Map([
+        ["engine", `${internalRoot}.engine`],
+        // Util packages: not "path plugins" but helper utilities; map to their actual scope
+        ["path-utils", `${internalRoot}.path.utils`],
+        ["canvas-utils", `${internalRoot}.canvas.utils`],
+        // Historical package name mismatch: @tsparticles/path-zig-zag exposes paths.zigzag.
+        ["path-zig-zag", `${internalRoot}.paths.zigzag`],
+        // Historical package name mismatch: @tsparticles/plugin-poisson-disc exposes plugins.poisson.
+        ["plugin-poisson-disc", `${internalRoot}.plugins.poisson`],
+        ...bundleLeafGlobals,
+      ]),
+      bundleLeaf = directLeafMap.get(leaf);
 
-    return buildScopedPath(rule.scope, rule.transform ? rule.transform(segment) : segment);
-  }
+    if (bundleLeaf) {
+      return bundleLeaf;
+    }
 
-  return undefined;
-};
+    const scopedLeaf = getScopedGlobalFromPrefix(leaf);
 
-const getScopedGlobalForLeaf = (leaf: string): string => {
-  const directLeafMap = new Map([
-    ["engine", `${internalRoot}.engine`],
-    // Util packages: not "path plugins" but helper utilities; map to their actual scope
-    ["path-utils", `${internalRoot}.path.utils`],
-    ["canvas-utils", `${internalRoot}.canvas.utils`],
-    // Historical package name mismatch: @tsparticles/path-zig-zag exposes paths.zigzag.
-    ["path-zig-zag", `${internalRoot}.paths.zigzag`],
-    // Historical package name mismatch: @tsparticles/plugin-poisson-disc exposes plugins.poisson.
-    ["plugin-poisson-disc", `${internalRoot}.plugins.poisson`],
-    ...bundleLeafGlobals,
-  ]),
-    bundleLeaf = directLeafMap.get(leaf);
+    if (scopedLeaf) {
+      return scopedLeaf;
+    }
 
-  if (bundleLeaf) {
-    return bundleLeaf;
-  }
-
-  const scopedLeaf = getScopedGlobalFromPrefix(leaf);
-
-  if (scopedLeaf) {
-    return scopedLeaf;
-  }
-
-  return `${internalRoot}.${leaf.split("-").map(toScopeSegment).join(".")}`;
-};
+    return `${internalRoot}.${leaf.split("-").map(toScopeSegment).join(".")}`;
+  };
 
 export const getUmdGlobalForExternal = (id: string): string | undefined => {
   if (id === "tsparticles") {
@@ -240,13 +232,10 @@ export const getUmdGlobalForExternal = (id: string): string | undefined => {
 };
 
 export const getUmdGlobalsBootstrap = (temporaryGlobalName?: string): string => {
-  const temporaryBootstrap = temporaryGlobalName
-    ? `g.${temporaryGlobalName}=g.${temporaryGlobalName}||{};`
-    : "";
-
-  // Pre-create namespaces (including nested ones) to avoid eager UMD external lookups
-  // crashing on missing branches like plugins.emittersShapes.circle.
-  const namespaces = [
+  const temporaryBootstrap = temporaryGlobalName ? `g.${temporaryGlobalName}=g.${temporaryGlobalName}||{};` : "",
+    // Pre-create namespaces (including nested ones) to avoid eager UMD external lookups
+    // crashing on missing branches like plugins.emittersShapes.circle.
+    namespaces = [
       "bundles",
       "effects",
       "engine",
@@ -298,4 +287,3 @@ export const getUmdGlobalsBootstrap = (temporaryGlobalName?: string): string => 
     `${temporaryBootstrap}})(typeof globalThis!=="undefined"?globalThis:typeof window!=="undefined"?window:this);\n`
   );
 };
-

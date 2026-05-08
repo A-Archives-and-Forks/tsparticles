@@ -16,29 +16,29 @@ export interface ConfigParams {
   banner: string;
   bundle?: boolean;
   dir: string;
-  includeLazy?: boolean;
   entry: {
     bundle: boolean;
     format: string;
     name?: string;
   };
+  includeLazy?: boolean;
   minBanner: string;
   umdPolicy: UmdPolicyData;
   version: string;
 }
 
 export interface ParticlesBuildParams {
-  dir: string;
-  version: string;
+  [key: string]: unknown;
   additionalExternals?: ExternalData[];
-  moduleName?: string;
   bundle?: boolean;
   bundleName?: string;
+  dir: string;
   effectName?: string;
+  moduleName?: string;
   pluginName?: string;
   presetName?: string;
   shapeName?: string;
   templateName?: string;
   updaterName?: string;
-  [key: string]: unknown;
+  version: string;
 }
