@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/configs",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.13",
   "homepage": "https://particles.js.org",
   "scripts": {
     "build": "tsparticles-build",
@@ -88,7 +88,10 @@
   "files": [
     "dist"
   ],
-  "sideEffects": ["dist/browser/browser.js", "dist/browser/index.js"],
+  "sideEffects": [
+    "dist/browser/browser.js",
+    "dist/browser/index.js"
+  ],
   "browser": "dist/browser/index.js",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
