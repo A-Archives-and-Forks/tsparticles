@@ -2802,10 +2802,6 @@ importers:
         version: 8.0.2
 
   cli/utils/depcruise-config:
-    dependencies:
-      dependency-cruiser:
-        specifier: ^17
-        version: 17.3.10
     devDependencies:
       '@stylistic/eslint-plugin':
         specifier: ^5.10.0
@@ -2819,6 +2815,9 @@ importers:
       '@types/node':
         specifier: ^25.6.2
         version: 25.6.2
+      dependency-cruiser:
+        specifier: ^17.4.0
+        version: 17.4.0
       eslint:
         specifier: ^10.3.0
         version: 10.3.0(jiti@2.7.0)
@@ -27876,11 +27875,6 @@ packages:
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
-
-  dependency-cruiser@17.3.10:
-    resolution: {integrity: sha512-jF5WaIb+O+wLabXrQE7iBY2zYBEW8VlnuuL0+iZPvZHGhTaAYdLk31DI0zkwhcGE8CiHcDwGhMnn3PfOAYnVdQ==}
-    engines: {node: ^20.12||^22||>=24}
-    hasBin: true
 
   dependency-cruiser@17.4.0:
     resolution: {integrity: sha512-+WdFoOb+fT1XNC0iPqOyLpfhLd8xVh7eLXJxPAtiXCS+YmXzGrjqVTte7+L8SZIsnJj0aFhb8LxECIBJY5TTIA==}
@@ -60799,27 +60793,6 @@ snapshots:
   depd@1.1.2: {}
 
   depd@2.0.0: {}
-
-  dependency-cruiser@17.3.10:
-    dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
-      acorn-jsx-walk: 2.0.0
-      acorn-loose: 8.5.2
-      acorn-walk: 8.3.5
-      commander: 14.0.3
-      enhanced-resolve: 5.20.1
-      ignore: 7.0.5
-      interpret: 3.1.1
-      is-installed-globally: 1.0.0
-      json5: 2.2.3
-      picomatch: 4.0.4
-      prompts: 2.4.2
-      rechoir: 0.8.0
-      safe-regex: 2.1.1
-      semver: 7.7.4
-      tsconfig-paths-webpack-plugin: 4.2.0
-      watskeburt: 5.0.3
 
   dependency-cruiser@17.4.0:
     dependencies:

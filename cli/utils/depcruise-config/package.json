@@ -42,6 +42,7 @@
     "dependency-cruiser": "^17"
   },
   "devDependencies": {
+    "dependency-cruiser": "^17.4.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
