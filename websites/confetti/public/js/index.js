@@ -72,41 +72,48 @@ const trackCopyLink = function () {
 };
 
 const updateShareOrder = function () {
-  const shareContainer = document.querySelector('.social-share');
-
-  if (!shareContainer) {
-    return;
-  }
-
   const currentOrder = window.matchMedia('(max-width: 768px)').matches
     ? shareMobileOrder
     : shareDesktopOrder;
-  const linksByPlatform = {};
 
-  Array.from(shareContainer.querySelectorAll('[data-share-link]')).forEach((link) => {
-    const platform = link.getAttribute('data-share-link');
+  Array.from(document.querySelectorAll('.social-share')).forEach((shareContainer) => {
+    const linksByPlatform = {};
 
-    if (platform) {
-      linksByPlatform[platform] = link;
+    Array.from(shareContainer.querySelectorAll('[data-share-link]')).forEach((link) => {
+      const platform = link.getAttribute('data-share-link');
+
+      if (platform) {
+        linksByPlatform[platform] = link;
+      }
+    });
+
+    currentOrder.forEach((platform) => {
+      const link = linksByPlatform[platform];
+
+      if (link) {
+        shareContainer.appendChild(link);
+      }
+    });
+
+    const copyButton = shareContainer.querySelector('#shareCopyLinkButton');
+
+    if (copyButton) {
+      shareContainer.appendChild(copyButton);
     }
   });
-
-  currentOrder.forEach((platform) => {
-    const link = linksByPlatform[platform];
-
-    if (link) {
-      shareContainer.appendChild(link);
-    }
-  });
-
-  const copyButton = document.getElementById('shareCopyLinkButton');
-
-  if (copyButton) {
-    shareContainer.appendChild(copyButton);
-  }
 };
 
 const setupShareActions = function () {
+  const shareDropdown = document.querySelector('.share-menu');
+
+  if (shareDropdown) {
+    document.addEventListener('click', (event) => {
+      if (!shareDropdown.contains(event.target)) {
+        shareDropdown.removeAttribute('open');
+      }
+    });
+  }
+
   Array.from(document.querySelectorAll('[data-share-link]')).forEach((link) => {
     const platform = link.getAttribute('data-share-link') || 'unknown';
 
@@ -115,25 +122,21 @@ const setupShareActions = function () {
     });
   });
 
-  const copyButton = document.getElementById('shareCopyLinkButton');
+  Array.from(document.querySelectorAll('#shareCopyLinkButton')).forEach((copyButton) => {
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        const originalLabel = copyButton.textContent;
 
-  if (!copyButton) {
-    return;
-  }
-
-  copyButton.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      const originalLabel = copyButton.textContent;
-
-      copyButton.textContent = 'Copied';
-      trackCopyLink();
-      window.setTimeout(() => {
-        copyButton.textContent = originalLabel;
-      }, 1800);
-    } catch (err) {
-      console.error('Unable to copy share link.', err);
-    }
+        copyButton.textContent = 'Copied';
+        trackCopyLink();
+        window.setTimeout(() => {
+          copyButton.textContent = originalLabel;
+        }, 1800);
+      } catch (err) {
+        console.error('Unable to copy share link.', err);
+      }
+    });
   });
 };
 
