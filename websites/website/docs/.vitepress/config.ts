@@ -281,6 +281,10 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   base,
+  ignoreDeadLinks: [
+    /\/releases\/index$/,
+    /\/[a-z]{2}\/releases\/index$/,
+  ],
   locales: {
     root: {
       label: "English",
