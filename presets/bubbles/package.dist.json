@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/preset-bubbles",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.13",
   "description": "tsParticles bubbles preset",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -106,9 +106,9 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@tsparticles/basic": "4.0.0-beta.12",
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-emitters": "4.0.0-beta.12"
+    "@tsparticles/basic": "4.0.0-beta.13",
+    "@tsparticles/engine": "4.0.0-beta.13",
+    "@tsparticles/plugin-emitters": "4.0.0-beta.13"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/interaction-particles-collisions",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.13",
   "description": "tsParticles collisions particles interaction",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -101,7 +101,7 @@
   },
   "type": "module",
   "peerDependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-interactivity": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.13",
+    "@tsparticles/plugin-interactivity": "4.0.0-beta.13"
   }
 }

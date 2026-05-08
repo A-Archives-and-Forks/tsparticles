@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/preset-snow",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.13",
   "description": "tsParticles snow preset",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -106,10 +106,10 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@tsparticles/basic": "4.0.0-beta.12",
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/palette-snowfall": "4.0.0-beta.12",
-    "@tsparticles/updater-wobble": "4.0.0-beta.12"
+    "@tsparticles/basic": "4.0.0-beta.13",
+    "@tsparticles/engine": "4.0.0-beta.13",
+    "@tsparticles/palette-snowfall": "4.0.0-beta.13",
+    "@tsparticles/updater-wobble": "4.0.0-beta.13"
   },
   "publishConfig": {
     "access": "public"
