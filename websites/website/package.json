@@ -247,7 +247,7 @@
         "tsparticles": "workspace:*"
     },
     "devDependencies": {
-        "prettier": "^3.8.1",
+        "prettier": "^3.8.3",
         "vitepress": "^1.6.4"
     }
 }

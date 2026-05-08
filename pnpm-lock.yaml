@@ -12429,7 +12429,7 @@ importers:
         version: link:../../bundles/full/dist
     devDependencies:
       prettier:
-        specifier: ^3.8.1
+        specifier: ^3.8.3
         version: 3.8.3
       vitepress:
         specifier: ^1.6.4
