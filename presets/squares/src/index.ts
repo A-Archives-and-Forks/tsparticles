@@ -1,4 +1,11 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { loadHexColorPlugin } from "@tsparticles/plugin-hex-color";
+import { loadPaintUpdater } from "@tsparticles/updater-paint";
+import { loadRotateUpdater } from "@tsparticles/updater-rotate";
+import { loadSizeUpdater } from "@tsparticles/updater-size";
+import { loadSquareShape } from "@tsparticles/shape-square";
+import { options } from "./options.js";
 
 const presetName = "squares";
 
@@ -7,24 +14,6 @@ const presetName = "squares";
  */
 export async function loadSquaresPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadHexColorPlugin },
-      { loadEmittersPluginSimple },
-      { loadSquareShape },
-      { loadRotateUpdater },
-      { loadSizeUpdater },
-      { loadPaintUpdater },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/plugin-hex-color"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("@tsparticles/shape-square"),
-      import("@tsparticles/updater-rotate"),
-      import("@tsparticles/updater-size"),
-      import("@tsparticles/updater-paint"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadHexColorPlugin(e),
       loadEmittersPluginSimple(e),

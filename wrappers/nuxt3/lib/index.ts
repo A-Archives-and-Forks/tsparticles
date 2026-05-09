@@ -1,5 +1,5 @@
 import { addPlugin, addTemplate, defineNuxtModule } from "@nuxt/kit";
-import type { NuxtModule } from "@nuxt/schema";
+import type {} from "@nuxt/schema";
 
 export interface ITsParticlesNuxtOptions {
   initPath?: string;
@@ -15,7 +15,7 @@ declare module "@nuxt/schema" {
   }
 }
 
-const tsParticlesNuxtModule: NuxtModule<ITsParticlesNuxtOptions> = defineNuxtModule<ITsParticlesNuxtOptions>({
+export default defineNuxtModule<ITsParticlesNuxtOptions>({
   meta: {
     name: "@tsparticles/nuxt3",
     configKey: "tsparticles",
@@ -39,7 +39,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(VueParticles, {
     init: registerParticles,
   });
-});
+  });
 `,
     }).dst;
 
@@ -49,5 +49,3 @@ export default defineNuxtPlugin((nuxtApp) => {
     });
   },
 });
-
-export default tsParticlesNuxtModule;

@@ -1,6 +1,7 @@
 import { type Container, type Engine, getItemMapFromInitializer } from "@tsparticles/engine";
 import type { MoveEngine, PathGeneratorInitializer } from "./Types.js";
 import type { IMovePathGenerator } from "./IMovePathGenerator.js";
+import { MovePlugin } from "./MovePlugin.js";
 
 declare const __VERSION__: string;
 
@@ -10,7 +11,7 @@ declare const __VERSION__: string;
 export async function loadMovePlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
+  await engine.pluginManager.register(e => {
     const moveEngine = e as MoveEngine,
       movePluginManager = moveEngine.pluginManager;
 
@@ -42,8 +43,6 @@ export async function loadMovePlugin(engine: Engine): Promise<void> {
         force,
       );
     };
-
-    const { MovePlugin } = await import("./MovePlugin.js");
 
     e.pluginManager.addPlugin(new MovePlugin(e.pluginManager));
   });

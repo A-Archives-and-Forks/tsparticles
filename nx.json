@@ -3,6 +3,30 @@
   "extends": "nx/presets/npm.json",
   "nxCloudId": "62a6df5ddbaff92c46e3b366",
   "defaultBase": "main",
+  "release": {
+    "projectsRelationship": "fixed",
+    "projects": ["*"],
+    "version": {
+      "conventionalCommits": true,
+      "updateDependents": "always",
+      "git": {
+        "commit": true,
+        "commitMessage": "chore(release): published new version",
+        "push": true,
+        "tag": true,
+        "stageChanges": true
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": true,
+      "projectChangelogs": false,
+      "git": {
+        "commit": true,
+        "push": true,
+        "stageChanges": true
+      }
+    }
+  },
   "targetDefaults": {
     "build": {
       "dependsOn": [
@@ -21,8 +45,27 @@
           "args": ["--ci"]
         }
       }
+    },
+    "build:ci": {
+      "dependsOn": [
+        "^build:ci"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "cache": true
     }
   },
+  "plugins": [
+    {
+      "plugin": "nx/plugins/package-json",
+      "include": [
+        "cli/packages/*/package.json",
+        "cli/commands/build/package.json"
+      ]
+    },
+    "@tsparticles/cli-nx-plugin"
+  ],
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": false
@@ -36,7 +79,6 @@
     "sharedGlobals": [
       "{workspaceRoot}/nx.json",
       "{workspaceRoot}/tsconfig.json",
-      "{workspaceRoot}/lerna.json",
       "{workspaceRoot}/pnpm-workspace.yaml"
     ],
     "production": [

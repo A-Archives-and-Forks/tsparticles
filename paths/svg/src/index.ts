@@ -1,5 +1,6 @@
+import { type MoveEngine, ensureBaseMoverLoaded } from "@tsparticles/plugin-move";
 import { type Engine } from "@tsparticles/engine";
-import { type MoveEngine } from "@tsparticles/plugin-move";
+import { SVGPathGenerator } from "./SVGPathGenerator.js";
 
 declare const __VERSION__: string;
 
@@ -11,15 +12,11 @@ export const svgPathName = "svgPathGenerator";
 export async function loadSVGPath(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: MoveEngine) => {
-    const { ensureBaseMoverLoaded } = await import("@tsparticles/plugin-move");
-
+  await engine.pluginManager.register((e: MoveEngine) => {
     ensureBaseMoverLoaded(e);
 
-    e.pluginManager.addPathGenerator?.(svgPathName, async container => {
-      const { SVGPathGenerator } = await import("./SVGPathGenerator.js");
-
-      return new SVGPathGenerator(container);
+    e.pluginManager.addPathGenerator?.(svgPathName, container => {
+      return Promise.resolve(new SVGPathGenerator(container));
     });
   });
 }

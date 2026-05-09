@@ -1,3 +1,4 @@
+import type { ICogData } from "./ICogData.js";
 import type { Particle } from "@tsparticles/engine";
 
 export type CogParticle = Particle & {
@@ -6,4 +7,5 @@ export type CogParticle = Particle & {
   cogInnerTaper?: number;
   cogNotches?: number;
   cogOuterTaper?: number;
+  shapeData?: ICogData;
 };

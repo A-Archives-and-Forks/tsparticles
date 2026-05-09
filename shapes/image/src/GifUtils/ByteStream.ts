@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
+import type { GIFDataHeaders } from "./Types/GIFDataHeaders.js";
+
 export class ByteStream {
   /**
    * this streams raw data
@@ -33,7 +35,7 @@ export class ByteStream {
    * get the next byte and increase cursors position by one
    * @returns the next byte
    */
-  nextByte(): number {
+  nextByte(): GIFDataHeaders {
     return this.data[this.pos++]!;
   }
 

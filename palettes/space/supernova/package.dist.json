@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/palette-supernova",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles supernova palette",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -81,8 +81,7 @@
       "url": "https://www.buymeacoffee.com/matteobruni"
     }
   ],
-  "jsdelivr": "tsparticles.palette.supernova.min.js",
-  "unpkg": "tsparticles.palette.supernova.min.js",
+  "sideEffects": false,
   "browser": "browser/index.js",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -96,13 +95,23 @@
       "umd": "./umd/index.js",
       "default": "./cjs/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "umd": "./umd/index.lazy.js",
+      "default": "./cjs/index.lazy.js"
+    }
   },
   "dependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.15"
   },
+  "type": "module",
+  "jsdelivr": "tsparticles.palette-colored-smoke-amber.min.js",
+  "unpkg": "tsparticles.palette-colored-smoke-amber.min.js",
   "publishConfig": {
     "access": "public"
-  },
-  "type": "module"
+  }
 }

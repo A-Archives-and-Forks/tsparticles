@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/plugin-emitters",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles emitters plugin",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -82,12 +82,26 @@
       "require": "./cjs/index.js",
       "default": "./esm/index.js"
     },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
+    },
     "./interaction": {
       "types": "./types/interaction.d.ts",
       "browser": "./browser/interaction.js",
       "import": "./esm/interaction.js",
       "require": "./cjs/interaction.js",
       "default": "./esm/interaction.js"
+    },
+    "./interaction/lazy": {
+      "types": "./types/interaction.lazy.d.ts",
+      "browser": "./browser/interaction.lazy.js",
+      "import": "./esm/interaction.lazy.js",
+      "require": "./cjs/interaction.lazy.js",
+      "default": "./esm/interaction.lazy.js"
     },
     "./plugin": {
       "types": "./types/plugin.d.ts",
@@ -96,11 +110,18 @@
       "require": "./cjs/plugin.js",
       "default": "./esm/plugin.js"
     },
+    "./plugin/lazy": {
+      "types": "./types/plugin.lazy.d.ts",
+      "browser": "./browser/plugin.lazy.js",
+      "import": "./esm/plugin.lazy.js",
+      "require": "./cjs/plugin.lazy.js",
+      "default": "./esm/plugin.lazy.js"
+    },
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-interactivity": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/plugin-interactivity": "4.0.0-beta.15"
   },
   "peerDependenciesMeta": {
     "@tsparticles/plugin-interactivity": {

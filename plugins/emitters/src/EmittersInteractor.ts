@@ -1,4 +1,4 @@
-import type { EmitterModeOptions, IEmitterDataModeOptions, IEmitterModeOptions } from "./types.js";
+import type { EmitterModeOptions, IEmitterModeOptions } from "./types.js";
 import {
   ExternalInteractorBase,
   type IInteractivityData,
@@ -141,7 +141,7 @@ export class EmittersInteractor extends ExternalInteractorBase<EmitterContainer>
           options.emitters.value.push(tmp);
         }
       } else if ("value" in source.emitters) {
-        const emitterModeOptions = source.emitters as RecursivePartial<IEmitterDataModeOptions>;
+        const emitterModeOptions = source.emitters;
 
         options.emitters.random.enable = emitterModeOptions.random?.enable ?? options.emitters.random.enable;
         options.emitters.random.count = emitterModeOptions.random?.count ?? options.emitters.random.count;

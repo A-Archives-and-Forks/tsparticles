@@ -1,6 +1,9 @@
-import { type IImage, shapeTypes } from "./Utils.js";
+import { type IImage, downloadSvgImage, loadImage, shapeTypes } from "./Utils.js";
 import type { ImageContainer, ImageEngine } from "./types.js";
 import type { IPreload } from "./Options/Interfaces/IPreload.js";
+import { ImageDrawer } from "./ImageDrawer.js";
+import { ImagePreloaderPlugin } from "./ImagePreloader.js";
+import { loadGifImage } from "./GifUtils/Utils.js";
 
 const extLength = 3;
 
@@ -59,16 +62,10 @@ function addLoadImageToEngine(engine: ImageEngine): void {
       let imageFunc: (image: IImage) => Promise<void>;
 
       if (data.gif) {
-        const { loadGifImage } = await import("./GifUtils/Utils.js");
-
         imageFunc = (img): Promise<void> => loadGifImage(img, { colorSpace: "srgb" });
       } else if (data.replaceColor) {
-        const { downloadSvgImage } = await import("./Utils.js");
-
         imageFunc = downloadSvgImage;
       } else {
-        const { loadImage } = await import("./Utils.js");
-
         imageFunc = loadImage;
       }
 
@@ -88,16 +85,10 @@ declare const __VERSION__: string;
 export async function loadImageShape(engine: ImageEngine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { ImagePreloaderPlugin } = await import("./ImagePreloader.js");
-
+  await engine.pluginManager.register(e => {
     addLoadImageToEngine(e);
 
     e.pluginManager.addPlugin(new ImagePreloaderPlugin(e));
-    e.pluginManager.addShape(shapeTypes, async container => {
-      const { ImageDrawer } = await import("./ImageDrawer.js");
-
-      return new ImageDrawer(e, container);
-    });
+    e.pluginManager.addShape(shapeTypes, container => Promise.resolve(new ImageDrawer(e, container)));
   });
 }

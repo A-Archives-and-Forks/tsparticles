@@ -1,11 +1,11 @@
 {
   "name": "@tsparticles/interaction-external-particle",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles particle external interaction",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "version": "tsparticles-cli build -d && git add package.dist.json && tsparticles-cli build -p -l && git add .",
+    "build": "tsparticles-build",
+    "version": "tsparticles-build -d && git add package.dist.json && tsparticles-build -p -l && git add .",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -62,6 +62,13 @@
       "require": "./dist/cjs/index.js",
       "default": "./dist/esm/index.js"
     },
+    "./lazy": {
+      "types": "./dist/types/index.lazy.d.ts",
+      "browser": "./dist/browser/index.lazy.js",
+      "import": "./dist/esm/index.lazy.js",
+      "require": "./dist/cjs/index.lazy.js",
+      "default": "./dist/esm/index.lazy.js"
+    },
     "./package.json": "./dist/package.json"
   },
   "peerDependencies": {
@@ -69,6 +76,8 @@
     "@tsparticles/plugin-interactivity": "workspace:*"
   },
   "devDependencies": {
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^",
     "@tsparticles/engine": "workspace:*",
     "@tsparticles/plugin-interactivity": "workspace:*"
   },

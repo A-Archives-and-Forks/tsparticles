@@ -1,4 +1,8 @@
 import { type Engine } from "@tsparticles/engine";
+import { loadClubsSuitShape } from "./clubs/index.js";
+import { loadDiamondsSuitShape } from "./diamonds/index.js";
+import { loadHeartsSuitShape } from "./hearts/index.js";
+import { loadSpadesSuitShape } from "./spades/index.js";
 
 declare const __VERSION__: string;
 
@@ -8,29 +12,10 @@ declare const __VERSION__: string;
 export async function loadCardSuitsShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const [
-      { loadClubsSuitShape },
-      { loadDiamondsSuitShape },
-      { loadHeartsSuitShape },
-      { loadSpadesSuitShape },
-    ] = await Promise.all([
-      import("./clubs/index.js"),
-      import("./diamonds/index.js"),
-      import("./hearts/index.js"),
-      import("./spades/index.js"),
-    ]);
-
-    await Promise.all([
-      loadClubsSuitShape(e),
-      loadDiamondsSuitShape(e),
-      loadHeartsSuitShape(e),
-      loadSpadesSuitShape(e),
-    ]);
-  });
+  await Promise.all([
+    loadClubsSuitShape(engine),
+    loadDiamondsSuitShape(engine),
+    loadHeartsSuitShape(engine),
+    loadSpadesSuitShape(engine),
+  ]);
 }
-
-export * from "./clubs/index.js";
-export * from "./diamonds/index.js";
-export * from "./hearts/index.js";
-export * from "./spades/index.js";

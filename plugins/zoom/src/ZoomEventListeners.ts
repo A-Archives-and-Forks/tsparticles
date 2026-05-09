@@ -33,8 +33,8 @@ export class ZoomEventListeners {
    * @param container - the calling container
    */
   constructor(private readonly container: ZoomContainer) {
-    this._gestureScale = defaultZoom as number;
-    this._touchDistance = initialTouchDistance as number;
+    this._gestureScale = defaultZoom;
+    this._touchDistance = initialTouchDistance;
     this._handlers = {
       gestureStart: (e: Event): void => {
         this._handleGestureStart(e);
@@ -154,7 +154,7 @@ export class ZoomEventListeners {
 
     event.preventDefault();
 
-    this._gestureScale = defaultZoom as number;
+    this._gestureScale = defaultZoom;
   };
 
   /**
@@ -185,7 +185,7 @@ export class ZoomEventListeners {
 
     event.preventDefault();
 
-    this._gestureScale = defaultZoom as number;
+    this._gestureScale = defaultZoom;
   };
 
   /**
@@ -238,7 +238,7 @@ export class ZoomEventListeners {
    * @param event - the touch event
    */
   private readonly _handleTouchEnd = (): void => {
-    this._touchDistance = initialTouchDistance as number;
+    this._touchDistance = initialTouchDistance;
   };
 
   /**

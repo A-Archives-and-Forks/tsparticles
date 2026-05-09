@@ -50,7 +50,7 @@ function parseExtensionBlock(
   getFrameIndex: (increment: boolean) => number,
   getTransparencyIndex: (newValue?: number | null) => number,
 ): void {
-  switch (byteStream.nextByte() as GIFDataHeaders) {
+  switch (byteStream.nextByte()) {
     case GIFDataHeaders.GraphicsControlExtension: {
       // ~ parse graphics control extension data - applies to the next frame in the byte stream
       const frame = gif.frames[getFrameIndex(false)]!;
@@ -402,7 +402,7 @@ async function parseBlock(
   canvasSettings: CanvasRenderingContext2DSettings,
   progressCallback?: GIFProgressCallbackFunction,
 ): Promise<boolean> {
-  switch (byteStream.nextByte() as GIFDataHeaders) {
+  switch (byteStream.nextByte()) {
     case GIFDataHeaders.EndOfFile:
       return true;
     case GIFDataHeaders.Image:

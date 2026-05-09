@@ -1,4 +1,9 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadDestroyUpdater } from "@tsparticles/updater-destroy";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { loadTrailPlugin } from "@tsparticles/plugin-trail";
+import { options } from "./options.js";
 
 const presetName = "fountain";
 
@@ -7,20 +12,6 @@ const presetName = "fountain";
  */
 export async function loadFountainPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadBasic },
-      { loadDestroyUpdater },
-      { loadEmittersPluginSimple },
-      { loadTrailPlugin },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/updater-destroy"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("@tsparticles/plugin-trail"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadBasic(e),
       loadDestroyUpdater(e),

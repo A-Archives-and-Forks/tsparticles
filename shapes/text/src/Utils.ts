@@ -5,7 +5,6 @@ import {
   half,
   itemFromSingleOrMultiple,
 } from "@tsparticles/engine";
-import type { ITextShape } from "./ITextShape.js";
 import type { TextParticle } from "./TextParticle.js";
 
 export const validTypes = ["text", "character", "char", "multiline-text"];
@@ -19,7 +18,7 @@ const firstIndex = 0,
  */
 export function drawText(data: IShapeDrawData<TextParticle>): void {
   const { context, particle, fill, stroke, radius, opacity } = data,
-    character = particle.shapeData as ITextShape | undefined;
+    character = particle.shapeData;
 
   if (!character) {
     return;

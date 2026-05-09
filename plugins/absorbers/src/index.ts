@@ -2,8 +2,6 @@ import { type Engine } from "@tsparticles/engine";
 import { loadAbsorbersInteraction } from "./interaction.js";
 import { loadAbsorbersPluginSimple } from "./plugin.js";
 
-declare const __VERSION__: string;
-
 /**
  * @param engine -
  */

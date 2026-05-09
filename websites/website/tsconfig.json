@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "lib": ["ES2022", "DOM"],
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["docs/**/*.ts", "docs/**/*.d.ts", "docs/**/*.vue"]
+}

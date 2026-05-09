@@ -1,11 +1,15 @@
 packages:
   - bundles/*
+  - cli/commands/*
+  - cli/packages/*
+  - cli/utils/*
   - demo/*
   - effects/*
   - engine
   - interactions/*
   - interactions/*/*
   - wrappers/*
+  - wrappers/inferno-hooks
   - templates/*
   - palettes/*/*
   - paths/*
@@ -18,6 +22,27 @@ packages:
   - shapes/*
   - updaters/*
   - utils/*
+  - websites/*
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  '@tsparticles/engine': true
+  canvas: true
+  core-js: true
+  core-js-bundle: true
+  core-js-pure: true
+  electron: true
+  esbuild: true
+  fsevents: true
+  inferno: true
+  lmdb: true
+  msgpackr-extract: true
+  nuxt: true
+  nx: true
+  puppeteer: true
+  sharp: true
+  svelte-preprocess: true
+  unrs-resolver: true
 linkWorkspacePackages: deep
 
 onlyBuiltDependencies:
@@ -34,3 +59,6 @@ onlyBuiltDependencies:
   - nx
   - sharp
   - unrs-resolver
+patchedDependencies:
+  tsup@8.5.1: patches/tsup@8.5.1.patch
+  vue-server-renderer@2.7.16: patches/vue-server-renderer@2.7.16.patch

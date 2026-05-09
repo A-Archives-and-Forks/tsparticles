@@ -1,0 +1,16 @@
+import { type Engine } from "@tsparticles/engine/lazy";
+
+declare const __VERSION__: string;
+
+/**
+ * @param engine -
+ */
+export async function loadPathShape(engine: Engine): Promise<void> {
+  engine.checkVersion(__VERSION__);
+
+  await engine.pluginManager.register(async e => {
+    const { PathDrawer } = await import("./PathDrawer.js");
+
+    e.pluginManager.addShape(["path"], () => Promise.resolve(new PathDrawer()));
+  });
+}

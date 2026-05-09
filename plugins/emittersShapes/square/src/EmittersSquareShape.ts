@@ -19,6 +19,14 @@ function randomSquareCoordinate(position: number, offset: number): number {
   return position + offset * (getRandom() - half);
 }
 
+/**
+ * @param sides -
+ * @returns the number of sides
+ */
+function getRandomSize(sides: number): Sides {
+  return Math.floor(getRandom() * sides);
+}
+
 export class EmittersSquareShape extends EmitterShapeBase {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(position: ICoordinates, size: IDimension, fill: boolean, options: unknown) {
@@ -44,7 +52,7 @@ export class EmittersSquareShape extends EmitterShapeBase {
     } else {
       const halfW = size.width * half,
         halfH = size.height * half,
-        side = Math.floor(getRandom() * sides) as Sides,
+        side = getRandomSize(sides),
         v = (getRandom() - half) * double;
 
       switch (side) {

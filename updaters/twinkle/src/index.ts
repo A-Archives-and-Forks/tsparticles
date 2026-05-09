@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { TwinkleUpdater } from "./TwinkleUpdater.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,8 @@ export async function loadTwinkleUpdater(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addParticleUpdater("twinkle", async container => {
-      const { TwinkleUpdater } = await import("./TwinkleUpdater.js");
-
-      return new TwinkleUpdater(e.pluginManager, container);
+    e.pluginManager.addParticleUpdater("twinkle", container => {
+      return Promise.resolve(new TwinkleUpdater(e.pluginManager, container));
     });
   });
 }

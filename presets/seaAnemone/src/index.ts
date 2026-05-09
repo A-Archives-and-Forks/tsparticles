@@ -1,4 +1,9 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadCurvesPath } from "@tsparticles/path-curves";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { loadTrailPlugin } from "@tsparticles/plugin-trail";
+import { options } from "./options.js";
 
 const presetName = "seaAnemone";
 
@@ -7,20 +12,6 @@ const presetName = "seaAnemone";
  */
 export async function loadSeaAnemonePreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadBasic },
-      { loadEmittersPluginSimple },
-      { loadTrailPlugin },
-      { loadCurvesPath },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("@tsparticles/plugin-trail"),
-      import("@tsparticles/path-curves"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       (async (): Promise<void> => {
         await loadBasic(e);

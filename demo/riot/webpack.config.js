@@ -13,6 +13,18 @@ module.exports = {
         clean: true
     },
     devtool: 'source-map',
+    resolve: {
+        alias: {
+            // Point the package alias to the Riot component file so imports like
+            // `import ... from "@tsparticles/riot"` resolve correctly to the .riot file.
+            '@tsparticles/riot': path.resolve(__dirname, '..', '..', 'wrappers', 'riot', 'src', 'riot-particles.riot'),
+        },
+        // Ensure webpack looks up node_modules from the demo package first so
+        // dependencies declared in demo/riot/package.json (eg. @riotjs/hot-reload)
+        // are resolvable when modules are imported from the wrappers/ directory.
+        modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+        
+    },
     optimization: {
         runtimeChunk: {
             name: 'runtime',

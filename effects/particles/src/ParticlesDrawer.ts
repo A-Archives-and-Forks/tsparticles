@@ -31,6 +31,7 @@ interface IParticlesData extends IShapeValues {
 }
 
 type ParticlesParticle = Particle & {
+  effectData?: IParticlesData;
   particlesData?: IParticlesData;
   particlesNextSpawn?: number;
   particlesSpawnQuantity?: number;
@@ -71,7 +72,7 @@ export class ParticlesDrawer implements IEffectDrawer<ParticlesParticle> {
   }
 
   particleInit(_container: Container, particle: ParticlesParticle): void {
-    const effectData = particle.effectData as IParticlesData | undefined,
+    const effectData = particle.effectData,
       spawnRate = getRangeValue(effectData?.spawn?.rate?.delay ?? defaultSpawnRate);
 
     particle.particlesSpawnQuantity = getRangeValue(effectData?.spawn?.rate?.quantity ?? defaultSpawnQuantity);

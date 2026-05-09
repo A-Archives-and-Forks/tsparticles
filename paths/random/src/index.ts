@@ -1,5 +1,6 @@
+import { type MoveEngine, ensureBaseMoverLoaded } from "@tsparticles/plugin-move";
 import { type Engine } from "@tsparticles/engine";
-import { type MoveEngine } from "@tsparticles/plugin-move";
+import { RandomPathGenerator } from "./RandomPathGenerator.js";
 
 declare const __VERSION__: string;
 
@@ -11,15 +12,11 @@ export const randomPathName = "randomPathGenerator";
 export async function loadRandomPath(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: MoveEngine) => {
-    const { ensureBaseMoverLoaded } = await import("@tsparticles/plugin-move");
-
+  await engine.pluginManager.register((e: MoveEngine) => {
     ensureBaseMoverLoaded(e);
 
-    e.pluginManager.addPathGenerator?.(randomPathName, async () => {
-      const { RandomPathGenerator } = await import("./RandomPathGenerator.js");
-
-      return new RandomPathGenerator();
+    e.pluginManager.addPathGenerator?.(randomPathName, () => {
+      return Promise.resolve(new RandomPathGenerator());
     });
   });
 }

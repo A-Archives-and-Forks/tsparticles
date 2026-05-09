@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Cherry Blossom Palette
+# tsParticles CherryBlossom Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-cherry-blossom/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-cherry-blossom) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-cherry-blossom.svg)](https://www.npmjs.com/package/@tsparticles/palette-cherry-blossom) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-cherry-blossom)](https://www.npmjs.com/package/@tsparticles/palette-cherry-blossom) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-cherryBlossom/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-cherryBlossom) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-cherryBlossom.svg)](https://www.npmjs.com/package/@tsparticles/palette-cherryBlossom) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-cherryBlossom) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for cherry blossom.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/cherryBlossom/images/sample.png)](https://particles.js.org/samples/palettes/cherry-blossom)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/nature/cherryBlossom/images/sample.png)](https://particles.js.org/samples/palettes/cherryBlossom)
 
 ## Colors
 
@@ -79,7 +79,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-cherry-blossom@4/tsparticles.palette.cherry-blossom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-cherryBlossom@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +101,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "cherry-blossom",
+    palette: "cherryBlossom",
   };
 
   await engine.load({
@@ -116,47 +116,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "cherry-blossom",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadCherryBlossomPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadCherryBlossomPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadCherryBlossomPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pacherryBlossom[Cherry Blossom]
-end
-
-e[tsParticles Engine] --> pacherryBlossom
-```

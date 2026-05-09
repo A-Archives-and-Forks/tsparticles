@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { NamedColorManager } from "./NamedColorManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,9 +10,7 @@ declare const __VERSION__: string;
 export async function loadNamedColorPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { NamedColorManager } = await import("./NamedColorManager.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addColorManager("named", new NamedColorManager());
   });
 }

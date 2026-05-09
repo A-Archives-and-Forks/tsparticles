@@ -1,5 +1,6 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { Repulser } from "./Repulser.js";
 
 declare const __VERSION__: string;
 
@@ -9,17 +10,13 @@ declare const __VERSION__: string;
 export async function loadExternalRepulseInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
     const pluginManager = e.pluginManager;
 
-    pluginManager.addInteractor?.("externalRepulse", async container => {
-      const { Repulser } = await import("./Repulser.js");
-
-      return new Repulser(pluginManager, container);
+    pluginManager.addInteractor?.("externalRepulse", container => {
+      return Promise.resolve(new Repulser(pluginManager, container));
     });
   });
 }

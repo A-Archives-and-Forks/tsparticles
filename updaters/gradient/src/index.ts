@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { GradientUpdater } from "./GradientUpdater.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,8 @@ export async function loadGradientUpdater(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addParticleUpdater("gradient", async container => {
-      const { GradientUpdater } = await import("./GradientUpdater.js");
-
-      return new GradientUpdater(e.pluginManager, container);
+    e.pluginManager.addParticleUpdater("gradient", container => {
+      return Promise.resolve(new GradientUpdater(e.pluginManager, container));
     });
   });
 }

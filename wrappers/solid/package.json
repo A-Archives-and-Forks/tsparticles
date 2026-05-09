@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/solid",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "Official tsParticles Solid Component - Easily create highly customizable particle, confetti and fireworks animations and use them as animated backgrounds for your website. Ready to use components available also for React, Vue.js (2.x and 3.x), Angular, Svelte, jQuery, Preact, Inferno, Riot.js.",
   "license": "MIT",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
@@ -117,7 +117,7 @@
     "test:ssr": "pnpm run test:client --mode ssr",
     "lint": "concurrently \"pnpm:lint:code --fix\" pnpm:lint:types",
     "lint:ci": "concurrently pnpm:lint:code pnpm:lint:types",
-    "lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{ts,tsx}",
+    "lint:code": "eslint --max-warnings 0 src/**/*.{ts,tsx}",
     "lint:types": "tsc --noEmit",
     "update-deps": "pnpm up -Li",
     "prettify": "prettier --write \"src/**/*.{js,ts,json,css,tsx,jsx}\" \"README.md\"",
@@ -126,19 +126,20 @@
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
-    "@tsparticles/engine": ">=1.0.0",
+    "@tsparticles/engine": "workspace:^",
     "solid-js": ">=1.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tsparticles/engine": "workspace:^",
-    "@tsparticles/prettier-config": "^3.4.6",
+    "@tsparticles/prettier-config": "workspace:^",
     "@types/node": "^20.12.12",
-    "@typescript-eslint/eslint-plugin": "^7.9.0",
-    "@typescript-eslint/parser": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.1",
+    "@typescript-eslint/parser": "^8.59.1",
     "concurrently": "^9.2.1",
     "esbuild": "^0.21.3",
     "esbuild-plugin-solid": "^0.6.0",
-    "eslint": "^8.56.0",
+    "eslint": "^10.3.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "jsdom": "^29.0.2",

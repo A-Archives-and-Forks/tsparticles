@@ -1,6 +1,8 @@
+import type { ITextShape } from "./ITextShape.js";
 import type { Particle } from "@tsparticles/engine";
 
 export interface TextParticle extends Particle {
   maxTextLength?: number;
+  shapeData?: ITextShape;
   textLines?: string[];
 }

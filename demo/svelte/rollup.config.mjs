@@ -10,7 +10,7 @@ import json from "@rollup/plugin-json";
 
 const production = !process.env.ROLLUP_WATCH;
 
-function serve() {
+  function serve() {
   let server;
 
   function toExit() {
@@ -18,9 +18,13 @@ function serve() {
   }
 
   return {
-    writeBundle() {
+    async writeBundle() {
       if (server) return;
-      server = require("child_process").spawn("npm", ["run", "start", "--", "--dev"], {
+
+      // rollup config is an ES module; use dynamic import for builtins
+      const child = await import("child_process");
+
+      server = child.spawn("npm", ["run", "start", "--", "--dev"], {
         stdio: ["ignore", "inherit", "inherit"],
         shell: true,
       });

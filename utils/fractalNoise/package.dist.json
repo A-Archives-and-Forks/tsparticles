@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/fractal-noise",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles fractal noise library",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -92,7 +92,7 @@
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "@tsparticles/smooth-value-noise": "4.0.0-beta.12"
+    "@tsparticles/smooth-value-noise": "4.0.0-beta.15"
   },
   "exports": {
     ".": {
@@ -101,6 +101,13 @@
       "import": "./esm/index.js",
       "require": "./cjs/index.js",
       "default": "./esm/index.js"
+    },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
     },
     "./package.json": "./package.json"
   },

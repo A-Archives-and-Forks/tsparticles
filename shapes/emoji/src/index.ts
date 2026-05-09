@@ -1,3 +1,4 @@
+import { EmojiDrawer } from "./EmojiDrawer.js";
 import { type Engine } from "@tsparticles/engine";
 import { validTypes } from "./Utils.js";
 
@@ -10,10 +11,6 @@ export async function loadEmojiShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(validTypes, async () => {
-      const { EmojiDrawer } = await import("./EmojiDrawer.js");
-
-      return new EmojiDrawer();
-    });
+    e.pluginManager.addShape(validTypes, () => Promise.resolve(new EmojiDrawer()));
   });
 }

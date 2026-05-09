@@ -1,7 +1,7 @@
+import type { Engine, PluginManager } from "@tsparticles/engine";
 import type { AbsorbersInstancesManager } from "./AbsorbersInstancesManager.js";
-import type { Engine } from "@tsparticles/engine";
 
-const instancesManagers = new WeakMap<object, Promise<AbsorbersInstancesManager>>();
+const instancesManagers = new WeakMap<PluginManager, Promise<AbsorbersInstancesManager>>();
 
 /**
  * @param e - The engine instance whose plugin manager will be used to resolve the absorbers manager.
@@ -17,6 +17,7 @@ export function getAbsorbersInstancesManager(e: Engine): Promise<AbsorbersInstan
       .then(({ AbsorbersInstancesManager }) => new AbsorbersInstancesManager(pluginManager))
       .catch((error: unknown) => {
         instancesManagers.delete(pluginManager);
+
         throw error;
       });
 

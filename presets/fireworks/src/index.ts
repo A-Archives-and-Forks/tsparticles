@@ -1,4 +1,14 @@
 import type { Engine } from "@tsparticles/engine";
+import { initOptions } from "./options.js";
+import { loadBasic } from "@tsparticles/basic";
+import { loadDestroyUpdater } from "@tsparticles/updater-destroy";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { loadEmittersShapeSquare } from "@tsparticles/plugin-emitters-shape-square";
+import { loadLifeUpdater } from "@tsparticles/updater-life";
+import { loadLineShape } from "@tsparticles/shape-line";
+import { loadRotateUpdater } from "@tsparticles/updater-rotate";
+import { loadSoundsPlugin } from "@tsparticles/plugin-sounds";
+import { loadTrailEffect } from "@tsparticles/effect-trail";
 
 const presetName = "fireworks";
 
@@ -7,34 +17,11 @@ const presetName = "fireworks";
  */
 export async function loadFireworksPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-        { loadBasic },
-        { loadEmittersPluginSimple },
-        { loadTrailEffect },
-        { loadEmittersShapeSquare },
-        { loadSoundsPlugin },
-        { loadLineShape },
-        { loadRotateUpdater },
-        { loadDestroyUpdater },
-        { loadLifeUpdater },
-        { initOptions },
-      ] = await Promise.all([
-        import("@tsparticles/basic"),
-        import("@tsparticles/plugin-emitters/plugin"),
-        import("@tsparticles/effect-trail"),
-        import("@tsparticles/plugin-emitters-shape-square"),
-        import("@tsparticles/plugin-sounds"),
-        import("@tsparticles/shape-line"),
-        import("@tsparticles/updater-rotate"),
-        import("@tsparticles/updater-destroy"),
-        import("@tsparticles/updater-life"),
-        import("./options.js"),
-      ]),
-      loadEmittersForFireworks = async (e: Engine): Promise<void> => {
-        await loadEmittersPluginSimple(e);
+    const loadEmittersForFireworks = async (e: Engine): Promise<void> => {
+      await loadEmittersPluginSimple(e);
 
-        await loadEmittersShapeSquare(e);
-      };
+      await loadEmittersShapeSquare(e);
+    };
 
     await Promise.all([
       loadBasic(e),

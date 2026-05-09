@@ -1,4 +1,6 @@
 import { type Engine } from "@tsparticles/engine";
+import { PolygonDrawer } from "./PolygonDrawer.js";
+import { TriangleDrawer } from "./TriangleDrawer.js";
 
 declare const __VERSION__: string;
 
@@ -9,11 +11,7 @@ export async function loadGenericPolygonShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["polygon"], async () => {
-      const { PolygonDrawer } = await import("./PolygonDrawer.js");
-
-      return new PolygonDrawer();
-    });
+    e.pluginManager.addShape(["polygon"], () => Promise.resolve(new PolygonDrawer()));
   });
 }
 
@@ -24,11 +22,7 @@ export async function loadTriangleShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["triangle"], async () => {
-      const { TriangleDrawer } = await import("./TriangleDrawer.js");
-
-      return new TriangleDrawer();
-    });
+    e.pluginManager.addShape(["triangle"], () => Promise.resolve(new TriangleDrawer()));
   });
 }
 

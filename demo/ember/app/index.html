@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>tsParticles Ember Demo</title>
+    <meta name="description" content="Ember demo for @tsparticles/ember" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {{content-for "head"}}
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
+    <!-- built ember assets are namespaced under @tsparticles in the dist output -->
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/@tsparticles/ember-demo.css" />
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <!-- built ember app bundle is namespaced under @tsparticles in the dist output -->
+    <script src="{{rootURL}}assets/@tsparticles/ember-demo.js"></script>
+
+    {{content-for "body-footer"}}
+  </body>
+</html>

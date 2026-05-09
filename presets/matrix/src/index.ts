@@ -1,4 +1,10 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadMatrixShape } from "@tsparticles/shape-matrix";
+import { loadPoissonDiscPlugin } from "@tsparticles/plugin-poisson-disc";
+import { loadShadowEffect } from "@tsparticles/effect-shadow";
+import { loadTrailPlugin } from "@tsparticles/plugin-trail";
+import { options } from "./options.js";
 
 const presetName = "matrix";
 
@@ -7,22 +13,6 @@ const presetName = "matrix";
  */
 export async function loadMatrixPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadBasic },
-      { loadShadowEffect },
-      { loadPoissonDiscPlugin },
-      { loadTrailPlugin },
-      { loadMatrixShape },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/effect-shadow"),
-      import("@tsparticles/plugin-poisson-disc"),
-      import("@tsparticles/plugin-trail"),
-      import("@tsparticles/shape-matrix"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadBasic(e),
       loadShadowEffect(e),

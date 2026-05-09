@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { InfinityDrawer } from "./InfinityDrawer.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,6 @@ export async function loadInfinityShape(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addShape(["infinity"], async () => {
-      const { InfinityDrawer } = await import("./InfinityDrawer.js");
-
-      return new InfinityDrawer();
-    });
+    e.pluginManager.addShape(["infinity"], () => Promise.resolve(new InfinityDrawer()));
   });
 }

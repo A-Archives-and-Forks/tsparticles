@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/ember",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "Ember.js component for using tsParticles",
   "keywords": [
     "ember-addon"
@@ -17,7 +17,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "echo build",
+    "build": "ember build",
     "lint": "npm-run-all --print-name --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
     "lint:fix": "npm-run-all --print-name --aggregate-output --continue-on-error --parallel \"lint:*:fix\"",
     "lint:hbs": "ember-template-lint .",
@@ -113,5 +113,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

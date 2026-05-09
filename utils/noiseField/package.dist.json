@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/noise-field",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles noise field library",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -92,8 +92,8 @@
   "module": "esm/index.js",
   "types": "types/index.d.ts",
   "peerDependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-move": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/plugin-move": "4.0.0-beta.15"
   },
   "exports": {
     ".": {
@@ -102,6 +102,13 @@
       "import": "./esm/index.js",
       "require": "./cjs/index.js",
       "default": "./esm/index.js"
+    },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
     },
     "./package.json": "./package.json"
   },

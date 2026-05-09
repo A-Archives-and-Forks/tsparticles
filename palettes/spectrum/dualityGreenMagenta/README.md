@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Duality Green/Magenta Palette
+# tsParticles DualityGreenMagenta Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-duality-green-magenta/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-duality-green-magenta) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-duality-green-magenta.svg)](https://www.npmjs.com/package/@tsparticles/palette-duality-green-magenta) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-duality-green-magenta)](https://www.npmjs.com/package/@tsparticles/palette-duality-green-magenta) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-dualityGreenMagenta/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-dualityGreenMagenta) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-dualityGreenMagenta.svg)](https://www.npmjs.com/package/@tsparticles/palette-dualityGreenMagenta) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-dualityGreenMagenta) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for duality - green/magenta.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/dualityGreenMagenta/images/sample.png)](https://particles.js.org/samples/palettes/duality-green-magenta)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/spectrum/dualityGreenMagenta/images/sample.png)](https://particles.js.org/samples/palettes/dualityGreenMagenta)
 
 ## Colors
 
@@ -57,7 +57,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-duality-green-magenta@4/tsparticles.palette.duality-green-magenta.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-dualityGreenMagenta@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -79,7 +79,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "duality-green-magenta",
+    palette: "dualityGreenMagenta",
   };
 
   await engine.load({
@@ -94,47 +94,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "duality-green-magenta",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadDualityGreenMagentaPalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadDualityGreenMagentaPalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadDualityGreenMagentaPalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-padualityGreenMagenta[Duality Green/Magenta]
-end
-
-e[tsParticles Engine] --> padualityGreenMagenta
-```

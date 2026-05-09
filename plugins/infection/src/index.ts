@@ -1,5 +1,8 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import type { InfectableContainer } from "./Types.js";
+import { InfectionPlugin } from "./InfectionPlugin.js";
+import { ParticlesInfecter } from "./ParticlesInfecter.js";
 
 declare const __VERSION__: string;
 
@@ -9,23 +12,13 @@ declare const __VERSION__: string;
 export async function loadInfectionPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const [
-      { ensureInteractivityPluginLoaded },
-      { InfectionPlugin },
-    ] = await Promise.all([
-      import("@tsparticles/plugin-interactivity"),
-      import("./InfectionPlugin.js"),
-    ]);
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
     e.pluginManager.addPlugin(new InfectionPlugin());
 
-    e.pluginManager.addInteractor?.("particlesInfection", async container => {
-      const { ParticlesInfecter } = await import("./ParticlesInfecter.js");
-
-      return new ParticlesInfecter(container);
+    e.pluginManager.addInteractor?.("particlesInfection", (container: InfectableContainer) => {
+      return Promise.resolve(new ParticlesInfecter(container));
     });
   });
 }

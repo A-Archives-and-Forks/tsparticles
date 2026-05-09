@@ -1,0 +1,35 @@
+{
+  "name": "@tsparticles/cli-build",
+  "version": "4.0.0-beta.15",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "tsparticles-build": "bin/tsparticles-build.cjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tagVersionPrefix": "v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/packages/cli-build"
+  },
+  "prettier": "@tsparticles/prettier-config",
+  "scripts": {
+    "prettify:ci:readme": "prettier --check ./README.md",
+    "prettify:readme": "prettier --write ./README.md",
+    "build": "pnpm run prettify:readme",
+    "build:ci": "pnpm run prettify:ci:readme",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@tsparticles/cli-command-build": "workspace:^",
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@tsparticles/prettier-config": "workspace:^"
+  },
+  "description": "tsParticles CLI - Build command only (no circular dependencies)",
+  "author": "Matteo Bruni <matteo.bruni@me.com>"
+}

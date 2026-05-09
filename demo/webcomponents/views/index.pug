@@ -21,9 +21,17 @@ html(lang="en")
         link(href="/stylesheets/main.css" rel="stylesheet" type="text/css")
 
     body
-        web-particles(id="tsparticles" url="/@tsparticles/configs/basic.json")
-
+        // Load engine & polyfills first, then initialize the webcomponents engine
         script(src="/tsparticles/tsparticles.bundle.min.js")
-        script(src="/webcomponentsjs/custom-elements-es5-adapter.js")
-        script(src="/webcomponentsjs/webcomponents-loader.js")
-        script(src="/@tsparticles/webcomponents/web-particles.js" type="module")
+        // Load webcomponents polyfills from a CDN so the demo does not require
+        // a local installation of @webcomponents/webcomponentsjs. The
+        // custom-elements ES5 adapter is needed because the wrapper is
+        // transpiled to ES5 and relies on the adapter when run in older
+        // environments or when classes are downleveled.
+        script(src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/custom-elements-es5-adapter.js")
+        script(src="https://unpkg.com/@webcomponents/webcomponentsjs@2.6.0/webcomponents-loader.js")
+
+        // Import the webcomponents module and bootstrap the demo from an
+        // external script. The heavy inline debug UI was moved into a
+        // dedicated file under public/javascripts/webcomponents-demo.js.
+        script(type="module" src="/javascripts/webcomponents-demo.js")

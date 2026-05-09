@@ -11,10 +11,12 @@
 - [tsparticles (and all its dependencies)](https://github.com/tsparticles/tsparticles/tree/main/bundles/full)
 - [@tsparticles/engine](https://github.com/tsparticles/tsparticles/tree/main/engine)
 - [@tsparticles/effect-bubble](https://github.com/tsparticles/tsparticles/tree/main/effects/bubble)
+- [@tsparticles/effect-filter](https://github.com/tsparticles/tsparticles/tree/main/effects/filter)
 - [@tsparticles/effect-particles](https://github.com/tsparticles/tsparticles/tree/main/effects/particles)
 - [@tsparticles/effect-shadow](https://github.com/tsparticles/tsparticles/tree/main/effects/shadow)
 - [@tsparticles/effect-trail](https://github.com/tsparticles/tsparticles/tree/main/effects/trail)
 - [@tsparticles/interaction-external-particle](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/particle)
+- [@tsparticles/interaction-external-cannon](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/cannon)
 - [@tsparticles/interaction-external-pop](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/pop)
 - [@tsparticles/interaction-light](https://github.com/tsparticles/tsparticles/tree/main/interactions/light)
 - [@tsparticles/interaction-particles-repulse](https://github.com/tsparticles/tsparticles/tree/main/interactions/particles/repulse)
@@ -31,7 +33,7 @@
 - [@tsparticles/path-simplex-noise](https://github.com/tsparticles/tsparticles/tree/main/paths/simplexNoise)
 - [@tsparticles/path-spiral](https://github.com/tsparticles/tsparticles/tree/main/paths/spiral)
 - [@tsparticles/path-svg](https://github.com/tsparticles/tsparticles/tree/main/paths/svg)
-- [@tsparticles/path-zig-zag](https://github.com/tsparticles/tsparticles/tree/main/paths/zigZag)
+- [@tsparticles/path-zig-zag](https://github.com/tsparticles/tsparticles/tree/main/paths/zigzag)
 - [@tsparticles/plugin-background-mask](https://github.com/tsparticles/tsparticles/tree/main/plugins/backgroundMask)
 - [@tsparticles/plugin-blend](https://github.com/tsparticles/tsparticles/tree/main/plugins/blend)
 - [@tsparticles/plugin-canvas-mask](https://github.com/tsparticles/tsparticles/tree/main/plugins/canvasMask)
@@ -48,23 +50,23 @@
 - [@tsparticles/plugin-easing-sigmoid](https://github.com/tsparticles/tsparticles/tree/main/plugins/easings/sigmoid)
 - [@tsparticles/plugin-easing-sine](https://github.com/tsparticles/tsparticles/tree/main/plugins/easings/sine)
 - [@tsparticles/plugin-easing-smoothstep](https://github.com/tsparticles/tsparticles/tree/main/plugins/easings/smoothstep)
-- [@tsparticles/plugin-emitters-shape-canvas](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/canvas)
-- [@tsparticles/plugin-emitters-shape-path](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/path)
-- [@tsparticles/plugin-emitters-shape-polygon](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/polygon)
+- [@tsparticles/plugin-emitters-shape-canvas](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/canvas)
+- [@tsparticles/plugin-emitters-shape-path](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/path)
+- [@tsparticles/plugin-emitters-shape-polygon](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/polygon)
 - [@tsparticles/plugin-export-image](https://github.com/tsparticles/tsparticles/tree/main/plugins/exports/image)
 - [@tsparticles/plugin-export-json](https://github.com/tsparticles/tsparticles/tree/main/plugins/exports/json)
 - [@tsparticles/plugin-export-video](https://github.com/tsparticles/tsparticles/tree/main/plugins/exports/video)
-- [@tsparticles/plugin-hsv-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hsvColor)
-- [@tsparticles/plugin-hwb-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hwbColor)
+- [@tsparticles/plugin-hsv-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hsv)
+- [@tsparticles/plugin-hwb-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/hwb)
 - [@tsparticles/plugin-infection](https://github.com/tsparticles/tsparticles/tree/main/plugins/infection)
-- [@tsparticles/plugin-lab-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/labColor)
-- [@tsparticles/plugin-lch-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/lchColor)
+- [@tsparticles/plugin-lab-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/lab)
+- [@tsparticles/plugin-lch-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/lch)
 - [@tsparticles/plugin-manual-particles](https://github.com/tsparticles/tsparticles/tree/main/plugins/manualParticles)
 - [@tsparticles/plugin-motion](https://github.com/tsparticles/tsparticles/tree/main/plugins/motion)
-- [@tsparticles/plugin-named-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/namedColor)
-- [@tsparticles/plugin-oklab-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/oklabColor)
-- [@tsparticles/plugin-oklch-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/oklchColor)
-- [@tsparticles/plugin-poisson-disc](https://github.com/tsparticles/tsparticles/tree/main/plugins/poissonDisc)
+- [@tsparticles/plugin-named-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/named)
+- [@tsparticles/plugin-oklab-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/oklab)
+- [@tsparticles/plugin-oklch-color](https://github.com/tsparticles/tsparticles/tree/main/plugins/colors/oklch)
+- [@tsparticles/plugin-poisson-disc](https://github.com/tsparticles/tsparticles/tree/main/plugins/poisson)
 - [@tsparticles/plugin-polygon-mask](https://github.com/tsparticles/tsparticles/tree/main/plugins/polygonMask)
 - [@tsparticles/plugin-responsive](https://github.com/tsparticles/tsparticles/tree/main/plugins/responsive)
 - [@tsparticles/plugin-sounds](https://github.com/tsparticles/tsparticles/tree/main/plugins/sounds)
@@ -78,8 +80,8 @@
 - [@tsparticles/shape-infinity](https://github.com/tsparticles/tsparticles/tree/main/shapes/infinity)
 - [@tsparticles/shape-matrix](https://github.com/tsparticles/tsparticles/tree/main/shapes/matrix)
 - [@tsparticles/shape-path](https://github.com/tsparticles/tsparticles/tree/main/shapes/path)
-- [@tsparticles/shape-rounded-polygon](https://github.com/tsparticles/tsparticles/tree/main/shapes/polygon)
-- [@tsparticles/shape-rounded-rect](https://github.com/tsparticles/tsparticles/tree/main/shapes/rect)
+- [@tsparticles/shape-rounded-polygon](https://github.com/tsparticles/tsparticles/tree/main/shapes/rounded-polygon)
+- [@tsparticles/shape-rounded-rect](https://github.com/tsparticles/tsparticles/tree/main/shapes/rounded-rect)
 - [@tsparticles/shape-spiral](https://github.com/tsparticles/tsparticles/tree/main/shapes/spiral)
 - [@tsparticles/shape-squircle](https://github.com/tsparticles/tsparticles/tree/main/shapes/squircle)
 - [@tsparticles/updater-gradient](https://github.com/tsparticles/tsparticles/tree/main/updaters/gradient)
@@ -101,12 +103,14 @@ end
 
 subgraph e [Effects]
   eb[tsparticles/effect-bubble]
+  ef[tsparticles/effect-filter]
   ep[tsparticles/effect-particles]
   es[tsparticles/effect-shadow]
   et[tsparticles/effect-trail]
 end
 
 subgraph i [Interactions]
+  iec[tsparticles/interaction-external-cannon]
   iep[tsparticles/interaction-external-particle]
   iepo[tsparticles/interaction-external-pop]
   il[tsparticles/interaction-light]

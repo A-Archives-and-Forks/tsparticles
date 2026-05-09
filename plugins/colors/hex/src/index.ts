@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { HexColorManager } from "./HexColorManager.js";
 
 declare const __VERSION__: string;
 
@@ -9,9 +10,7 @@ declare const __VERSION__: string;
 export async function loadHexColorPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { HexColorManager } = await import("./HexColorManager.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addColorManager("hex", new HexColorManager());
   });
 }

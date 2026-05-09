@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { PoissonDiscPlugin } from "./PoissonDiscPlugin.js";
 
 declare const __VERSION__: string;
 
@@ -8,9 +9,7 @@ declare const __VERSION__: string;
 export async function loadPoissonDiscPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
-    const { PoissonDiscPlugin } = await import("./PoissonDiscPlugin.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addPlugin(new PoissonDiscPlugin());
   });
 }

@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/shape-cards",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles cards shape",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -96,12 +96,26 @@
       "require": "./cjs/index.js",
       "default": "./esm/index.js"
     },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
+    },
     "./cards": {
       "types": "./types/cards/index.d.ts",
       "browser": "./browser/cards/index.js",
       "import": "./esm/cards/index.js",
       "require": "./cjs/cards/index.js",
       "default": "./esm/cards/index.js"
+    },
+    "./cards/lazy": {
+      "types": "./types/cards/index.lazy.d.ts",
+      "browser": "./browser/cards/index.lazy.js",
+      "import": "./esm/cards/index.lazy.js",
+      "require": "./cjs/cards/index.lazy.js",
+      "default": "./esm/cards/index.lazy.js"
     },
     "./clubs": {
       "types": "./types/clubs/index.d.ts",
@@ -110,12 +124,26 @@
       "require": "./cjs/clubs/index.js",
       "default": "./esm/clubs/index.js"
     },
+    "./clubs/lazy": {
+      "types": "./types/clubs/index.lazy.d.ts",
+      "browser": "./browser/clubs/index.lazy.js",
+      "import": "./esm/clubs/index.lazy.js",
+      "require": "./cjs/clubs/index.lazy.js",
+      "default": "./esm/clubs/index.lazy.js"
+    },
     "./diamons": {
       "types": "./types/diamons/index.d.ts",
       "browser": "./browser/diamons/index.js",
       "import": "./esm/diamons/index.js",
       "require": "./cjs/diamons/index.js",
       "default": "./esm/diamons/index.js"
+    },
+    "./diamons/lazy": {
+      "types": "./types/diamons/index.lazy.d.ts",
+      "browser": "./browser/diamons/index.lazy.js",
+      "import": "./esm/diamons/index.lazy.js",
+      "require": "./cjs/diamons/index.lazy.js",
+      "default": "./esm/diamons/index.lazy.js"
     },
     "./hearts": {
       "types": "./types/hearts/index.d.ts",
@@ -124,12 +152,26 @@
       "require": "./cjs/hearts/index.js",
       "default": "./esm/hearts/index.js"
     },
+    "./hearts/lazy": {
+      "types": "./types/hearts/index.lazy.d.ts",
+      "browser": "./browser/hearts/index.lazy.js",
+      "import": "./esm/hearts/index.lazy.js",
+      "require": "./cjs/hearts/index.lazy.js",
+      "default": "./esm/hearts/index.lazy.js"
+    },
     "./spades": {
       "types": "./types/spades/index.d.ts",
       "browser": "./browser/spades/index.js",
       "import": "./esm/spades/index.js",
       "require": "./cjs/spades/index.js",
       "default": "./esm/spades/index.js"
+    },
+    "./spades/lazy": {
+      "types": "./types/spades/index.lazy.d.ts",
+      "browser": "./browser/spades/index.lazy.js",
+      "import": "./esm/spades/index.lazy.js",
+      "require": "./cjs/spades/index.lazy.js",
+      "default": "./esm/spades/index.lazy.js"
     },
     "./suits": {
       "types": "./types/suits.d.ts",
@@ -138,11 +180,18 @@
       "require": "./cjs/suits.js",
       "default": "./esm/suits.js"
     },
+    "./suits/lazy": {
+      "types": "./types/suits.lazy.d.ts",
+      "browser": "./browser/suits.lazy.js",
+      "import": "./esm/suits.lazy.js",
+      "require": "./cjs/suits.lazy.js",
+      "default": "./esm/suits.lazy.js"
+    },
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/path-utils": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/path-utils": "4.0.0-beta.15"
   },
   "publishConfig": {
     "access": "public"

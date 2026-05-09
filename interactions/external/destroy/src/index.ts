@@ -1,5 +1,6 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
+import { Destroyer } from "./Destroyer.js";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
 
 declare const __VERSION__: string;
 
@@ -9,15 +10,11 @@ declare const __VERSION__: string;
 export async function loadExternalDestroyInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
     e.pluginManager.addInteractor?.("externalDestroy", async container => {
-      const { Destroyer } = await import("./Destroyer.js");
-
-      return new Destroyer(container);
+      return Promise.resolve(new Destroyer(container));
     });
   });
 }

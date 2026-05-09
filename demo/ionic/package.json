@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/ionic-demo",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "author": "Matteo Bruni <matteo.bruni@me.com>",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "ng build",
     "build:ci": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "eslint \"src/**/*.ts\"",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -110,7 +110,7 @@
     "@types/node": "^25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.58.1",
     "@typescript-eslint/parser": "^8.58.1",
-    "eslint": "^8.57.1",
+    "eslint": "^10.3.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",

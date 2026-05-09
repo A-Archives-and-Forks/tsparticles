@@ -4,6 +4,8 @@ import configs from "@tsparticles/configs";
 
 @Component({
   selector: "app-tab1",
+  // explicitly mark as non-standalone to avoid runtime mismatch when declared in NgModule
+  standalone: false,
   templateUrl: "tab1.page.html",
   styleUrls: ["tab1.page.scss"]
 })

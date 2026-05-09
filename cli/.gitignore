@@ -1,0 +1,14 @@
+dist
+node_modules
+.DS_Store
+test-cli
+.idea
+.nyc_output
+.eslintcache
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+
+
+.nx/cache
+.nx/workspace-data

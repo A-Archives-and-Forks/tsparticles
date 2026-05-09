@@ -4,6 +4,20 @@ const libPackage = "./projects/ng-particles/package.json";
 const libReadme = "./projects/ng-particles/README.md";
 const sourceReadme = "./README.md";
 
+function resolveWorkspaceDependency(spec, fallbackVersion) {
+  if (!spec?.startsWith("workspace:")) {
+    return spec;
+  }
+
+  const workspaceRange = spec.replace("workspace:", "");
+
+  if (workspaceRange.length > 0 && workspaceRange !== "*" && workspaceRange !== "^" && workspaceRange !== "~") {
+    return workspaceRange;
+  }
+
+  return workspaceRange === "^" || workspaceRange === "~" ? `${workspaceRange}${fallbackVersion}` : `^${fallbackVersion}`;
+}
+
 fs.readFile(libPackage, function (error, data) {
   if (error) {
     throw error;
@@ -14,7 +28,10 @@ fs.readFile(libPackage, function (error, data) {
   const libObj = JSON.parse(text);
 
   libObj.version = mainPackage.version;
-  libObj.peerDependencies["@tsparticles/engine"] = mainPackage.dependencies["@tsparticles/engine"].replace("workspace:", "");
+  libObj.peerDependencies["@tsparticles/engine"] = resolveWorkspaceDependency(
+    mainPackage.dependencies["@tsparticles/engine"],
+    mainPackage.version,
+  );
 
   fs.writeFile(libPackage, JSON.stringify(libObj, undefined, 2), 'utf-8', function () {
     console.log(`lib package.json updated successfully to version ${mainPackage.version}`);

@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Bokeh Pastel Palette
+# tsParticles BokehPastel Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bokeh-pastel/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bokeh-pastel) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bokeh-pastel.svg)](https://www.npmjs.com/package/@tsparticles/palette-bokeh-pastel) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-bokeh-pastel)](https://www.npmjs.com/package/@tsparticles/palette-bokeh-pastel) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bokehPastel/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bokehPastel) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bokehPastel.svg)](https://www.npmjs.com/package/@tsparticles/palette-bokehPastel) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-bokehPastel) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for bokeh pastel optics.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/optics/bokehPastel/images/sample.png)](https://particles.js.org/samples/palettes/bokeh-pastel)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/optics/bokehPastel/images/sample.png)](https://particles.js.org/samples/palettes/bokehPastel)
 
 ## Colors
 
@@ -79,7 +79,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-bokeh-pastel@4/tsparticles.palette-bokeh-pastel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-bokehPastel@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +101,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "bokeh-pastel",
+    palette: "bokehPastel",
   };
 
   await engine.load({

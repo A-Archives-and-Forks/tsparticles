@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Nuclear Glow Palette
+# tsParticles NuclearGlow Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-nuclear-glow/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-nuclear-glow) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-nuclear-glow.svg)](https://www.npmjs.com/package/@tsparticles/palette-nuclear-glow) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-nuclear-glow)](https://www.npmjs.com/package/@tsparticles/palette-nuclear-glow) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-nuclearGlow/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-nuclearGlow) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-nuclearGlow.svg)](https://www.npmjs.com/package/@tsparticles/palette-nuclearGlow) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-nuclearGlow) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for nuclear glow impact.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/impact/nuclearGlow/images/sample.png)](https://particles.js.org/samples/palettes/nuclear-glow)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/impact/nuclearGlow/images/sample.png)](https://particles.js.org/samples/palettes/nuclearGlow)
 
 ## Colors
 
@@ -79,7 +79,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-nuclear-glow@4/tsparticles.palette-nuclear-glow.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-nuclearGlow@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +101,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "nuclear-glow",
+    palette: "nuclearGlow",
   };
 
   await engine.load({

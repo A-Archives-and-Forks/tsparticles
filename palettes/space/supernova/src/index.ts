@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { options } from "./options.js";
 
 const paletteName = "supernova";
 
@@ -6,9 +7,7 @@ const paletteName = "supernova";
  * @param engine -
  */
 export async function loadSupernovaPalette(engine: Engine): Promise<void> {
-  await engine.pluginManager.register(async e => {
-    const { options } = await import("./options.js");
-
+  await engine.pluginManager.register(e => {
     e.pluginManager.addPalette(paletteName, options);
   });
 }

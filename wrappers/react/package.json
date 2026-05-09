@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/react",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/lib/index.d.ts",
@@ -25,7 +25,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@tsparticles/engine": ">=4.0.0-alpha.0",
+    "@tsparticles/engine": "workspace:^",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

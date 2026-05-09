@@ -47,7 +47,8 @@ If `position` is omitted, a random position is used.
     { "position": { "x": 10, "y": 10 } },
     { "position": { "x": 90, "y": 10 } },
     { "position": { "x": 10, "y": 90 } },
-    { "position": { "x": 90, "y": 90 } }]
+    { "position": { "x": 90, "y": 90 } }
+  ]
 }
 ```
 

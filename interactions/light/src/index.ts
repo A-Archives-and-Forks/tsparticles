@@ -1,5 +1,7 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { ExternalLighter } from "./ExternalLighter.js";
+import { ParticlesLighter } from "./ParticlesLighter.js";
 
 declare const __VERSION__: string;
 
@@ -9,20 +11,15 @@ declare const __VERSION__: string;
 export async function loadLightInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
-    e.pluginManager.addInteractor?.("externalLight", async container => {
-      const { ExternalLighter } = await import("./ExternalLighter.js");
-
-      return new ExternalLighter(e.pluginManager, container);
+    e.pluginManager.addInteractor?.("externalLight", container => {
+      return Promise.resolve(new ExternalLighter(e.pluginManager, container));
     });
-    e.pluginManager.addInteractor?.("particlesLight", async container => {
-      const { ParticlesLighter } = await import("./ParticlesLighter.js");
 
-      return new ParticlesLighter(e.pluginManager, container);
+    e.pluginManager.addInteractor?.("particlesLight", container => {
+      return Promise.resolve(new ParticlesLighter(e.pluginManager, container));
     });
   });
 }

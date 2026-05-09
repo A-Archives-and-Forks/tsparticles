@@ -1,6 +1,8 @@
+import type { ISquircleData } from "./ISquircleData.js";
 import type { Particle } from "@tsparticles/engine";
 
 export type SquircleParticle = Particle & {
+  shapeData?: ISquircleData;
   squircleExponent?: number;
   squircleSteps?: number;
 };

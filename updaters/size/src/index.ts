@@ -1,4 +1,5 @@
 import { type Engine } from "@tsparticles/engine";
+import { SizeUpdater } from "./SizeUpdater.js";
 
 declare const __VERSION__: string;
 
@@ -9,10 +10,8 @@ export async function loadSizeUpdater(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(e => {
-    e.pluginManager.addParticleUpdater("size", async container => {
-      const { SizeUpdater } = await import("./SizeUpdater.js");
-
-      return new SizeUpdater(container);
+    e.pluginManager.addParticleUpdater("size", container => {
+      return Promise.resolve(new SizeUpdater(container));
     });
   });
 }

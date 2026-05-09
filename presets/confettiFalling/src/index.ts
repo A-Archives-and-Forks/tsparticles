@@ -1,4 +1,13 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadConfettiPalette } from "@tsparticles/palette-confetti";
+import { loadMotionPlugin } from "@tsparticles/plugin-motion";
+import { loadRollUpdater } from "@tsparticles/updater-roll";
+import { loadRotateUpdater } from "@tsparticles/updater-rotate";
+import { loadSquareShape } from "@tsparticles/shape-square";
+import { loadTiltUpdater } from "@tsparticles/updater-tilt";
+import { loadWobbleUpdater } from "@tsparticles/updater-wobble";
+import { options } from "./options.js";
 
 const presetNames = ["confettiFalling", "confetti-falling"];
 
@@ -7,28 +16,6 @@ const presetNames = ["confettiFalling", "confetti-falling"];
  */
 export async function loadConfettiFallingPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [
-      { loadBasic },
-      { loadMotionPlugin },
-      { loadRotateUpdater },
-      { loadSquareShape },
-      { loadTiltUpdater },
-      { loadWobbleUpdater },
-      { loadRollUpdater },
-      { loadConfettiPalette },
-      { options },
-    ] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/plugin-motion"),
-      import("@tsparticles/updater-rotate"),
-      import("@tsparticles/shape-square"),
-      import("@tsparticles/updater-tilt"),
-      import("@tsparticles/updater-wobble"),
-      import("@tsparticles/updater-roll"),
-      import("@tsparticles/palette-confetti"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadBasic(e),
       loadConfettiPalette(e),

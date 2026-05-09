@@ -1,0 +1,6 @@
+import type { IMatrixOptions } from "./IMatrixOptions.js";
+import type { Particle } from "@tsparticles/engine";
+
+export type MatrixParticle = Particle & {
+  shapeData?: IMatrixOptions;
+};

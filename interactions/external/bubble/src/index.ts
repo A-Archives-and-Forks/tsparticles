@@ -1,5 +1,6 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
+import { Bubbler } from "./Bubbler.js";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
 
 declare const __VERSION__: string;
 
@@ -9,15 +10,11 @@ declare const __VERSION__: string;
 export async function loadExternalBubbleInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
-    e.pluginManager.addInteractor?.("externalBubble", async container => {
-      const { Bubbler } = await import("./Bubbler.js");
-
-      return new Bubbler(e.pluginManager, container);
+    e.pluginManager.addInteractor?.("externalBubble", container => {
+      return Promise.resolve(new Bubbler(e.pluginManager, container));
     });
   });
 }

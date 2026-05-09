@@ -1,6 +1,8 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import type { Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
 import type { LinkContainer } from "./Types.js";
+import { Linker } from "./Linker.js";
+import { LinksPlugin } from "./LinksPlugin.js";
 
 declare const __VERSION__: string;
 
@@ -10,24 +12,15 @@ declare const __VERSION__: string;
 export async function loadParticlesLinksInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const pluginManager = e.pluginManager,
-      [
-        { ensureInteractivityPluginLoaded },
-        { LinksPlugin },
-      ] = await Promise.all([
-        import("@tsparticles/plugin-interactivity"),
-        import("./LinksPlugin.js"),
-      ]);
+  await engine.pluginManager.register((e: InteractivityEngine) => {
+    const pluginManager = e.pluginManager;
 
     ensureInteractivityPluginLoaded(e);
 
     pluginManager.addPlugin(new LinksPlugin(pluginManager));
 
-    pluginManager.addInteractor?.("particlesLinks", async container => {
-      const { Linker } = await import("./Linker.js");
-
-      return new Linker(pluginManager, container as LinkContainer);
+    pluginManager.addInteractor?.("particlesLinks", container => {
+      return Promise.resolve(new Linker(pluginManager, container as LinkContainer));
     });
   });
 }

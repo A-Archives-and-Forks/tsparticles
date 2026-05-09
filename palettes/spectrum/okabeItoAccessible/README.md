@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Okabe Ito Accessible Palette
+# tsParticles OkabeItoAccessible Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-okabe-ito-accessible/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-okabe-ito-accessible) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-okabe-ito-accessible.svg)](https://www.npmjs.com/package/@tsparticles/palette-okabe-ito-accessible) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-okabe-ito-accessible)](https://www.npmjs.com/package/@tsparticles/palette-okabe-ito-accessible) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-okabeItoAccessible/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-okabeItoAccessible) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-okabeItoAccessible.svg)](https://www.npmjs.com/package/@tsparticles/palette-okabeItoAccessible) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-okabeItoAccessible) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for okabe ito accessible.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/okabeItoAccessible/images/sample.png)](https://particles.js.org/samples/palettes/okabe-ito-accessible)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/spectrum/okabeItoAccessible/images/sample.png)](https://particles.js.org/samples/palettes/okabeItoAccessible)
 
 ## Colors
 
@@ -83,7 +83,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-okabe-ito-accessible@4/tsparticles.palette.okabe-ito-accessible.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-okabeItoAccessible@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -105,7 +105,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "okabe-ito-accessible",
+    palette: "okabeItoAccessible",
   };
 
   await engine.load({
@@ -120,47 +120,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "okabe-ito-accessible",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadOkabeItoAccessiblePalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadOkabeItoAccessiblePalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadOkabeItoAccessiblePalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-paokabeItoAccessible[Okabe Ito Accessible]
-end
-
-e[tsParticles Engine] --> paokabeItoAccessible
-```

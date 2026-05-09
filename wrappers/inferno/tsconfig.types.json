@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Emit declaration files only into the dist folder
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    // Allow emit even if base tsconfig sets noEmit
+    "noEmit": false
+  },
+  "include": ["src/**/*"]
+}

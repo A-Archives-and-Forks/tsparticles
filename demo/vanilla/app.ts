@@ -3,13 +3,12 @@ import cluster from "node:cluster";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 //import helmet from "helmet";
 import connectLiveReload from "connect-livereload";
-import { dirname } from "path";
+import path, { dirname } from "node:path";
 import dotenv from "dotenv";
 import express from "express";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import livereload from "livereload";
-import path from "node:path";
-import os from "os";
+import os from "node:os";
 //import rateLimit from "express-rate-limit";
 import stylus from "stylus";
 import winston from "winston";
@@ -51,12 +50,30 @@ const logger = winston.createLogger({
   ],
 });
 
-const workspaceRootGuess = path.resolve(dirName, "..", "..", ".."),
-  workspaceRoot = existsSync(path.join(workspaceRootGuess, "package.json"))
-    ? workspaceRootGuess
-    : path.resolve(dirName, "..", ".."),
+const workspaceRootCandidates = [
+    path.resolve(dirName, "..", "..", ".."),
+    path.resolve(dirName, "..", "..", "..", ".."),
+    path.resolve(dirName, "..", ".."),
+  ],
+  workspaceRoot =
+    workspaceRootCandidates.find(
+      candidate => existsSync(path.join(candidate, "presets")) && existsSync(path.join(candidate, "palettes")),
+    ) ?? path.resolve(dirName, "..", ".."),
   presetsRoot = path.join(workspaceRoot, "presets"),
   palettesRoot = path.join(workspaceRoot, "palettes");
+
+// Read demo package.json to get declared dependencies (we will only discover palettes/presets
+// that are declared as dependencies of this demo). This avoids scanning the whole repo.
+let demoPackageDeps: string[] = [];
+try {
+  const demoPkgPath = [path.join(dirName, "package.json"), path.join(dirName, "..", "package.json")].find(existsSync);
+  if (demoPkgPath) {
+    const demoPkg = JSON.parse(readFileSync(demoPkgPath, "utf8")) as { dependencies?: Record<string, string> };
+    demoPackageDeps = Object.keys(demoPkg.dependencies ?? {});
+  }
+} catch {
+  demoPackageDeps = [];
+}
 
 type CatalogMode = "preset" | "palette";
 
@@ -74,6 +91,8 @@ interface CatalogItem {
   description: string;
   staticPath: string;
   category?: string;
+  showcaseRoute?: string;
+  showcaseLabel?: string;
 }
 
 interface PaletteGroup {
@@ -91,6 +110,9 @@ const camelToKebab = (value: string): string =>
 
 const toPascal = (value: string): string => `${value[0].toUpperCase()}${value.slice(1)}`;
 
+const getPaletteId = (category: string, folder: string): string =>
+  category === "other" ? folder : `${category}${toPascal(folder)}`;
+
 const parsePaletteName = (fullPath: string, folder: string): string => {
   const optionsPath = path.join(fullPath, "src", "options.ts");
 
@@ -104,6 +126,134 @@ const parsePaletteName = (fullPath: string, folder: string): string => {
   return match?.[1] ?? toTitleCase(camelToKebab(folder).replace(/-/g, " "));
 };
 
+interface PaletteSourceMetadata {
+  loader: string;
+  optionValue: string;
+}
+
+interface PalettePackageMetadata {
+  packageName: string;
+  slug: string;
+}
+
+interface PresetSourceMetadata {
+  loader: string;
+  optionValue: string;
+}
+
+interface PresetPackageMetadata {
+  packageName: string;
+  slug: string;
+}
+
+const readPresetPackageMetadata = (fullPath: string, folder: string): PresetPackageMetadata => {
+  const fallbackSlug = camelToKebab(folder),
+    packageJsonPath = path.join(fullPath, "package.json");
+
+  if (!existsSync(packageJsonPath)) {
+    return {
+      packageName: `@tsparticles/preset-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(readFileSync(packageJsonPath, "utf8")) as { name?: string },
+      packageName = parsed.name?.startsWith("@tsparticles/preset-")
+        ? parsed.name
+        : `@tsparticles/preset-${fallbackSlug}`,
+      slug = packageName.replace("@tsparticles/preset-", "");
+
+    return {
+      packageName,
+      slug,
+    };
+  } catch {
+    return {
+      packageName: `@tsparticles/preset-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+};
+
+const readPresetSourceMetadata = (fullPath: string, folder: string, slug: string): PresetSourceMetadata => {
+  const indexPath = path.join(fullPath, "src", "index.ts");
+
+  if (!existsSync(indexPath)) {
+    return {
+      loader: `load${toPascal(folder)}Preset`,
+      optionValue: slug,
+    };
+  }
+
+  const indexContent = readFileSync(indexPath, "utf8"),
+    loaderMatch = indexContent.match(/export\s+async\s+function\s+(load\w+Preset)\s*\(/u),
+    presetNamesMatch = indexContent.match(/const\s+presetNames\s*=\s*\[([^\]]+)\]\s*;/u),
+    presetNameMatch = indexContent.match(/const\s+presetName\s*=\s*"([^"]+)"\s*;/u),
+    presetNames = [...(presetNamesMatch?.[1].matchAll(/"([^"]+)"/gu) ?? [])].map(match => match[1]),
+    optionValue =
+      presetNameMatch?.[1] ??
+      presetNames.find(name => name === slug) ??
+      presetNames.find(name => !name.includes("-")) ??
+      presetNames[0] ??
+      slug;
+
+  return {
+    loader: loaderMatch?.[1] ?? `load${toPascal(folder)}Preset`,
+    optionValue,
+  };
+};
+
+const readPalettePackageMetadata = (fullPath: string, folder: string): PalettePackageMetadata => {
+  const fallbackSlug = camelToKebab(folder),
+    packageJsonPath = path.join(fullPath, "package.json");
+
+  if (!existsSync(packageJsonPath)) {
+    return {
+      packageName: `@tsparticles/palette-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+
+  try {
+    const parsed = JSON.parse(readFileSync(packageJsonPath, "utf8")) as { name?: string },
+      packageName = parsed.name?.startsWith("@tsparticles/palette-")
+        ? parsed.name
+        : `@tsparticles/palette-${fallbackSlug}`,
+      slug = packageName.replace("@tsparticles/palette-", "");
+
+    return {
+      packageName,
+      slug,
+    };
+  } catch {
+    return {
+      packageName: `@tsparticles/palette-${fallbackSlug}`,
+      slug: fallbackSlug,
+    };
+  }
+};
+
+const readPaletteSourceMetadata = (fullPath: string, folder: string, slug: string): PaletteSourceMetadata => {
+  const indexPath = path.join(fullPath, "src", "index.ts");
+
+  if (!existsSync(indexPath)) {
+    return {
+      loader: `load${toPascal(folder)}Palette`,
+      optionValue: slug,
+    };
+  }
+
+  const indexContent = readFileSync(indexPath, "utf8"),
+    loaderMatch = indexContent.match(/export\s+async\s+function\s+(load\w+Palette)\s*\(/u),
+    paletteNameMatch = indexContent.match(/const\s+paletteName\s*=\s*"([^"]+)"\s*;/u);
+
+  return {
+    loader: loaderMatch?.[1] ?? `load${toPascal(folder)}Palette`,
+    optionValue: paletteNameMatch?.[1] ?? slug,
+  };
+};
+
 const findGeneratedScript = (distPath: string, fallback: string, matcher: RegExp): string => {
   if (!existsSync(distPath)) {
     return fallback;
@@ -114,23 +264,45 @@ const findGeneratedScript = (distPath: string, fallback: string, matcher: RegExp
   return generatedScript ?? fallback;
 };
 
-const loadPresetsCatalog = (): CatalogItem[] => {
+const discoverPresetDirs = (): Array<{ folder: string; fullPath: string }> => {
+  const presetDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/preset-"));
+
   if (!existsSync(presetsRoot)) {
     return [];
   }
 
-  return readdirSync(presetsRoot, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .map(entry => entry.name)
-    .sort((a, b) => a.localeCompare(b))
-    .map(folder => {
-      const slug = camelToKebab(folder),
-        packageName = `@tsparticles/preset-${slug}`,
+  const presetFolders = readdirSync(presetsRoot, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name),
+    bySlug = new Map<string, string>();
+
+  for (const folder of presetFolders) {
+    const fullPath = path.join(presetsRoot, folder),
+      packageMetadata = readPresetPackageMetadata(fullPath, folder);
+
+    bySlug.set(packageMetadata.slug, folder);
+  }
+
+  return presetDeps
+    .map(dep => dep.replace("@tsparticles/preset-", ""))
+    .map(slug => {
+      const folder = bySlug.get(slug) ?? slug;
+
+      return {
+        folder,
+        fullPath: path.join(presetsRoot, folder),
+      };
+    })
+    .sort((a, b) => a.folder.localeCompare(b.folder));
+};
+
+const loadPresetsCatalog = (): CatalogItem[] => {
+  return discoverPresetDirs()
+    .map(({ folder, fullPath }) => {
+      const packageMetadata = readPresetPackageMetadata(fullPath, folder),
+        sourceMetadata = readPresetSourceMetadata(fullPath, folder, packageMetadata.slug),
+        slug = packageMetadata.slug,
         title = toTitleCase(slug.replace(/-/g, " ")),
-        loader = `load${toPascal(folder)}Preset`,
-        packageRoot = path.join(presetsRoot, folder),
         scriptFile = findGeneratedScript(
-          path.join(packageRoot, "dist"),
+          path.join(fullPath, "dist"),
           `tsparticles.preset.${slug}.bundle.min.js`,
           /^tsparticles\.preset\..+\.bundle\.min\.js$/u,
         );
@@ -139,73 +311,101 @@ const loadPresetsCatalog = (): CatalogItem[] => {
         id: folder,
         slug,
         title,
-        packageName,
+        packageName: packageMetadata.packageName,
         mountPath: `/preset-${slug}`,
         route: `/presets/${folder}`,
         image: `/images/presets/${folder}.png`,
         scriptFile,
-        loader,
-        optionValue: slug,
+        loader: sourceMetadata.loader,
+        optionValue: sourceMetadata.optionValue,
         description: `${title} preset demo`,
-        staticPath: path.join(packageRoot, "dist"),
+        staticPath: path.join(fullPath, "dist"),
       };
-    });
+    })
+    .filter(item => existsSync(item.staticPath));
 };
 
 const hasPaletteOptions = (palettePath: string): boolean => existsSync(path.join(palettePath, "src", "options.ts"));
 
 const discoverPaletteDirs = (): Array<{ category: string; folder: string; fullPath: string }> => {
+  const paletteDeps = demoPackageDeps.filter(d => d.startsWith("@tsparticles/palette-")),
+    allPaletteDirs: Array<{ category: string; folder: string; fullPath: string }> = [];
+
   if (!existsSync(palettesRoot)) {
     return [];
   }
 
-  return readdirSync(palettesRoot, { withFileTypes: true })
-    .filter(entry => entry.isDirectory())
-    .flatMap(entry => {
-      const categoryPath = path.join(palettesRoot, entry.name);
+  const rootEntries = readdirSync(palettesRoot, { withFileTypes: true }).filter(e => e.isDirectory());
 
-      if (hasPaletteOptions(categoryPath)) {
-        return [{ category: "other", folder: entry.name, fullPath: categoryPath }];
+  for (const entry of rootEntries) {
+    const category = entry.name,
+      categoryPath = path.join(palettesRoot, category);
+
+    if (hasPaletteOptions(categoryPath)) {
+      allPaletteDirs.push({ category: "other", folder: category, fullPath: categoryPath });
+      continue;
+    }
+
+    const palettesInCategory = readdirSync(categoryPath, { withFileTypes: true }).filter(e => e.isDirectory());
+
+    for (const paletteEntry of palettesInCategory) {
+      const fullPath = path.join(categoryPath, paletteEntry.name);
+
+      if (!hasPaletteOptions(fullPath)) {
+        continue;
       }
 
-      return readdirSync(categoryPath, { withFileTypes: true })
-        .filter(nested => nested.isDirectory())
-        .map(nested => ({
-          category: entry.name,
-          folder: nested.name,
-          fullPath: path.join(categoryPath, nested.name),
-        }))
-        .filter(item => hasPaletteOptions(item.fullPath));
-    })
+      allPaletteDirs.push({ category, folder: paletteEntry.name, fullPath });
+    }
+  }
+
+  const bySlug = new Map<string, { category: string; folder: string; fullPath: string }>();
+
+  for (const item of allPaletteDirs) {
+    const { slug } = readPalettePackageMetadata(item.fullPath, item.folder);
+
+    bySlug.set(slug, item);
+  }
+
+  return paletteDeps
+    .map(dep => dep.replace("@tsparticles/palette-", ""))
+    .map(slug => bySlug.get(slug))
+    .filter((item): item is { category: string; folder: string; fullPath: string } => Boolean(item))
     .sort((a, b) => a.folder.localeCompare(b.folder));
 };
 
 const loadPalettesCatalog = (): CatalogItem[] => {
   return discoverPaletteDirs().map(({ category, folder, fullPath }) => {
-    const slug = camelToKebab(folder),
-      packageName = `@tsparticles/palette-${slug}`,
+    const paletteId = getPaletteId(category, folder),
+      packageMetadata = readPalettePackageMetadata(fullPath, folder),
       title = parsePaletteName(fullPath, folder),
-      loader = `load${toPascal(folder)}Palette`,
+      sourceMetadata = readPaletteSourceMetadata(fullPath, folder, packageMetadata.slug),
+      isFireworksStroke = category === "fireworks" && /stroke$/iu.test(folder),
+      showcaseRoute = category === "confetti" || isFireworksStroke ? `/palettes/${paletteId}/showcase` : undefined,
+      showcaseLabel =
+        category === "confetti" ? "Confetti Example" : isFireworksStroke ? "Fireworks Example" : undefined,
       scriptFile = findGeneratedScript(
         path.join(fullPath, "dist"),
-        `tsparticles.palette.${slug}.min.js`,
+        `tsparticles.palette.${packageMetadata.slug}.min.js`,
         /^tsparticles\.palette\..+\.min\.js$/u,
       );
 
     return {
-      id: folder,
-      slug,
+      id: paletteId,
+      slug: packageMetadata.slug,
       title,
-      packageName,
-      mountPath: `/palette-${slug}`,
-      route: `/palettes/${folder}`,
-      image: `/images/palettes/${folder}.png`,
+      packageName: packageMetadata.packageName,
+      mountPath: `/palette-${packageMetadata.slug}`,
+      route: `/palettes/${paletteId}`,
+      image: `/images/palettes/${paletteId}.png`,
       scriptFile,
-      loader,
-      optionValue: slug,
+      loader: sourceMetadata.loader,
+      optionValue: sourceMetadata.optionValue,
       description: `${title} palette demo`,
       staticPath: path.join(fullPath, "dist"),
       category,
+      showcaseRoute,
+      showcaseLabel,
     };
   });
 };
@@ -258,6 +458,7 @@ app.use("/tsparticles-pjs", express.static("./node_modules/@tsparticles/pjs"));
 app.use("/tsparticles-slim", express.static("./node_modules/@tsparticles/slim"));
 app.use("/tsparticles-confetti", express.static("./node_modules/@tsparticles/confetti"));
 app.use("/tsparticles-fireworks", express.static("./node_modules/@tsparticles/fireworks"));
+app.use("/tsparticles-particles", express.static("./node_modules/@tsparticles/particles"));
 app.use("/tsparticles", express.static("./node_modules/tsparticles"));
 app.use("/tsparticles-configs", express.static("./node_modules/@tsparticles/configs"));
 app.use("/canvas-utils", express.static("./node_modules/@tsparticles/canvas-utils"));
@@ -414,16 +615,24 @@ app.get("/basic", function (req, res) {
   res.render("basic");
 });
 
+
 app.get("/bundle", function (req, res) {
   logger.info("bundle requested");
 
   res.render("bundle");
 });
 
+
 app.get("/playground", function (req, res) {
   logger.info("playground requested");
 
   res.render("playground");
+});
+
+app.get("/canvas", function (req, res) {
+  logger.info("canvas requested");
+
+  res.render("canvas");
 });
 
 app.get("/confetti", function (req, res) {
@@ -436,6 +645,12 @@ app.get("/fireworks", function (req, res) {
   logger.info("firefox requested");
 
   res.render("fireworks");
+});
+
+app.get("/particles", function (req, res) {
+  logger.info("particles requested");
+
+  res.render("particles");
 });
 
 app.get("/domEmitters", function (req, res) {
@@ -524,13 +739,46 @@ app.get("/palettes/:id", function (req, res) {
   res.render("palette", { item });
 });
 
+app.get("/palettes/:id/showcase", function (req, res) {
+  const item = palettesMap.get(req.params.id);
+
+  if (!item) {
+    res.status(404).send("Palette not found");
+
+    return;
+  }
+
+  if (!item.showcaseRoute) {
+    res.status(404).send("Showcase not available for this palette");
+
+    return;
+  }
+
+  if (item.category === "confetti") {
+    logger.info(`palette confetti showcase ${req.params.id} requested`);
+    res.render("paletteShowcaseConfetti", { item });
+
+    return;
+  }
+
+  if (item.category === "fireworks") {
+    logger.info(`palette fireworks showcase ${req.params.id} requested`);
+    res.render("paletteShowcaseFireworks", { item });
+
+    return;
+  }
+
+  res.status(404).send("Showcase not available for this palette");
+});
+
 for (const item of palettesCatalog) {
   app.get(`/palette/${item.id}`, function (req, res) {
     res.redirect(item.route);
   });
 }
 
-const port = 3000;
+const liveReloadPort = Number.parseInt(process.env.LIVE_RELOAD_PORT ?? "35731", 10),
+  port = Number.parseInt(process.env.PORT ?? "3000", 10);
 
 if (cluster.isMaster) {
   for (let i = 0; i < numCpus; i++) {
@@ -553,7 +801,7 @@ if (cluster.isMaster) {
     }
   });
 
-  const liveReloadServer = livereload.createServer();
+  const liveReloadServer = livereload.createServer({ port: liveReloadPort });
 
   liveReloadServer.server.once("connection", () => {
     setTimeout(() => {

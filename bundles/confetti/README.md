@@ -4,8 +4,7 @@
 
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/confetti/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/confetti) [![npmjs](https://badge.fury.io/js/@tsparticles/confetti.svg)](https://www.npmjs.com/package/@tsparticles/confetti) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/confetti)](https://www.npmjs.com/package/@tsparticles/confetti) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) confetti bundle loads all the features necessary to create
-beautiful confetti effects with ease.
+[tsParticles](https://github.com/tsparticles/tsparticles) confetti bundle to create confetti effects with a single API.
 
 **Included Packages**
 
@@ -70,30 +69,84 @@ bc --> s
 bc --> u
 ```
 
-## Quick checklist
+## Exposed API
 
-1. Install `@tsparticles/engine` (or use the CDN bundle below)
-2. Call the package loader function(s) before `tsParticles.load(...)`
-3. Apply the package options in your `tsParticles.load(...)` config
+The package API is centered on `confetti`.
+
+```ts
+import { confetti } from "@tsparticles/confetti";
+
+// Main API
+await confetti(options);
+await confetti("canvas-id", options);
+
+// Extra helpers
+await confetti.init();
+const fireOnCanvas = await confetti.create(canvas, defaultOptions);
+await fireOnCanvas(options);
+
+console.log(confetti.version);
+```
+
+`@tsparticles/confetti` does not expose `tsParticles` from its main entrypoint.
+If you need direct engine APIs, import them from `@tsparticles/engine`.
+
+## Installation
+
+```bash
+pnpm add @tsparticles/confetti
+```
 
 ## How to use it
 
+### ESM / TypeScript
+
+```ts
+import { confetti } from "@tsparticles/confetti";
+
+await confetti({
+  count: 80,
+  spread: 60,
+  position: { x: 50, y: 50 },
+  colors: ["#ffffff", "#ff0000"],
+});
+```
+
+With explicit canvas id:
+
+```ts
+import { confetti } from "@tsparticles/confetti";
+
+await confetti("tsparticles", {
+  count: 50,
+  angle: 90,
+  spread: 45,
+});
+```
+
+### Custom canvas via `confetti.create`
+
+```ts
+import { confetti } from "@tsparticles/confetti";
+
+const canvas = document.getElementById("my-canvas") as HTMLCanvasElement;
+const localConfetti = await confetti.create(canvas, { count: 30 });
+
+await localConfetti({ spread: 70 });
+```
+
 ### CDN / Vanilla JS / jQuery
 
-The CDN/Vanilla version JS has two different files:
+The CDN/Vanilla JS version has two files:
 
 - One is a bundle file with all the scripts included in a single file
-- One is a file including just the `confetti` function to load the tsParticles confetti bunddle, all dependencies must
-  be
-  included manually
+- One includes only the `confetti` API, where dependencies must be loaded manually
+
+After loading the bundle, `confetti` is available on `globalThis`.
 
 #### Bundle
 
-Including the `tsparticles.confetti.bundle.min.js` file will out of the box.
-
-This is the easiest usage, since it's a single file with all the features loaded.
-
-You can still add additional packages, loading them like all the other packages.
+Use the bundle when you want a single script with all required dependencies.
 
 #### Not Bundle
 
@@ -102,116 +155,62 @@ specified in the **Included Packages** section.
 
 ### Usage
 
-Once the scripts are loaded you can set up `tsParticles` like the following examples:
-
-** Easiest Way **
-
-```javascript
-confetti();
+```js
+confetti({ count: 60 });
 ```
 
-** Async Way, best practice **
-
-```javascript
+```js
 (async () => {
-  await confetti();
+  await confetti({ count: 60, spread: 55 });
 })();
 ```
 
-** Confetti Options **
-
-```javascript
+```js
 confetti("tsparticles", {
-  /**
-   * @deprecated use count property instead
-   */
-  particleCount: 50,
-  /**
-   * @deprecated use position property instead
-   */
-  origin: {
-    x: 0.5,
-    y: 0.5,
-  },
-  //------------------------------------------
-  angle: 90,
   count: 50,
   position: {
     x: 50,
     y: 50,
   },
-  spread: 45,
-  startVelocity: 45,
-  decay: 0.9,
-  gravity: 1,
-  drift: 0,
-  ticks: 200,
-  colors: ["#ffffff", "#ff0000"],
-  shapes: ["square", "circle"],
-  scalar: 1,
-  zIndex: 100,
-  disableForReducedMotion: true,
 });
 ```
 
-#### Options
+### Options
 
-The `confetti` first parameter can be an id and the second parameter a single `options` object, or just the single
-options object without the id, which will be `confetti` by default. The `options` object has the following properties:
+The `confetti` API accepts:
 
-- `count` _Integer (default: 50)_: The number of confetti to launch. More is always fun... but be cool, there's a lot of
-  math involved. (`particleCount` can be used too, but it's deprecated)
-- `angle` _Number (default: 90)_: The angle in which to launch the confetti, in degrees: 90 is straight up.
-- `spread` _Number (default: 45)_: How far off center the confetti can go, in degrees. 45 means the confetti will launch
-  at the defined `angle` plus or minus 22.5 degrees.
-- `startVelocity` _Number (default: 45)_: How fast the confetti will start going, in pixels.
-- `decay` _Number (default: 0.9)_: How quickly the confetti will lose speed. Keep this number between 0 and 1, otherwise
-  the confetti will gain speed. Better yet, just never change it.
-- `flat` _Boolean (default: false)_: Optionally turns off the tilt and wobble that three dimensional confetti would have
-  in the real world. Yeah, they look a little sad, but y'all asked for them, so don't blame me.
-- `gravity` _Number (default: 1)_: How quickly the particles are pulled down: 1 is full gravity, 0.5 is half gravity,
-  etc., but there are no limits. You can even make particles go up if you'd like.
-- `drift` _Number (default: 0)_: How much to the side the confetti will drift. The default is 0, meaning that they will
-  fall straight down. Use a negative number for left and positive number for right.
-- `ticks` _Number (default: 200)_: How many times the confetti will move. This is abstract... but play with it if the
-  confetti disappear too quickly for you.
-- `position` _Object_: Where to start firing confetti from. Feel free to launch off-screen if you'd like. (`origin` can
-  be used too, but it's deprecated)
-  - `position.x` _Number (default: 50)_: The `x` position on the page, with `0` being the left edge and `100` being
-    the
-    right edge.
-  - `position.y` _Number (default: 50)_: The `y` position on the page, with `0` being the top edge and `100` being the
-    bottom edge.
-- `colors` _Array&lt;String&gt;_: An array of color strings, in the HEX format... you know, like `#bada55`.
-- `shapes` _Array&lt;String&gt;_: An array of shapes for the confetti. The possible values are:
-  - `circle`
-  - `square`
-  - `star`
-  - `polygon`
-  - `image`
-  - `heart`
-  - `hearts`
-  - `spades`
-  - `clubs`
-  - `diamonds`
-  - `text`
-    The default is to use both shapes in an even mix. You can even change the mix by providing a value such
-    as `['circle', 'circle', 'square']` to use two third circles and one third squares.
-- `scalar` _Number (default: 1)_: Scale factor for each confetti particle. Use decimals to make the confetti smaller. Go
-  on, try teeny tiny confetti, they are adorable!
-- `zIndex` _Integer (default: 100)_: The confetti should be on top, after all. But if you have a crazy high page, you
-  can set it even higher.
-- `disableForReducedMotion` _Boolean (default: true)_: Disables confetti entirely for users
-  that [prefer reduced motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
+- `confetti(options)`
+- `confetti(id, options)`
 
-And for those asking, yes you can paste your canvas-confetti code and migrate to tsParticles Confetti without changing a
-thing
+Main options:
+
+- `count` _Integer (default: 50)_
+- `angle` _Number (default: 90)_
+- `spread` _Number (default: 45)_
+- `startVelocity` _Number (default: 45)_
+- `decay` _Number (default: 0.9)_
+- `flat` _Boolean (default: false)_
+- `gravity` _Number (default: 1)_
+- `drift` _Number (default: 0)_
+- `ticks` _Number (default: 200)_
+- `position` _Object_ (`x`/`y`, default 50/50)
+- `colors` _Array&lt;String&gt;_
+- `shapes` _Array&lt;String&gt;_
+- `shapeOptions` _Record&lt;string, unknown&gt;_
+- `scalar` _Number (default: 1)_
+- `zIndex` _Integer (default: 100)_
+- `disableForReducedMotion` _Boolean (default: true)_
+
+Deprecated aliases still accepted:
+
+- `particleCount` (use `count`)
+- `origin` (use `position`)
 
 ## Common pitfalls
 
-- Calling `tsParticles.load(...)` before `package loader(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+- Calling `confetti` before scripts are loaded in CDN usage
+- Assuming `tsParticles` is exported by `@tsparticles/confetti` main entrypoint
+- Passing no first argument in TypeScript (use `confetti(options)` or `confetti(id, options)`)
 
 ## Related docs
 

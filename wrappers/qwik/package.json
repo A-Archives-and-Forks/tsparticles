@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/qwik",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "Official tsParticles Qwik Component - Easily create highly customizable particle, confetti and fireworks animations and use them as animated backgrounds for your website. Ready to use components available also for Web Components, Vue.js (2.x and 3.x), Angular, Svelte, jQuery, Preact, React, Riot.js, Solid.js, Inferno.",
   "main": "./lib/index.qwik.mjs",
   "qwik": "./lib/index.qwik.mjs",
@@ -21,7 +21,12 @@
   },
   "type": "module",
   "scripts": {
-    "build": "echo build",
+    "prettify:src": "prettier --write ./src/**/*",
+    "prettify:readme": "prettier --write ./README.md",
+    "prettify:ci:src": "prettier --check ./src/**/*",
+    "prettify:ci:readme": "prettier --check ./README.md",
+    "build": "pnpm run prettify:src && pnpm run build.lib && pnpm run build.types",
+    "build:ci": "pnpm run prettify:ci:src && pnpm run build.lib && pnpm run build.types",
     "build.lib": "vite build --mode lib",
     "build.types": "tsc --emitDeclarationOnly",
     "dev": "vite --mode ssr",
@@ -51,5 +56,8 @@
     "undici": "8.1.0",
     "vite": "8.0.8",
     "vite-tsconfig-paths": "6.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

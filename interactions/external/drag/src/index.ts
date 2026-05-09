@@ -1,9 +1,9 @@
-import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
-
-export type { IDrag } from "./Options/Interfaces/IDrag.js";
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 export type { DragContainer, DragMode, IDragMode } from "./Types.js";
 export { Drag } from "./Options/Classes/Drag.js";
+import { Dragger } from "./Dragger.js";
+import { type Engine } from "@tsparticles/engine";
+export type { IDrag } from "./Options/Interfaces/IDrag.js";
 
 declare const __VERSION__: string;
 
@@ -16,15 +16,11 @@ declare const __VERSION__: string;
 export async function loadExternalDragInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const { ensureInteractivityPluginLoaded } = await import("@tsparticles/plugin-interactivity");
-
+  await engine.pluginManager.register((e: InteractivityEngine) => {
     ensureInteractivityPluginLoaded(e);
 
-    e.pluginManager.addInteractor?.("externalDrag", async container => {
-      const { Dragger } = await import("./Dragger.js");
-
-      return new Dragger(container);
+    e.pluginManager.addInteractor?.("externalDrag", container => {
+      return Promise.resolve(new Dragger(container));
     });
   });
 }

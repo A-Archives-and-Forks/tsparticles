@@ -1,6 +1,10 @@
 <template>
   <main id="app">
-    <vue-particles id="tsparticles" :options="options" :particles-loaded="particlesLoaded" />
+    <vue-particles
+      id="tsparticles"
+      :options="options"
+      :particles-loaded="particlesLoaded"
+    />
   </main>
 </template>
 

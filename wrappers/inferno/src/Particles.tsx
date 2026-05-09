@@ -1,134 +1,74 @@
 import { Component } from "inferno";
-import equal from "fast-deep-equal/react";
-import { tsParticles, Container } from "@tsparticles/engine";
 import type { IParticlesProps } from "./IParticlesProps";
-import type { IParticlesState } from "./IParticlesState";
-import { isParticlesEngineInitialized, waitForParticlesEngineInitialization } from "./initParticlesEngine";
+import { type Container, tsParticles, getLogger } from "@tsparticles/engine";
+import { waitForParticlesEngineInitialization } from "./initParticlesEngine";
 
-interface MutableRefObject<T> {
-	current: T | null;
-}
+// Class-based Particles component to avoid relying on Inferno hooks at
+// runtime. This ensures compatibility with Inferno builds that do not
+// expose hooks as named exports or when consumers prefer class-style
+// components.
+export default class Particles extends Component<IParticlesProps> {
+	_container?: Container;
+	_cancelled = false;
 
-/**
- * @param {IParticlesProps}
- */
-export default class Particles extends Component<IParticlesProps, IParticlesState> {
-	static defaultProps = {
-		width: "100%",
-		height: "100%",
-		options: {},
-		style: {},
-		id: "tsparticles",
-	};
+	componentDidMount() {
+		this._cancelled = false;
 
-	constructor(props: IParticlesProps) {
-		super(props);
-
-		this.state = {
-			init: isParticlesEngineInitialized(),
-			library: undefined,
-		};
+		void this.loadContainer();
 	}
 
-	destroy(): void {
-		if (!this.state.library) {
-			return;
+	componentDidUpdate(prevProps: IParticlesProps) {
+		// Reload the container if relevant props changed
+		if (
+			prevProps.id !== this.props.id ||
+			prevProps.url !== this.props.url ||
+			prevProps.options !== this.props.options
+		) {
+			void this.reloadContainer();
 		}
-
-		this.state.library.destroy();
-
-		this.setState({
-			library: undefined,
-		});
 	}
 
-	shouldComponentUpdate(nextProps: Readonly<IParticlesProps>): boolean {
-		return !equal(nextProps, this.props);
+	componentWillUnmount() {
+		this._cancelled = true;
+
+		try {
+			this._container?.destroy();
+		} catch {
+			// ignore cleanup errors
+		}
 	}
 
-	componentDidUpdate(): void {
-		this.refresh();
-	}
+	async loadContainer() {
+		try {
+			await waitForParticlesEngineInitialization();
 
-	forceUpdate(): void {
-		this.refresh().then(() => {
-			super.forceUpdate();
-		});
-	}
-
-	componentDidMount(): void {
-		(async () => {
-			if (!this.state.init) {
-				await waitForParticlesEngineInitialization();
-
-				if (!isParticlesEngineInitialized()) {
-					throw new Error("initParticlesEngine(...) must be called once before rendering <Particles /> components.");
-				}
+			if (this._cancelled) {
+				return;
 			}
 
-			this.setState(
-				{
-					init: true,
-				},
-				async () => {
-					await this.loadParticles();
-				},
-			);
-		})();
+			const { id, url, options } = this.props;
+
+			this._container = await tsParticles.load({ id: id ?? "tsparticles", url, options });
+		} catch (e) {
+			getLogger().error("Particles: error during load", e);
+		}
 	}
 
-	componentWillUnmount(): void {
-		this.destroy();
+	async reloadContainer() {
+		try {
+			this._container?.destroy();
+		} catch {
+			// ignore
+		}
+
+		this._container = undefined;
+
+		await this.loadContainer();
 	}
 
 	render() {
-		const { width, height, className, canvasClassName, id } = this.props;
+		const { className, id, style } = this.props;
 
-		return (
-			<div className={className} id={id}>
-				<canvas
-					className={canvasClassName}
-					style={{
-						...this.props.style,
-						width,
-						height,
-					}}
-				/>
-			</div>
-		);
-	}
-
-	private async refresh(): Promise<void> {
-		this.destroy();
-
-		await this.loadParticles();
-	}
-
-	private async loadParticles(): Promise<void> {
-		if (!this.state.init) {
-			return;
-		}
-
-		const cb = async (container?: Container) => {
-			if (this.props.container) {
-				(this.props.container as MutableRefObject<Container>).current = container;
-			}
-
-			this.setState({
-				library: container,
-			});
-
-			if (this.props.loaded) {
-				await this.props.loaded(container);
-			}
-		};
-
-		const container = await tsParticles.load({
-			id: this.props.id,
-			options: this.props.params ?? this.props.options,
-			url: this.props.url,
-		});
-
-		await cb(container);
+		return <div id={id ?? "tsparticles"} className={className} style={style} />;
 	}
 }

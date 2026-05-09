@@ -23,14 +23,20 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // Keep components auto-import disabled in this monorepo to avoid vue2/vue3 loader mismatches.
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
   ],
+
+  // Nuxt 2 may resolve Vue 3 from the workspace root in monorepos.
+  // Disable fork-ts-checker type-check phase to avoid vue/vue-template-compiler mismatch at startup.
+  typescript: {
+    typeCheck: false,
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@tsparticles/nuxt2'],

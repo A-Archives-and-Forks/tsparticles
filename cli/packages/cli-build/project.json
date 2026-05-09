@@ -1,0 +1,17 @@
+{
+  "name": "@tsparticles/cli-build",
+  "$schema": "https://json.schemastore.org/nx-project.json",
+  "projectType": "library",
+  "sourceRoot": "cli/packages/cli-build",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["pnpm run build"],
+        "cwd": "cli/packages/cli-build"
+      },
+      "dependsOn": ["^build"]
+    }
+  }
+}
+

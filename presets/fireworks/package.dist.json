@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/preset-fireworks",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles fireworks preset",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -96,19 +96,26 @@
       "umd": "./umd/index.js",
       "default": "./cjs/index.js"
     },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./cjs/index.lazy.js"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@tsparticles/basic": "4.0.0-beta.12",
-    "@tsparticles/effect-trail": "4.0.0-beta.12",
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-emitters": "4.0.0-beta.12",
-    "@tsparticles/plugin-emitters-shape-square": "4.0.0-beta.12",
-    "@tsparticles/plugin-sounds": "4.0.0-beta.12",
-    "@tsparticles/shape-line": "4.0.0-beta.12",
-    "@tsparticles/updater-destroy": "4.0.0-beta.12",
-    "@tsparticles/updater-life": "4.0.0-beta.12",
-    "@tsparticles/updater-rotate": "4.0.0-beta.12"
+    "@tsparticles/basic": "4.0.0-beta.15",
+    "@tsparticles/effect-trail": "4.0.0-beta.15",
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/plugin-emitters": "4.0.0-beta.15",
+    "@tsparticles/plugin-emitters-shape-square": "4.0.0-beta.15",
+    "@tsparticles/plugin-sounds": "4.0.0-beta.15",
+    "@tsparticles/shape-line": "4.0.0-beta.15",
+    "@tsparticles/updater-destroy": "4.0.0-beta.15",
+    "@tsparticles/updater-life": "4.0.0-beta.15",
+    "@tsparticles/updater-rotate": "4.0.0-beta.15"
   },
   "publishConfig": {
     "access": "public"

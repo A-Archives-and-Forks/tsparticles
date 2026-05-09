@@ -1,6 +1,7 @@
 import { type Container, type Engine, type Particle, getItemsFromInitializer } from "@tsparticles/engine";
 import { type InteractivityContainer, type InteractivityEngine, type InteractorInitializer } from "./types.js";
 import { type IInteractor } from "./Interfaces/IInteractor.js";
+import { InteractivityPlugin } from "./InteractivityPlugin.js";
 
 declare const __VERSION__: string;
 
@@ -10,10 +11,9 @@ declare const __VERSION__: string;
 export async function loadInteractivityPlugin(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
-  await engine.pluginManager.register(async e => {
+  await engine.pluginManager.register(e => {
     const interactivityEngine = e as InteractivityEngine,
-      interactivityPluginManager = interactivityEngine.pluginManager,
-      { InteractivityPlugin } = await import("./InteractivityPlugin.js");
+      interactivityPluginManager = interactivityEngine.pluginManager;
 
     interactivityPluginManager.addPlugin(new InteractivityPlugin(interactivityPluginManager));
 

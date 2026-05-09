@@ -1,7 +1,7 @@
+import type { Engine, PluginManager } from "@tsparticles/engine";
 import type { EmittersInstancesManager } from "./EmittersInstancesManager.js";
-import type { Engine } from "@tsparticles/engine";
 
-const instancesManagers = new WeakMap<object, Promise<EmittersInstancesManager>>();
+const instancesManagers = new WeakMap<PluginManager, Promise<EmittersInstancesManager>>();
 
 /**
  * @param e - The engine instance providing the plugin manager.
@@ -17,6 +17,7 @@ export function getEmittersInstancesManager(e: Engine): Promise<EmittersInstance
       .then(({ EmittersInstancesManager }) => new EmittersInstancesManager(pluginManager))
       .catch((error: unknown) => {
         instancesManagers.delete(pluginManager);
+
         throw error;
       });
 

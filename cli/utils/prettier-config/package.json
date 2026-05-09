@@ -1,0 +1,36 @@
+{
+  "name": "@tsparticles/prettier-config",
+  "version": "4.0.0-beta.15",
+  "description": "tsParticles default Prettier Configuration",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": "./dist/index.cjs"
+  },
+  "license": "MIT",
+  "files": [
+    "dist/index.cjs",
+    "dist/prettier-config.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "cli/utils/prettier-config"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "cpx \"./src/**.*\" ./dist/",
+    "build:ci": "cpx \"./src/**.*\" ./dist/"
+  },
+  "peerDependencies": {
+    "prettier": "^3"
+  },
+  "dependencies": {
+    "prettier-plugin-multiline-arrays": "^4.1.8"
+  },
+  "devDependencies": {
+    "cpx2": "^8.0.2",
+    "prettier": "^3.8.3"
+  }
+}

@@ -5,40 +5,38 @@ import { Visualizer } from './Visualizer';
 import './Incrementer.scss';
 
 interface Props {
-	name: string;
+  name: string;
 }
 
-/*
- * The first interface defines prop shape
- * The second interface defines state shape
- */
-export class Incrementer extends Component<Props, { value: number }> {
-	public state = {
-		value: 1
-	};
+interface State {
+  value: number;
+}
 
-	constructor(props, context) {
-		super(props, context);
-	}
+export class Incrementer extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props as any);
 
-	public doMath = () => {
-		this.setState({
-			value: addOne(this.state.value)
-		});
-	}
+    this.state = { value: 1 };
 
-	public render() {
-		// uncomment: example of type verification
-		//
-		// this.props.name = 1;
-		// this.props.bar = 1;
+    this.doMath = this.doMath.bind(this);
+  }
 
-		return (
-			<div>
-				{this.props.name}
-				<button className="my-button" onClick={this.doMath}>Increment</button>
-				<Visualizer value={this.state.value + 'THIS SHOULD FAIL ( npm run check )!'} />
-			</div>
-		);
-	}
+  doMath() {
+    this.setState(({ value }) => ({ value: addOne(value) }));
+  }
+
+  render() {
+    const { name } = this.props;
+    const { value } = this.state;
+
+    return (
+      <div>
+        {name}
+        <button className="my-button" onClick={this.doMath}>
+          Increment
+        </button>
+        <Visualizer value={value} />
+      </div>
+    );
+  }
 }

@@ -1,0 +1,6 @@
+import type { IFireworkOptions } from "./IFireworkOptions.js";
+import type { RecursivePartial } from "@tsparticles/engine/lazy";
+
+export type FireworkOptions = RecursivePartial<IFireworkOptions>;
+
+export * from "./fireworks.lazy.js";

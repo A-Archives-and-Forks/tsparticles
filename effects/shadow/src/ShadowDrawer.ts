@@ -24,6 +24,7 @@ interface IShadowData extends IShapeValues {
 }
 
 type ShadowParticle = Particle & {
+  effectData?: IShadowData;
   shadowBlur?: number;
   shadowColor?: IRgb;
   shadowOffset?: ICoordinates;
@@ -64,7 +65,7 @@ export class ShadowDrawer implements IEffectDrawer {
   }
 
   particleInit(_container: Container, particle: ShadowParticle): void {
-    const effectData = particle.effectData as IShadowData | undefined,
+    const effectData = particle.effectData,
       shadowColor = OptionsColor.create(new OptionsColor(), effectData?.color);
 
     particle.shadowColor = rangeColorToRgb(this._pluginManager, shadowColor);

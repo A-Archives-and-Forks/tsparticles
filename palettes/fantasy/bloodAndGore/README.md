@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Blood & Gore Palette
+# tsParticles BloodAndGore Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-blood-and-gore/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-blood-and-gore) [![npmjs](https://badge.fury.io/js/@tsparticles/palette-blood-and-gore.svg)](https://www.npmjs.com/package/@tsparticles/palette-blood-and-gore) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/palette-blood-and-gore)](https://www.npmjs.com/package/@tsparticles/palette-blood-and-gore) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-bloodAndGore/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-bloodAndGore) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-bloodAndGore.svg)](https://www.npmjs.com/package/@tsparticles/palette-bloodAndGore) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-bloodAndGore) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for blood & gore.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/bloodAndGore/images/sample.png)](https://particles.js.org/samples/palettes/blood-and-gore)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/fantasy/bloodAndGore/images/sample.png)](https://particles.js.org/samples/palettes/bloodAndGore)
 
 ## Colors
 
@@ -79,7 +79,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-blood-and-gore@4/tsparticles.palette.blood-and-gore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-bloodAndGore@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -101,7 +101,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "blood-and-gore",
+    palette: "bloodAndGore",
   };
 
   await engine.load({
@@ -116,47 +116,11 @@ Once the scripts are loaded you can set up `tsParticles` like this:
 **Important ⚠️**
 You can override all the options defining the properties like in any standard `tsParticles` installation.
 
-```javascript
-tsParticles.load({
-  id: "tsparticles",
-  options: {
-    particles: {
-      shape: {
-        type: "square", // starting from v2, this require the square shape script
-      },
-    },
-    palette: "blood-and-gore",
-  },
-});
-```
-
-Like in the sample above, the circles will be replaced by squares.
-
 ### Frameworks with a tsParticles component library
 
-Checkout the documentation in the component library repository and call the `loadBloodAndGorePalette` function instead of `loadFull`, `loadSlim` or similar functions.
-
-The options shown above are valid for all the component libraries.
-
-## Common pitfalls
-
-- Calling `tsParticles.load(...)` before `loadBloodAndGorePalette(...)`
-- Verify required peer packages before enabling advanced options
-- Change one option group at a time to isolate regressions quickly
+Checkout the documentation in the component library repository and call the `loadBloodAndGorePalette` function.
 
 ## Related docs
 
 - Presets and palettes catalog: <https://github.com/tsparticles/palettes>
 - Main docs: <https://particles.js.org/docs/>
-
----
-
-```mermaid
-flowchart TD
-
-subgraph pr [Palettes]
-pabloodAndGore[Blood & Gore]
-end
-
-e[tsParticles Engine] --> pabloodAndGore
-```

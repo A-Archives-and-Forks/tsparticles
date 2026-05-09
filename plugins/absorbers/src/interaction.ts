@@ -1,6 +1,8 @@
+import { type InteractivityEngine, ensureInteractivityPluginLoaded } from "@tsparticles/plugin-interactivity";
 import type { AbsorberContainer } from "./AbsorberContainer.js";
+import { AbsorbersInteractor } from "./AbsorbersInteractor.js";
 import { type Engine } from "@tsparticles/engine";
-import type { InteractivityEngine } from "@tsparticles/plugin-interactivity";
+import { getAbsorbersInstancesManager } from "./getAbsorbersInstancesManager.js";
 
 declare const __VERSION__: string;
 
@@ -11,22 +13,13 @@ export async function loadAbsorbersInteraction(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async (e: InteractivityEngine) => {
-    const [
-        { ensureInteractivityPluginLoaded },
-        { getAbsorbersInstancesManager },
-      ] = await Promise.all([
-        import("@tsparticles/plugin-interactivity"),
-        import("./getAbsorbersInstancesManager.js"),
-      ]),
-      pluginManager = e.pluginManager,
+    const pluginManager = e.pluginManager,
       instancesManager = await getAbsorbersInstancesManager(e);
 
     ensureInteractivityPluginLoaded(e);
 
-    pluginManager.addInteractor?.("externalAbsorbers", async container => {
-      const { AbsorbersInteractor } = await import("./AbsorbersInteractor.js");
-
-      return new AbsorbersInteractor(container as AbsorberContainer, instancesManager);
+    pluginManager.addInteractor?.("externalAbsorbers", container => {
+      return Promise.resolve(new AbsorbersInteractor(container as AbsorberContainer, instancesManager));
     });
   });
 }

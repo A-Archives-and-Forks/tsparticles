@@ -1,4 +1,7 @@
 import type { Engine } from "@tsparticles/engine";
+import { loadBasic } from "@tsparticles/basic";
+import { loadEmittersPluginSimple } from "@tsparticles/plugin-emitters/plugin";
+import { options } from "./options.js";
 
 const presetName = "bubbles";
 
@@ -7,12 +10,6 @@ const presetName = "bubbles";
  */
 export async function loadBubblesPreset(engine: Engine): Promise<void> {
   await engine.pluginManager.register(async e => {
-    const [{ loadBasic }, { loadEmittersPluginSimple }, { options }] = await Promise.all([
-      import("@tsparticles/basic"),
-      import("@tsparticles/plugin-emitters/plugin"),
-      import("./options.js"),
-    ]);
-
     await Promise.all([
       loadBasic(e),
       loadEmittersPluginSimple(e),

@@ -1,0 +1,53 @@
+{
+  "name": "@tsparticles/particles",
+  "version": "4.0.0-beta.15",
+  "description": "Easily create highly customizable particle animations and use them as animated backgrounds for your website. Ready to use components available also for React, Vue.js (2.x and 3.x), Angular, Svelte, jQuery, Preact, Riot.js, Inferno.",
+  "homepage": "https://particles.js.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsparticles/tsparticles.git",
+    "directory": "bundles/particles"
+  },
+  "keywords": [
+    "particles",
+    "tsparticles",
+    "canvas"
+  ],
+  "author": "Matteo Bruni <matteo.bruni@me.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "jsdelivr": "tsparticles.particles.bundle.min.js",
+  "unpkg": "tsparticles.particles.bundle.min.js",
+  "browser": "browser/index.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "browser": "./browser/index.js",
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "default": "./esm/index.js"
+    },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./esm/index.lazy.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@tsparticles/basic": "4.0.0-beta.15",
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/interaction-particles-collisions": "4.0.0-beta.15",
+    "@tsparticles/interaction-particles-links": "4.0.0-beta.15",
+    "@tsparticles/plugin-interactivity": "4.0.0-beta.15"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module"
+}

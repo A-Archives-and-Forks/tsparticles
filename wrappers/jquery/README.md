@@ -36,107 +36,80 @@ or from jsDelivr
 
 ## How to use
 
-HTML
+The jQuery wrapper exposes a single static API surface for engine initialization
+and a jQuery plugin for loading containers.
+
+Include the scripts (UMD)
 
 ```html
 <div id="tsparticles"></div>
+
+<!-- tsParticles engine bundle -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles/tsparticles.bundle.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+
+<!-- jQuery wrapper -->
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/jquery/dist/jquery.particles.js"></script>
 ```
+
+Usage
 
 ```javascript
-import { initParticlesEngine } from "@tsparticles/jquery";
-import { loadFull } from "tsparticles";
+// Initialize the engine and register any plugins/presets.
+// This must be called once before using the jQuery plugin. Many apps
+// will want to load the full plugin bundle; `loadFull` is commonly used
+// for that purpose. If you use `loadFull`, make sure the `tsparticles`
+// package is available (via npm or CDN) so the function can be imported.
+$.particles.init(async engine => {
+  // register plugins (for example `loadFull`), if needed
+  // Example (dynamic import):
+  // const mod = await import('tsparticles').catch(() => null);
+  // if (mod && typeof mod.loadFull === 'function') {
+  //   await mod.loadFull(engine);
+  // }
+  // Or, if `loadFull` is exposed globally via a bundle:
+  // if (typeof loadFull === 'function') {
+  //   await loadFull(engine);
+  // }
+});
 
-$(document).ready(async function () {
-  await initParticlesEngine(async engine => {
-    await loadFull(engine);
+// Load particles into an element using the jQuery plugin and return a Promise
+// that resolves to the container.
+$("#tsparticles")
+  .particles()
+  .load({
+    particles: {
+      number: { value: 80 },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+    },
+    interactivity: {
+      events: { onhover: { enable: true, mode: "repulse" } },
+    },
+  })
+  .then(container => {
+    // container ready
   });
 
-  $("#tsparticles")
-    .particles()
-    .init(
-      {
-        background: {
-          color: {
-            value: "#0d47a1",
-          },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
-              enable: true,
-              mode: "push",
-            },
-            onHover: {
-              enable: true,
-              mode: "repulse",
-            },
-          },
-          modes: {
-            push: {
-              quantity: 4,
-            },
-            repulse: {
-              distance: 200,
-              duration: 0.4,
-            },
-          },
-        },
-        particles: {
-          color: {
-            value: "#ffffff",
-          },
-          links: {
-            color: "#ffffff",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: {
-              default: "bounce",
-            },
-            random: false,
-            speed: 6,
-            straight: false,
-          },
-          number: {
-            density: {
-              enable: true,
-            },
-            value: 80,
-          },
-          opacity: {
-            value: 0.5,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 1, max: 5 },
-          },
-        },
-        detectRetina: true,
-      },
-      function (container) {
-        // container is the particles container where you can play/pause or stop/start.
-        // the container is already started, you don't need to start it manually.
-      },
-    );
-
-  // or
-
-  $("#tsparticles")
-    .particles()
-    .ajax("particles.json", function (container) {
-      // container is the particles container where you can play/pause or stop/start.
-      // the container is already started, you don't need to start it manually.
-    });
-});
+// Or load from a JSON URL
+$("#tsparticles")
+  .particles()
+  .ajax("/particles.json")
+  .then(container => {
+    // container ready
+  });
 ```
+
+Notes
+
+- The only required initialization entrypoint for the browser UMD bundle is
+  `$.particles.init(callback)`. The `callback` receives the tsParticles
+  `engine` and is where you should register plugins/presets.
+- Use the jQuery plugin methods `.load(options)` and `.ajax(url)` to mount
+  containers on selected elements. These methods return a Promise that
+  resolves with the Container instance.
 
 ## Demos
 

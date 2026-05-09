@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/preset-squares",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles squares preset",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -96,16 +96,23 @@
       "umd": "./umd/index.js",
       "default": "./cjs/index.js"
     },
+    "./lazy": {
+      "types": "./types/index.lazy.d.ts",
+      "browser": "./browser/index.lazy.js",
+      "import": "./esm/index.lazy.js",
+      "require": "./cjs/index.lazy.js",
+      "default": "./cjs/index.lazy.js"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@tsparticles/engine": "4.0.0-beta.12",
-    "@tsparticles/plugin-emitters": "4.0.0-beta.12",
-    "@tsparticles/plugin-hex-color": "4.0.0-beta.12",
-    "@tsparticles/shape-square": "4.0.0-beta.12",
-    "@tsparticles/updater-paint": "4.0.0-beta.12",
-    "@tsparticles/updater-rotate": "4.0.0-beta.12",
-    "@tsparticles/updater-size": "4.0.0-beta.12"
+    "@tsparticles/engine": "4.0.0-beta.15",
+    "@tsparticles/plugin-emitters": "4.0.0-beta.15",
+    "@tsparticles/plugin-hex-color": "4.0.0-beta.15",
+    "@tsparticles/shape-square": "4.0.0-beta.15",
+    "@tsparticles/updater-paint": "4.0.0-beta.15",
+    "@tsparticles/updater-rotate": "4.0.0-beta.15",
+    "@tsparticles/updater-size": "4.0.0-beta.15"
   },
   "publishConfig": {
     "access": "public"

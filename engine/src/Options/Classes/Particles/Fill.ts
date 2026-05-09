@@ -10,14 +10,12 @@ import { setRangeValue } from "../../../Utils/MathUtils.js";
  * [[include:Options/Particles/Fill.md]]
  */
 export class Fill implements IFill, IOptionLoader<IFill> {
-  color: AnimatableColor;
+  color?: AnimatableColor;
   enable: boolean;
   opacity: RangeValue;
 
   constructor() {
     this.enable = true;
-    this.color = new AnimatableColor();
-    this.color.value = "#fff";
     this.opacity = 1;
   }
 

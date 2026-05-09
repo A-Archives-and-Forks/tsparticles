@@ -229,6 +229,8 @@ export class Particle {
 
   isRotating!: boolean;
 
+  justWarped!: boolean;
+
   /**
    * Last path timestamp
    */
@@ -494,6 +496,7 @@ export class Particle {
 
     this.id = id;
     this.group = group;
+    this.justWarped = false;
     this.effectClose = true;
     this.shapeClose = true;
     this.pathRotation = false;

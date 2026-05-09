@@ -69,11 +69,19 @@ const getCanvasFromContainer = (domContainer: HTMLElement): HTMLCanvasElement =>
     const documentSafe = safeDocument();
 
     let canvasEl: HTMLCanvasElement;
+    const isCanvas = domContainer instanceof HTMLCanvasElement || domContainer.tagName.toLowerCase() === canvasTag;
 
-    if (domContainer instanceof HTMLCanvasElement || domContainer.tagName.toLowerCase() === canvasTag) {
+    if (isCanvas) {
       canvasEl = domContainer as HTMLCanvasElement;
 
       canvasEl.dataset[generatedAttribute] ??= generatedFalse;
+
+      if (canvasEl.dataset[generatedAttribute] === generatedTrue) {
+        canvasEl.style.width ||= fullPercent;
+        canvasEl.style.height ||= fullPercent;
+        canvasEl.style.pointerEvents = "none";
+        canvasEl.style.setProperty("pointer-events", "none");
+      }
     } else {
       const existingCanvases = domContainer.getElementsByTagName(canvasTag),
         foundCanvas = existingCanvases[canvasFirstIndex];
@@ -92,10 +100,12 @@ const getCanvasFromContainer = (domContainer: HTMLElement): HTMLCanvasElement =>
         /* append canvas */
         domContainer.appendChild(canvasEl);
       }
-    }
 
-    canvasEl.style.width ||= fullPercent;
-    canvasEl.style.height ||= fullPercent;
+      canvasEl.style.width ||= fullPercent;
+      canvasEl.style.height ||= fullPercent;
+      canvasEl.style.pointerEvents = "none";
+      canvasEl.style.setProperty("pointer-events", "none");
+    }
 
     return canvasEl;
   },

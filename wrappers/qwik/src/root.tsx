@@ -1,11 +1,17 @@
 import { Particles, initParticlesEngine } from "./components/particles";
 import { loadFull } from "tsparticles";
+import { component$, useVisibleTask$ } from "@builder.io/qwik";
 
-void initParticlesEngine(async engine => {
-  await loadFull(engine);
-});
+// Initialize the particles engine on the client only. Calling initParticlesEngine
+// at module scope runs during SSR and won't set the client-side initialization
+// state, which makes <Particles /> throw when it renders in the browser.
+export default component$(() => {
+  useVisibleTask$(async () => {
+    await initParticlesEngine(async engine => {
+      await loadFull(engine);
+    });
+  });
 
-export default () => {
   return (
     <>
       <head>
@@ -22,6 +28,11 @@ export default () => {
               },
             },
             particles: {
+              paint: {
+                fill: {
+                  enable: true,
+                },
+              },
               number: {
                 value: 100,
               },
@@ -37,4 +48,4 @@ export default () => {
       </body>
     </>
   );
-};
+});

@@ -1,12 +1,12 @@
 {
   "name": "@tsparticles/preset-big-circles",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles big circles preset",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "build:ci": "tsparticles-cli build --ci",
-    "version": "tsparticles-cli build -d && git add package.dist.json",
+    "build": "tsparticles-build",
+    "build:ci": "tsparticles-build --ci",
+    "version": "tsparticles-build -d && git add package.dist.json",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -103,8 +103,14 @@
       "browser": "./dist/browser/index.js",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
-      "umd": "./dist/umd/index.js",
       "default": "./dist/cjs/index.js"
+    },
+    "./lazy": {
+      "types": "./dist/types/index.lazy.d.ts",
+      "browser": "./dist/browser/index.lazy.js",
+      "import": "./dist/esm/index.lazy.js",
+      "require": "./dist/cjs/index.lazy.js",
+      "default": "./dist/cjs/index.lazy.js"
     },
     "./package.json": "./dist/package.json"
   },
@@ -113,5 +119,9 @@
     "@tsparticles/basic": "workspace:*",
     "@tsparticles/engine": "workspace:*"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^"
+  }
 }

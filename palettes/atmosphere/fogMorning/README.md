@@ -1,10 +1,10 @@
 [![banner](https://particles.js.org/images/banner3.png)](https://particles.js.org)
 
-# tsParticles Fog Morning Palette
+# tsParticles FogMorning Palette
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-fog-morning/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-fog-morning) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-fog-morning.svg)](https://www.npmjs.com/package/@tsparticles/palette-fog-morning) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-fog-morning)](https://www.npmjs.com/package/@tsparticles/palette-fog-morning) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/palette-fogMorning/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/palette-fogMorning) [![npmjs](https://badge.fury.io/js/%40tsparticles%2Fpalette-fogMorning.svg)](https://www.npmjs.com/package/@tsparticles/palette-fogMorning) [![npmjs](https://img.shields.io/npm/dt/%40tsparticles%2Fpalette-coloredSmokeAmber)](https://www.npmjs.com/package/@tsparticles/palette-fogMorning) [![GitHub Sponsors](https://img.shields.io/github/sponsors/matteobruni)](https://github.com/sponsors/matteobruni)
 
-[tsParticles](https://github.com/tsparticles/tsparticles) palette for morning fog atmosphere.
+[tsParticles](https://github.com/tsparticles/tsparticles) palette for colored smoke amber.
 
 [![Discord](https://particles.js.org/images/discord.png)](https://discord.gg/hACwv45Hme) [![Telegram](https://particles.js.org/images/telegram.png)](https://t.me/tsparticles)
 
@@ -12,7 +12,7 @@
 
 ## Sample
 
-[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/atmosphere/fogMorning/images/sample.png)](https://particles.js.org/samples/palettes/fog-morning)
+[![demo](https://raw.githubusercontent.com/tsparticles/palettes/main/palettes/atmosphere/fogMorning/images/sample.png)](https://particles.js.org/samples/palettes/fogMorning)
 
 ## Colors
 
@@ -75,7 +75,7 @@ A palette defines colors, not complete behavior, so pair it with a runtime packa
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@4/tsparticles.basic.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-fog-morning@4/tsparticles.palette-fog-morning.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/palette-fogMorning@4/tsparticles.palette-coloredSmokeAmber.min.js"></script>
 ```
 
 ### Usage
@@ -97,7 +97,7 @@ Once the scripts are loaded you can set up `tsParticles` like this:
         speed: 2,
       },
     },
-    palette: "fog-morning",
+    palette: "fogMorning",
   };
 
   await engine.load({

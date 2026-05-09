@@ -10,7 +10,6 @@ React.js, Vue.js (2.x and 3.x), Angular, Svelte, jQuery, Preact, Inferno, Riot.j
 [![Cdnjs](https://img.shields.io/cdnjs/v/@tsparticles/engine?style=for-the-badge)](https://cdnjs.com/libraries/tsparticles)
 [![npm](https://img.shields.io/npm/v/@tsparticles/engine?style=for-the-badge)](https://www.npmjs.com/package/tsparticles)
 [![npm](https://img.shields.io/npm/dm/tsparticles?style=for-the-badge)](https://www.npmjs.com/package/tsparticles)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff?style=for-the-badge)](https://lerna.js.org/)
 [![CodeFactor](https://www.codefactor.io/repository/github/tsparticles/tsparticles/badge)](https://www.codefactor.io/repository/github/tsparticles/tsparticles)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b983aaf3461a4c48b1e2eecce1ff1d74)](https://www.codacy.com/manual/ar3s/tsparticles?utm_source=github.com&utm_medium=referral&utm_content=tsparticles/tsparticles&utm_campaign=Badge_Grade)
 [![Rate this package](https://badges.openbase.com/js/rating/tsparticles.svg?style=openbase&token=A9jHQ1nkb6fnCndKM7O2w4hx3OD8PVCuqHtSpw8mMOg=)](https://openbase.com/js/tsparticles?utm_source=embedded&utm_medium=badge&utm_campaign=rating-badge&utm_term=js/tsparticles)
@@ -209,6 +208,7 @@ Useful docs for the next step:
 #### jsDelivr
 
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/confetti/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/confetti)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/particles/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/particles)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/engine/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/engine)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/fireworks/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/fireworks)
 [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/basic/badge)](https://www.jsdelivr.com/package/npm/@tsparticles/basic)
@@ -222,7 +222,7 @@ Useful docs for the next step:
 
 #### unpkg
 
-<https://unpkg.com/@tsparticles/confetti/> <https://unpkg.com/@tsparticles/engine/> <https://unpkg.com/@tsparticles/fireworks/> <https://unpkg.com/@tsparticles/basic/> <https://unpkg.com/@tsparticles/slim/> <https://unpkg.com/tsparticles/> <https://unpkg.com/@tsparticles/all/>
+<https://unpkg.com/@tsparticles/confetti/> <https://unpkg.com/@tsparticles/particles/> <https://unpkg.com/@tsparticles/engine/> <https://unpkg.com/@tsparticles/fireworks/> <https://unpkg.com/@tsparticles/basic/> <https://unpkg.com/@tsparticles/slim/> <https://unpkg.com/tsparticles/> <https://unpkg.com/@tsparticles/all/>
 
 ---
 
@@ -231,6 +231,10 @@ Useful docs for the next step:
 _tsParticles Confetti_
 
 [![npm](https://img.shields.io/npm/v/@tsparticles/confetti?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/confetti) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/confetti?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/confetti)
+
+_tsParticles Particles_
+
+[![npm](https://img.shields.io/npm/v/@tsparticles/particles?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/particles) [![npmjs](https://img.shields.io/npm/dt/@tsparticles/particles?style=for-the-badge)](https://www.npmjs.com/package/@tsparticles/particles)
 
 _tsParticles Engine_
 
@@ -312,10 +316,10 @@ tsParticles
     id: "tsparticles",
     url: "presets/default.json",
   })
-  .then(container => {
+  .then((container) => {
     console.log("callback - tsparticles config loaded");
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
   });
 
@@ -796,7 +800,7 @@ _More videos are coming soon! Check every day if there are some new contents._
 
 **particles.json**
 
-You can find some config samples [here](https://github.com/tsparticles/website/tree/main/presets) 📖
+You can find some config samples [here](https://particles.js.org/demos/presets/) 📖
 
 ---
 
@@ -832,6 +836,8 @@ $ pnpm start
 
 **Boom! 💥** <http://localhost:3000> and you can check out other demos.
 
+Note: `demo/wordpress` contains documentation only. The WordPress wrapper runs as a plugin inside a WordPress installation, not as a standalone demo app.
+
 _If you are brave enough_ you can switch to the `dev` branch for trying the features under development.
 
 ---
@@ -840,7 +846,7 @@ _If you are brave enough_ you can switch to the `dev` branch for trying the feat
 
 **tsParticles** has a package that makes this library 100% compatible with the _particles.js_ configuration.
 
-[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/particles.js/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@tsparticles/particles.js) [![npmjs](https://badge.fury.io/js/@tsparticles/particles.js.svg)](https://www.npmjs.com/package/@tsparticles/particles.js) [![npm](https://img.shields.io/npm/dm/@tsparticles/particles.js)](https://www.npmjs.com/package/@tsparticles/particles.js)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@tsparticles/pjs/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@tsparticles/pjs) [![npmjs](https://badge.fury.io/js/@tsparticles/pjs.svg)](https://www.npmjs.com/package/@tsparticles/pjs) [![npm](https://img.shields.io/npm/dm/@tsparticles/pjs)](https://www.npmjs.com/package/@tsparticles/pjs)
 
 Seriously, you just need to change the script from particles.js to the bundled compatibility package, et-voilà, **you're
 ready** 🧙!

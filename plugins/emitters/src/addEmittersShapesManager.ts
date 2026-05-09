@@ -3,7 +3,7 @@ import type { IEmitterShapeGenerator } from "./IEmitterShapeGenerator.js";
 
 /**
  *
- * @param e
+ * @param e -
  */
 export async function addEmittersShapesManager(e: EmittersEngine): Promise<void> {
   const { ShapeManager } = await import("./ShapeManager.js"),

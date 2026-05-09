@@ -11,11 +11,12 @@ a `@tsparticles/engine` instance.
 
 - [@tsparticles/slim (and all its dependencies)](https://github.com/tsparticles/tsparticles/tree/main/bundles/slim)
 - [@tsparticles/engine](https://github.com/tsparticles/tsparticles/tree/main/engine)
+- [@tsparticles/interaction-external-drag](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/drag)
 - [@tsparticles/interaction-external-trail](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/trail)
 - [@tsparticles/plugin-absorbers](https://github.com/tsparticles/tsparticles/tree/main/plugins/absorbers)
 - [@tsparticles/plugin-emitters](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters)
-- [@tsparticles/plugin-emitters-shape-circle](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/circle)
-- [@tsparticles/plugin-emitters-shape-square](https://github.com/tsparticles/tsparticles/tree/main/plugins/emitters/shape/square)
+- [@tsparticles/plugin-emitters-shape-circle](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/circle)
+- [@tsparticles/plugin-emitters-shape-square](https://github.com/tsparticles/tsparticles/tree/main/plugins/emittersShapes/square)
 - [@tsparticles/shape-text](https://github.com/tsparticles/tsparticles/tree/main/shapes/text)
 - [@tsparticles/updater-destroy](https://github.com/tsparticles/tsparticles/tree/main/updaters/destroy)
 - [@tsparticles/updater-roll](https://github.com/tsparticles/tsparticles/tree/main/updaters/roll)
@@ -38,6 +39,7 @@ subgraph c [Core]
 end
 
 subgraph i [Interactions]
+  ied[tsparticles/interaction-external-drag]
   iet[tsparticles/interaction-external-trail]
 end
 

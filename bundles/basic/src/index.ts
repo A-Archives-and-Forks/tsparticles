@@ -1,4 +1,13 @@
 import { type Engine } from "@tsparticles/engine";
+import { loadCircleShape } from "@tsparticles/shape-circle";
+import { loadHexColorPlugin } from "@tsparticles/plugin-hex-color";
+import { loadHslColorPlugin } from "@tsparticles/plugin-hsl-color";
+import { loadMovePlugin } from "@tsparticles/plugin-move";
+import { loadOpacityUpdater } from "@tsparticles/updater-opacity";
+import { loadOutModesUpdater } from "@tsparticles/updater-out-modes";
+import { loadPaintUpdater } from "@tsparticles/updater-paint";
+import { loadRgbColorPlugin } from "@tsparticles/plugin-rgb-color";
+import { loadSizeUpdater } from "@tsparticles/updater-size";
 
 declare const __VERSION__: string;
 
@@ -14,32 +23,6 @@ export async function loadBasic(engine: Engine): Promise<void> {
   engine.checkVersion(__VERSION__);
 
   await engine.pluginManager.register(async e => {
-    const [
-      { loadHexColorPlugin },
-      { loadHslColorPlugin },
-      { loadRgbColorPlugin },
-      { loadMovePlugin },
-
-      { loadCircleShape },
-
-      { loadPaintUpdater },
-      { loadOpacityUpdater },
-      { loadOutModesUpdater },
-      { loadSizeUpdater },
-    ] = await Promise.all([
-      import("@tsparticles/plugin-hex-color"),
-      import("@tsparticles/plugin-hsl-color"),
-      import("@tsparticles/plugin-rgb-color"),
-      import("@tsparticles/plugin-move"),
-
-      import("@tsparticles/shape-circle"),
-
-      import("@tsparticles/updater-paint"),
-      import("@tsparticles/updater-opacity"),
-      import("@tsparticles/updater-out-modes"),
-      import("@tsparticles/updater-size"),
-    ]);
-
     await Promise.all([
       loadHexColorPlugin(e),
       loadHslColorPlugin(e),

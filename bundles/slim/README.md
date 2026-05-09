@@ -15,6 +15,7 @@ a `@tsparticles/engine` instance.
 - [@tsparticles/interaction-external-bounce](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/bounce)
 - [@tsparticles/interaction-external-bubble](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/bubble)
 - [@tsparticles/interaction-external-connect](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/connect)
+- [@tsparticles/interaction-external-destroy](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/destroy)
 - [@tsparticles/interaction-external-grab](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/grab)
 - [@tsparticles/interaction-external-parallax](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/parallax)
 - [@tsparticles/interaction-external-pause](https://github.com/tsparticles/tsparticles/tree/main/interactions/external/pause)
@@ -56,6 +57,7 @@ subgraph i [Interactions]
   ieb[tsparticles/interaction-external-bounce]
   iebu[tsparticles/interaction-external-bubble]
   iec[tsparticles/interaction-external-connect]
+  ied[tsparticles/interaction-external-destroy]
   ieg[tsparticles/interaction-external-grab]
   iepa[tsparticles/interaction-external-parallax]
   iepau[tsparticles/interaction-external-pause]

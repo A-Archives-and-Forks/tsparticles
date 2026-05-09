@@ -1,7 +1,7 @@
 const stats = new Stats();
 
 stats.addPanel('count', '#ff8', 0, () => {
-    const container = tsParticles.domItem(0);
+    const container = tsParticles.item(0);
     if (container) {
         maxParticles = Math.max(container.particles.count, maxParticles);
 
@@ -29,33 +29,42 @@ let updateStats = function () {
     requestAnimationFrame(update);
 };
 
-let updateParticles = function (editor) {
-    let presetId = localStorage.presetId || 'basic';
+// Note: initialization is performed during document ready below. We avoid
+// starting an early init here to prevent stale/rejected init promises from
+// interfering with the demo flow.
 
-    $('#tsparticles').particles().init(tsParticles.configs[presetId], (particles) => {
+let updateParticles = function (editor) {
+    const presetId = localStorage.presetId || 'basic';
+
+    // Now safe to use the jQuery wrapper API (init is performed once at
+    // document ready to ensure the wrapper's initialization flags are set).
+    const options = tsParticles.pluginManager.configs[presetId];
+
+    if (!options) {
+        console.warn('no options found for preset', presetId);
+        return;
+    }
+
+    $('#tsparticles').particles().load(options).then((container) => {
         localStorage.presetId = presetId;
 
-        const omit = obj => {
-            return _.omitBy(obj, (value, key) => {
-                return _.startsWith(key, "_");
-            });
-        };
+        const omit = obj => _.omitBy(obj, (value, key) => _.startsWith(key, "_"));
 
-        const transform = obj => {
-            return _.transform(omit(obj), function (result, value, key) {
-                result[key] = !_.isArray(value) && _.isObject(value) ? transform(omit(value)) : value;
-            });
-        };
+        const transform = obj => _.transform(omit(obj), function (result, value, key) {
+            result[key] = !_.isArray(value) && _.isObject(value) ? transform(omit(value)) : value;
+        });
 
-        editor.update(transform(particles.options));
+        editor.update(transform(container?.options));
         editor.expandAll();
         updateStats();
+    }).catch((e) => {
+        console.error('failed to load particles with jQuery wrapper:', e);
     });
 };
 
 $(document).ready(function () {
-    for (const presetId in tsParticles.configs) {
-        const preset = tsParticles.configs[presetId];
+    for (const presetId in tsParticles.pluginManager.configs) {
+        const preset = tsParticles.pluginManager.configs[presetId];
 
         const option = document.createElement('option');
         option.value = presetId;
@@ -91,15 +100,67 @@ $(document).ready(function () {
         localStorage.presetId = 'basic';
     }
 
-    cmbPresets.val(localStorage.presetId);
-    cmbPresets.change();
+    // Simplified initialization: call the jQuery wrapper init and ensure
+    // the full plugin bundle is loaded via `loadFull`. We try a dynamic
+    // import first (works in module setups) and fall back to common global
+    // locations where loadFull may be exposed.
+    (async () => {
+        try {
+            if (typeof $ !== 'undefined' && $.particles && typeof $.particles.init === 'function') {
+                await $.particles.init(async (engine) => {
+                    try {
+                        // Try dynamic import (works in bundler environments)
+                        const mod = await import('tsparticles').catch(() => null);
+                        if (mod && typeof mod.loadFull === 'function') {
+                            await mod.loadFull(engine);
+                            return;
+                        }
+
+                        // Fallbacks: global loadFull or tsParticles.loadFull
+                        if (typeof loadFull === 'function') {
+                            await loadFull(engine);
+                        } else if (typeof window !== 'undefined' && window.loadFull) {
+                            await window.loadFull(engine);
+                        } else if (typeof tsParticles !== 'undefined' && typeof tsParticles.loadFull === 'function') {
+                            await tsParticles.loadFull(engine);
+                        }
+                    } catch (err) {
+                        console.warn('Failed to loadFull plugins:', err);
+                    }
+                });
+            } else if (typeof tsParticles !== 'undefined' && typeof tsParticles.init === 'function') {
+                // Last resort: try to load plugins then init the engine.
+                try {
+                    const mod = await import('tsparticles').catch(() => null);
+                    if (mod && typeof mod.loadFull === 'function') {
+                        await mod.loadFull(tsParticles);
+                    } else if (typeof loadFull === 'function') {
+                        await loadFull(tsParticles);
+                    } else if (typeof tsParticles.loadFull === 'function') {
+                        await tsParticles.loadFull(tsParticles);
+                    }
+                } catch (e) {
+                    // ignore
+                }
+
+                await tsParticles.init();
+            }
+        } catch (e) {
+            console.error('initParticlesEngine failed:', e);
+            return;
+        }
+
+        // Now trigger initial preset load
+        cmbPresets.val(localStorage.presetId);
+        cmbPresets.change();
+    })();
 
     const btnUpdate = $('#btnUpdate');
     btnUpdate.click(function () {
-        const particles = tsParticles.domItem(0);
+        const particles = tsParticles.item(0);
 
         particles.reset().then(() => {
-            particles.options.load(editor.get());
+            particles.options.c(editor.get());
             particles.refresh().then(() => {
                 // do nothing
             });

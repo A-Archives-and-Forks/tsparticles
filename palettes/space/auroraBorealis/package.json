@@ -1,12 +1,12 @@
 {
   "name": "@tsparticles/palette-aurora-borealis",
-  "version": "4.0.0-beta.12",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles aurora borealis palette",
   "homepage": "https://particles.js.org",
   "scripts": {
-    "build": "tsparticles-cli build",
-    "build:ci": "tsparticles-cli build --ci",
-    "version": "tsparticles-cli build -d && git add package.dist.json",
+    "build": "tsparticles-build",
+    "build:ci": "tsparticles-build --ci",
+    "version": "tsparticles-build -d && git add package.dist.json",
     "prepack": "pnpm run build"
   },
   "repository": {
@@ -106,11 +106,23 @@
       "umd": "./dist/umd/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./lazy": {
+      "types": "./dist/types/index.lazy.d.ts",
+      "browser": "./dist/browser/index.lazy.js",
+      "import": "./dist/esm/index.lazy.js",
+      "require": "./dist/cjs/index.lazy.js",
+      "umd": "./dist/umd/index.lazy.js",
+      "default": "./dist/cjs/index.lazy.js"
+    },
     "./package.json": "./dist/package.json"
   },
   "prettier": "@tsparticles/prettier-config",
   "dependencies": {
     "@tsparticles/engine": "workspace:*"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@tsparticles/cli-build": "workspace:^",
+    "@tsparticles/cli-command-build": "workspace:^"
+  }
 }

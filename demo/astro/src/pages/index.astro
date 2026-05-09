@@ -1,44 +1,50 @@
 ---
-import Particles, { initParticlesEngine } from "@tsparticles/astro";
+import Particles from "@tsparticles/astro";
 import type { ISourceOptions } from "@tsparticles/engine";
-import { loadFull } from "tsparticles";
 
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
 
-await initParticlesEngine(async (engine) => {
-    await loadFull(engine);
-});
-
 const options: ISourceOptions = {
-    background: {
-        color: {
-            value: "#fff"
-        }
-    },
-    fullScreen: {
-        zIndex: -1
-    },
-    particles: {
-        color: {
-            value: "#000"
-        },
-        links: {
-            color: "#000",
-            enable: true
-        },
-        number: {
-            value: 100
-        },
-        move: {
-            enable: true
-        }
+  background: {
+    color: {
+      value: "#f00"
     }
+  },
+  particles: {
+    paint: {
+      color: {
+        value: "#000"
+      },
+    },
+    links: {
+      color: "#000",
+      enable: true
+    },
+    number: {
+      value: 100
+    },
+    move: {
+      enable: true
+    }
+  }
 };
 ---
 
 <Layout title="Welcome to Astro.">
     <main>
+        <script>
+            import { initParticlesEngine } from "@tsparticles/astro";
+
+            void initParticlesEngine(async (engine) => {
+                const { loadFull } = await import("tsparticles");
+
+                await loadFull(engine);
+            }).catch((e) => {
+                console.error("Failed to initialize particles engine:", e);
+            });
+        </script>
+
         <Particles id="tsparticles" options={options} />
         <h1>Welcome to <span class="text-gradient">Astro</span></h1>
         <p class="instructions">

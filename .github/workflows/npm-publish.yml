@@ -92,6 +92,8 @@ jobs:
           else
             $BASE_CMD
           fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # 🧠 Create release (raw GitHub notes)
       - name: Create Release (raw)

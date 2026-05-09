@@ -1,0 +1,7 @@
+{
+  "name": "@tsparticles/cli-command-build",
+  "root": "cli/commands/build",
+  "sourceRoot": "cli/commands/build/src",
+  "tags": ["type:tooling", "scope:cli"]
+}
+

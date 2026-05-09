@@ -4,6 +4,20 @@ const libPackage = "./projects/ng-fireworks/package.json";
 const libReadme = "./projects/ng-fireworks/README.md";
 const sourceReadme = "./README.md";
 
+function resolveWorkspaceDependency(spec, fallbackVersion) {
+  if (!spec?.startsWith("workspace:")) {
+    return spec;
+  }
+
+  const workspaceRange = spec.replace("workspace:", "");
+
+  if (workspaceRange.length > 0 && workspaceRange !== "*" && workspaceRange !== "^" && workspaceRange !== "~") {
+    return workspaceRange;
+  }
+
+  return workspaceRange === "^" || workspaceRange === "~" ? `${workspaceRange}${fallbackVersion}` : `^${fallbackVersion}`;
+}
+
 fs.readFile(libPackage, function (error, data) {
   if (error) {
     throw error;
@@ -14,7 +28,10 @@ fs.readFile(libPackage, function (error, data) {
   const libObj = JSON.parse(text);
 
   libObj.version = mainPackage.version;
-  libObj.peerDependencies["@tsparticles/fireworks"] = mainPackage.dependencies["@tsparticles/fireworks"].replace("workspace:", "");
+  libObj.peerDependencies["@tsparticles/fireworks"] = resolveWorkspaceDependency(
+    mainPackage.dependencies["@tsparticles/fireworks"],
+    mainPackage.version,
+  );
 
   fs.writeFile(libPackage, JSON.stringify(libObj, undefined, 2), 'utf-8', function () {
     console.log(`lib package.json updated successfully to version ${mainPackage.version}`);

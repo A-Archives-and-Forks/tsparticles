@@ -442,7 +442,7 @@ export class EmitterInstance {
   private _emitParticles(quantity: number): void {
     const singleParticlesOptions = (itemFromSingleOrMultiple(this._particlesOptions) ??
         {}) as RecursivePartial<IParticlesOptions>,
-      fillHslAnimation = this.options.spawn.fill?.color.animation,
+      fillHslAnimation = this.options.spawn.fill?.color?.animation,
       fillEnabled = this.options.spawn.fill?.enable ?? !!this.options.spawn.fill?.color,
       fillOpacity =
         this.options.spawn.fill?.opacity === undefined

@@ -70,7 +70,7 @@ export class ExportVideoPluginInstance implements IContainerPlugin {
     switch (type) {
       case "video":
         res.supported = true;
-        res.blob = await this._exportVideo(data as IExportVideoData);
+        res.blob = await this._exportVideo(data);
 
         break;
     }
