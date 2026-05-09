@@ -49,7 +49,7 @@ jobs:
         run: pnpm install
 
       - name: Build workspace packages
-        run: pnpm exec nx run-many -t build
+        run: pnpm exec nx run-many -t build --projects="@tsparticles/confetti-website,@tsparticles/website"
 
       - name: Generate GitHub App token (confetti)
         id: token-confetti
