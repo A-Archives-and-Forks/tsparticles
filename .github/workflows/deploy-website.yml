@@ -51,10 +51,13 @@ jobs:
 
       - name: Install dependencies
         if: steps.changes.outputs.changed == 'true'
-        working-directory: websites/website
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: Build workspace packages
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm exec nx run-many -t build
+
+      - name: Build website
         if: steps.changes.outputs.changed == 'true'
         working-directory: websites/website
         run: pnpm run docs:build

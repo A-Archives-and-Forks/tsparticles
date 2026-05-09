@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite';
 import { readFileSync } from 'fs';
 
-const confettiPkg = JSON.parse(
-  readFileSync('./node_modules/@tsparticles/confetti/package.json', 'utf8')
-);
+const confettiPkg = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default defineConfig({
   plugins: [
