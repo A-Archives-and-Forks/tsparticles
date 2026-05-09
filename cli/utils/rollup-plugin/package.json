@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/rollup-plugin",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "Rollup build utilities for tsParticles",
   "private": false,
   "type": "module",

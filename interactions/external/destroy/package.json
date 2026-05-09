@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/interaction-external-destroy",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles destroy external interaction",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -104,10 +104,10 @@
     "@tsparticles/plugin-interactivity": "workspace:*"
   },
   "devDependencies": {
-    "@tsparticles/engine": "workspace:*",
-    "@tsparticles/plugin-interactivity": "workspace:*",
     "@tsparticles/cli-build": "workspace:^",
-    "@tsparticles/cli-command-build": "workspace:^"
+    "@tsparticles/cli-command-build": "workspace:^",
+    "@tsparticles/engine": "workspace:*",
+    "@tsparticles/plugin-interactivity": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

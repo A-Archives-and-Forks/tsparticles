@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/palette-berries",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles berries palette",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -106,7 +106,7 @@
     }
   },
   "dependencies": {
-    "@tsparticles/engine": "4.0.0-beta.14"
+    "@tsparticles/engine": "4.0.0-beta.15"
   },
   "type": "module",
   "jsdelivr": "tsparticles.palette-colored-smoke-amber.min.js",

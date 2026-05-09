@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli-command-build-diststats",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "license": "MIT",
   "type": "module",
   "publishConfig": {
@@ -36,6 +36,7 @@
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
     "@tsparticles/tsconfig": "workspace:^",
+    "dependency-cruiser": "^17.4.0",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^62.9.0",
@@ -43,7 +44,6 @@
     "eslint-plugin-tsdoc": "^0.5.2",
     "klaw": "^4.1.0",
     "lookpath": "^1.2.3",
-    "dependency-cruiser": "^17.4.0",
     "path-scurry": "^2.0.2",
     "prettier": "^3.8.3",
     "prettier-plugin-multiline-arrays": "^4.1.8",

@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/updater-life",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles particles life updater",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -103,9 +103,9 @@
     "@tsparticles/engine": "workspace:*"
   },
   "devDependencies": {
-    "@tsparticles/engine": "workspace:*",
     "@tsparticles/cli-build": "workspace:^",
-    "@tsparticles/cli-command-build": "workspace:^"
+    "@tsparticles/cli-command-build": "workspace:^",
+    "@tsparticles/engine": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

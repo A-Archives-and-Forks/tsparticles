@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/plugin-emitters",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles emitters plugin",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -131,10 +131,10 @@
     "@tsparticles/plugin-interactivity": "workspace:*"
   },
   "devDependencies": {
-    "@tsparticles/engine": "workspace:*",
-    "@tsparticles/plugin-interactivity": "workspace:*",
     "@tsparticles/cli-build": "workspace:^",
-    "@tsparticles/cli-command-build": "workspace:^"
+    "@tsparticles/cli-command-build": "workspace:^",
+    "@tsparticles/engine": "workspace:*",
+    "@tsparticles/plugin-interactivity": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@tsparticles/plugin-interactivity": {

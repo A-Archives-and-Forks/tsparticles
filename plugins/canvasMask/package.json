@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/plugin-canvas-mask",
-  "version": "4.0.0-beta.14",
+  "version": "4.0.0-beta.15",
   "description": "tsParticles canvas mask plugin",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -104,9 +104,9 @@
   },
   "devDependencies": {
     "@tsparticles/canvas-utils": "workspace:*",
-    "@tsparticles/engine": "workspace:*",
     "@tsparticles/cli-build": "workspace:^",
-    "@tsparticles/cli-command-build": "workspace:^"
+    "@tsparticles/cli-command-build": "workspace:^",
+    "@tsparticles/engine": "workspace:*"
   },
   "publishConfig": {
     "access": "public",
