@@ -8,6 +8,7 @@ on:
       - main
     paths:
       - 'websites/website/**'
+      - '.github/workflows/deploy-website.yml'
   workflow_dispatch:
 
 concurrency:
@@ -40,13 +41,13 @@ jobs:
 
       - uses: pnpm/action-setup@v6
         if: steps.changes.outputs.changed == 'true'
+        with:
+          cache: true
 
       - uses: actions/setup-node@v6
         if: steps.changes.outputs.changed == 'true'
         with:
           node-version: '24'
-          cache: 'pnpm'
-          cache-dependency-path: websites/website/pnpm-lock.yaml
 
       - name: Install dependencies
         if: steps.changes.outputs.changed == 'true'
