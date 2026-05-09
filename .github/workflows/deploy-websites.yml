@@ -74,7 +74,7 @@ jobs:
       - name: Deploy to tsparticles/confetti main
         uses: peaceiris/actions-gh-pages@v4
         with:
-          token: ${{ steps.token-confetti.outputs.token }}
+          personal_token: ${{ steps.token-confetti.outputs.token }}
           external_repository: tsparticles/confetti
           publish_branch: main
           publish_dir: websites/confetti/public
@@ -87,7 +87,7 @@ jobs:
       - name: Deploy to tsparticles/website main
         uses: peaceiris/actions-gh-pages@v4
         with:
-          token: ${{ steps.token-website.outputs.token }}
+          personal_token: ${{ steps.token-website.outputs.token }}
           external_repository: tsparticles/website
           publish_branch: main
           publish_dir: websites/website/docs/.vitepress/dist
