@@ -250,5 +250,12 @@
     "devDependencies": {
         "prettier": "^3.8.3",
         "vitepress": "^1.6.4"
+    },
+    "nx": {
+        "targets": {
+            "build": {
+                "outputs": ["{projectRoot}/docs/.vitepress/dist"]
+            }
+        }
     }
 }
