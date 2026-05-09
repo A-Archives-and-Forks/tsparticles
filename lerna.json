@@ -6,7 +6,8 @@
     "version": {
       "message": "chore(release): published new version",
       "forcePublish": true,
-      "yes": true
+      "yes": true,
+      "conventionalCommits": true
     },
     "publish": {
       "yes": true
