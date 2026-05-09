@@ -77,7 +77,7 @@ jobs:
           personal_token: ${{ steps.token-confetti.outputs.token }}
           external_repository: tsparticles/confetti
           publish_branch: main
-          publish_dir: websites/confetti/public
+          publish_dir: websites/confetti/dist
           cname: confetti.js.org
           user_name: 'github-actions-bot'
           user_email: 'support+actions@github.com'
