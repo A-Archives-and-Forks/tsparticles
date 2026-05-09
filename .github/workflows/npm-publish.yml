@@ -75,21 +75,22 @@ jobs:
       - name: Publish to NPM (OIDC Auth)
         run: |
           TAG="${GITHUB_REF#refs/tags/}"
+          BASE_CMD="pnpm lerna publish from-package --ignore-scripts"
 
           echo "Publishing tag: $TAG via OIDC"
 
           if [[ "$TAG" == *"-alpha."* ]]; then
-            pnpm exec lerna publish from-package --pre-dist-tag=alpha --yes
+            $BASE_CMD --dist-tag alpha
           elif [[ "$TAG" == *"-beta."* ]]; then
-            pnpm exec lerna publish from-package --dist-tag=beta --yes
+            $BASE_CMD --dist-tag beta
           elif [[ "$TAG" == v1* ]]; then
-            pnpm exec lerna publish from-package --dist-tag=v1 --yes
+            $BASE_CMD --dist-tag v1
           elif [[ "$TAG" == v2* ]]; then
-            pnpm exec lerna publish from-package --dist-tag=v2 --yes
+            $BASE_CMD --dist-tag v2
           elif [[ "$TAG" == v3* ]]; then
-            pnpm exec lerna publish from-package --dist-tag=v3 --yes
+            $BASE_CMD --dist-tag v3
           else
-            pnpm exec lerna publish from-package --yes
+            $BASE_CMD
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
