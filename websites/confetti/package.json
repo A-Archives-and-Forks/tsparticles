@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ci": "vite build",
     "preview": "vite preview",
     "deploy": "node deploy.js",
     "lint": "eslint src",
