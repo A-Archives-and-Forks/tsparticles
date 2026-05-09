@@ -683,7 +683,7 @@ const modes = [
       },
     ],
     fn: function () {
-      var defaults = {
+      const defaults = {
         scalar: 2,
         spread: 270,
         particleCount: 25,
