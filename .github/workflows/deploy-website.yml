@@ -18,6 +18,9 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  NX_CLOUD_ACCESS_TOKEN: "${{ secrets.NX_CLOUD_ACCESS_TOKEN }}"
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -40,30 +43,31 @@ jobs:
           fi
 
       - uses: pnpm/action-setup@v6
-        if: steps.changes.outputs.changed == 'true'
         with:
           cache: true
 
       - uses: actions/setup-node@v6
-        if: steps.changes.outputs.changed == 'true'
         with:
           node-version: '24'
 
+      - name: Initialize Nx Cloud or fall back to local
+        run: |
+          if [ -z "$NX_CLOUD_ACCESS_TOKEN" ]; then
+            echo "NX Cloud token missing — using local nx execution"
+            echo "NX_NO_CLOUD=true" >> "$GITHUB_ENV"
+          fi
+
       - name: Install dependencies
-        if: steps.changes.outputs.changed == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build workspace packages
-        if: steps.changes.outputs.changed == 'true'
         run: pnpm exec nx run-many -t build
 
       - name: Build website
-        if: steps.changes.outputs.changed == 'true'
         working-directory: websites/website
         run: pnpm run docs:build
 
       - name: Generate GitHub App token
-        if: steps.changes.outputs.changed == 'true'
         id: app-token
         uses: actions/create-github-app-token@v1
         with:
@@ -74,7 +78,6 @@ jobs:
             website
 
       - name: Deploy to tsparticles/website main
-        if: steps.changes.outputs.changed == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
