@@ -364,8 +364,9 @@ css/*.map
 docs/.vitepress/cache/
 docs/.vitepress/dist/
 
-# TypeDoc generated API docs
-docs/docs/
+# TypeDoc generated API docs (HTML output)
+typedoc-dist/
+docs/public/docs/
 docs/public/audio/
 docs/public/images/
 docs/public/videos/

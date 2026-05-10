@@ -1,5 +1,4 @@
 import { defineConfig, type DefaultTheme } from "vitepress";
-import typedocSidebar from "../docs/typedoc-sidebar.json";
 
 const base = process.env.VITEPRESS_BASE ?? "/";
 const hostname = "https://particles.js.org";
@@ -242,12 +241,6 @@ const baseSidebar: DefaultTheme.Sidebar = {
   "/migration/": [{ text: "Migration", items: [{ text: "Compatibility & Migrations", link: "/migration/" }] }],
   "/changelog": [{ text: "Changelog", items: [{ text: "Latest Release", link: "/changelog" }] }],
   "/releases/": [{ text: "Releases", items: [{ text: "Versioning & Release", link: "/releases/" }] }],
-  "/docs/": [
-    {
-      text: "API Documentation",
-      items: typedocSidebar,
-    },
-  ],
 };
 
 function prefixSidebarItems(items: DefaultTheme.SidebarItem[], prefix: string): DefaultTheme.SidebarItem[] {
@@ -287,9 +280,9 @@ export default defineConfig({
   description: "Modern particle animations for the web",
   lang: "en-US",
   cleanUrls: true,
-  lastUpdated: true,
+  lastUpdated: false,
   base,
-  ignoreDeadLinks: [/\/releases\/index$/, /\/[a-z]{2}\/releases\/index$/],
+  ignoreDeadLinks: [],
   locales: {
     root: {
       label: "English",
@@ -394,6 +387,30 @@ export default defineConfig({
   },
   vite: {
     envDir: "..",
+    build: {
+      sourcemap: false,
+    },
+  },
+  markdown: {
+    shiki: {
+      langs: [
+        "typescript",
+        "javascript",
+        "jsx",
+        "tsx",
+        "css",
+        "html",
+        "json",
+        "jsonc",
+        "yaml",
+        "bash",
+        "shell",
+        "markdown",
+        "vue",
+        "svelte",
+        "astro",
+      ],
+    },
   },
   sitemap: {
     hostname,
