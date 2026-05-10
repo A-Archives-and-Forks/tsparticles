@@ -169,6 +169,7 @@
     "typedoc-plugin-mdn-links"
   ],
   "hidePageHeader": true,
+  "sanitizeComments": true,
   "entryFileName": "index.md",
   "sidebar": {
     "autoConfiguration": true,
