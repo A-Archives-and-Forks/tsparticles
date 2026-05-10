@@ -1,4 +1,5 @@
 import { defineConfig, type DefaultTheme } from "vitepress";
+import typedocSidebar from "../docs/typedoc-sidebar.json";
 
 const base = process.env.VITEPRESS_BASE ?? "/";
 const hostname = "https://particles.js.org";
@@ -9,6 +10,7 @@ const nav: DefaultTheme.NavItem[] = [
   { text: "Demos", link: "/demos/" },
   { text: "Wrappers", link: "/guide/wrappers" },
   { text: "Options", link: "/options/" },
+  { text: "API", link: "/docs/" },
   {
     text: "Sponsor",
     items: [
@@ -240,6 +242,12 @@ const baseSidebar: DefaultTheme.Sidebar = {
   "/migration/": [{ text: "Migration", items: [{ text: "Compatibility & Migrations", link: "/migration/" }] }],
   "/changelog": [{ text: "Changelog", items: [{ text: "Latest Release", link: "/changelog" }] }],
   "/releases/": [{ text: "Releases", items: [{ text: "Versioning & Release", link: "/releases/" }] }],
+  "/docs/": [
+    {
+      text: "API Documentation",
+      items: typedocSidebar,
+    },
+  ],
 };
 
 function prefixSidebarItems(items: DefaultTheme.SidebarItem[], prefix: string): DefaultTheme.SidebarItem[] {

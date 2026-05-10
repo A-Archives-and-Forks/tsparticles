@@ -7,10 +7,11 @@
     "type": "module",
     "scripts": {
         "postinstall": "node ./scripts/fix-palette-types.mjs",
+        "typedoc:api": "cd ../.. && pnpm typedoc",
         "docs:assets": "node ./scripts/sync-public-assets.mjs",
-        "dev": "pnpm run docs:assets && vitepress dev docs --host",
-        "docs:build": "pnpm run lint:fix && pnpm run docs:assets && vitepress build docs",
-        "docs:build:ci": "pnpm run lint && pnpm run docs:assets && vitepress build docs",
+        "dev": "pnpm run typedoc:api && pnpm run docs:assets && vitepress dev docs --host",
+        "docs:build": "pnpm run typedoc:api && pnpm run lint:fix && pnpm run docs:assets && vitepress build docs",
+        "docs:build:ci": "pnpm run typedoc:api && pnpm run lint && pnpm run docs:assets && vitepress build docs",
         "docs:preview": "vitepress preview docs --host",
         "build": "pnpm run docs:build",
         "lint": "prettier --check \"docs/**/*.{md,ts,css}\"",
@@ -254,8 +255,8 @@
     "nx": {
         "targets": {
             "build": {
-                "outputs": ["{projectRoot}/docs/.vitepress/dist"],
-                "inputs": ["production", "^production", "{projectRoot}/docs/**/*"]
+                "outputs": ["{projectRoot}/docs/.vitepress/dist", "{projectRoot}/docs/docs/"],
+                "inputs": ["production", "^production", "{projectRoot}/docs/**/*", "{workspaceRoot}/typedoc.json"]
             }
         }
     }
