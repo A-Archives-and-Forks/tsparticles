@@ -254,7 +254,8 @@
     "nx": {
         "targets": {
             "build": {
-                "outputs": ["{projectRoot}/docs/.vitepress/dist"]
+                "outputs": ["{projectRoot}/docs/.vitepress/dist"],
+                "inputs": ["production", "^production", "{projectRoot}/docs/**/*"]
             }
         }
     }
