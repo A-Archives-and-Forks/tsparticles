@@ -158,7 +158,7 @@
   "includeVersion": true,
   "hideGenerator": true,
   "out": "typedoc-dist",
-  "hostedBaseUrl": "https://particles.js.org/typedoc",
+  "hostedBaseUrl": "https://particles.js.org/docs",
   "useHostedBaseUrlForAbsoluteLinks": true,
   "plugin": [
     "typedoc-plugin-google-ads",
