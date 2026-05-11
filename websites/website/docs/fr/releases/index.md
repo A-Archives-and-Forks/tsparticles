@@ -11,7 +11,7 @@ Ce projet est désormais livré à partir d'un seul référentiel : `tsparticle
 - Moteur : <https://github.com/tsparticles/tsparticles/tree/main/engine>
 - Emballages : <https://github.com/tsparticles/tsparticles/tree/main/wrappers>
 - Préréglages : <https://github.com/tsparticles/tsparticles/tree/main/presets>
--Palettes : <https://github.com/tsparticles/tsparticles/tree/main/palettes>
+- Palettes : <https://github.com/tsparticles/tsparticles/tree/main/palettes>
 
 ## Règle d'alignement des versions
 

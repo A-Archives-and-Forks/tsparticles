@@ -12434,9 +12434,6 @@ importers:
       typedoc-plugin-missing-exports:
         specifier: ^4.1.3
         version: 4.1.3(typedoc@0.28.19(typescript@6.0.3))
-      typedoc-vitepress-theme:
-        specifier: ^1.1.2
-        version: 1.1.2(typedoc-plugin-markdown@4.11.0(typedoc@0.28.19(typescript@6.0.3)))
       vitepress:
         specifier: ^1.6.4
         version: 1.6.4(@algolia/client-search@5.48.1)(@types/node@25.6.2)(@types/react@18.3.28)(axios@1.15.0)(fuse.js@7.3.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.14)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.99.0)(search-insights@2.17.3)(stylus@0.64.0)(terser@5.46.1)(typescript@6.0.3)
@@ -40264,11 +40261,6 @@ packages:
     resolution: {integrity: sha512-tgrlnwzXbqMP2/3BaZk0atddPsD7UnpCoeQ0cUCtk624gODT1bLYOLBEJLXQyVmbnP8HZCMhHpRiR+rxSdZqhg==}
     peerDependencies:
       typedoc: ^0.28.1
-
-  typedoc-vitepress-theme@1.1.2:
-    resolution: {integrity: sha512-hQvCZRr5uKDqY1bRuY1+eNTNn6d4TE4OP5pnw65Y7WGgajkJW9X1/lVJK2UJpcwCmwkdjw1QIO49H9JQlxWhhw==}
-    peerDependencies:
-      typedoc-plugin-markdown: '>=4.4.0'
 
   typedoc@0.28.19:
     resolution: {integrity: sha512-wKh+lhdmMFivMlc6vRRcMGXeGEHGU2g8a2CkPTJjJlwRf1iXbimWIPcFolCqe4E0d/FRtGszpIrsp3WLpDB8Pw==}
@@ -79944,10 +79936,6 @@ snapshots:
   typedoc-plugin-missing-exports@4.1.3(typedoc@0.28.19(typescript@6.0.3)):
     dependencies:
       typedoc: 0.28.19(typescript@6.0.3)
-
-  typedoc-vitepress-theme@1.1.2(typedoc-plugin-markdown@4.11.0(typedoc@0.28.19(typescript@6.0.3))):
-    dependencies:
-      typedoc-plugin-markdown: 4.11.0(typedoc@0.28.19(typescript@6.0.3))
 
   typedoc@0.28.19(typescript@6.0.3):
     dependencies:
