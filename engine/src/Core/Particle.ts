@@ -639,10 +639,6 @@ export class Particle {
     this.initialVelocity = this._calculateVelocity();
     this.velocity = this.initialVelocity.copy();
 
-    const particles = container.particles;
-
-    particles.setLastZIndex(this.position.z);
-
     // Scale z-index factor
     this.zIndexFactor = this.position.z / container.zLayers;
     this.sides = 24;
