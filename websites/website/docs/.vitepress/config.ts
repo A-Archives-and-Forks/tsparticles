@@ -9,7 +9,7 @@ const nav: DefaultTheme.NavItem[] = [
   { text: "Demos", link: "/demos/" },
   { text: "Wrappers", link: "/guide/wrappers" },
   { text: "Options", link: "/options/" },
-  { text: "API", link: "/docs/" },
+  { text: "API", link: "/docs/", target: "_blank" },
   {
     text: "Sponsor",
     items: [
