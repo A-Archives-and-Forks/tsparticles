@@ -20,8 +20,11 @@ import {
 } from "@tsparticles/engine";
 import { buildParticleWithDirection, segmentBounce } from "../Fixture/Utils.js";
 import { describe, expect, it } from "vitest";
+import { TestWindow } from "../Fixture/Window.js";
 
 describe("Utils", () => {
+  globalThis.window = TestWindow;
+
   describe("clamp", () => {
     const min = 1,
       max = 10;

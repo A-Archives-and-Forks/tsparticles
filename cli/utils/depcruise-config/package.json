@@ -45,7 +45,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tsparticles/eslint-config": "workspace:^",
     "@tsparticles/prettier-config": "workspace:^",
-    "@types/node": "^25.6.2",
+    "@types/node": "^25.7.0",
     "dependency-cruiser": "^17.4.0",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
@@ -55,6 +55,6 @@
     "prettier-plugin-multiline-arrays": "^4.1.8",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.2"
+    "typescript-eslint": "^8.59.3"
   }
 }

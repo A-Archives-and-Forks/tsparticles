@@ -24,7 +24,6 @@ function getParticlePaint(options: { particles: IParticlesOptions }): IPaint | u
 }
 
 describe("Options tests", () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   globalThis.window = TestWindow;
 
   it("checking default options", async () => {
