@@ -639,10 +639,6 @@ export class Particle {
     this.initialVelocity = this._calculateVelocity();
     this.velocity = this.initialVelocity.copy();
 
-    const particles = container.particles;
-
-    particles.setLastZIndex(this.position.z);
-
     // Scale z-index factor
     this.zIndexFactor = this.position.z / container.zLayers;
     this.sides = 24;
@@ -882,7 +878,7 @@ export class Particle {
 
   private readonly _initPosition: (position?: ICoordinates) => void = position => {
     const container = this._container,
-      zIndexValue = getRangeValue(this.options.zIndex.value),
+      zIndexValue = Math.floor(getRangeValue(this.options.zIndex.value)),
       initialPosition = this._calcPosition(position, clamp(zIndexValue, minZ, container.zLayers));
 
     if (!initialPosition) {

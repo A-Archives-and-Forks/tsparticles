@@ -175,7 +175,7 @@ export class InteractivityEventListeners {
     const html = interactivityEl as HTMLElement,
       canvas = container.canvas;
 
-    canvas.setPointerEvents(html === canvas.element ? "initial" : "none");
+    canvas.setPointerEvents(html === canvas.domElement ? "initial" : "none");
 
     if (add && !(options.interactivity?.events.onHover.enable || options.interactivity?.events.onClick.enable)) {
       return;
@@ -215,7 +215,7 @@ export class InteractivityEventListeners {
       interactionManager = this._interactionManager,
       options = container.actualOptions,
       detectType = options.interactivity?.detectsOn,
-      canvasEl = container.canvas.element;
+      canvasEl = container.canvas.domElement;
 
     /* events target element */
     if (detectType === InteractivityDetect.window) {
@@ -304,7 +304,7 @@ export class InteractivityEventListeners {
       interactionManager = this._interactionManager,
       options = container.actualOptions,
       interactivity = interactionManager.interactivityData,
-      canvasEl = container.canvas.element;
+      canvasEl = container.canvas.domElement;
 
     if (!interactivity.element) {
       return;

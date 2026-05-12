@@ -80,7 +80,7 @@ export class ExportVideoPluginInstance implements IContainerPlugin {
   }
 
   private readonly _exportVideo: (data: IExportVideoData) => Promise<Blob | undefined> = async data => {
-    const element = this._container.canvas.element;
+    const element = this._container.canvas.domElement;
 
     if (!element) {
       return;

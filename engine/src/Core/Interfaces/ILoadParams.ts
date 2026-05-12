@@ -6,9 +6,13 @@ import type { SingleOrMultiple } from "../../Types/SingleOrMultiple.js";
  */
 export interface ILoadParams {
   /**
-   * The container HTML element, could be a canvas or any other element that will contain the canvas
+   * The source element for loading.
+   *
+   * - HTMLElement: used to resolve/create the DOM canvas that will be transferred
+   *   to OffscreenCanvas for rendering.
+   * - OffscreenCanvas: used directly as render target.
    */
-  element?: HTMLElement;
+  element?: HTMLElement | OffscreenCanvas;
 
   /**
    * The id assigned to the container

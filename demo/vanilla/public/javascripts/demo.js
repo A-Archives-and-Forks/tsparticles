@@ -49,7 +49,6 @@
     };
 
     const particlesCount = document.getElementById("particles-count"),
-        zParticlesCount = document.getElementById("z-particles-count"),
         poolCount = document.getElementById("pool-count");
 
     setInterval(() => {
@@ -61,7 +60,6 @@
 
         if (container) {
             particlesCount.innerText = `${container.particles.count}`;
-            zParticlesCount.innerText = `${container.particles._zArray.length}`;
             poolCount.innerText = `${container.particles._pool.length}`;
         }
     }, 100);
@@ -259,11 +257,11 @@
                     const modalBody = document.body.querySelector("#exportModal .modal-body .modal-body-content");
 
                     modalBody.innerHTML = "";
-                    modalBody.style.backgroundColor = container.canvas.element.style.backgroundColor;
-                    modalBody.style.backgroundImage = container.canvas.element.style.backgroundImage;
-                    modalBody.style.backgroundPosition = container.canvas.element.style.backgroundPosition;
-                    modalBody.style.backgroundRepeat = container.canvas.element.style.backgroundRepeat;
-                    modalBody.style.backgroundSize = container.canvas.element.style.backgroundSize;
+                    modalBody.style.backgroundColor = container.canvas.domElement.style.backgroundColor;
+                    modalBody.style.backgroundImage = container.canvas.domElement.style.backgroundImage;
+                    modalBody.style.backgroundPosition = container.canvas.domElement.style.backgroundPosition;
+                    modalBody.style.backgroundRepeat = container.canvas.domElement.style.backgroundRepeat;
+                    modalBody.style.backgroundSize = container.canvas.domElement.style.backgroundSize;
 
                     const image = document.createElement("img");
 
@@ -288,11 +286,11 @@
                     const modalBody = document.body.querySelector("#exportModal .modal-body .modal-body-content");
 
                     modalBody.innerHTML = "";
-                    modalBody.style.backgroundColor = container.canvas.element.style.backgroundColor;
-                    modalBody.style.backgroundImage = container.canvas.element.style.backgroundImage;
-                    modalBody.style.backgroundPosition = container.canvas.element.style.backgroundPosition;
-                    modalBody.style.backgroundRepeat = container.canvas.element.style.backgroundRepeat;
-                    modalBody.style.backgroundSize = container.canvas.element.style.backgroundSize;
+                    modalBody.style.backgroundColor = container.canvas.domElement.style.backgroundColor;
+                    modalBody.style.backgroundImage = container.canvas.domElement.style.backgroundImage;
+                    modalBody.style.backgroundPosition = container.canvas.domElement.style.backgroundPosition;
+                    modalBody.style.backgroundRepeat = container.canvas.domElement.style.backgroundRepeat;
+                    modalBody.style.backgroundSize = container.canvas.domElement.style.backgroundSize;
 
                     const downloadLink = document.createElement("a");
 

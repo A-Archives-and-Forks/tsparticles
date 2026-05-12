@@ -3,10 +3,12 @@ import {
   defaultDensityFactor,
   defaultRemoveQuantity,
   deleteCount,
-  lengthOffset,
+  double,
+  empty,
   minCount,
   minIndex,
   minLimit,
+  one,
   spatialHashGridCellSize,
   squareExp,
 } from "./Utils/Constants.js";
@@ -44,10 +46,8 @@ export class ParticlesManager {
   private readonly _container: Container;
   private readonly _groupLimits: Map<string, number>;
   private _limit;
-  private _maxZIndex;
-  private _minZIndex;
-  private _needsSort;
   private _nextId;
+  private readonly _particleBuckets: Map<number, number>;
   private _particleResetPlugins: IContainerPlugin[];
   private _particleUpdatePlugins: IContainerPlugin[];
   private readonly _pluginManager;
@@ -56,7 +56,7 @@ export class ParticlesManager {
   private _postUpdatePlugins: IContainerPlugin[];
   private _resizeFactor?: IDimension;
   private _updatePlugins: IContainerPlugin[];
-  private _zArray: Particle[];
+  private _zBuckets: Particle[][];
 
   /**
    *
@@ -68,13 +68,11 @@ export class ParticlesManager {
     this._container = container;
     this._nextId = 0;
     this._array = [];
-    this._zArray = [];
     this._pool = [];
     this._limit = 0;
     this._groupLimits = new Map<string, number>();
-    this._needsSort = false;
-    this._minZIndex = 0;
-    this._maxZIndex = 0;
+    this._particleBuckets = new Map<number, number>();
+    this._zBuckets = this._createBuckets(this._container.zLayers);
     this.grid = new SpatialHashGrid(spatialHashGridCellSize);
     this.checkParticlePositionPlugins = [];
     this._particleResetPlugins = [];
@@ -147,7 +145,7 @@ export class ParticlesManager {
       }
 
       this._array.push(particle);
-      this._zArray.push(particle);
+      this._insertParticleIntoBucket(particle);
 
       this._nextId++;
 
@@ -168,14 +166,16 @@ export class ParticlesManager {
    */
   clear(): void {
     this._array = [];
-    this._zArray = [];
+    this._particleBuckets.clear();
+    this._resetBuckets(this._container.zLayers);
   }
 
   /** Destroys the particles manager */
   destroy(): void {
     this._array = [];
     this._pool.length = 0;
-    this._zArray = [];
+    this._particleBuckets.clear();
+    this._zBuckets = [];
     this.checkParticlePositionPlugins = [];
     this._particleResetPlugins = [];
     this._particleUpdatePlugins = [];
@@ -189,8 +189,16 @@ export class ParticlesManager {
    * @param delta
    */
   drawParticles(delta: IDelta): void {
-    for (const particle of this._zArray) {
-      particle.draw(delta);
+    for (let i = this._zBuckets.length - one; i >= minIndex; i--) {
+      const bucket = this._zBuckets[i];
+
+      if (!bucket) {
+        continue;
+      }
+
+      for (const particle of bucket) {
+        particle.draw(delta);
+      }
     }
   }
 
@@ -223,15 +231,14 @@ export class ParticlesManager {
     const container = this._container,
       options = container.actualOptions;
 
-    this._minZIndex = 0;
-    this._maxZIndex = 0;
-    this._needsSort = false;
     this.checkParticlePositionPlugins = [];
     this._updatePlugins = [];
     this._particleUpdatePlugins = [];
     this._postUpdatePlugins = [];
     this._particleResetPlugins = [];
     this._postParticleUpdatePlugins = [];
+    this._particleBuckets.clear();
+    this._resetBuckets(container.zLayers);
 
     this.grid = new SpatialHashGrid(spatialHashGridCellSize * container.retina.pixelRatio);
 
@@ -403,14 +410,6 @@ export class ParticlesManager {
   }
 
   /**
-   * Sets the last z-index
-   * @param zIndex
-   */
-  setLastZIndex(zIndex: number): void {
-    this._needsSort ||= zIndex >= this._maxZIndex || (zIndex > this._minZIndex && zIndex < this._maxZIndex);
-  }
-
-  /**
    * Sets the resize factor
    * @param factor
    */
@@ -423,75 +422,19 @@ export class ParticlesManager {
    * @param delta
    */
   update(delta: IDelta): void {
-    const particlesToDelete = new Set<Particle>();
-
     this.grid.clear();
 
     for (const plugin of this._updatePlugins) {
       plugin.update?.(delta);
     }
 
-    const resizeFactor = this._resizeFactor;
-
-    for (const particle of this._array) {
-      if (resizeFactor && !particle.ignoresResizeRatio) {
-        particle.position.x *= resizeFactor.width;
-        particle.position.y *= resizeFactor.height;
-        particle.initialPosition.x *= resizeFactor.width;
-        particle.initialPosition.y *= resizeFactor.height;
-      }
-
-      particle.ignoresResizeRatio = false;
-
-      for (const plugin of this._particleResetPlugins) {
-        plugin.particleReset?.(particle);
-      }
-
-      for (const plugin of this._particleUpdatePlugins) {
-        if (particle.destroyed) {
-          break;
-        }
-
-        plugin.particleUpdate?.(particle, delta);
-      }
-
-      if (particle.destroyed) {
-        particlesToDelete.add(particle);
-
-        continue;
-      }
-
-      this.grid.insert(particle);
-    }
+    const particlesToDelete = this._updateParticlesPhase1(delta);
 
     for (const plugin of this._postUpdatePlugins) {
       plugin.postUpdate?.(delta);
     }
 
-    // this loop is required to be done after mouse interactions
-    for (const particle of this._array) {
-      if (particle.destroyed) {
-        particlesToDelete.add(particle);
-
-        continue;
-      }
-
-      for (const updater of this._container.particleUpdaters) {
-        updater.update(particle, delta);
-      }
-
-      // particle.destroyed can be set to true in updater.update
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!particle.destroyed && !particle.spawning) {
-        for (const plugin of this._postParticleUpdatePlugins) {
-          plugin.postParticleUpdate?.(particle, delta);
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      } else if (particle.destroyed) {
-        particlesToDelete.add(particle);
-      }
-    }
+    this._updateParticlesPhase2(delta, particlesToDelete);
 
     if (particlesToDelete.size) {
       for (const particle of particlesToDelete) {
@@ -500,23 +443,6 @@ export class ParticlesManager {
     }
 
     delete this._resizeFactor;
-
-    if (this._needsSort) {
-      const zArray = this._zArray;
-
-      zArray.sort((a, b) => b.position.z - a.position.z || a.id - b.id);
-
-      const firstItem = zArray[minIndex],
-        lastItem = zArray[zArray.length - lengthOffset];
-
-      if (!firstItem || !lastItem) {
-        return;
-      }
-
-      this._maxZIndex = firstItem.position.z;
-      this._minZIndex = lastItem.position.z;
-      this._needsSort = false;
-    }
   }
 
   private readonly _addToPool = (...particles: Particle[]): void => {
@@ -560,17 +486,78 @@ export class ParticlesManager {
     }
   };
 
+  private readonly _createBuckets = (zLayers: number): Particle[][] => {
+    const bucketCount = Math.max(Math.floor(zLayers), one);
+
+    return Array.from({ length: bucketCount }, () => []);
+  };
+
+  private readonly _getBucketIndex = (zIndex: number): number => {
+    const maxBucketIndex = this._zBuckets.length - one;
+
+    if (maxBucketIndex <= minIndex) {
+      return minIndex;
+    }
+
+    return Math.min(Math.max(Math.floor(zIndex), minIndex), maxBucketIndex);
+  };
+
+  private readonly _getParticleInsertIndex = (bucket: Particle[], particleId: number): number => {
+    let start = minIndex,
+      end = bucket.length;
+
+    while (start < end) {
+      const middle = Math.floor((start + end) / double),
+        middleParticle = bucket[middle];
+
+      if (!middleParticle) {
+        end = middle;
+
+        continue;
+      }
+
+      if (middleParticle.id < particleId) {
+        start = middle + one;
+      } else {
+        end = middle;
+      }
+    }
+
+    return start;
+  };
+
   private readonly _initDensityFactor: (densityOptions: IParticlesDensity) => number = densityOptions => {
     const container = this._container;
 
-    if (!container.canvas.element || !densityOptions.enable) {
+    if (!densityOptions.enable) {
       return defaultDensityFactor;
     }
 
-    const canvas = container.canvas.element,
+    // Read from canvas.size (retina-corrected dimensions) so this works with both
+    // HTMLCanvasElement and OffscreenCanvas render targets without relying on
+    // canvas.domElement (which may be neutered / absent in future Worker paths).
+    const canvasSize = container.canvas.size,
       pxRatio = container.retina.pixelRatio;
 
-    return (canvas.width * canvas.height) / (densityOptions.height * densityOptions.width * pxRatio ** squareExp);
+    if (!canvasSize.width || !canvasSize.height) {
+      return defaultDensityFactor;
+    }
+
+    return (
+      (canvasSize.width * canvasSize.height) / (densityOptions.height * densityOptions.width * pxRatio ** squareExp)
+    );
+  };
+
+  private readonly _insertParticleIntoBucket = (particle: Particle): void => {
+    const bucketIndex = this._getBucketIndex(particle.position.z),
+      bucket = this._zBuckets[bucketIndex];
+
+    if (!bucket) {
+      return;
+    }
+
+    bucket.splice(this._getParticleInsertIndex(bucket, particle.id), empty, particle);
+    this._particleBuckets.set(particle.id, bucketIndex);
   };
 
   private readonly _removeParticle = (index: number, group?: string, override?: boolean): boolean => {
@@ -584,10 +571,8 @@ export class ParticlesManager {
       return false;
     }
 
-    const zIdx = this._zArray.indexOf(particle);
-
     this._array.splice(index, deleteCount);
-    this._zArray.splice(zIdx, deleteCount);
+    this._removeParticleFromBucket(particle);
 
     particle.destroy(override);
 
@@ -598,5 +583,137 @@ export class ParticlesManager {
     this._addToPool(particle);
 
     return true;
+  };
+
+  private readonly _removeParticleFromBucket = (particle: Particle): void => {
+    const bucketIndex = this._particleBuckets.get(particle.id) ?? this._getBucketIndex(particle.position.z),
+      bucket = this._zBuckets[bucketIndex];
+
+    if (!bucket) {
+      this._particleBuckets.delete(particle.id);
+
+      return;
+    }
+
+    const particleIndex = this._getParticleInsertIndex(bucket, particle.id);
+
+    if (bucket[particleIndex]?.id !== particle.id) {
+      this._particleBuckets.delete(particle.id);
+
+      return;
+    }
+
+    bucket.splice(particleIndex, deleteCount);
+    this._particleBuckets.delete(particle.id);
+  };
+
+  private readonly _resetBuckets = (zLayers: number): void => {
+    const bucketCount = Math.max(Math.floor(zLayers), one);
+
+    if (this._zBuckets.length !== bucketCount) {
+      this._zBuckets = this._createBuckets(bucketCount);
+
+      return;
+    }
+
+    for (const bucket of this._zBuckets) {
+      bucket.length = minIndex;
+    }
+  };
+
+  private readonly _updateParticleBucket = (particle: Particle): void => {
+    const newBucketIndex = this._getBucketIndex(particle.position.z),
+      currentBucketIndex = this._particleBuckets.get(particle.id);
+
+    if (currentBucketIndex === undefined) {
+      this._insertParticleIntoBucket(particle);
+
+      return;
+    }
+
+    if (currentBucketIndex === newBucketIndex) {
+      return;
+    }
+
+    const currentBucket = this._zBuckets[currentBucketIndex];
+
+    if (currentBucket) {
+      const particleIndex = this._getParticleInsertIndex(currentBucket, particle.id);
+
+      if (currentBucket[particleIndex]?.id === particle.id) {
+        currentBucket.splice(particleIndex, deleteCount);
+      }
+    }
+
+    const newBucket = this._zBuckets[newBucketIndex];
+
+    if (!newBucket) {
+      this._particleBuckets.set(particle.id, newBucketIndex);
+
+      return;
+    }
+
+    newBucket.splice(this._getParticleInsertIndex(newBucket, particle.id), empty, particle);
+    this._particleBuckets.set(particle.id, newBucketIndex);
+  };
+
+  private readonly _updateParticlesPhase1 = (delta: IDelta): Set<Particle> => {
+    const particlesToDelete = new Set<Particle>(),
+      resizeFactor = this._resizeFactor;
+
+    for (const particle of this._array) {
+      if (resizeFactor && !particle.ignoresResizeRatio) {
+        particle.position.x *= resizeFactor.width;
+        particle.position.y *= resizeFactor.height;
+        particle.initialPosition.x *= resizeFactor.width;
+        particle.initialPosition.y *= resizeFactor.height;
+      }
+
+      particle.ignoresResizeRatio = false;
+
+      for (const plugin of this._particleResetPlugins) {
+        plugin.particleReset?.(particle);
+      }
+
+      for (const plugin of this._particleUpdatePlugins) {
+        if (particle.destroyed) {
+          break;
+        }
+
+        plugin.particleUpdate?.(particle, delta);
+      }
+
+      if (particle.destroyed) {
+        particlesToDelete.add(particle);
+
+        continue;
+      }
+
+      this.grid.insert(particle);
+    }
+
+    return particlesToDelete;
+  };
+
+  private readonly _updateParticlesPhase2 = (delta: IDelta, particlesToDelete: Set<Particle>): void => {
+    for (const particle of this._array) {
+      if (particle.destroyed) {
+        particlesToDelete.add(particle);
+
+        continue;
+      }
+
+      for (const updater of this._container.particleUpdaters) {
+        updater.update(particle, delta);
+      }
+
+      if (!particle.spawning) {
+        for (const plugin of this._postParticleUpdatePlugins) {
+          plugin.postParticleUpdate?.(particle, delta);
+        }
+      }
+
+      this._updateParticleBucket(particle);
+    }
   };
 }

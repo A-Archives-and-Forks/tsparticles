@@ -26,11 +26,10 @@ export class Retina {
     this.reduceFactor = defaultReduceFactor;
 
     const ratio = this.pixelRatio,
-      canvas = container.canvas;
+      canvas = container.canvas,
+      element = canvas.domElement;
 
-    if (canvas.element) {
-      const element = canvas.element;
-
+    if (element) {
       canvas.size.width = element.offsetWidth * ratio;
       canvas.size.height = element.offsetHeight * ratio;
     }

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment */
 import { type Canvas, createCanvas } from "canvas";
 
+import { installTransferControlToOffscreen } from "./OffscreenCanvas.js";
+
 /**
  *
  * @param width -
@@ -9,7 +11,10 @@ import { type Canvas, createCanvas } from "canvas";
  */
 export function createCustomCanvas(width: number, height: number): Canvas {
   const canvas = createCanvas(width, height),
-    augmentCanvas = canvas as any;
+    augmentCanvas = canvas as any,
+    transferableCanvas: object = augmentCanvas;
+
+  installTransferControlToOffscreen(transferableCanvas);
 
   augmentCanvas.offsetWidth = width;
   augmentCanvas.offsetHeight = height;

@@ -8,7 +8,6 @@ const width = 1920,
   height = 1080;
 
 describe("Particle", async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   globalThis.window = TestWindow;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any

@@ -261,6 +261,9 @@
         "vitepress": "^1.6.4"
     },
     "nx": {
+        "implicitDependencies": [
+            "@tsparticles/confetti-website"
+        ],
         "targets": {
             "build": {
                 "outputs": [
