@@ -878,7 +878,7 @@ export class Particle {
 
   private readonly _initPosition: (position?: ICoordinates) => void = position => {
     const container = this._container,
-      zIndexValue = getRangeValue(this.options.zIndex.value),
+      zIndexValue = Math.floor(getRangeValue(this.options.zIndex.value)),
       initialPosition = this._calcPosition(position, clamp(zIndexValue, minZ, container.zLayers));
 
     if (!initialPosition) {
