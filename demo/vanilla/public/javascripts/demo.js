@@ -257,11 +257,11 @@
                     const modalBody = document.body.querySelector("#exportModal .modal-body .modal-body-content");
 
                     modalBody.innerHTML = "";
-                    modalBody.style.backgroundColor = container.canvas.element.style.backgroundColor;
-                    modalBody.style.backgroundImage = container.canvas.element.style.backgroundImage;
-                    modalBody.style.backgroundPosition = container.canvas.element.style.backgroundPosition;
-                    modalBody.style.backgroundRepeat = container.canvas.element.style.backgroundRepeat;
-                    modalBody.style.backgroundSize = container.canvas.element.style.backgroundSize;
+                    modalBody.style.backgroundColor = container.canvas.domElement.style.backgroundColor;
+                    modalBody.style.backgroundImage = container.canvas.domElement.style.backgroundImage;
+                    modalBody.style.backgroundPosition = container.canvas.domElement.style.backgroundPosition;
+                    modalBody.style.backgroundRepeat = container.canvas.domElement.style.backgroundRepeat;
+                    modalBody.style.backgroundSize = container.canvas.domElement.style.backgroundSize;
 
                     const image = document.createElement("img");
 
@@ -286,11 +286,11 @@
                     const modalBody = document.body.querySelector("#exportModal .modal-body .modal-body-content");
 
                     modalBody.innerHTML = "";
-                    modalBody.style.backgroundColor = container.canvas.element.style.backgroundColor;
-                    modalBody.style.backgroundImage = container.canvas.element.style.backgroundImage;
-                    modalBody.style.backgroundPosition = container.canvas.element.style.backgroundPosition;
-                    modalBody.style.backgroundRepeat = container.canvas.element.style.backgroundRepeat;
-                    modalBody.style.backgroundSize = container.canvas.element.style.backgroundSize;
+                    modalBody.style.backgroundColor = container.canvas.domElement.style.backgroundColor;
+                    modalBody.style.backgroundImage = container.canvas.domElement.style.backgroundImage;
+                    modalBody.style.backgroundPosition = container.canvas.domElement.style.backgroundPosition;
+                    modalBody.style.backgroundRepeat = container.canvas.domElement.style.backgroundRepeat;
+                    modalBody.style.backgroundSize = container.canvas.domElement.style.backgroundSize;
 
                     const downloadLink = document.createElement("a");
 
