@@ -529,14 +529,23 @@ export class ParticlesManager {
   private readonly _initDensityFactor: (densityOptions: IParticlesDensity) => number = densityOptions => {
     const container = this._container;
 
-    if (!container.canvas.element || !densityOptions.enable) {
+    if (!densityOptions.enable) {
       return defaultDensityFactor;
     }
 
-    const canvas = container.canvas.element,
+    // Read from canvas.size (retina-corrected dimensions) so this works with both
+    // HTMLCanvasElement and OffscreenCanvas render targets without relying on
+    // canvas.domElement (which may be neutered / absent in future Worker paths).
+    const canvasSize = container.canvas.size,
       pxRatio = container.retina.pixelRatio;
 
-    return (canvas.width * canvas.height) / (densityOptions.height * densityOptions.width * pxRatio ** squareExp);
+    if (!canvasSize.width || !canvasSize.height) {
+      return defaultDensityFactor;
+    }
+
+    return (
+      (canvasSize.width * canvasSize.height) / (densityOptions.height * densityOptions.width * pxRatio ** squareExp)
+    );
   };
 
   private readonly _insertParticleIntoBucket = (particle: Particle): void => {

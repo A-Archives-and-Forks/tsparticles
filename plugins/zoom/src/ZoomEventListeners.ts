@@ -79,11 +79,11 @@ export class ZoomEventListeners {
   private readonly _handleGestureChange = (event: Event): void => {
     const container = this.container,
       canvas = container.canvas as {
-        element?: HTMLCanvasElement;
+        domElement?: HTMLCanvasElement;
         setZoom: (zoom: number, center: { x: number; y: number }) => void;
         zoom: number;
       },
-      canvasEl = canvas.element;
+      canvasEl = canvas.domElement;
 
     if (!canvasEl) {
       return;
@@ -134,9 +134,9 @@ export class ZoomEventListeners {
   private readonly _handleGestureEnd = (event: Event): void => {
     const container = this.container,
       canvas = container.canvas as {
-        element?: HTMLCanvasElement;
+        domElement?: HTMLCanvasElement;
       },
-      canvasEl = canvas.element;
+      canvasEl = canvas.domElement;
 
     if (!canvasEl) {
       return;
@@ -165,9 +165,9 @@ export class ZoomEventListeners {
   private readonly _handleGestureStart = (event: Event): void => {
     const container = this.container,
       canvas = container.canvas as {
-        element?: HTMLCanvasElement;
+        domElement?: HTMLCanvasElement;
       },
-      canvasEl = canvas.element;
+      canvasEl = canvas.domElement;
 
     if (!canvasEl) {
       return;
@@ -201,11 +201,11 @@ export class ZoomEventListeners {
     const container = this.container,
       zoomOptions = container.actualOptions.zoom,
       canvas = container.canvas as {
-        element?: HTMLCanvasElement;
+        domElement?: HTMLCanvasElement;
         setZoom: (zoom: number, center: { x: number; y: number }) => void;
         zoom: number;
       },
-      canvasEl = canvas.element;
+      canvasEl = canvas.domElement;
 
     if (!canvasEl) {
       return;
@@ -270,11 +270,11 @@ export class ZoomEventListeners {
     const container = this.container,
       zoomOptions = container.actualOptions.zoom,
       canvas = container.canvas as {
-        element?: HTMLCanvasElement;
+        domElement?: HTMLCanvasElement;
         setZoom: (zoom: number, center: { x: number; y: number }) => void;
         zoom: number;
       },
-      canvasEl = canvas.element;
+      canvasEl = canvas.domElement;
 
     if (!canvasEl) {
       return;
@@ -344,7 +344,7 @@ export class ZoomEventListeners {
    */
   private readonly _manageListeners: (add: boolean) => void = add => {
     const handlers = this._handlers,
-      canvas = this.container.canvas.element,
+      canvas = this.container.canvas.domElement,
       options = this.container.actualOptions,
       doc = safeDocument();
 

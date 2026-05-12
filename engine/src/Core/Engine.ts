@@ -84,7 +84,7 @@ const getCanvasFromContainer = (domContainer: HTMLElement): HTMLCanvasElement =>
       }
     } else {
       const existingCanvases = domContainer.getElementsByTagName(canvasTag),
-        foundCanvas = existingCanvases[canvasFirstIndex];
+        foundCanvas = existingCanvases.item(canvasFirstIndex);
 
       /* get existing canvas if present, otherwise a new one will be created */
       if (foundCanvas) {
@@ -232,8 +232,14 @@ export class Engine {
   async load(params: ILoadParams): Promise<Container | undefined> {
     await this.init();
 
+    let domSourceElement: HTMLElement | undefined;
+
+    if (typeof HTMLElement !== "undefined" && params.element instanceof HTMLElement) {
+      domSourceElement = params.element;
+    }
+
     const { Container } = await import("./Container.js"),
-      id = params.id ?? params.element?.id ?? `tsparticles${Math.floor(getRandom() * loadRandomFactor).toString()}`,
+      id = params.id ?? domSourceElement?.id ?? `tsparticles${Math.floor(getRandom() * loadRandomFactor).toString()}`,
       { index, url } = params,
       options = url ? await getDataFromUrl({ fallback: params.options, url, index }) : params.options,
       /* elements */
@@ -274,10 +280,12 @@ export class Engine {
       items.push(newItem);
     }
 
-    const domContainer = getDomContainer(id, params.element),
-      canvasEl = getCanvasFromContainer(domContainer);
+    const sourceCanvas: HTMLCanvasElement | OffscreenCanvas =
+      typeof OffscreenCanvas !== "undefined" && params.element instanceof OffscreenCanvas
+        ? params.element
+        : getCanvasFromContainer(getDomContainer(id, domSourceElement));
 
-    newItem.canvas.loadCanvas(canvasEl);
+    newItem.canvas.loadCanvas(sourceCanvas);
 
     /* launch tsParticles */
     await newItem.start();

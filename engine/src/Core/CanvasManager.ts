@@ -5,8 +5,44 @@ import type { Container } from "./Container.js";
 import type { IContainerPlugin } from "./Interfaces/IContainerPlugin.js";
 import type { ICoordinates } from "./Interfaces/ICoordinates.js";
 import type { IDimension } from "./Interfaces/IDimension.js";
+import type { ParticlesCanvasType } from "../Types/ParticlesCanvasType.js";
 import type { PluginManager } from "./Utils/PluginManager.js";
 import { RenderManager } from "./RenderManager.js";
+
+/**
+ * Returns the canvas to use for rendering.
+ * When an explicit OffscreenCanvas is passed in it is used as-is.
+ *
+ * DOM canvases are always transferred because the render context must come from an
+ * OffscreenCanvas.
+ * @param canvas - The canvas source to use for rendering.
+ * @returns The render canvas instance.
+ */
+const transferredCanvases = new WeakMap<HTMLCanvasElement, OffscreenCanvas>(),
+  getTransferredCanvas = (canvas: HTMLCanvasElement): OffscreenCanvas => {
+    const transferredCanvas = transferredCanvases.get(canvas);
+
+    if (transferredCanvas) {
+      return transferredCanvas;
+    }
+
+    if (typeof canvas.transferControlToOffscreen !== "function") {
+      throw new TypeError("OffscreenCanvas is required but not supported by this browser");
+    }
+
+    try {
+      const offscreenCanvas = canvas.transferControlToOffscreen();
+
+      transferredCanvases.set(canvas, offscreenCanvas);
+
+      return offscreenCanvas;
+    } catch {
+      throw new TypeError("OffscreenCanvas transfer failed");
+    }
+  },
+  isHtmlCanvasElement = (canvas: ParticlesCanvasType): canvas is HTMLCanvasElement => {
+    return typeof HTMLCanvasElement !== "undefined" && canvas instanceof HTMLCanvasElement;
+  };
 
 /**
  *
@@ -59,12 +95,18 @@ function setStyle(canvas: HTMLCanvasElement, style?: CSSStyleDeclaration, import
  */
 export class CanvasManager {
   /**
-   * The particles canvas
+   * The source DOM canvas element, if available.
    */
-  element?: HTMLCanvasElement;
+  domElement?: HTMLCanvasElement;
 
   /** The render manager */
   readonly render;
+
+  /**
+   * The canvas used for rendering and as source for the 2D context.
+   * This is an OffscreenCanvas when a DOM canvas is provided.
+   */
+  renderCanvas?: ParticlesCanvasType;
 
   /**
    * The particles canvas dimension
@@ -128,11 +170,12 @@ export class CanvasManager {
     this.stop();
 
     if (this._generated) {
-      const element = this.element;
+      const element = this.domElement;
 
       element?.remove();
 
-      this.element = undefined;
+      this.domElement = undefined;
+      this.renderCanvas = undefined;
     } else {
       this._resetOriginalStyle();
     }
@@ -142,7 +185,10 @@ export class CanvasManager {
     this._resizePlugins = [];
   }
 
-  /** Gets the zoom center point */
+  /**
+   * Gets the zoom center point
+   * @returns The current zoom center.
+   */
   getZoomCenter(): ICoordinates {
     const pxRatio = this._container.retina.pixelRatio,
       { width, height } = this.size;
@@ -176,11 +222,13 @@ export class CanvasManager {
     this._initStyle();
     this.initBackground();
     this._safeMutationObserver(obs => {
-      if (!this.element || !(this.element instanceof Node)) {
+      const element = this.domElement;
+
+      if (!element || !(element instanceof Node)) {
         return;
       }
 
-      obs.observe(this.element, { attributes: true });
+      obs.observe(element, { attributes: true });
     });
 
     this.initPlugins();
@@ -194,7 +242,7 @@ export class CanvasManager {
     const { _container } = this,
       options = _container.actualOptions,
       background = options.background,
-      element = this.element;
+      element = this.domElement;
 
     if (!element) {
       return;
@@ -230,31 +278,44 @@ export class CanvasManager {
 
   /**
    * Loads the canvas HTML element
-   * @param canvas - the canvas HTML element
+   * @param canvas - the canvas source element or OffscreenCanvas
    */
-  loadCanvas(canvas: HTMLCanvasElement): void {
-    if (this._generated && this.element) {
-      this.element.remove();
+  loadCanvas(canvas: ParticlesCanvasType): void {
+    if (this._generated && this.domElement) {
+      this.domElement.remove();
     }
 
-    const container = this._container;
+    const container = this._container,
+      domCanvas = isHtmlCanvasElement(canvas) ? canvas : undefined;
 
-    this._generated =
-      generatedAttribute in canvas.dataset ? canvas.dataset[generatedAttribute] === "true" : this._generated;
-    this.element = canvas;
-    this.element.ariaHidden = "true";
-    this._originalStyle = cloneStyle(this.element.style);
+    this.domElement = domCanvas;
+    this._generated = domCanvas ? domCanvas.dataset[generatedAttribute] === "true" : false;
+    this.renderCanvas = domCanvas ? getTransferredCanvas(domCanvas) : canvas;
 
-    const standardSize = this._standardSize;
+    const domElement = this.domElement;
 
-    standardSize.height = canvas.offsetHeight;
-    standardSize.width = canvas.offsetWidth;
+    if (domElement) {
+      domElement.ariaHidden = "true";
+
+      this._originalStyle = cloneStyle(domElement.style);
+    }
+
+    const standardSize = this._standardSize,
+      renderCanvas = this.renderCanvas;
+
+    if (domElement) {
+      standardSize.height = domElement.offsetHeight;
+      standardSize.width = domElement.offsetWidth;
+    } else {
+      standardSize.height = renderCanvas.height;
+      standardSize.width = renderCanvas.width;
+    }
 
     const pxRatio = this._container.retina.pixelRatio,
       retinaSize = this.size;
 
-    canvas.height = retinaSize.height = standardSize.height * pxRatio;
-    canvas.width = retinaSize.width = standardSize.width * pxRatio;
+    renderCanvas.height = retinaSize.height = standardSize.height * pxRatio;
+    renderCanvas.width = retinaSize.width = standardSize.width * pxRatio;
 
     const canSupportHdrQuery = safeMatchMedia("(color-gamut: p3)");
 
@@ -264,7 +325,7 @@ export class CanvasManager {
       desynchronized: true,
       willReadFrequently: false,
     });
-    this.render.setContext(this.element.getContext("2d", this.render.settings));
+    this.render.setContext(renderCanvas.getContext("2d", this.render.settings));
 
     this._safeMutationObserver(obs => {
       obs.disconnect();
@@ -274,11 +335,13 @@ export class CanvasManager {
     this.initBackground();
 
     this._safeMutationObserver(obs => {
-      if (!this.element || !(this.element instanceof Node)) {
+      const element = this.domElement;
+
+      if (!element || !(element instanceof Node)) {
         return;
       }
 
-      obs.observe(this.element, { attributes: true });
+      obs.observe(element, { attributes: true });
     });
   }
 
@@ -287,15 +350,23 @@ export class CanvasManager {
    * @returns true if the size changed
    */
   resize(): boolean {
-    if (!this.element) {
+    const element = this.domElement;
+
+    if (!element) {
       return false;
     }
 
     const container = this._container,
-      currentSize = container.canvas._standardSize,
+      renderCanvas = this.renderCanvas;
+
+    if (renderCanvas === undefined) {
+      return false;
+    }
+
+    const currentSize = container.canvas._standardSize,
       newSize = {
-        width: this.element.offsetWidth,
-        height: this.element.offsetHeight,
+        width: element.offsetWidth,
+        height: element.offsetHeight,
       },
       pxRatio = container.retina.pixelRatio,
       retinaSize = {
@@ -306,8 +377,8 @@ export class CanvasManager {
     if (
       newSize.height === currentSize.height &&
       newSize.width === currentSize.width &&
-      retinaSize.height === this.element.height &&
-      retinaSize.width === this.element.width
+      retinaSize.height === renderCanvas.height &&
+      retinaSize.width === renderCanvas.width
     ) {
       return false;
     }
@@ -319,8 +390,8 @@ export class CanvasManager {
 
     const canvasSize = this.size;
 
-    this.element.width = canvasSize.width = retinaSize.width;
-    this.element.height = canvasSize.height = retinaSize.height;
+    renderCanvas.width = canvasSize.width = retinaSize.width;
+    renderCanvas.height = canvasSize.height = retinaSize.height;
 
     if (this._container.started) {
       container.particles.setResizeFactor({
@@ -334,10 +405,10 @@ export class CanvasManager {
 
   /**
    * Sets the pointer events style on the canvas
-   * @param type
+   * @param type - The pointer-events value to apply.
    */
   setPointerEvents(type: string): void {
-    const element = this.element;
+    const element = this.domElement;
 
     if (!element) {
       return;
@@ -372,7 +443,7 @@ export class CanvasManager {
    * The window resize event handler
    */
   async windowResize(): Promise<void> {
-    if (!this.element || !this.resize()) {
+    if (!this.domElement || !this.resize()) {
       return;
     }
 
@@ -396,7 +467,7 @@ export class CanvasManager {
   };
 
   private readonly _initStyle: () => void = () => {
-    const element = this.element,
+    const element = this.domElement,
       options = this._container.actualOptions;
 
     if (!element) {
@@ -425,7 +496,7 @@ export class CanvasManager {
   };
 
   private readonly _repairStyle: () => void = () => {
-    const element = this.element;
+    const element = this.domElement;
 
     if (!element) {
       return;
@@ -452,7 +523,7 @@ export class CanvasManager {
   };
 
   private readonly _resetOriginalStyle: () => void = () => {
-    const element = this.element,
+    const element = this.domElement,
       originalStyle = this._originalStyle;
 
     if (!element || !originalStyle) {
@@ -471,7 +542,7 @@ export class CanvasManager {
   };
 
   private readonly _setFullScreenStyle: () => void = () => {
-    const element = this.element;
+    const element = this.domElement;
 
     if (!element) {
       return;
