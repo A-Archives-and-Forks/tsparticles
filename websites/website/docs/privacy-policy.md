@@ -20,14 +20,15 @@ This policy covers the docs website and related pages served from `particles.js.
 ## Legal basis and consent
 
 - Essential technical storage is used for site operation.
-- Analytics technologies are enabled only after explicit consent.
+- Analytics cookies are enabled only after explicit consent.
+- When analytics consent is not granted, the site may use cookieless, aggregate analytics measurement (Google Consent Mode) where legally permitted.
 - Advertising can run in non-personalized mode when consent for personalized ads is not granted, where legally permitted and configured.
 - You can reject consent and continue using the docs.
 
 ## Consent storage
 
 - Consent choice is stored locally in browser storage under a site-specific key.
-- No analytics/ad tracking is activated before consent is accepted.
+- Consent choice controls whether analytics/ads storage can be used.
 
 ## Data sharing
 

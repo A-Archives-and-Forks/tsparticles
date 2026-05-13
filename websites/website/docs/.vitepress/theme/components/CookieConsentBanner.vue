@@ -68,14 +68,14 @@ onMounted(() => {
     <p class="cookie-banner__title">Privacy settings</p>
     <p class="cookie-banner__text">
       Choose how this site can use analytics and advertising technologies. You can continue with essential only, accept
-      all, or save custom preferences.
+      all, or save custom preferences. With analytics disabled, we only keep anonymous cookieless measurement enabled.
       <a :href="trackingConfig.cookiePolicyPath">Cookie Policy</a>
       and
       <a :href="trackingConfig.privacyPolicyPath">Privacy Policy</a>.
     </p>
     <label class="cookie-banner__option">
       <input v-model="preferences.analytics" type="checkbox" />
-      <span>Analytics (Google Analytics)</span>
+      <span>Analytics cookies (Google Analytics)</span>
     </label>
     <label class="cookie-banner__option">
       <input v-model="preferences.adsense" type="checkbox" />

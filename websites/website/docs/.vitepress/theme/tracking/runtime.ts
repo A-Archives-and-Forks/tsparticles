@@ -13,6 +13,28 @@ const ADSENSE_SCRIPT_ID = "tsparticles-adsense-loader";
 let gaInitialized = false;
 let adSenseInitialized = false;
 let consentApplied: CookieConsentPreferences | undefined;
+let consentDefaultsInitialized = false;
+
+function initConsentModeDefaults(): void {
+  if (consentDefaultsInitialized) {
+    return;
+  }
+
+  const trackingWindow = ensureGtagStub();
+
+  if (!trackingWindow?.gtag) {
+    return;
+  }
+
+  trackingWindow.gtag("consent", "default", {
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+
+  consentDefaultsInitialized = true;
+}
 
 function getTrackingWindow(): TrackingWindow | undefined {
   if (typeof globalThis.window === "undefined") {
@@ -59,6 +81,8 @@ function initGoogleAnalytics(): void {
   if (!trackingConfig.isAnalyticsEnabled || gaInitialized) {
     return;
   }
+
+  initConsentModeDefaults();
 
   const trackingWindow = ensureGtagStub();
 
@@ -139,6 +163,14 @@ function sameConsent(a: CookieConsentPreferences, b: CookieConsentPreferences): 
   return a.analytics === b.analytics && a.adsense === b.adsense;
 }
 
+function canTrackAnalytics(): boolean {
+  if (!trackingConfig.isAnalyticsEnabled || !consentApplied) {
+    return false;
+  }
+
+  return consentApplied.analytics || trackingConfig.analyticsCookielessOnReject;
+}
+
 export function applyConsent(preferences: CookieConsentPreferences): void {
   if (consentApplied && sameConsent(consentApplied, preferences)) {
     return;
@@ -147,9 +179,7 @@ export function applyConsent(preferences: CookieConsentPreferences): void {
   updateConsentMode(preferences);
   updateAdSensePersonalization(preferences);
 
-  if (preferences.analytics) {
-    initGoogleAnalytics();
-  }
+  initGoogleAnalytics();
 
   if (preferences.adsense || trackingConfig.adSenseNonPersonalizedOnReject) {
     initGoogleAdSense();
@@ -159,7 +189,7 @@ export function applyConsent(preferences: CookieConsentPreferences): void {
 }
 
 export function trackPageView(path: string): void {
-  if (!trackingConfig.isAnalyticsEnabled || !consentApplied?.analytics) {
+  if (!canTrackAnalytics()) {
     return;
   }
 
@@ -173,7 +203,7 @@ export function trackPageView(path: string): void {
 }
 
 export function trackEvent(eventName: string, params?: Record<string, unknown>): void {
-  if (!trackingConfig.isAnalyticsEnabled || !consentApplied?.analytics) {
+  if (!canTrackAnalytics()) {
     return;
   }
 
