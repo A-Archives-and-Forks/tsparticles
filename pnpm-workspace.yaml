@@ -7,7 +7,8 @@ packages:
   - effects/*
   - engine
   - interactions/*
-  - interactions/*/*
+  - interactions/external/*
+  - interactions/particles/*
   - wrappers/*
   - wrappers/inferno-hooks
   - templates/*
