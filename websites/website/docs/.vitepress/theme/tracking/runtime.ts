@@ -5,6 +5,7 @@ type TrackingWindow = Window & {
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
   adsbygoogle?: unknown[] & { requestNonPersonalizedAds?: 0 | 1 };
+  __tsparticlesPageLevelAdsEnabled?: boolean;
 };
 
 const GA_SCRIPT_ID = "tsparticles-ga-loader";
@@ -116,10 +117,14 @@ function initGoogleAdSense(): void {
   }
 
   trackingWindow.adsbygoogle ??= [];
-  trackingWindow.adsbygoogle.push({
-    google_ad_client: trackingConfig.googleAdSenseClientId,
-    enable_page_level_ads: true,
-  });
+
+  if (!trackingWindow.__tsparticlesPageLevelAdsEnabled) {
+    trackingWindow.adsbygoogle.push({
+      google_ad_client: trackingConfig.googleAdSenseClientId,
+      enable_page_level_ads: true,
+    });
+    trackingWindow.__tsparticlesPageLevelAdsEnabled = true;
+  }
 
   adSenseInitialized = true;
 }
@@ -144,6 +149,8 @@ function updateConsentMode(preferences: CookieConsentPreferences): void {
   if (!trackingConfig.isAnalyticsEnabled && !trackingConfig.isAdSenseEnabled) {
     return;
   }
+
+  initConsentModeDefaults();
 
   const trackingWindow = ensureGtagStub();
 

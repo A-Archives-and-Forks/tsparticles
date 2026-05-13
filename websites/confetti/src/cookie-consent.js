@@ -131,6 +131,7 @@ function initConsentDefaults() {
 }
 
 function updateConsentMode(activeConsent) {
+  initConsentDefaults();
   ensureGtagStub();
 
   window.gtag('consent', 'update', {
