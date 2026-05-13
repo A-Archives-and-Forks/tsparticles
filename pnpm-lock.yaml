@@ -6850,15 +6850,6 @@ importers:
         version: link:../../plugins/interactivity/dist
     publishDirectory: dist
 
-  interactions/light/dist:
-    dependencies:
-      '@tsparticles/engine':
-        specifier: 4.0.0-beta.16
-        version: link:../../../engine/dist
-      '@tsparticles/plugin-interactivity':
-        specifier: 4.0.0-beta.16
-        version: link:../../../plugins/interactivity/dist
-
   interactions/particles/attract:
     devDependencies:
       '@tsparticles/cli-build':
