@@ -1,10 +1,4 @@
-import {
-  type CanvasContextType,
-  type IShapeDrawData,
-  double,
-  half,
-  itemFromSingleOrMultiple,
-} from "@tsparticles/engine";
+import { type IShapeDrawData, double, half, itemFromSingleOrMultiple } from "@tsparticles/engine";
 import type { TextParticle } from "./TextParticle.js";
 
 export const validTypes = ["text", "character", "char", "multiline-text"];
@@ -69,7 +63,7 @@ export function drawText(data: IShapeDrawData<TextParticle>): void {
  * @param stroke -
  */
 function drawTextLine(
-  context: CanvasContextType,
+  context: OffscreenCanvasRenderingContext2D,
   line: string,
   size: number,
   index: number,

@@ -1,14 +1,4 @@
-import {
-  type CanvasContextType,
-  type IRgb,
-  double,
-  doublePI,
-  getStyleFromRgb,
-  half,
-  originPoint,
-  safeDocument,
-  triple,
-} from "@tsparticles/engine";
+import { type IRgb, double, doublePI, getStyleFromRgb, half, originPoint, triple } from "@tsparticles/engine";
 import type { ICardData } from "./ICardData.js";
 import { SuitType } from "./SuitType.js";
 import { drawPath } from "@tsparticles/path-utils";
@@ -42,7 +32,7 @@ const cardWidthRatio = (double * double) / triple,
  * @param canvasSettings -
  */
 export function drawRoundedCard(
-  ctx: CanvasContextType,
+  ctx: OffscreenCanvasRenderingContext2D,
   radius: number,
   cardData: ICardData,
   hdr: boolean,
@@ -61,19 +51,8 @@ export function drawRoundedCard(
     let cachedData = cardsCache.get(cacheKey);
 
     if (!cachedData) {
-      let cacheCanvas: HTMLCanvasElement | OffscreenCanvas, cacheCtx: CanvasContextType | null;
-
-      if (typeof OffscreenCanvas === "undefined") {
-        cacheCanvas = safeDocument().createElement("canvas");
-
-        cacheCanvas.width = cardWidth;
-        cacheCanvas.height = cardHeight;
-
+      const cacheCanvas = new OffscreenCanvas(cardWidth, cardHeight),
         cacheCtx = cacheCanvas.getContext("2d", canvasSettings);
-      } else {
-        cacheCanvas = new OffscreenCanvas(cardWidth, cardHeight);
-        cacheCtx = cacheCanvas.getContext("2d", canvasSettings);
-      }
 
       if (cacheCtx) {
         cacheCtx.translate(halfWidth, halfHeight);
@@ -108,7 +87,7 @@ function getCacheKey(radius: number, hdr: boolean, cardData: ICardData): string 
  * @param ctx -
  * @param radius -
  */
-function drawRoundedCardBack(ctx: CanvasContextType, radius: number): void {
+function drawRoundedCardBack(ctx: OffscreenCanvasRenderingContext2D, radius: number): void {
   drawCardBody(ctx, radius);
 }
 
@@ -118,7 +97,12 @@ function drawRoundedCardBack(ctx: CanvasContextType, radius: number): void {
  * @param cardData -
  * @param hdr -
  */
-function drawRoundedCardFront(ctx: CanvasContextType, radius: number, cardData: ICardData, hdr: boolean): void {
+function drawRoundedCardFront(
+  ctx: OffscreenCanvasRenderingContext2D,
+  radius: number,
+  cardData: ICardData,
+  hdr: boolean,
+): void {
   const { suit, value } = cardData,
     cardWidth = radius * cardWidthRatio,
     cardHeight = radius * cardHeightRatio,
@@ -202,7 +186,7 @@ function drawRoundedCardFront(ctx: CanvasContextType, radius: number, cardData: 
  * @param ctx -
  * @param radius -
  */
-function drawCardBody(ctx: CanvasContextType, radius: number): void {
+function drawCardBody(ctx: OffscreenCanvasRenderingContext2D, radius: number): void {
   const cardWidth = radius * cardWidthRatio,
     cardHeight = radius * cardHeightRatio,
     halfWidth = cardWidth * half,

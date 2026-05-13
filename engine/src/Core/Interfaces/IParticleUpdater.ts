@@ -1,4 +1,3 @@
-import type { CanvasContextType } from "../../Types/CanvasContextType.js";
 import type { IDelta } from "./IDelta.js";
 import type { IParticleColorStyle } from "./IParticleColorStyle.js";
 import type { IParticleTransformValues } from "./IParticleTransformValues.js";
@@ -18,7 +17,7 @@ export interface IParticleUpdater {
   /** Returns custom color styles for a particle */
   getColorStyles?: (
     particle: Particle,
-    context: CanvasContextType,
+    context: OffscreenCanvasRenderingContext2D,
     radius: number,
     opacity: number,
   ) => IParticleColorStyle;
