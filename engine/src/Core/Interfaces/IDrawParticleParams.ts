@@ -1,4 +1,3 @@
-import type { CanvasContextType } from "../../Types/CanvasContextType.js";
 import type { Container } from "../Container.js";
 import type { IDelta } from "./IDelta.js";
 import type { IParticleColorStyle } from "./IParticleColorStyle.js";
@@ -20,7 +19,7 @@ export interface IDrawParticleParams {
   /**
    * The canvas context to draw on
    */
-  context: CanvasContextType;
+  context: OffscreenCanvasRenderingContext2D;
   /**
    * This variable contains the delta between the current frame and the previous frame
    */

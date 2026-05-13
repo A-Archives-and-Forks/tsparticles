@@ -1,6 +1,5 @@
 import {
   AnimationStatus,
-  type CanvasContextType,
   type Container,
   GradientType,
   type ICoordinates,
@@ -56,7 +55,7 @@ export class GradientUpdater implements IParticleUpdater {
    */
   getColorStyles(
     particle: GradientParticle,
-    context: CanvasContextType,
+    context: OffscreenCanvasRenderingContext2D,
     radius: number,
     opacity: number,
   ): IParticleColorStyle {

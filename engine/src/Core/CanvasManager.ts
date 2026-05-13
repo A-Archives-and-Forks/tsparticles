@@ -5,7 +5,6 @@ import type { Container } from "./Container.js";
 import type { IContainerPlugin } from "./Interfaces/IContainerPlugin.js";
 import type { ICoordinates } from "./Interfaces/ICoordinates.js";
 import type { IDimension } from "./Interfaces/IDimension.js";
-import type { ParticlesCanvasType } from "../Types/ParticlesCanvasType.js";
 import type { PluginManager } from "./Utils/PluginManager.js";
 import { RenderManager } from "./RenderManager.js";
 
@@ -40,7 +39,7 @@ const transferredCanvases = new WeakMap<HTMLCanvasElement, OffscreenCanvas>(),
       throw new TypeError("OffscreenCanvas transfer failed");
     }
   },
-  isHtmlCanvasElement = (canvas: ParticlesCanvasType): canvas is HTMLCanvasElement => {
+  isHtmlCanvasElement = (canvas: HTMLCanvasElement | OffscreenCanvas): canvas is HTMLCanvasElement => {
     return typeof HTMLCanvasElement !== "undefined" && canvas instanceof HTMLCanvasElement;
   };
 
@@ -106,7 +105,7 @@ export class CanvasManager {
    * The canvas used for rendering and as source for the 2D context.
    * This is an OffscreenCanvas when a DOM canvas is provided.
    */
-  renderCanvas?: ParticlesCanvasType;
+  renderCanvas?: OffscreenCanvas;
 
   /**
    * The particles canvas dimension
@@ -280,7 +279,7 @@ export class CanvasManager {
    * Loads the canvas HTML element
    * @param canvas - the canvas source element or OffscreenCanvas
    */
-  loadCanvas(canvas: ParticlesCanvasType): void {
+  loadCanvas(canvas: HTMLCanvasElement | OffscreenCanvas): void {
     if (this._generated && this.domElement) {
       this.domElement.remove();
     }
@@ -290,7 +289,7 @@ export class CanvasManager {
 
     this.domElement = domCanvas;
     this._generated = domCanvas ? domCanvas.dataset[generatedAttribute] === "true" : false;
-    this.renderCanvas = domCanvas ? getTransferredCanvas(domCanvas) : canvas;
+    this.renderCanvas = domCanvas ? getTransferredCanvas(domCanvas) : (canvas as OffscreenCanvas);
 
     const domElement = this.domElement;
 

@@ -1,5 +1,4 @@
 import {
-  type CanvasContextType,
   type Container,
   type IShapeDrawData,
   type IShapeDrawer,
@@ -9,7 +8,6 @@ import {
   getRangeMax,
   isInArray,
   itemFromSingleOrMultiple,
-  safeDocument,
 } from "@tsparticles/engine";
 import { drawEmoji, validTypes } from "./Utils.js";
 import type { EmojiParticle } from "./EmojiParticle.js";
@@ -38,7 +36,7 @@ export class EmojiDrawer implements IShapeDrawer<EmojiParticle> {
 
   /**
    * Draws the emoji shape
-   * @param data
+   * @param data -
    */
   draw(data: IShapeDrawData<EmojiParticle>): void {
     const key = data.particle.emojiDataKey;
@@ -82,7 +80,7 @@ export class EmojiDrawer implements IShapeDrawer<EmojiParticle> {
 
   /**
    * Cleans up emoji data when particle is destroyed
-   * @param particle
+   * @param particle -
    */
   particleDestroy(particle: EmojiParticle): void {
     particle.emojiDataKey = undefined;
@@ -90,8 +88,8 @@ export class EmojiDrawer implements IShapeDrawer<EmojiParticle> {
 
   /**
    * Initializes the emoji shape for a particle
-   * @param container
-   * @param particle
+   * @param container -
+   * @param particle -
    */
   particleInit(container: Container, particle: EmojiParticle): void {
     const shapeData = particle.shapeData as unknown as IEmojiShape;
@@ -132,22 +130,9 @@ export class EmojiDrawer implements IShapeDrawer<EmojiParticle> {
     const padding = emojiOptions.padding * double,
       maxSize = getRangeMax(particle.size.value),
       fullSize = maxSize + padding,
-      canvasSize = fullSize * double;
-
-    let cacheCanvas: HTMLCanvasElement | OffscreenCanvas, context: CanvasContextType | null;
-
-    if (typeof OffscreenCanvas === "undefined") {
-      const canvas = safeDocument().createElement("canvas");
-
-      canvas.width = canvasSize;
-      canvas.height = canvasSize;
-
-      context = canvas.getContext("2d", container.canvas.render.settings);
-      cacheCanvas = canvas;
-    } else {
-      cacheCanvas = new OffscreenCanvas(canvasSize, canvasSize);
+      canvasSize = fullSize * double,
+      cacheCanvas = new OffscreenCanvas(canvasSize, canvasSize),
       context = cacheCanvas.getContext("2d", container.canvas.render.settings);
-    }
 
     if (!context) {
       return;

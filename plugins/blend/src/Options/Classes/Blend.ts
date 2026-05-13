@@ -12,7 +12,7 @@ export class Blend implements IBlend, IOptionLoader<IBlend> {
 
   /**
    * Canvas composite operation
-   * values here: https://developer.mozilla.org/en-US/docs/Web/API/CanvasContextType/globalCompositeOperation
+   * values here: https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvasRenderingContext2D/globalCompositeOperation
    */
   mode: GlobalCompositeOperation;
 

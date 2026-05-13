@@ -13,6 +13,7 @@ const currentConsent = ref<CookieConsentPreferences>(defaultCookieConsentPrefere
 function syncConsent(preferences?: CookieConsentPreferences): void {
   currentConsent.value = preferences ?? defaultCookieConsentPreferences;
   applyConsent(currentConsent.value);
+  trackPageView(route.path);
 }
 
 function onConsentChange(event: Event): void {
@@ -37,9 +38,7 @@ onBeforeUnmount(() => {
 watch(
   () => route.path,
   (path) => {
-    if (currentConsent.value.analytics) {
-      trackPageView(path);
-    }
+    trackPageView(path);
   },
   { immediate: true },
 );

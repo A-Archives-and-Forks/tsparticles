@@ -1,5 +1,4 @@
 import {
-  type CanvasContextType,
   type Container,
   type ICoordinates,
   type IDimension,
@@ -12,7 +11,7 @@ import { generateRandomPointOnPathPerimeter, generateRandomPointWithinPath } fro
 import type { EmittersPathShapeOptions } from "./Options/Classes/EmittersPathShapeOptions.js";
 
 export class EmittersPathShape extends EmitterShapeBase<EmittersPathShapeOptions> {
-  checkContext: CanvasContextType;
+  checkContext: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
   path: Path2D;
   points: ICoordinates[];
 

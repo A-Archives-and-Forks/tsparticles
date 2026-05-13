@@ -2,6 +2,7 @@ const CONSENT_KEY = 'tsparticles-confetti/cookie-consent-v1';
 const GA_MEASUREMENT_ID = 'G-80MY3TZM79';
 const ADSENSE_CLIENT_ID = 'ca-pub-1784552607103901';
 const ADSENSE_NON_PERSONALIZED_ON_REJECT = true;
+const ANALYTICS_COOKIELESS_ON_REJECT = true;
 
 const defaultConsent = {
   analytics: false,
@@ -11,6 +12,8 @@ const defaultConsent = {
 let consent = readConsent();
 let analyticsInitialized = false;
 let adsenseInitialized = false;
+let consentDefaultsInitialized = false;
+let initialPageViewTracked = false;
 
 function readConsent() {
   try {
@@ -78,6 +81,7 @@ function initAnalytics() {
   }
 
   ensureGtagStub();
+  initConsentDefaults();
   loadScript('ga-script', `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`);
   window.gtag('js', new Date());
   window.gtag('config', GA_MEASUREMENT_ID, {
@@ -109,6 +113,23 @@ function initAdSense() {
   adsenseInitialized = true;
 }
 
+function initConsentDefaults() {
+  if (consentDefaultsInitialized) {
+    return;
+  }
+
+  ensureGtagStub();
+
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  });
+
+  consentDefaultsInitialized = true;
+}
+
 function updateConsentMode(activeConsent) {
   ensureGtagStub();
 
@@ -126,13 +147,33 @@ function updateAdSensePersonalization(activeConsent) {
     activeConsent.adsense || !ADSENSE_NON_PERSONALIZED_ON_REJECT ? 0 : 1;
 }
 
+function canTrackAnalytics(activeConsent) {
+  return !!activeConsent && (activeConsent.analytics || ANALYTICS_COOKIELESS_ON_REJECT);
+}
+
+function trackInitialPageView(activeConsent) {
+  if (initialPageViewTracked || !canTrackAnalytics(activeConsent) || !globalThis.gtag) {
+    return;
+  }
+
+  globalThis.gtag('event', 'page_view', {
+    page_location: globalThis.location.href,
+    page_path: globalThis.location.pathname,
+    page_title: document.title,
+  });
+
+  initialPageViewTracked = true;
+}
+
 function applyConsent(activeConsent) {
   updateConsentMode(activeConsent);
   updateAdSensePersonalization(activeConsent);
 
-  if (activeConsent.analytics) {
+  if (canTrackAnalytics(activeConsent)) {
     initAnalytics();
   }
+
+  trackInitialPageView(activeConsent);
 
   if (activeConsent.adsense || ADSENSE_NON_PERSONALIZED_ON_REJECT) {
     initAdSense();
@@ -170,11 +211,12 @@ function createBanner() {
         <p class="cookie-consent-title">Privacy settings</p>
         <p class="cookie-consent-text">
           Choose how this site can use analytics and advertising technologies.
+          If analytics cookies are disabled, anonymous cookieless measurement remains enabled.
           Read the <a class="cookie-consent-link" href="/cookie-policy.html" target="_blank" rel="noopener noreferrer">cookie policy</a>.
         </p>
         <label class="cookie-consent-option">
           <input id="cookieConsentAnalytics" type="checkbox" ${consentState.analytics ? 'checked' : ''} />
-          <span>Analytics</span>
+          <span>Analytics cookies</span>
         </label>
         <label class="cookie-consent-option">
           <input id="cookieConsentAdsense" type="checkbox" ${consentState.adsense ? 'checked' : ''} />
@@ -226,5 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
     get() {
       return consent || defaultConsent;
     },
+    allowsCookielessAnalytics: ANALYTICS_COOKIELESS_ON_REJECT,
   };
 });

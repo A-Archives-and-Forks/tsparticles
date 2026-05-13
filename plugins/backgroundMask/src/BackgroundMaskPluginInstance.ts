@@ -1,5 +1,4 @@
 import {
-  type CanvasContextType,
   type IContainerPlugin,
   type PluginManager,
   getStyleFromRgb,
@@ -48,7 +47,7 @@ export class BackgroundMaskPluginInstance implements IContainerPlugin {
     return true;
   }
 
-  drawSettingsCleanup(context: CanvasContextType): void {
+  drawSettingsCleanup(context: OffscreenCanvasRenderingContext2D): void {
     if (!this._defaultCompositeValue) {
       return;
     }
@@ -56,7 +55,7 @@ export class BackgroundMaskPluginInstance implements IContainerPlugin {
     context.globalCompositeOperation = this._defaultCompositeValue;
   }
 
-  drawSettingsSetup(context: CanvasContextType): void {
+  drawSettingsSetup(context: OffscreenCanvasRenderingContext2D): void {
     const previousComposite = context.globalCompositeOperation,
       backgroundMask = this._container.actualOptions.backgroundMask;
 

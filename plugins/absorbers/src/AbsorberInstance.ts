@@ -1,5 +1,4 @@
 import {
-  type CanvasContextType,
   type Container,
   type ICoordinates,
   type IDelta,
@@ -230,7 +229,7 @@ export class AbsorberInstance {
    * The draw method, for drawing the absorber in the canvas
    * @param context - the canvas 2d context used for drawing
    */
-  draw(context: CanvasContextType): void {
+  draw(context: OffscreenCanvasRenderingContext2D): void {
     context.translate(this.position.x, this.position.y);
     context.beginPath();
     context.arc(originPoint.x, originPoint.y, this.size, minAngle, maxAngle, false);

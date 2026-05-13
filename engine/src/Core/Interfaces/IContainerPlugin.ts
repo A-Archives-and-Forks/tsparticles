@@ -1,4 +1,3 @@
-import type { CanvasContextType } from "../../Types/CanvasContextType.js";
 import type { ExportResult } from "../../Types/ExportResult.js";
 import type { ICoordinates } from "./ICoordinates.js";
 import type { IDelta } from "./IDelta.js";
@@ -16,25 +15,25 @@ export interface IContainerPlugin {
   /** Checks if a particle position is valid, with retry count */
   checkParticlePosition?: (particle: Particle, position: ICoordinates, tryCount: number) => boolean;
   /** Clears plugin-specific drawings from the canvas */
-  clearDraw?: (context: CanvasContextType, delta: IDelta) => void;
+  clearDraw?: (context: OffscreenCanvasRenderingContext2D, delta: IDelta) => void;
   /** Validates a click position */
   clickPositionValid?: (position: ICoordinates) => boolean;
   /** Cleans up plugin resources */
   destroy?: () => void;
   /** Draws plugin content on the canvas */
-  draw?: (context: CanvasContextType, delta: IDelta) => void;
+  draw?: (context: OffscreenCanvasRenderingContext2D, delta: IDelta) => void;
   /** Draws a particle managed by the plugin */
-  drawParticle?: (context: CanvasContextType, particle: Particle, delta: IDelta) => void;
+  drawParticle?: (context: OffscreenCanvasRenderingContext2D, particle: Particle, delta: IDelta) => void;
   /** Cleanup after drawing a particle */
-  drawParticleCleanup?: (context: CanvasContextType, particle: Particle, delta: IDelta) => void;
+  drawParticleCleanup?: (context: OffscreenCanvasRenderingContext2D, particle: Particle, delta: IDelta) => void;
   /** Setup before drawing a particle */
-  drawParticleSetup?: (context: CanvasContextType, particle: Particle, delta: IDelta) => void;
+  drawParticleSetup?: (context: OffscreenCanvasRenderingContext2D, particle: Particle, delta: IDelta) => void;
   /** Applies canvas transform before drawing a particle */
   drawParticleTransform?: (data: IShapeDrawData) => void;
   /** Cleanup after drawing settings */
-  drawSettingsCleanup?: (context: CanvasContextType, delta: IDelta) => void;
+  drawSettingsCleanup?: (context: OffscreenCanvasRenderingContext2D, delta: IDelta) => void;
   /** Setup before drawing settings */
-  drawSettingsSetup?: (context: CanvasContextType, delta: IDelta) => void;
+  drawSettingsSetup?: (context: OffscreenCanvasRenderingContext2D, delta: IDelta) => void;
   /** Exports the container content */
   export?: (type: string, data: Record<string, unknown>) => Promise<ExportResult>;
   /** Initializes the plugin */

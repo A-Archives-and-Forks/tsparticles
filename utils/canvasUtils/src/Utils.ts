@@ -1,5 +1,5 @@
+import type { CanvasPixelData, ITextDataOptions, TextLineData } from "./types.js";
 import {
-  type CanvasContextType,
   type ICoordinates,
   type IDimension,
   type IRgba,
@@ -10,7 +10,6 @@ import {
   originPoint,
   safeDocument,
 } from "@tsparticles/engine";
-import type { CanvasPixelData, ITextDataOptions, TextLineData } from "./types.js";
 
 const defaultWidth = 0,
   indexesOffset = {
@@ -28,7 +27,7 @@ const defaultWidth = 0,
  * @param begin - The start point of the line.
  * @param end - The end point of the line.
  */
-export function drawLine(context: CanvasContextType, begin: ICoordinates, end: ICoordinates): void {
+export function drawLine(context: OffscreenCanvasRenderingContext2D, begin: ICoordinates, end: ICoordinates): void {
   context.beginPath();
   context.moveTo(begin.x, begin.y);
   context.lineTo(end.x, end.y);
@@ -43,7 +42,7 @@ export function drawLine(context: CanvasContextType, begin: ICoordinates, end: I
  * @returns the canvas pixel data
  */
 export function getCanvasImageData(
-  ctx: CanvasContextType,
+  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   size: IDimension,
   offset: number,
   clear = true,

@@ -1,6 +1,5 @@
 import "./pathseg.js";
 import {
-  type CanvasContextType,
   type IContainerPlugin,
   type ICoordinates,
   type IDelta,
@@ -87,7 +86,7 @@ export class PolygonMaskInstance implements IContainerPlugin {
   }
 
   /** @inheritDoc */
-  draw(context: CanvasContextType): void {
+  draw(context: OffscreenCanvasRenderingContext2D): void {
     if (!this.paths?.length) {
       return;
     }

@@ -47,14 +47,19 @@ const updateShareLinks = function () {
   });
 };
 
-const hasAnalyticsConsent = function () {
+const canTrackAnalytics = function () {
   const consentApi = window.tsParticlesConfettiConsent;
+  const preferences = consentApi?.get?.();
 
-  return !!consentApi?.get?.()?.analytics;
+  if (!preferences) {
+    return false;
+  }
+
+  return !!preferences.analytics || !!consentApi?.allowsCookielessAnalytics;
 };
 
 const trackShare = function (platform) {
-  if (!hasAnalyticsConsent() || !window.gtag) {
+  if (!canTrackAnalytics() || !window.gtag) {
     return;
   }
 
@@ -66,7 +71,7 @@ const trackShare = function (platform) {
 };
 
 const trackCopyLink = function () {
-  if (!hasAnalyticsConsent() || !window.gtag) {
+  if (!canTrackAnalytics() || !window.gtag) {
     return;
   }
 
