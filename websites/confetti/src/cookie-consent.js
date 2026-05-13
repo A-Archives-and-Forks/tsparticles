@@ -96,6 +96,10 @@ function initAdSense() {
     return;
   }
 
+  // Auto-ads are configured via the AdSense dashboard and activated automatically
+  // by the script when loaded with ?client=ca-pub-XXXXX — no manual push needed.
+  // Pushing enable_page_level_ads manually conflicts with the script's own init
+  // and causes "Only one 'enable_page_level_ads' allowed per page" TagError.
   loadScript(
     'adsense-script',
     `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`,
@@ -105,10 +109,6 @@ function initAdSense() {
   );
 
   window.adsbygoogle = window.adsbygoogle || [];
-  window.adsbygoogle.push({
-    google_ad_client: ADSENSE_CLIENT_ID,
-    enable_page_level_ads: true,
-  });
 
   adsenseInitialized = true;
 }

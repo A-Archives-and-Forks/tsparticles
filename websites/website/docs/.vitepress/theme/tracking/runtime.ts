@@ -5,7 +5,6 @@ type TrackingWindow = Window & {
   dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
   adsbygoogle?: unknown[] & { requestNonPersonalizedAds?: 0 | 1 };
-  __tsparticlesPageLevelAdsEnabled?: boolean;
 };
 
 const GA_SCRIPT_ID = "tsparticles-ga-loader";
@@ -105,6 +104,9 @@ function initGoogleAdSense(): void {
     return;
   }
 
+  // Load the AdSense script with the client ID in the URL.
+  // Auto-ads are configured via the AdSense dashboard; the script enables them
+  // automatically when loaded with ?client=ca-pub-XXXXX — no manual push needed.
   loadScriptOnce(
     ADSENSE_SCRIPT_ID,
     `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${trackingConfig.googleAdSenseClientId}`,
@@ -117,14 +119,6 @@ function initGoogleAdSense(): void {
   }
 
   trackingWindow.adsbygoogle ??= [];
-
-  if (!trackingWindow.__tsparticlesPageLevelAdsEnabled) {
-    trackingWindow.adsbygoogle.push({
-      google_ad_client: trackingConfig.googleAdSenseClientId,
-      enable_page_level_ads: true,
-    });
-    trackingWindow.__tsparticlesPageLevelAdsEnabled = true;
-  }
 
   adSenseInitialized = true;
 }
