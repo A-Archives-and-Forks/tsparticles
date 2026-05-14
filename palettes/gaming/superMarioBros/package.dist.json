@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tsparticles/tsparticles.git",
-    "directory": "palettes/gaming/super-mario-bros"
+    "directory": "palettes/gaming/superMarioBros"
   },
   "keywords": [
     "front-end",
