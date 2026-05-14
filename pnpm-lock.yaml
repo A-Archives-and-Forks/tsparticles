@@ -5700,7 +5700,7 @@ importers:
         version: link:../../palettes/atmospheric/sunsetBinary/dist
       '@tsparticles/palette-super-mario-bros':
         specifier: workspace:*
-        version: link:../../palettes/gaming/super-mario-bros/dist
+        version: link:../../palettes/gaming/superMarioBros/dist
       '@tsparticles/palette-supernova':
         specifier: workspace:*
         version: link:../../palettes/space/supernova/dist
@@ -8427,7 +8427,7 @@ importers:
         version: link:../../../cli/commands/build
     publishDirectory: dist
 
-  palettes/gaming/super-mario-bros:
+  palettes/gaming/superMarioBros:
     dependencies:
       '@tsparticles/engine':
         specifier: workspace:*
@@ -12356,7 +12356,7 @@ importers:
         version: link:../../palettes/atmospheric/sunsetBinary/dist
       '@tsparticles/palette-super-mario-bros':
         specifier: workspace:*
-        version: link:../../palettes/gaming/super-mario-bros/dist
+        version: link:../../palettes/gaming/superMarioBros/dist
       '@tsparticles/palette-supernova':
         specifier: workspace:*
         version: link:../../palettes/space/supernova/dist
