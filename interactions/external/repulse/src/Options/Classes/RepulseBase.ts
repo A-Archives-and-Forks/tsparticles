@@ -1,5 +1,5 @@
 import { EasingType, type EasingTypeAlt, type IOptionLoader, type RecursivePartial, isNull } from "@tsparticles/engine";
-import type { IRepulseBase } from "../Interfaces/IRepulseBase.js";
+import type { IRepulseBase, IRepulseRestore } from "../Interfaces/IRepulseBase.js";
 
 /**
  * Repulse mode base options
@@ -15,6 +15,8 @@ export abstract class RepulseBase implements IRepulseBase, IOptionLoader<IRepuls
   factor;
   /** Maximum repulse speed */
   maxSpeed;
+  /** Restore behavior after repulse interaction */
+  restore: IRepulseRestore;
   /** Repulse speed */
   speed;
 
@@ -25,6 +27,12 @@ export abstract class RepulseBase implements IRepulseBase, IOptionLoader<IRepuls
     this.speed = 1;
     this.maxSpeed = 50;
     this.easing = EasingType.easeOutQuad;
+    this.restore = {
+      enable: false,
+      delay: 0,
+      speed: 0.08,
+      follow: true,
+    };
   }
 
   /** @inheritDoc */
@@ -55,6 +63,13 @@ export abstract class RepulseBase implements IRepulseBase, IOptionLoader<IRepuls
 
     if (data.maxSpeed !== undefined) {
       this.maxSpeed = data.maxSpeed;
+    }
+
+    if (data.restore !== undefined) {
+      this.restore.enable = data.restore.enable ?? this.restore.enable;
+      this.restore.delay = data.restore.delay ?? this.restore.delay;
+      this.restore.speed = data.restore.speed ?? this.restore.speed;
+      this.restore.follow = data.restore.follow ?? this.restore.follow;
     }
   }
 }

@@ -24,6 +24,7 @@ const minFactor = 1,
  * @param attractRadius - The radius of the attraction effect
  * @param area - The area to query particles from
  * @param queryCb - Callback to filter which particles to attract
+ * @param onAttractParticle - Callback invoked after a particle is selected for attraction
  */
 function processAttract(
   pluginManager: PluginManager,
@@ -32,6 +33,7 @@ function processAttract(
   attractRadius: number,
   area: BaseRange,
   queryCb: (p: Particle) => boolean,
+  onAttractParticle?: (particle: Particle) => void,
 ): void {
   const attractOptions = container.actualOptions.interactivity?.modes.attract;
 
@@ -53,6 +55,7 @@ function processAttract(
     updateVector.x = !distance ? velocity : (dx / distance) * attractFactor;
     updateVector.y = !distance ? velocity : (dy / distance) * attractFactor;
 
+    onAttractParticle?.(particle);
     particle.position.subFrom(updateVector);
   }
 }
@@ -63,12 +66,14 @@ function processAttract(
  * @param container - The attract container
  * @param interactivityData - The interactivity data containing mouse position
  * @param enabledCb - Callback to check if a particle should be attracted
+ * @param onAttractParticle - Callback invoked after a particle is selected for attraction
  */
 export function clickAttract(
   pluginManager: PluginManager,
   container: AttractContainer,
   interactivityData: IInteractivityData,
   enabledCb: (particle: Particle) => boolean,
+  onAttractParticle?: (particle: Particle) => void,
 ): void {
   container.attract ??= { particles: [] };
 
@@ -98,6 +103,7 @@ export function clickAttract(
       attractRadius,
       new Circle(mousePos.x, mousePos.y, attractRadius),
       (p: Particle) => enabledCb(p),
+      onAttractParticle,
     );
   } else if (attract.clicking === false) {
     attract.particles = [];
@@ -110,12 +116,14 @@ export function clickAttract(
  * @param container - The attract container
  * @param interactivityData - The interactivity data containing mouse position
  * @param enabledCb - Callback to check if a particle should be attracted
+ * @param onAttractParticle - Callback invoked after a particle is selected for attraction
  */
 export function hoverAttract(
   pluginManager: PluginManager,
   container: AttractContainer,
   interactivityData: IInteractivityData,
   enabledCb: (particle: Particle) => boolean,
+  onAttractParticle?: (particle: Particle) => void,
 ): void {
   const mousePos = interactivityData.mouse.position,
     attractRadius = container.retina.attractModeDistance;
@@ -131,5 +139,6 @@ export function hoverAttract(
     attractRadius,
     new Circle(mousePos.x, mousePos.y, attractRadius),
     (p: Particle) => enabledCb(p),
+    onAttractParticle,
   );
 }

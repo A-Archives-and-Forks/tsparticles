@@ -3,22 +3,29 @@ import type { IRgba, ISourceOptions } from "@tsparticles/engine";
 const minFilterValue = 30,
   minFilterAlpha = 0,
   options: ISourceOptions = {
-    key: "imageMask",
-    name: "Image Mask",
+    key: "imageMaskRepulse",
+    name: "Image Mask Repulse Restore",
     smooth: true,
     interactivity: {
       events: {
         onHover: {
           enable: true,
-          mode: "bubble",
+          mode: "repulse",
         },
       },
       modes: {
-        bubble: {
-          distance: 40,
-          duration: 2,
-          opacity: 8,
-          size: 15,
+        repulse: {
+          distance: 50,
+          duration: 0.4,
+          speed: 1,
+          factor: 90,
+          maxSpeed: 80,
+          restore: {
+            enable: true,
+            delay: 0,
+            speed: 0.3,
+            follow: true,
+          },
         },
       },
     },
@@ -26,7 +33,7 @@ const minFilterValue = 30,
       move: {
         direction: "none",
         distance: 10,
-        enable: true,
+        enable: false,
         speed: 1,
       },
       number: {
