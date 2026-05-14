@@ -5521,6 +5521,9 @@ importers:
       '@tsparticles/palette-meteor-impact':
         specifier: workspace:*
         version: link:../../palettes/impact/meteorImpact/dist
+      '@tsparticles/palette-minecraft':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/minecraft/dist
       '@tsparticles/palette-molten-metal':
         specifier: workspace:*
         version: link:../../palettes/fire/moltenMetal/dist
@@ -5587,6 +5590,9 @@ importers:
       '@tsparticles/palette-okabe-ito-accessible':
         specifier: workspace:*
         version: link:../../palettes/spectrum/okabeItoAccessible/dist
+      '@tsparticles/palette-pacman':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/pacman/dist
       '@tsparticles/palette-pastel-cool':
         specifier: workspace:*
         version: link:../../palettes/pastel/cool/dist
@@ -5692,12 +5698,18 @@ importers:
       '@tsparticles/palette-sunset-binary':
         specifier: workspace:*
         version: link:../../palettes/atmospheric/sunsetBinary/dist
+      '@tsparticles/palette-super-mario-bros':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/super-mario-bros/dist
       '@tsparticles/palette-supernova':
         specifier: workspace:*
         version: link:../../palettes/space/supernova/dist
       '@tsparticles/palette-sushi':
         specifier: workspace:*
         version: link:../../palettes/food/sushi/dist
+      '@tsparticles/palette-tetris':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/tetris/dist
       '@tsparticles/palette-thermal-map':
         specifier: workspace:*
         version: link:../../palettes/atmospheric/thermalMap/dist
@@ -8374,6 +8386,62 @@ importers:
     publishDirectory: dist
 
   palettes/food/watermelon:
+    dependencies:
+      '@tsparticles/engine':
+        specifier: workspace:*
+        version: link:../../../engine/dist
+    devDependencies:
+      '@tsparticles/cli-build':
+        specifier: workspace:^
+        version: link:../../../cli/packages/cli-build
+      '@tsparticles/cli-command-build':
+        specifier: workspace:^
+        version: link:../../../cli/commands/build
+    publishDirectory: dist
+
+  palettes/gaming/minecraft:
+    dependencies:
+      '@tsparticles/engine':
+        specifier: workspace:*
+        version: link:../../../engine/dist
+    devDependencies:
+      '@tsparticles/cli-build':
+        specifier: workspace:^
+        version: link:../../../cli/packages/cli-build
+      '@tsparticles/cli-command-build':
+        specifier: workspace:^
+        version: link:../../../cli/commands/build
+    publishDirectory: dist
+
+  palettes/gaming/pacman:
+    dependencies:
+      '@tsparticles/engine':
+        specifier: workspace:*
+        version: link:../../../engine/dist
+    devDependencies:
+      '@tsparticles/cli-build':
+        specifier: workspace:^
+        version: link:../../../cli/packages/cli-build
+      '@tsparticles/cli-command-build':
+        specifier: workspace:^
+        version: link:../../../cli/commands/build
+    publishDirectory: dist
+
+  palettes/gaming/super-mario-bros:
+    dependencies:
+      '@tsparticles/engine':
+        specifier: workspace:*
+        version: link:../../../engine/dist
+    devDependencies:
+      '@tsparticles/cli-build':
+        specifier: workspace:^
+        version: link:../../../cli/packages/cli-build
+      '@tsparticles/cli-command-build':
+        specifier: workspace:^
+        version: link:../../../cli/commands/build
+    publishDirectory: dist
+
+  palettes/gaming/tetris:
     dependencies:
       '@tsparticles/engine':
         specifier: workspace:*
@@ -12109,6 +12177,9 @@ importers:
       '@tsparticles/palette-meteor-impact':
         specifier: workspace:*
         version: link:../../palettes/impact/meteorImpact/dist
+      '@tsparticles/palette-minecraft':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/minecraft/dist
       '@tsparticles/palette-molten-metal':
         specifier: workspace:*
         version: link:../../palettes/fire/moltenMetal/dist
@@ -12175,6 +12246,9 @@ importers:
       '@tsparticles/palette-okabe-ito-accessible':
         specifier: workspace:*
         version: link:../../palettes/spectrum/okabeItoAccessible/dist
+      '@tsparticles/palette-pacman':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/pacman/dist
       '@tsparticles/palette-pastel-cool':
         specifier: workspace:*
         version: link:../../palettes/pastel/cool/dist
@@ -12280,12 +12354,18 @@ importers:
       '@tsparticles/palette-sunset-binary':
         specifier: workspace:*
         version: link:../../palettes/atmospheric/sunsetBinary/dist
+      '@tsparticles/palette-super-mario-bros':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/super-mario-bros/dist
       '@tsparticles/palette-supernova':
         specifier: workspace:*
         version: link:../../palettes/space/supernova/dist
       '@tsparticles/palette-sushi':
         specifier: workspace:*
         version: link:../../palettes/food/sushi/dist
+      '@tsparticles/palette-tetris':
+        specifier: workspace:*
+        version: link:../../palettes/gaming/tetris/dist
       '@tsparticles/palette-thermal-map':
         specifier: workspace:*
         version: link:../../palettes/atmospheric/thermalMap/dist

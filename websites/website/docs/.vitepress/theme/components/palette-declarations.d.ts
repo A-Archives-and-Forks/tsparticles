@@ -52,8 +52,16 @@ declare module "@tsparticles/palette-melon" {
   export function loadMelonPalette(engine: Engine): Promise<void>;
 }
 
+declare module "@tsparticles/palette-minecraft" {
+  export function loadMinecraftPalette(engine: Engine): Promise<void>;
+}
+
 declare module "@tsparticles/palette-mermaid" {
   export function loadMermaidPalette(engine: Engine): Promise<void>;
+}
+
+declare module "@tsparticles/palette-pacman" {
+  export function loadPacmanPalette(engine: Engine): Promise<void>;
 }
 
 declare module "@tsparticles/palette-pineapple" {
@@ -78,6 +86,14 @@ declare module "@tsparticles/palette-spice-rack" {
 
 declare module "@tsparticles/palette-steak" {
   export function loadSteakPalette(engine: Engine): Promise<void>;
+}
+
+declare module "@tsparticles/palette-super-mario-bros" {
+  export function loadSuperMarioBrosPalette(engine: Engine): Promise<void>;
+}
+
+declare module "@tsparticles/palette-tetris" {
+  export function loadTetrisPalette(engine: Engine): Promise<void>;
 }
 
 declare module "@tsparticles/palette-sushi" {
