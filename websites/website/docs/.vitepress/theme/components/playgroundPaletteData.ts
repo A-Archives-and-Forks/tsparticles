@@ -65,15 +65,6 @@ export const paletteGroupDefinitions: readonly PaletteGroupDefinition[] = [
     ],
   },
   {
-    title: "Gaming",
-    slugs: [
-      "minecraft",
-      "pacman",
-      "super-mario-bros",
-      "tetris",
-    ],
-  },
-  {
     title: "Fantasy",
     slugs: [
       "bioluminescence",
@@ -147,6 +138,10 @@ export const paletteGroupDefinitions: readonly PaletteGroupDefinition[] = [
       "fireworks-silver",
       "fireworks-silver-stroke",
     ],
+  },
+  {
+    title: "Gaming",
+    slugs: ["minecraft", "pacman", "super-mario-bros", "tetris"],
   },
   {
     title: "Impact",

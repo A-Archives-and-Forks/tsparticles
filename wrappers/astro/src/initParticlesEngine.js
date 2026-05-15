@@ -4,17 +4,11 @@ import { tsParticles } from "@tsparticles/engine";
 // Kept in src as a .js file so consumers (Vite/dev server/browser) can import it
 // directly from node_modules without requiring TS/.astro compilation.
 
-// Add a small runtime trace so dev logs confirm the module was loaded by the browser.
-// Consumers can remove this once a proper dist/ build is produced.
-console.log("[tsparticles/astro] initParticlesEngine.js loaded");
-
 let initialized = false;
 let initPromise = undefined;
 let initCallback = undefined;
 
 export async function initParticlesEngine(init) {
-  console.log("[tsparticles/astro] initParticlesEngine called");
-
   if (initialized) {
     return;
   }
