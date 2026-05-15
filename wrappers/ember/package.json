@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/ember",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.17",
   "description": "Ember.js component for using tsParticles",
   "keywords": [
     "ember-addon"
@@ -114,7 +114,14 @@
   "nx": {
     "targets": {
       "build": {
-        "inputs": ["production", "^production", "{projectRoot}/addon/**/*", "{projectRoot}/app/**/*", "{projectRoot}/config/**/*", "{projectRoot}/index.js"]
+        "inputs": [
+          "production",
+          "^production",
+          "{projectRoot}/addon/**/*",
+          "{projectRoot}/app/**/*",
+          "{projectRoot}/config/**/*",
+          "{projectRoot}/index.js"
+        ]
       }
     }
   },

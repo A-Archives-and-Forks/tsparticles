@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-beta.17](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.16...v4.0.0-beta.17) (2026-05-15)
+
+### Features
+
+- added new palettes ([9896872](https://github.com/tsparticles/tsparticles/commit/9896872255b5c6f9a90716de20e7a8f383abf804))
+
 # [4.0.0-beta.16](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.15...v4.0.0-beta.16) (2026-05-09)
 
 **Note:** Version bump only for package @tsparticles/palette-pacman

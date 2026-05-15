@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/palette-minecraft",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.17",
   "description": "tsParticles minecraft palette",
   "homepage": "https://particles.js.org",
   "repository": {
@@ -108,7 +108,7 @@
     }
   },
   "dependencies": {
-    "@tsparticles/engine": "4.0.0-beta.16"
+    "@tsparticles/engine": "4.0.0-beta.17"
   },
   "type": "module",
   "jsdelivr": "tsparticles.palette-palette-minecraft.min.js",

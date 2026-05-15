@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/confetti-website",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.17",
   "description": "tsParticles confetti webpage",
   "private": true,
   "type": "module",
@@ -43,10 +43,17 @@
     "vite": "^8.0.12"
   },
   "nx": {
-    "implicitDependencies": ["*", "!@tsparticles/website"],
+    "implicitDependencies": [
+      "*",
+      "!@tsparticles/website"
+    ],
     "targets": {
       "build": {
-        "inputs": ["{projectRoot}/vite.config.js", "production", "^production"]
+        "inputs": [
+          "{projectRoot}/vite.config.js",
+          "production",
+          "^production"
+        ]
       }
     }
   }

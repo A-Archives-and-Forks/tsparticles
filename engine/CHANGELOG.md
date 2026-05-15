@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-beta.17](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.16...v4.0.0-beta.17) (2026-05-15)
+
+### Bug Fixes
+
+- position.z value now is integer, so buckets will work better ([613210a](https://github.com/tsparticles/tsparticles/commit/613210ae8bf5c4e24efb3170795385d270688a07))
+
 # [4.0.0-beta.16](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.15...v4.0.0-beta.16) (2026-05-09)
 
 **Note:** Version bump only for package @tsparticles/engine
