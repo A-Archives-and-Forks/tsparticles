@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/cli-command-create-bundle",
-  "version": "4.0.0-beta.17",
+  "version": "4.0.0",
   "license": "MIT",
   "type": "module",
   "publishConfig": {
