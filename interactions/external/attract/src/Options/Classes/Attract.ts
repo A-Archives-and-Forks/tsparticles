@@ -1,5 +1,5 @@
 import { EasingType, type EasingTypeAlt, type IOptionLoader, type RecursivePartial, isNull } from "@tsparticles/engine";
-import type { IAttract } from "../Interfaces/IAttract.js";
+import type { IAttract, IAttractRestore } from "../Interfaces/IAttract.js";
 
 /** Attract mode options class */
 export class Attract implements IAttract, IOptionLoader<IAttract> {
@@ -18,6 +18,9 @@ export class Attract implements IAttract, IOptionLoader<IAttract> {
   /** Maximum speed of attracted particles */
   maxSpeed;
 
+  /** Restore behavior after attract interaction */
+  restore: IAttractRestore;
+
   /** Attraction speed */
   speed;
 
@@ -28,6 +31,12 @@ export class Attract implements IAttract, IOptionLoader<IAttract> {
     this.factor = 1;
     this.maxSpeed = 50;
     this.speed = 1;
+    this.restore = {
+      enable: false,
+      delay: 0,
+      speed: 0.08,
+      follow: true,
+    };
   }
 
   /** @inheritDoc */
@@ -58,6 +67,13 @@ export class Attract implements IAttract, IOptionLoader<IAttract> {
 
     if (data.speed !== undefined) {
       this.speed = data.speed;
+    }
+
+    if (data.restore !== undefined) {
+      this.restore.enable = data.restore.enable ?? this.restore.enable;
+      this.restore.delay = data.restore.delay ?? this.restore.delay;
+      this.restore.speed = data.restore.speed ?? this.restore.speed;
+      this.restore.follow = data.restore.follow ?? this.restore.follow;
     }
   }
 }

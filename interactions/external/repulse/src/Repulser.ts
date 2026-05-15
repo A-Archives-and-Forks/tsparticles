@@ -37,19 +37,29 @@ const repulseMode = "repulse",
   squarePower = 2,
   minRadius = 0,
   minSpeed = 0,
-  easingOffset = 1;
+  easingOffset = 1,
+  minRestoreSpeed = 0.001,
+  maxRestoreSpeed = 1,
+  restoreEpsilon = 0.5;
+
+interface IRepulseRestoreData {
+  lastInteractionTime: number;
+  target: Vector;
+}
 
 /**
  * Particle repulse manager
  */
 export class Repulser extends ExternalInteractorBase<RepulseContainer> {
-  /** @inheritDoc */
+  /** {@inheritDoc} */
   handleClickMode: (mode: string, interactivityData: IInteractivityData) => void;
 
   private readonly _clickVec: Vector;
+  private readonly _interactedThisFrame;
   private _maxDistance;
   private readonly _normVec: Vector;
   private readonly _pluginManager;
+  private readonly _restoreData;
 
   constructor(pluginManager: PluginManager, container: RepulseContainer) {
     super(container);
@@ -57,7 +67,9 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
     this._pluginManager = pluginManager;
     this._maxDistance = 0;
     this._normVec = Vector.origin;
+    this._interactedThisFrame = new Set<InteractivityParticle>();
     this._clickVec = Vector.origin;
+    this._restoreData = new Map<InteractivityParticle, IRepulseRestoreData>();
 
     container.repulse ??= { particles: [] };
 
@@ -101,12 +113,12 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
     return this._maxDistance;
   }
 
-  /** @inheritDoc */
+  /** {@inheritDoc} */
   clear(): void {
     // do nothing
   }
 
-  /** @inheritDoc */
+  /** {@inheritDoc} */
   init(): void {
     const container = this.container,
       repulse = container.actualOptions.interactivity?.modes.repulse;
@@ -120,8 +132,13 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
     container.retina.repulseModeDistance = repulse.distance * container.retina.pixelRatio;
   }
 
-  /** @inheritDoc */
+  /**
+   * {@inheritDoc}
+   * @param interactivityData
+   */
   interact(interactivityData: IInteractivityData): void {
+    this._interactedThisFrame.clear();
+
     const container = this.container,
       options = container.actualOptions,
       mouseMoveStatus = interactivityData.status === mouseMoveEvent,
@@ -148,9 +165,15 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
         this._singleSelectorRepulse(interactivityData, selector, div);
       });
     }
+
+    this._restoreParticles();
   }
 
-  /** @inheritDoc */
+  /**
+   * {@inheritDoc}
+   * @param interactivityData
+   * @param particle
+   */
   isEnabled(interactivityData: IInteractivityData, particle?: InteractivityParticle): boolean {
     const container = this.container,
       options = container.actualOptions,
@@ -176,7 +199,11 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
     return isInArray(repulseMode, hoverMode) || isInArray(repulseMode, clickMode) || divRepulse;
   }
 
-  /** @inheritDoc */
+  /**
+   * {@inheritDoc}
+   * @param options
+   * @param sources
+   */
   loadModeOptions(
     options: Modes & RepulseMode,
     ...sources: RecursivePartial<(IModes & IRepulseMode) | undefined>[]
@@ -188,7 +215,7 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
     }
   }
 
-  /** @inheritDoc */
+  /** {@inheritDoc} */
   reset(): void {
     // do nothing
   }
@@ -236,6 +263,8 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
           force = (-repulseRadius * velocity) / d;
 
         if (d <= repulseRadius) {
+          this._trackInteractedParticle(particle);
+
           repulse.particles.push(particle);
 
           this._clickVec.x = dx;
@@ -293,9 +322,64 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
       this._normVec.x = !distance ? velocity : (dx / distance) * repulseFactor;
       this._normVec.y = !distance ? velocity : (dy / distance) * repulseFactor;
 
+      this._trackInteractedParticle(particle);
       particle.position.addTo(this._normVec);
     }
   };
+
+  private _restoreParticles(): void {
+    const restore = this.container.actualOptions.interactivity?.modes.repulse?.restore;
+
+    if (!restore?.enable || !this._restoreData.size) {
+      return;
+    }
+
+    const now = Date.now(),
+      restoreDelay = restore.delay * millisecondsToSeconds,
+      restoreSpeed = Math.max(minRestoreSpeed, Math.min(maxRestoreSpeed, restore.speed));
+
+    for (const [particle, restoreData] of this._restoreData) {
+      if (this._interactedThisFrame.has(particle)) {
+        continue;
+      }
+
+      if (particle.destroyed) {
+        this._restoreData.delete(particle);
+
+        continue;
+      }
+
+      const target = restoreData.target;
+
+      if (now - restoreData.lastInteractionTime < restoreDelay) {
+        continue;
+      }
+
+      if (restore.follow && particle.options.move.enable) {
+        target.x += particle.velocity.x;
+        target.y += particle.velocity.y;
+        target.z += particle.velocity.z;
+      }
+
+      const dx = target.x - particle.position.x,
+        dy = target.y - particle.position.y,
+        dz = target.z - particle.position.z;
+
+      particle.position.x += dx * restoreSpeed;
+      particle.position.y += dy * restoreSpeed;
+      particle.position.z += dz * restoreSpeed;
+
+      if (Math.abs(dx) <= restoreEpsilon && Math.abs(dy) <= restoreEpsilon) {
+        particle.position.x = target.x;
+        particle.position.y = target.y;
+        particle.position.z = target.z;
+
+        this._restoreData.delete(particle);
+
+        continue;
+      }
+    }
+  }
 
   private readonly _singleSelectorRepulse: (
     interactivityData: IInteractivityData,
@@ -338,4 +422,34 @@ export class Repulser extends ExternalInteractorBase<RepulseContainer> {
       this._processRepulse(interactivityData, pos, repulseRadius, area, divRepulse);
     });
   };
+
+  private _trackInteractedParticle(particle: InteractivityParticle): void {
+    this._interactedThisFrame.add(particle);
+
+    const restore = this.container.actualOptions.interactivity?.modes.repulse?.restore;
+
+    if (!restore?.enable) {
+      return;
+    }
+
+    const now = Date.now();
+    let restoreData = this._restoreData.get(particle);
+
+    if (!restoreData) {
+      restoreData = {
+        target: particle.position.copy(),
+        lastInteractionTime: now,
+      };
+
+      this._restoreData.set(particle, restoreData);
+    }
+
+    restoreData.lastInteractionTime = now;
+
+    if (restore.follow && particle.options.move.enable) {
+      restoreData.target.x += particle.velocity.x;
+      restoreData.target.y += particle.velocity.y;
+      restoreData.target.z += particle.velocity.z;
+    }
+  }
 }

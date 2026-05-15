@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-beta.17](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.16...v4.0.0-beta.17) (2026-05-15)
+
+### Bug Fixes
+
+- escape raw svg tags in SVGPathElement docs ([b9780c5](https://github.com/tsparticles/tsparticles/commit/b9780c5be6000db220b0b5c96f8d12e7119fa1db))
+- fixed some demos code ([9a665dc](https://github.com/tsparticles/tsparticles/commit/9a665dca30251553a4189cdc871eb6bbf2866c59))
+- position.z value now is integer, so buckets will work better ([613210a](https://github.com/tsparticles/tsparticles/commit/613210ae8bf5c4e24efb3170795385d270688a07))
+
+### Features
+
+- added new palettes ([9896872](https://github.com/tsparticles/tsparticles/commit/9896872255b5c6f9a90716de20e7a8f383abf804))
+- added restore behavior options for attract and repulse interactions ([c2eefee](https://github.com/tsparticles/tsparticles/commit/c2eefeebda99ee6623544367eba8063bfd9ce699))
+
 # [4.0.0-beta.16](https://github.com/tsparticles/tsparticles/compare/v4.0.0-beta.15...v4.0.0-beta.16) (2026-05-09)
 
 **Note:** Version bump only for package @tsparticles/workspace

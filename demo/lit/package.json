@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/lit-demo",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.17",
   "private": true,
   "description": "A simple web component",
   "type": "module",
@@ -58,7 +58,7 @@
     "rollup": "^3.0.0",
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-terser": "^7.0.0",
-    "sinon": "^16.0.0",
+    "sinon": "^22.0.0",
     "typescript": "^5.0.0",
     "web-component-analyzer": "^1.0.0"
   }

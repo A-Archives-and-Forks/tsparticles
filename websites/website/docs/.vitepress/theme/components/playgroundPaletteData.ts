@@ -65,6 +65,15 @@ export const paletteGroupDefinitions: readonly PaletteGroupDefinition[] = [
     ],
   },
   {
+    title: "Gaming",
+    slugs: [
+      "minecraft",
+      "pacman",
+      "super-mario-bros",
+      "tetris",
+    ],
+  },
+  {
     title: "Fantasy",
     slugs: [
       "bioluminescence",

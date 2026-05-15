@@ -113,6 +113,13 @@ Source folder: <https://github.com/tsparticles/tsparticles/tree/main/palettes>
 - `fireworks-silver`
 - `fireworks-silver-stroke`
 
+### Gaming (4 palettes)
+
+- `minecraft`
+- `pacman`
+- `super-mario-bros`
+- `tetris`
+
 ### Impact (7 palettes)
 
 - `bullet-hit`

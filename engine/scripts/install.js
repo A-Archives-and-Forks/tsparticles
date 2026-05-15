@@ -1,251 +1,352 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 
-async function checkErrors() {
-    const angularParticlesFoundError = "ng-particles-found",
-        particlesJsFoundError = "particles.js-found",
-        reactParticlesJsFoundError = "react-particles-js-found",
-        reactParticlesFoundError = "react-particles-found",
-        reactTsParticlesFoundError = "react-tsparticles-found",
-        vue2ParticlesFoundError = "vue2-particles-found",
-        vue3ParticlesFoundError = "vue3-particles-found";
-
-    try {
-        console.log("Thank you for installing tsParticles.");
-        console.log("Remember to checkout the official website https://particles.js.org to explore some samples.");
-        console.log("You can find more samples on CodePen too: https://codepen.io/collection/DPOage");
-        console.log("If you need documentation you can find it here: https://particles.js.org/docs");
-        console.log(
-            "Don't forget to star the tsParticles repository, if you like the project and want to support it: https://github.com/tsparticles/tsparticles"
-        );
-
-        const rootPkgPath = path.join(process.env.INIT_CWD, "package.json"),
-            pkgSettings = await fs.readJson(rootPkgPath);
-
-        if (!pkgSettings) {
-            return;
+const ERR_INCOMPATIBLE = "incompatible-package-found",
+  ERR_DEPRECATED = "deprecated-package-found",
+  incompatible = [
+    {
+      package: "particles.js",
+      message:
+        "The package particles.js can't be installed with tsparticles, since it can lead to unexpected behaviors. Please uninstall particles.js and remove it from the package.json file.",
+    },
+    {
+      package: "particlesjs",
+      message:
+        "The package particlesjs can't be installed with tsparticles, since it can lead to unexpected behaviors. Please uninstall particlesjs and remove it from the package.json file.",
+    },
+  ],
+  deprecated = [
+    {
+      package: "react-particles-js",
+      replacement: "@tsparticles/react",
+      message: "The package react-particles-js has been deprecated and is not supported anymore.",
+    },
+    {
+      package: "react-tsparticles",
+      replacement: "@tsparticles/react",
+      message: "The package react-tsparticles has been deprecated and is not supported anymore.",
+    },
+    {
+      package: "react-particles",
+      replacement: "@tsparticles/react",
+      message: "The package react-particles has been deprecated and is not supported anymore.",
+    },
+    {
+      package: "ng-particles",
+      replacement: "@tsparticles/angular",
+      message: "The package ng-particles has been deprecated and is not supported anymore.",
+    },
+    {
+      package: "vue3-particles",
+      replacement: "@tsparticles/vue3",
+      message: "The package vue3-particles has been deprecated and is not supported anymore.",
+    },
+    {
+      package: "vue2-particles",
+      replacement: "@tsparticles/vue2",
+      message: "The package vue2-particles has been deprecated and is not supported anymore.",
+    },
+  ],
+  wrappers = [
+    {
+      framework: "react",
+      detector: deps => deps["react"] || deps["next"],
+      wrapper: "@tsparticles/react",
+      message:
+        "Found React installed. Please install @tsparticles/react to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/react/#readme",
+    },
+    {
+      framework: "nextjs",
+      detector: deps => deps["next"],
+      wrapper: "@tsparticles/nextjs",
+      message:
+        "Found Next.js installed. Please install @tsparticles/nextjs to use tsParticles with a component optimized for Next.js.",
+      url: "https://github.com/tsparticles/nextjs/#readme",
+    },
+    {
+      framework: "angular",
+      detector: deps => deps["@angular/core"],
+      wrapper: "@tsparticles/angular",
+      message:
+        "Found Angular installed. Please install @tsparticles/angular to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/angular/#readme",
+    },
+    {
+      framework: "vue3",
+      detector: deps => {
+        if (deps["nuxt"]) {
+          return false;
         }
 
-        const dependencies = pkgSettings.dependencies;
+        const version = deps["vue"];
 
-        if (!dependencies) {
-            return;
+        return version && parseInt(version) > 2;
+      },
+      wrapper: "@tsparticles/vue3",
+      message:
+        "Found Vue 3.x installed. Please install @tsparticles/vue3 to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/vue3/#readme",
+    },
+    {
+      framework: "vue2",
+      detector: deps => {
+        if (deps["nuxt"]) {
+          return false;
         }
 
-        if (dependencies["particles.js"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package particles.js can't be installed with tsparticles, since it can lead to unexpected behaviors, please uninstall particles.js and remove it from the package.json file."
-            );
+        const version = deps["vue"];
 
-            throw new Error(reactParticlesJsFoundError);
+        return version && parseInt(version) === 2;
+      },
+      wrapper: "@tsparticles/vue2",
+      message:
+        "Found Vue 2.x installed. Please install @tsparticles/vue2 to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/vue2/#readme",
+    },
+    {
+      wrapper: "@tsparticles/vue3",
+      message:
+        "Found Vue 3.x installed. Please install @tsparticles/vue3 to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/vue3/#readme",
+    },
+    {
+      framework: "vue2",
+      detector: deps => {
+        const vue = deps["vue"],
+          nuxt = deps["nuxt"],
+          version = vue || nuxt;
+
+        return version && parseInt(version) === 2;
+      },
+      wrapper: "@tsparticles/vue2",
+      message:
+        "Found Vue 2.x installed. Please install @tsparticles/vue2 to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/vue2/#readme",
+    },
+    {
+      framework: "nuxt",
+      detector: deps => deps["nuxt"],
+      wrapper: null,
+      dynamic: true,
+      nuxtWrappers: [
+        { minVersion: 4, wrapper: "@tsparticles/nuxt4", url: "https://github.com/tsparticles/nuxt4/#readme" },
+        { minVersion: 3, wrapper: "@tsparticles/nuxt3", url: "https://github.com/tsparticles/nuxt3/#readme" },
+        { minVersion: 0, wrapper: "@tsparticles/nuxt2", url: "https://github.com/tsparticles/nuxt2/#readme" },
+      ],
+      message: version => {
+        const major = parseInt(version);
+
+        if (major >= 4) {
+          return "Found Nuxt 4.x installed. Please install @tsparticles/nuxt4 to use tsParticles with a component optimized for Nuxt 4.";
         }
 
-        if (dependencies["particlesjs"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package particlesjs can't be installed with tsparticles, since it can lead to unexpected behaviors, please uninstall particlesjs and remove it from the package.json file."
-            );
-
-            throw new Error(reactParticlesJsFoundError);
+        if (major >= 3) {
+          return "Found Nuxt 3.x installed. Please install @tsparticles/nuxt3 to use tsParticles with a component optimized for Nuxt 3.";
         }
 
-        if (dependencies["react-particles-js"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package react-particles-js has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to react-particles package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once react-particles-js is removed from the package.json file."
-            );
+        return "Found Nuxt 2.x installed. Please install @tsparticles/nuxt2 to use tsParticles with a component optimized for Nuxt 2.";
+      },
+    },
+    {
+      framework: "svelte",
+      detector: deps => deps["svelte"],
+      wrapper: "@tsparticles/svelte",
+      message:
+        "Found Svelte installed. Please install @tsparticles/svelte to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/svelte/#readme",
+    },
+    {
+      framework: "solid",
+      detector: deps => deps["solid-js"],
+      wrapper: "@tsparticles/solid",
+      message:
+        "Found Solid.js installed. Please install @tsparticles/solid to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/solid/#readme",
+    },
+    {
+      framework: "preact",
+      detector: deps => deps["preact"],
+      wrapper: "@tsparticles/preact",
+      message:
+        "Found Preact installed. Please install @tsparticles/preact to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/preact/#readme",
+    },
+    {
+      framework: "inferno",
+      detector: deps => deps["inferno"],
+      wrapper: "@tsparticles/inferno",
+      message:
+        "Found Inferno installed. Please install @tsparticles/inferno to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/inferno/#readme",
+    },
+    {
+      framework: "jquery",
+      detector: deps => deps["jquery"],
+      wrapper: "@tsparticles/jquery",
+      message:
+        "Found jQuery installed. Please install @tsparticles/jquery to use tsParticles with a plugin ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/jquery/#readme",
+    },
+    {
+      framework: "riot",
+      detector: deps => deps["riot"],
+      wrapper: "@tsparticles/riot",
+      message:
+        "Found Riot.js installed. Please install @tsparticles/riot to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/riot/#readme",
+    },
+    {
+      framework: "lit",
+      detector: deps => deps["lit"],
+      wrapper: "@tsparticles/lit",
+      message:
+        "Found Lit installed. Please install @tsparticles/lit to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/lit/#readme",
+    },
+    {
+      framework: "ember",
+      detector: deps => deps["ember-source"],
+      wrapper: "@tsparticles/ember",
+      message:
+        "Found Ember.js installed. Please install @tsparticles/ember to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/ember/#readme",
+    },
+    {
+      framework: "qwik",
+      detector: deps => deps["@builder.io/qwik"],
+      wrapper: "@tsparticles/qwik",
+      message:
+        "Found Qwik installed. Please install @tsparticles/qwik to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/qwik/#readme",
+    },
+    {
+      framework: "astro",
+      detector: deps => deps["astro"],
+      wrapper: "@tsparticles/astro",
+      message:
+        "Found Astro installed. Please install @tsparticles/astro to use tsParticles with a component ready to use and easier to configure.",
+      url: "https://github.com/tsparticles/astro/#readme",
+    },
+    {
+      framework: "webcomponents",
+      detector: deps => true,
+      wrapper: "@tsparticles/webcomponents",
+      message:
+        "You can also use @tsparticles/webcomponents to use tsParticles as a standard Web Component, framework-agnostic.",
+      url: "https://github.com/tsparticles/webcomponents/#readme",
+      alwaysSuggest: true,
+    },
+  ];
 
-            throw new Error(reactParticlesJsFoundError);
-        }
+function logInfo(msg) {
+  console.log(msg);
+}
 
-        if (dependencies["react-tsparticles"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package react-tsparticles has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to @tsparticles/react package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once react-tsparticles is removed from the package.json file."
-            );
+function logWarn(msg) {
+  console.warn("\x1b[43m\x1b[30m%s\x1b[0m", msg);
+}
 
-            throw new Error(reactTsParticlesFoundError);
-        }
+function logError(msg) {
+  console.error("\x1b[31m%s\x1b[0m", msg);
+}
 
-        if (dependencies["react-particles"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package react-particles has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to @tsparticles/react package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once react-particles is removed from the package.json file."
-            );
+function checkIncompatible(dependencies) {
+  for (const entry of incompatible) {
+    if (dependencies[entry.package]) {
+      logError(entry.message);
 
-            throw new Error(reactParticlesFoundError);
-        }
-
-        if (dependencies["react"] || dependencies["next"]) {
-            if (!dependencies["@tsparticles/react"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found React installed. Please download react-particles to use tsParticles with a component ready to use and easier to configure."
-                );
-                console.log(
-                    "You can read more about the component here: https://github.com/tsparticles/react/#readme"
-                );
-            }
-        }
-
-        if (dependencies["ng-particles"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package ng-particles has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to @tsparticles/angular package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once ng-particles is removed from the package.json file."
-            );
-
-            throw new Error(angularParticlesFoundError);
-        }
-
-        if (dependencies["@angular/core"]) {
-            if (!dependencies["@tsparticles/angular"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found Angular installed. Please download ng-particles to use tsParticles with a component ready to use and easier to configure."
-                );
-                console.log("You can read more about the component here: https://github.com/tsparticles/angular/#readme");
-            }
-        }
-
-        if (dependencies["vue3-particles"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package vue3-particles has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to @tsparticles/vue3 package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once vue3-particles is removed from the package.json file."
-            );
-
-            throw new Error(vue3ParticlesFoundError);
-        }
-
-        if (dependencies["vue2-particles"]) {
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "The package vue2-particles has been deprecated and is not supported anymore."
-            );
-            console.error("\x1b[31m%s\x1b[0m", "Please consider switching to @tsparticles/vue2 package.");
-            console.error(
-                "\x1b[31m%s\x1b[0m",
-                "This error will be fixed once vue2-particles is removed from the package.json file."
-            );
-
-            throw new Error(vue2ParticlesFoundError);
-        }
-
-        if (dependencies["vue"] || dependencies["nuxt"]) {
-            const vueVersion = dependencies["vue"],
-                nuxtVersion = dependencies["nuxt"],
-                vueMajor = (vueVersion || nuxtVersion).split(".")[0];
-
-            if (vueMajor > 2) {
-                if (!dependencies["@tsparticles/vue3"]) {
-                    console.warn(
-                        "\x1b[43m\x1b[30m%s\x1b[0m",
-                        "Found Vue 3.x installed. Please Download @tsparticles/vue3 to use tsParticles with a component ready to use and easier to configure."
-                    );
-                    console.log(
-                        "You can read more about the component here: https://github.com/tsparticles/vue3/#readme"
-                    );
-                }
-            } else {
-                if (!dependencies["@tsparticles/vue2"]) {
-                    console.warn(
-                        "\x1b[43m\x1b[30m%s\x1b[0m",
-                        "Found Vue 2.x installed. Please Download @tsparticles/vue2 to use tsParticles with a component ready to use and easier to configure."
-                    );
-                    console.log(
-                        "You can read more about the component here: https://github.com/tsparticles/vue2/#readme"
-                    );
-                }
-            }
-        }
-
-        if (dependencies["svelte"]) {
-            if (!dependencies["@tsparticles/svelte"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found Svelte installed. Please Download @tsparticles/svelte to use tsParticles with a component ready to use and easier to configure."
-                );
-                console.log(
-                    "You can read more about the component here: https://github.com/tsparticles/svelte/#readme"
-                );
-            }
-        }
-
-        if (dependencies["inferno"]) {
-            if (!dependencies["inferno-particles"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found Inferno installed. Please Download inferno-particles to use tsParticles with a component ready to use and easier to configure."
-                );
-                console.log(
-                    "You can read more about the component here: https://github.com/tsparticles/tsparticles/blob/main/components/inferno/README.md"
-                );
-            }
-        }
-
-        if (dependencies["preact"]) {
-            if (!dependencies["preact-particles"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found Preact installed. Please Download preact-particles to use tsParticles with a component ready to use and easier to configure."
-                );
-                console.log(
-                    "You can read more about the component here: https://github.com/tsparticles/tsparticles/blob/main/components/preact/README.md"
-                );
-            }
-        }
-
-        if (dependencies["jquery"]) {
-            if (!dependencies["jquery-particles"]) {
-                console.warn(
-                    "\x1b[43m\x1b[30m%s\x1b[0m",
-                    "Found jQuery installed. Please Download jquery-particles to use tsParticles with a plugin ready to use and easier to configure."
-                );
-                console.log(
-                    "You can read more about the plugin here: https://github.com/tsparticles/tsparticles/blob/main/components/jquery/README.md"
-                );
-            }
-        }
-    } catch (error) {
-        if (error.message === reactParticlesJsFoundError ||
-            error.message === particlesJsFoundError ||
-            error.message === reactParticlesFoundError ||
-            error.message === reactTsParticlesFoundError ||
-            error.message === angularParticlesFoundError ||
-            error.message === vue2ParticlesFoundError ||
-            error.message === vue3ParticlesFoundError
-        ) {
-            throw error;
-        }
-
-        console.log(error);
+      throw new Error(ERR_INCOMPATIBLE);
     }
+  }
+}
+
+function checkDeprecated(dependencies) {
+  for (const entry of deprecated) {
+    if (dependencies[entry.package]) {
+      logError(entry.message);
+      logError(`Please consider switching to ${entry.replacement} instead.`);
+      logError("This warning will be resolved once the deprecated package is removed from package.json.");
+
+      throw new Error(ERR_DEPRECATED);
+    }
+  }
+}
+
+function checkWrappers(dependencies) {
+  for (const w of wrappers) {
+    if (!w.detector(dependencies)) {
+      continue;
+    }
+
+    if (w.alwaysSuggest && dependencies[w.wrapper]) {
+      continue;
+    }
+
+    if (w.dynamic && w.nuxtWrappers) {
+      const nuxtVersion = dependencies["nuxt"],
+        major = parseInt(nuxtVersion) || 0;
+
+      let match;
+
+      for (const nw of w.nuxtWrappers) {
+        if (major >= nw.minVersion) {
+          match = nw;
+          break;
+        }
+      }
+
+      if (match) {
+        if (!dependencies[match.wrapper]) {
+          logWarn(w.message(nuxtVersion));
+          logInfo(`You can read more here: ${match.url}`);
+        }
+      }
+
+      continue;
+    }
+
+    if (!dependencies[w.wrapper]) {
+      logWarn(w.message);
+      logInfo(`You can read more here: ${w.url}`);
+    }
+  }
+}
+
+async function checkErrors() {
+  const initialMessage =
+    "Thank you for installing tsParticles.\n" +
+    "Remember to checkout the official website https://particles.js.org to explore some samples.\n" +
+    "You can find more samples on CodePen too: https://codepen.io/collection/DPOage\n" +
+    "If you need documentation you can find it here: https://particles.js.org/docs\n" +
+    "Don't forget to star the tsParticles repository, if you like the project and want to support it: https://github.com/tsparticles/tsparticles";
+
+  try {
+    console.log(initialMessage);
+
+    const rootPkgPath = path.join(process.env.INIT_CWD, "package.json"),
+      pkgSettings = await fs.readJson(rootPkgPath);
+
+    if (!pkgSettings) {
+      return;
+    }
+
+    const dependencies = pkgSettings.dependencies;
+
+    if (!dependencies) {
+      return;
+    }
+
+    checkIncompatible(dependencies);
+    checkDeprecated(dependencies);
+    checkWrappers(dependencies);
+  } catch (error) {
+    if (error.message === ERR_INCOMPATIBLE || error.message === ERR_DEPRECATED) {
+      throw error;
+    }
+
+    console.log(error);
+  }
 }
 
 checkErrors();

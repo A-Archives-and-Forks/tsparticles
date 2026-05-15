@@ -57,10 +57,6 @@ const minFilterValue = 30,
     },
     background: {
       color: "#000000",
-      image: "",
-      position: "50% 50%",
-      repeat: "no-repeat",
-      size: "cover",
     },
   };
 

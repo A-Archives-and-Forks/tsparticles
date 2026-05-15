@@ -205,6 +205,10 @@ import { loadIrisPalette } from "@tsparticles/palette-iris";
 import { loadMacaronPalette } from "@tsparticles/palette-macaron";
 import { loadMelonPalette } from "@tsparticles/palette-melon";
 import { loadMermaidPalette } from "@tsparticles/palette-mermaid";
+import { loadMinecraftPalette } from "@tsparticles/palette-minecraft";
+import { loadPacmanPalette } from "@tsparticles/palette-pacman";
+import { loadSuperMarioBrosPalette } from "@tsparticles/palette-super-mario-bros";
+import { loadTetrisPalette } from "@tsparticles/palette-tetris";
 import { loadPineapplePalette } from "@tsparticles/palette-pineapple";
 import { loadPizzaPalette } from "@tsparticles/palette-pizza";
 import { loadSakuraPalette } from "@tsparticles/palette-sakura";
@@ -430,6 +434,10 @@ const paletteLoaders: readonly ((engine: Engine) => Promise<void>)[] = [
   loadMacaronPalette,
   loadMelonPalette,
   loadMermaidPalette,
+  loadMinecraftPalette,
+  loadPacmanPalette,
+  loadSuperMarioBrosPalette,
+  loadTetrisPalette,
   loadPineapplePalette,
   loadPizzaPalette,
   loadSakuraPalette,

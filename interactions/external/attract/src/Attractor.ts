@@ -11,7 +11,16 @@ import { type PluginManager, type RecursivePartial, isInArray, millisecondsToSec
 import { clickAttract, hoverAttract } from "./Utils.js";
 import { Attract } from "./Options/Classes/Attract.js";
 
-const attractMode = "attract";
+const attractMode = "attract",
+  minVelocityLengthSq = 0,
+  minRestoreSpeed = 0.001,
+  maxRestoreSpeed = 1,
+  restoreEpsilon = 0.5;
+
+interface IAttractRestoreData {
+  lastInteractionTime: number;
+  target: InteractivityParticle["position"];
+}
 
 /**
  * Particle external attract manager
@@ -20,14 +29,18 @@ export class Attractor extends ExternalInteractorBase<AttractContainer> {
   /** @inheritDoc */
   handleClickMode: (mode: string, interactivityData: IInteractivityData) => void;
 
+  private readonly _interactedThisFrame;
   private _maxDistance;
   private readonly _pluginManager;
+  private readonly _restoreData;
 
   constructor(pluginManager: PluginManager, container: AttractContainer) {
     super(container);
 
     this._pluginManager = pluginManager;
     this._maxDistance = 0;
+    this._interactedThisFrame = new Set<InteractivityParticle>();
+    this._restoreData = new Map<InteractivityParticle, IAttractRestoreData>();
 
     container.attract ??= { particles: [] };
 
@@ -93,6 +106,8 @@ export class Attractor extends ExternalInteractorBase<AttractContainer> {
 
   /** @inheritDoc */
   interact(interactivityData: IInteractivityData): void {
+    this._interactedThisFrame.clear();
+
     const container = this.container,
       options = container.actualOptions,
       mouseMoveStatus = interactivityData.status === mouseMoveEvent,
@@ -106,13 +121,35 @@ export class Attractor extends ExternalInteractorBase<AttractContainer> {
       { enable: clickEnabled, mode: clickMode } = events.onClick;
 
     if (mouseMoveStatus && hoverEnabled && isInArray(attractMode, hoverMode)) {
-      hoverAttract(this._pluginManager, this.container, interactivityData, p => this.isEnabled(interactivityData, p));
+      hoverAttract(
+        this._pluginManager,
+        this.container,
+        interactivityData,
+        p => this.isEnabled(interactivityData, p),
+        p => {
+          this._trackInteractedParticle(p);
+        },
+      );
     } else if (clickEnabled && isInArray(attractMode, clickMode)) {
-      clickAttract(this._pluginManager, this.container, interactivityData, p => this.isEnabled(interactivityData, p));
+      clickAttract(
+        this._pluginManager,
+        this.container,
+        interactivityData,
+        p => this.isEnabled(interactivityData, p),
+        p => {
+          this._trackInteractedParticle(p);
+        },
+      );
     }
+
+    this._restoreParticles();
   }
 
-  /** @inheritDoc */
+  /**
+   * {@inheritDoc}
+   * @param interactivityData
+   * @param particle
+   */
   isEnabled(interactivityData: IInteractivityData, particle?: InteractivityParticle): boolean {
     const container = this.container,
       options = container.actualOptions,
@@ -129,7 +166,11 @@ export class Attractor extends ExternalInteractorBase<AttractContainer> {
     return isInArray(attractMode, hoverMode) || isInArray(attractMode, clickMode);
   }
 
-  /** @inheritDoc */
+  /**
+   * {@inheritDoc}
+   * @param options
+   * @param sources
+   */
   loadModeOptions(
     options: Modes & AttractMode,
     ...sources: RecursivePartial<(IModes & IAttractMode) | undefined>[]
@@ -144,5 +185,90 @@ export class Attractor extends ExternalInteractorBase<AttractContainer> {
   /** @inheritDoc */
   reset(): void {
     // do nothing
+  }
+
+  private _restoreParticles(): void {
+    const restore = this.container.actualOptions.interactivity?.modes.attract?.restore;
+
+    if (!restore?.enable || !this._restoreData.size) {
+      return;
+    }
+
+    const now = Date.now(),
+      restoreDelay = restore.delay * millisecondsToSeconds,
+      restoreSpeed = Math.max(minRestoreSpeed, Math.min(maxRestoreSpeed, restore.speed));
+
+    for (const [particle, restoreData] of this._restoreData) {
+      if (this._interactedThisFrame.has(particle)) {
+        continue;
+      }
+
+      if (particle.destroyed) {
+        this._restoreData.delete(particle);
+
+        continue;
+      }
+
+      const target = restoreData.target;
+
+      if (now - restoreData.lastInteractionTime < restoreDelay) {
+        continue;
+      }
+
+      let dx = target.x - particle.position.x,
+        dy = target.y - particle.position.y,
+        dz = target.z - particle.position.z;
+
+      if (restore.follow && particle.options.move.enable) {
+        const { x: vx, y: vy, z: vz } = particle.velocity,
+          velocityLengthSq = vx * vx + vy * vy + vz * vz;
+
+        if (velocityLengthSq > minVelocityLengthSq) {
+          const parallelScale = (dx * vx + dy * vy + dz * vz) / velocityLengthSq;
+
+          dx -= vx * parallelScale;
+          dy -= vy * parallelScale;
+          dz -= vz * parallelScale;
+        }
+      }
+
+      particle.position.x += dx * restoreSpeed;
+      particle.position.y += dy * restoreSpeed;
+      particle.position.z += dz * restoreSpeed;
+
+      if (Math.abs(dx) <= restoreEpsilon && Math.abs(dy) <= restoreEpsilon) {
+        particle.position.x = target.x;
+        particle.position.y = target.y;
+        particle.position.z = target.z;
+
+        this._restoreData.delete(particle);
+
+        continue;
+      }
+    }
+  }
+
+  private _trackInteractedParticle(particle: InteractivityParticle): void {
+    this._interactedThisFrame.add(particle);
+
+    const restore = this.container.actualOptions.interactivity?.modes.attract?.restore;
+
+    if (!restore?.enable) {
+      return;
+    }
+
+    const now = Date.now();
+    let restoreData = this._restoreData.get(particle);
+
+    if (!restoreData) {
+      restoreData = {
+        target: particle.position.copy(),
+        lastInteractionTime: now,
+      };
+
+      this._restoreData.set(particle, restoreData);
+    }
+
+    restoreData.lastInteractionTime = now;
   }
 }
