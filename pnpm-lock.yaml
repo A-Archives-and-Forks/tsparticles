@@ -13730,7 +13730,7 @@ importers:
         version: 3.2.0(eslint@10.3.0(jiti@2.7.0))
       eslint-plugin-no-only-tests:
         specifier: ^3.3.0
-        version: 3.3.0
+        version: 3.4.0
       jsdom:
         specifier: ^29.0.2
         version: 29.0.2(canvas@3.2.3)
@@ -29469,8 +29469,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-no-only-tests@3.3.0:
-    resolution: {integrity: sha512-brcKcxGnISN2CcVhXJ/kEQlNa0MEfGRtwKtWA16SkqXHKitaKIMrfemJKLKX1YqDU5C/5JY3PvZXd5jEW04e0Q==}
+  eslint-plugin-no-only-tests@3.4.0:
+    resolution: {integrity: sha512-4S3/9Nb7A2tiMcpzEQE9bQSlpeOz6WJkgryBuou/SA8W2x2c8Zf4j0NvTKBjv6qNhF9T79tmkecm/0CHqV0UGg==}
     engines: {node: '>=5.0.0'}
 
   eslint-plugin-node@11.1.0:
@@ -54212,9 +54212,9 @@ snapshots:
       '@types/ember__debug': 4.0.8
       '@types/ember__engine': 4.0.11
       '@types/ember__error': 4.0.6
-      '@types/ember__object': 4.0.12(@babel/core@7.29.0)
+      '@types/ember__object': 4.0.12
       '@types/ember__polyfills': 4.0.6
-      '@types/ember__routing': 4.0.23
+      '@types/ember__routing': 4.0.23(@babel/core@7.29.0)
       '@types/ember__runloop': 4.0.10
       '@types/ember__service': 4.0.9
       '@types/ember__string': 3.0.15
@@ -54342,19 +54342,12 @@ snapshots:
 
   '@types/ember__polyfills@4.0.6': {}
 
-  '@types/ember__routing@4.0.23':
-    dependencies:
-      '@types/ember': 4.0.11
-      '@types/ember__controller': 4.0.12
-      '@types/ember__object': 4.0.12
-      '@types/ember__service': 4.0.9
-
   '@types/ember__routing@4.0.23(@babel/core@7.29.0)':
     dependencies:
       '@types/ember': 4.0.11(@babel/core@7.29.0)
       '@types/ember__controller': 4.0.12
       '@types/ember__object': 4.0.12(@babel/core@7.29.0)
-      '@types/ember__service': 4.0.9
+      '@types/ember__service': 4.0.9(@babel/core@7.29.0)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -64978,7 +64971,7 @@ snapshots:
       resolve: 1.22.12
       semver: 7.8.0
 
-  eslint-plugin-no-only-tests@3.3.0: {}
+  eslint-plugin-no-only-tests@3.4.0: {}
 
   eslint-plugin-node@11.1.0(eslint@10.2.0(jiti@2.7.0)):
     dependencies:
