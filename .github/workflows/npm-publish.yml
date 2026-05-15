@@ -18,6 +18,8 @@ env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
   NX_CLOUD_ACCESS_TOKEN: "${{ secrets.NX_CLOUD_ACCESS_TOKEN }}"
   ZIP_CONCURRENCY: 5
+  RELEASE_UPLOAD_RETRIES: 6
+  RELEASE_RETRY_BASE_DELAY: 10
   IS_STABLE: ${{ !contains(github.ref, '-alpha.') && !contains(github.ref, '-beta.') }}
 
 jobs:
@@ -82,14 +84,31 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # 🧠 Create release (raw GitHub notes)
+      # 🧠 Create release + upload assets with retry/backoff
       - name: Create Release (raw)
         if: env.IS_STABLE == 'true'
         id: release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release-artifacts/*.zip
-          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          source .github/scripts/retry_gh.sh
+
+          TAG="${GITHUB_REF#refs/tags/}"
+
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            retry_gh gh release create "$TAG" --generate-notes
+          fi
+
+          for file in release-artifacts/*.zip; do
+            retry_gh gh release upload "$TAG" "$file" --clobber
+          done
+
+          {
+            echo "body<<EOF"
+            retry_gh gh release view "$TAG" --json body -q .body
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       # ✨ Prettify changelog → per package
       - name: Prettify changelog
@@ -101,10 +120,15 @@ jobs:
       # 🔁 Update release con changelog finale
       - name: Update Release Notes
         if: env.IS_STABLE == 'true'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release-artifacts/*.zip
-          body_path: RELEASE_NOTES.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          source .github/scripts/retry_gh.sh
+
+          TAG="${GITHUB_REF#refs/tags/}"
+
+          retry_gh gh release edit "$TAG" --notes-file RELEASE_NOTES.md
 
       - name: Stop Nx Cloud Session
         run: pnpm nx fix-ci
