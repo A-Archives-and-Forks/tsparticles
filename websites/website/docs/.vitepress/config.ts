@@ -10,6 +10,7 @@ const nav: DefaultTheme.NavItem[] = [
   { text: "Wrappers", link: "/guide/wrappers" },
   { text: "Options", link: "/options/" },
   { text: "API", link: "/docs/", target: "_blank" },
+  { text: "Confetti", link: "https://confetti.js.org", target: "_blank" },
   {
     text: "Sponsor",
     items: [
@@ -423,7 +424,11 @@ export default defineConfig({
   ],
   themeConfig: {
     logo: "https://particles.js.org/tsParticles-64.png",
-    socialLinks: [{ icon: "github", link: "https://github.com/tsparticles/tsparticles" }],
+    socialLinks: [
+      { icon: "github", link: "https://github.com/tsparticles/tsparticles" },
+      { icon: "discord", link: "https://discord.gg/hACwv45Hme" },
+      { icon: "reddit", link: "https://www.reddit.com/r/tsParticles/" },
+    ],
     sidebar,
     search: {
       provider: "local",
