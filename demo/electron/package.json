@@ -20,6 +20,7 @@
   "author": "Matteo Bruni <matteo.bruni@me.com>",
   "license": "MIT",
   "dependencies": {
+    "@tsparticles/canvas-utils": "workspace:*",
     "@tsparticles/basic": "workspace:*",
     "@tsparticles/configs": "workspace:*",
     "@tsparticles/engine": "workspace:*",

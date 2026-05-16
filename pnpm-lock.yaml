@@ -3324,6 +3324,9 @@ importers:
       "@tsparticles/basic":
         specifier: workspace:*
         version: link:../../bundles/basic/dist
+      "@tsparticles/canvas-utils":
+        specifier: workspace:*
+        version: link:../../utils/canvasUtils/dist
       "@tsparticles/configs":
         specifier: workspace:*
         version: link:../../utils/configs/dist
