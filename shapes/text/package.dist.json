@@ -65,11 +65,13 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "@tsparticles/canvas-utils": "4.0.1",
     "@tsparticles/engine": "4.0.1"
   },
   "publishConfig": {
     "access": "public"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@tsparticles/canvas-utils": "4.0.1"
+  }
 }

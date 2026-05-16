@@ -197,8 +197,7 @@
     "./package.json": "./dist/package.json"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "workspace:*",
-    "@tsparticles/path-utils": "workspace:*"
+    "@tsparticles/engine": "workspace:*"
   },
   "devDependencies": {
     "@tsparticles/cli-build": "workspace:^",
@@ -211,5 +210,8 @@
     "directory": "dist",
     "linkDirectory": true
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@tsparticles/path-utils": "workspace:*"
+  }
 }

@@ -99,11 +99,9 @@
     "./package.json": "./dist/package.json"
   },
   "peerDependencies": {
-    "@tsparticles/canvas-utils": "workspace:*",
     "@tsparticles/engine": "workspace:*"
   },
   "devDependencies": {
-    "@tsparticles/canvas-utils": "workspace:*",
     "@tsparticles/cli-build": "workspace:^",
     "@tsparticles/cli-command-build": "workspace:^",
     "@tsparticles/engine": "workspace:*"
@@ -113,5 +111,8 @@
     "directory": "dist",
     "linkDirectory": true
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@tsparticles/canvas-utils": "workspace:*"
+  }
 }
