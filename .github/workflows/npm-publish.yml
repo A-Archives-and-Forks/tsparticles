@@ -64,7 +64,7 @@ jobs:
       # 🚀 Publish npm
       - name: Publish to NPM (OIDC Auth)
         run: |
-          TAG="${GITHUB_REF#refs/tags/}"
+          TAG="${GITHUB_REF_NAME}"
           BASE_CMD="pnpm lerna publish from-package --ignore-scripts"
 
           echo "Publishing tag: $TAG via OIDC"
@@ -95,7 +95,7 @@ jobs:
           set -euo pipefail
           source .github/scripts/retry_gh.sh
 
-          TAG="${GITHUB_REF#refs/tags/}"
+          TAG="${GITHUB_REF_NAME}"
 
           if ! gh release view "$TAG" >/dev/null 2>&1; then
             retry_gh gh release create "$TAG" --generate-notes
@@ -127,7 +127,7 @@ jobs:
           set -euo pipefail
           source .github/scripts/retry_gh.sh
 
-          TAG="${GITHUB_REF#refs/tags/}"
+          TAG="${GITHUB_REF_NAME}"
 
           retry_gh gh release edit "$TAG" --notes-file RELEASE_NOTES.md
 
