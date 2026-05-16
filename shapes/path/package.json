@@ -1,6 +1,6 @@
 {
   "name": "@tsparticles/shape-path",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "tsParticles path shape",
   "homepage": "https://particles.js.org",
   "scripts": {
@@ -113,8 +113,7 @@
     "./package.json": "./dist/package.json"
   },
   "peerDependencies": {
-    "@tsparticles/engine": "workspace:*",
-    "@tsparticles/path-utils": "workspace:*"
+    "@tsparticles/engine": "workspace:*"
   },
   "devDependencies": {
     "@tsparticles/cli-build": "workspace:^",
@@ -127,5 +126,8 @@
     "directory": "dist",
     "linkDirectory": true
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@tsparticles/path-utils": "workspace:*"
+  }
 }

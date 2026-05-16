@@ -3324,6 +3324,9 @@ importers:
       "@tsparticles/basic":
         specifier: workspace:*
         version: link:../../bundles/basic/dist
+      "@tsparticles/canvas-utils":
+        specifier: workspace:*
+        version: link:../../utils/canvasUtils/dist
       "@tsparticles/configs":
         specifier: workspace:*
         version: link:../../utils/configs/dist
@@ -6632,10 +6635,11 @@ importers:
     publishDirectory: dist
 
   interactions/external/connect:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../../cli/packages/cli-build
@@ -6683,10 +6687,11 @@ importers:
     publishDirectory: dist
 
   interactions/external/grab:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../../cli/packages/cli-build
@@ -6894,10 +6899,11 @@ importers:
     publishDirectory: dist
 
   interactions/particles/links:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../../cli/packages/cli-build
@@ -9918,10 +9924,11 @@ importers:
     publishDirectory: dist
 
   plugins/canvasMask:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../cli/packages/cli-build
@@ -10265,10 +10272,11 @@ importers:
     publishDirectory: dist
 
   plugins/emittersShapes/canvas:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../../cli/packages/cli-build
@@ -11148,6 +11156,10 @@ importers:
     publishDirectory: dist
 
   shapes/cards:
+    dependencies:
+      "@tsparticles/path-utils":
+        specifier: workspace:*
+        version: link:../../utils/pathUtils/dist
     devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
@@ -11158,9 +11170,6 @@ importers:
       "@tsparticles/engine":
         specifier: workspace:*
         version: link:../../engine/dist
-      "@tsparticles/path-utils":
-        specifier: workspace:*
-        version: link:../../utils/pathUtils/dist
     publishDirectory: dist
 
   shapes/circle:
@@ -11190,10 +11199,11 @@ importers:
     publishDirectory: dist
 
   shapes/emoji:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../cli/packages/cli-build
@@ -11271,6 +11281,10 @@ importers:
     publishDirectory: dist
 
   shapes/path:
+    dependencies:
+      "@tsparticles/path-utils":
+        specifier: workspace:*
+        version: link:../../utils/pathUtils/dist
     devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
@@ -11281,9 +11295,6 @@ importers:
       "@tsparticles/engine":
         specifier: workspace:*
         version: link:../../engine/dist
-      "@tsparticles/path-utils":
-        specifier: workspace:*
-        version: link:../../utils/pathUtils/dist
     publishDirectory: dist
 
   shapes/polygon:
@@ -11378,10 +11389,11 @@ importers:
     publishDirectory: dist
 
   shapes/text:
-    devDependencies:
+    dependencies:
       "@tsparticles/canvas-utils":
         specifier: workspace:*
         version: link:../../utils/canvasUtils/dist
+    devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
         version: link:../../cli/packages/cli-build
@@ -11657,6 +11669,10 @@ importers:
     publishDirectory: dist
 
   utils/fractalNoise:
+    dependencies:
+      "@tsparticles/smooth-value-noise":
+        specifier: workspace:*
+        version: link:../smoothValueNoise/dist
     devDependencies:
       "@tsparticles/cli-build":
         specifier: workspace:^
@@ -11667,9 +11683,6 @@ importers:
       "@tsparticles/engine":
         specifier: workspace:*
         version: link:../../engine/dist
-      "@tsparticles/smooth-value-noise":
-        specifier: workspace:*
-        version: link:../smoothValueNoise/dist
     publishDirectory: dist
 
   utils/noiseField:
@@ -60414,9 +60427,9 @@ snapshots:
       "@types/ember__debug": 4.0.8
       "@types/ember__engine": 4.0.11
       "@types/ember__error": 4.0.6
-      "@types/ember__object": 4.0.12
+      "@types/ember__object": 4.0.12(@babel/core@7.29.0)
       "@types/ember__polyfills": 4.0.6
-      "@types/ember__routing": 4.0.23(@babel/core@7.29.0)
+      "@types/ember__routing": 4.0.23
       "@types/ember__runloop": 4.0.10
       "@types/ember__service": 4.0.9
       "@types/ember__string": 3.0.15
@@ -60544,12 +60557,19 @@ snapshots:
 
   "@types/ember__polyfills@4.0.6": {}
 
+  "@types/ember__routing@4.0.23":
+    dependencies:
+      "@types/ember": 4.0.11
+      "@types/ember__controller": 4.0.12
+      "@types/ember__object": 4.0.12
+      "@types/ember__service": 4.0.9
+
   "@types/ember__routing@4.0.23(@babel/core@7.29.0)":
     dependencies:
       "@types/ember": 4.0.11(@babel/core@7.29.0)
       "@types/ember__controller": 4.0.12
       "@types/ember__object": 4.0.12(@babel/core@7.29.0)
-      "@types/ember__service": 4.0.9(@babel/core@7.29.0)
+      "@types/ember__service": 4.0.9
     transitivePeerDependencies:
       - "@babel/core"
       - supports-color
