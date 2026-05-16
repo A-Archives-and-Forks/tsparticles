@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.2](https://github.com/tsparticles/tsparticles/compare/v4.0.1...v4.0.2) (2026-05-16)
+
+### Bug Fixes
+
+- fixed peer dependencies, fixes [#5763](https://github.com/tsparticles/tsparticles/issues/5763) ([9a586ee](https://github.com/tsparticles/tsparticles/commit/9a586ee4ec4abc9df24de9093462e299f4867cd0))
+
 ## [4.0.1](https://github.com/tsparticles/tsparticles/compare/v4.0.0...v4.0.1) (2026-05-15)
 
 **Note:** Version bump only for package @tsparticles/interaction-external-bounce
